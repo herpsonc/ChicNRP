@@ -28,6 +28,7 @@ public:
 	void setNbHours(int nbHours);
 
 
+
 protected:
 	string id;
 	bool beginner;
