@@ -23,3 +23,15 @@ int ConstraintDaysSeq::getPriority()
 {
 	return priority;
 }
+
+void ConstraintDaysSeq::setPriority(int priority) {
+	this->priority = priority;
+}
+
+const std::vector<Post>& ConstraintDaysSeq::getSequence() const {
+	return sequence;
+}
+
+void ConstraintDaysSeq::setSequence(const std::vector<Post> &sequence) {
+	this->sequence = sequence;
+}

@@ -17,6 +17,10 @@ class Post {
 public:
 	Post();
 	virtual ~Post();
+	const string& getId() const;
+	void setId(const string &id);
+	int getTime() const;
+	void setTime(int time);
 
 protected:
 	string id;

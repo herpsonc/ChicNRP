@@ -16,3 +16,18 @@ Post::~Post() {
 	// TODO Auto-generated destructor stub
 }
 
+const string& Post::getId() const {
+	return id;
+}
+
+void Post::setId(const string &id) {
+	this->id = id;
+}
+
+int Post::getTime() const {
+	return time;
+}
+
+void Post::setTime(int time) {
+	this->time = time;
+}

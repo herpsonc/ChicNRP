@@ -12,6 +12,8 @@
 #include "../Post.h"
 #include <vector>
 
+//Correspondant à la contrainte C2
+
 class ConstraintDaysSeq: public Constraint {
 
 public:
@@ -19,6 +21,9 @@ public:
 	virtual ~ConstraintDaysSeq();
 
 	int getPriority();
+	void setPriority(int priority);
+	const std::vector<Post>& getSequence() const;
+	void setSequence(const std::vector<Post> &sequence);
 
 protected:
 	int priority;

@@ -21,6 +21,12 @@ class Service {
 public:
 	Service();
 	virtual ~Service();
+	const string& getId() const;
+	void setId(const string &id);
+	const vector<Post>& getPosts() const;
+	void setPosts(const vector<Post> &posts);
+	const vector<Agent>& getReferents() const;
+	void setReferents(const vector<Agent> &referents);
 
 protected:
 	string id;

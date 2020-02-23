@@ -8,8 +8,6 @@
 #include <string>
 #include "Service.h"
 
-using namespace std;
-
 #ifndef MODEL_AGENT_H_
 #define MODEL_AGENT_H_
 
@@ -34,6 +32,9 @@ protected:
 	bool beginner;
 	bool inf6Month;
 	int nbHours;
+
+	std::vector<Post> calendar; //Liste où chaque élément = un jour (donc ordonné) avec le poste attribué
+	std::vector<Post> impossiblePosts; // Liste des potes qui ne sont pas attribuables à l'agent (C4)
 
 	Service* service;
 
