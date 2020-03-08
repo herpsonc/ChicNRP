@@ -7,7 +7,10 @@
 
 #include <string>
 #include <vector>
+#include <map>
+#include <array>
 #include "Post.h"
+#include "constraint\Constraint.h"
 
 
 using namespace std;
@@ -20,18 +23,34 @@ class Agent;
 class Service {
 public:
 	Service();
+	Service(string id);
 	virtual ~Service();
 	const string& getId() const;
 	void setId(const string &id);
-	const vector<Post>& getPosts() const;
-	void setPosts(const vector<Post> &posts);
-	const vector<Agent>& getReferents() const;
-	void setReferents(const vector<Agent> &referents);
+
+	const vector<Post*>& getPosts() const;
+	void setPosts(const vector<Post*> &posts);
+	void addPost(Post* post);
+
+	const vector<Agent*>& getReferents() const;
+	void setReferents(const vector<Agent*> &referents);
+	void addReferent(Agent* referent);
+
+	const vector<Constraint*>& getConstraints() const;
+	void setConstraints(const vector<Constraint*> &constraints);
+	void addConstraint(Constraint* constraint);
+
+	const array<map<Post*, int>, 7>& getPostRequired() const;
+	void setPostRequired(const array<map<Post*, int>, 7> &postRequired);
+	void addPostRequired(Post* post, int nb); //Ajoute pour tout les jours
+	void addPostRequired(Post* post, int nb, int day);
 
 protected:
 	string id;
-	vector<Post> posts;
-	vector<Agent> referents;
+	vector<Post*> posts;
+	vector<Agent*> referents;
+	array<map<Post*,int>, 7> postRequired; //tableau de 7 map, chaque map correspond a des couples Poste/nbRequis (C5)
+	vector<Constraint*> constraints;
 };
 
 #endif /* MODEL_SERVICE_H_ */
