@@ -4,6 +4,7 @@
  *  Created on: 1 mars 2020
  *      Author: Valars
  */
+#pragma once
 
 enum Day {Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, None};
 
@@ -12,6 +13,7 @@ enum Day {Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, None};
 
 #include <iostream>
 #include <vector>
+#include <set>
 #include "Post.h"
 #include "Service.h"
 #include "Agent.h"
@@ -19,22 +21,36 @@ enum Day {Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, None};
 class Model {
 public:
 	Model(Day firstDay, int nbDays, float overtime);
+	Model(const Model &obj);
 	virtual ~Model();
 
-	const std::vector<Agent*>& getAgents() const;
-	const std::vector<Service*>& getServices() const;
+	const std::set<Service*>& getServices() const;
 
-	void addAgent(Agent* agent);
+	std::vector<Agent*> getAgentFrom(Service* service);
+
+	void addAgent(Agent* agent, Service* service);
 	void addService(Service* service);
 
 	void printPlanning();
+
+	Day getFirstDay() const;
+	void setFirstDay(Day firstDay);
+	Day getNextDay(Day day);
+
+	int getNbDays() const;
+	void setNbDays(int nbDays);
+	float getOvertime() const;
+	void setOvertime(float overtime);
+	Post* getDefaultPost();
+	void setDefaultPost(Post *defaultPost);
 
 protected:
 	Day firstDay;
 	int nbDays;
 	float overtime; //heure supp (Delta)
-	std::vector<Agent*> agents;
-	std::vector<Service*> services;
+	Post* defaultPost;
+	std::map<Service*,std::vector<Agent*>> agents;
+	std::set<Service*> services;
 	std::vector<Post*> posts;
 
 

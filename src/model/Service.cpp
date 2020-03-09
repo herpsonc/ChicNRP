@@ -87,3 +87,15 @@ void Service::addPostRequired(Post *post, int nb) {
 void Service::addPostRequired(Post *post, int nb, int day) {
 	postRequired[day][post] = nb;
 }
+
+const vector<Agent*>& Service::getAgents() const {
+	return agents;
+}
+
+void Service::setAgents(const vector<Agent*> &agents) {
+	this->agents = agents;
+}
+
+void Service::addAgent(Agent *agent) {
+	agents.push_back(agent);
+}

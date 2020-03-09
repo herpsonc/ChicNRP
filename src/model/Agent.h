@@ -8,6 +8,7 @@
 #include <string>
 #include "Service.h"
 #include "constraint\Constraint.h"
+#include "Model.h"
 
 #ifndef MODEL_AGENT_H_
 #define MODEL_AGENT_H_
@@ -17,14 +18,15 @@ enum Status {Beginner, Rooki, Confirmed};
 class Agent {
 public:
 	Agent();
-	Agent(string id, int nbHour, Status status);
+	Agent(string id, int nbHourMonth,int nbHoursWeek, Status status);
+	Agent(const Agent &obj);
 	virtual ~Agent();
 
 	const string& getId() const;
 	void setId(const string &id);
 
-	float getNbHours() const;
-	void setNbHours(float nbHours);
+	float getNbHoursMonth() const;
+	void setNbHoursMonth(float nbHours);
 
 	const array<Post*, 31>& getCalendar() const;
 	void setCalendar(const array<Post*, 31> &calendar);
@@ -44,11 +46,17 @@ public:
 	void setStatus(Status status);
 	const array<Post*, 7>& getLastMonthCalendar() const;
 	void setLastMonthCalendar(const array<Post*, 7> &lastMonthCalendar);
+	float getNbHoursWeek() const;
+	void setNbHoursWeek(float nbHoursWeek);
+
+	float getWorkingHoursMonth();
+	float getWorkingHoursWeek(Day day, int weekI);
 
 protected:
 	string id;
 	Status status;
-	float nbHours;
+	float nbHoursMonth;
+	float nbHoursWeek;
 
 	array<Post*, 31> calendar; //Liste où chaque élément = un jour (donc ordonné) avec le poste attribué
 	array<Post*, 7> lastMonthCalendar; //Liste des 7 derniers postes avant le début du mois

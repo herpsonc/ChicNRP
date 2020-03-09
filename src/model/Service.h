@@ -45,10 +45,15 @@ public:
 	void addPostRequired(Post* post, int nb); //Ajoute pour tout les jours
 	void addPostRequired(Post* post, int nb, int day);
 
+	const vector<Agent*>& getAgents() const;
+	void setAgents(const vector<Agent*> &agents);
+	void addAgent(Agent* agent);
+
 protected:
 	string id;
 	vector<Post*> posts;
-	vector<Agent*> referents;
+	vector<Agent*> referents; //Les référents ne sont pas forcément affectés à ce service
+	vector<Agent*> agents; //Agents affectés au service
 	array<map<Post*,int>, 7> postRequired; //tableau de 7 map, chaque map correspond a des couples Poste/nbRequis (C5)
 	vector<Constraint*> constraints;
 };

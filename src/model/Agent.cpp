@@ -10,16 +10,30 @@
 Agent::Agent() {
 	id ="";
 	service = NULL;
-	nbHours = 0;
+	nbHoursMonth = 0;
+	nbHoursWeek = 0;
 	status = Confirmed;
 }
 
-Agent::Agent(string id, int nbHour, Status status)
+Agent::Agent(string id, int nbHourMonth, int nbHoursWeek, Status status)
 {
 	this->id = id;
 	service = NULL;
-	this->nbHours = nbHour;
+	this->nbHoursMonth = nbHourMonth;
+	this->nbHoursWeek = nbHoursWeek;
 	this->status = status;
+}
+
+Agent::Agent(const Agent &obj){
+	this->id=obj.id;
+	this->service=obj.service;
+	this->nbHoursMonth=obj.nbHoursMonth;
+	this->nbHoursWeek=obj.nbHoursWeek;
+	this->status=obj.status;
+	this->calendar=obj.calendar;
+	this->lastMonthCalendar=obj.lastMonthCalendar;
+	this->impossiblePosts=obj.impossiblePosts;
+	this->constraints=obj.constraints;
 }
 
 Agent::~Agent() {
@@ -34,12 +48,12 @@ void Agent::setId(const string &id) {
 }
 
 
-float Agent::getNbHours() const {
-	return nbHours;
+float Agent::getNbHoursMonth() const {
+	return nbHoursMonth;
 }
 
-void Agent::setNbHours(float nbHours) {
-	this->nbHours = nbHours;
+void Agent::setNbHoursMonth(float nbHours) {
+	this->nbHoursMonth = nbHours;
 }
 
 const array<Post*, 31>& Agent::getCalendar() const {
@@ -99,4 +113,34 @@ void Agent::setCalendarDay(Post *post, int day) {
 	{
 		calendar[day]=post;
 	}
+}
+
+float Agent::getNbHoursWeek() const {
+	return nbHoursWeek;
+}
+
+void Agent::setNbHoursWeek(float nbHoursWeek) {
+	this->nbHoursWeek = nbHoursWeek;
+}
+
+float Agent::getWorkingHoursMonth() {
+	float r = 0;
+	for(auto day : calendar){
+		if(day != NULL)
+			r += day->getTime();
+	}
+
+	return r;
+}
+
+float Agent::getWorkingHoursWeek(Day day, int weekI) {
+	float r = 0;
+	int indice = 7 - day;
+	for(auto day : calendar){
+		if(day != NULL && indice/7 == weekI){
+			r+= day->getTime();
+		}
+		indice++;
+	}
+	return r;
 }
