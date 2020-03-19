@@ -28,10 +28,10 @@ Model generateGhr() {
 
 		//Posts
 		Post* jg = new Post("Jg", 12.25);
-		jg->addAttribut("work");
+		jg->addAttribut("workL");
 		jg->addAttribut("day");
 		Post* ng = new Post("Ng", 12.25);
-		ng->addAttribut("work");
+		ng->addAttribut("workL");
 		ng->addAttribut("night");
 		Post* mat = new Post("Mat", 12.25);
 		mat->addAttribut("work");
@@ -76,9 +76,9 @@ Model generateGhr() {
 
 		//Pas 3 jours/nuit de travail d'affilé
 		v = vector<string>();
-		v.push_back("work");
-		v.push_back("work");
-		v.push_back("work");
+		v.push_back("workL");
+		v.push_back("workL");
+		v.push_back("workL");
 		ConstraintDaysSeq* c3N = new ConstraintDaysSeq(v, 1);
 
 		//Pas de nuit avant un congé posé
@@ -179,6 +179,12 @@ int main() {
 			}
 		}
 	}
+
+	cout << heuristicSolver::check(&m2) << endl;
+
+	
+	string t;
+	cin >> t;
 
 	return 0;
 }

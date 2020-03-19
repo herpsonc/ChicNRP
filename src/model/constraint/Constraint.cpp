@@ -7,4 +7,7 @@
 
 #include "Constraint.h"
 
-
+int Constraint::getPriority()
+{
+    return 0;
+}

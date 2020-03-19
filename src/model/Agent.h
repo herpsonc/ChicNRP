@@ -7,7 +7,7 @@
 
 #include <string>
 #include "Service.h"
-#include "constraint\Constraint.h"
+#include "constraint/Constraint.h"
 #include "Model.h"
 
 #ifndef MODEL_AGENT_H_

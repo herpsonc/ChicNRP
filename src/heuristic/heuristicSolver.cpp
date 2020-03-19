@@ -7,6 +7,7 @@
 
 #include "heuristicSolver.h"
 
+#include "../model/constraint/ConstraintDaysSeq.h"
 using namespace std;
 
 heuristicSolver::heuristicSolver() {
@@ -27,7 +28,7 @@ Model heuristicSolver::greedy(const Model m) {
 	auto day = mr.getFirstDay();
 
 	//Pour chaque jours
-	int indiceWeek = (7 - day); //Indice de la semaine en cours
+	int indiceWeek = day; //Indice de la semaine en cours
 	for(int i=0;i<mr.getNbDays();i++){
 
 		for(auto s : mr.getServices()){
@@ -47,7 +48,7 @@ Model heuristicSolver::greedy(const Model m) {
 					for(auto r : required){
 						if(r.second>0){
 							//On respecte les heures par semaine et par mois
-							if(a->getWorkingHoursMonth()+r.first->getTime()<=a->getNbHoursMonth()
+							if(a->getWorkingHoursMonth()+r.first->getTime()<=a->getNbHoursMonth()+mr.getOvertime()
 									&& a->getWorkingHoursWeek(mr.getFirstDay(),indiceWeek/7)+ r.first->getTime() <= a->getNbHoursWeek()){
 								a->setCalendarDay(r.first,i);
 								required[r.first] = r.second-1;
@@ -75,4 +76,34 @@ void heuristicSolver::nullTo(Model* m, Post* post) {
 			}
 		}
 	}
+}
+
+bool heuristicSolver::check(Model* m) {
+
+	for(auto s : m->getServices()){
+		for(auto a : m->getAgentFrom(s)){
+			//Check des heures au mois pour les agents
+			if(a->getWorkingHoursMonth() > a->getNbHoursMonth()+m->getOvertime()){
+				cout << "Checker: Dépassement d'heure au mois pour l'agent " << a->getId() << endl;
+				return false;
+			}
+			//Check des heures à la semaine pour les agents
+			for(int i=0;i<6;i++){
+				if(a->getWorkingHoursWeek(m->getFirstDay(),i) > a->getNbHoursWeek()){
+					cout << "Checker: Dépassement d'heure à la semaine " << i << " pour l'agent " << a->getId() << endl;
+					return false;
+				}
+			}
+
+			for(auto c : s->getConstraints()){
+				if(typeid(*c) == typeid(ConstraintDaysSeq)){
+
+					if(((ConstraintDaysSeq*)c)->check(a)){
+						return false;
+					}
+				}
+			}
+		}
+	}
+	return true;
 }

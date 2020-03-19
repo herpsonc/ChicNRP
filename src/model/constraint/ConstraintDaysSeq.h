@@ -11,7 +11,7 @@
 #include "Constraint.h"
 #include "../Post.h"
 #include <vector>
-
+#include "../Agent.h"
 //Correspondant à la contrainte C2
 
 class ConstraintDaysSeq: public Constraint {
@@ -29,6 +29,10 @@ public:
 
 	const std::vector<string>& getSequenceAtt() const;
 	void setSequenceAtt(const std::vector<string> &sequenceAtt);
+
+	string getSeqToPrint();
+	bool check(const Agent* agent);
+
 
 protected:
 	int priority;

@@ -9,9 +9,9 @@
 #define SRC_MODEL_CONSTRAINT_CONSTRAINTINVOLVED_H_
 
 #include "Constraint.h"
-#include "..\Post.h"
+#include "../Post.h"
 #include <vector>
-
+#include "../Agent.h"
 //Correspondant à la contrainte C6
 
 class ConstraintInvolved: public Constraint {
@@ -24,10 +24,14 @@ public:
 	void setLastSeq(const std::vector<Post*> &lastSeq);
 	int getPriority();
 
+	bool check(const Agent* agent);
+
 protected:
 	int priority;
 	std::vector<Post*> firstSeq; //Première partie de l'implication
 	std::vector<Post*> lastSeq; //Second partie de l'implication
+	std::vector<string> firstSeqAtt;
+	std::vector<string> lastSeqAtt;
 };
 
 #endif /* SRC_MODEL_CONSTRAINT_CONSTRAINTINVOLVED_H_ */

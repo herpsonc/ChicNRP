@@ -40,3 +40,7 @@ int ConstraintInvolved::getPriority()
 {
 	return priority;
 }
+
+bool ConstraintInvolved::check(const Agent *agent) {
+	return false;
+}

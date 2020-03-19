@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <chrono>
 #include <random>
+#include <typeinfo>
 
 class heuristicSolver {
 public:
@@ -20,6 +21,7 @@ public:
 
 	static Model greedy(const Model m);
 	static void nullTo(Model* m, Post* post);
+	static bool check(Model* m);
 };
 
 #endif /* SRC_HEURISTIC_HEURISTICSOLVER_H_ */

@@ -22,6 +22,14 @@ Agent::Agent(string id, int nbHourMonth, int nbHoursWeek, Status status)
 	this->nbHoursMonth = nbHourMonth;
 	this->nbHoursWeek = nbHoursWeek;
 	this->status = status;
+
+	for (int i = 0;i < calendar.size();i++) {
+		calendar[i] = NULL;
+	}
+
+	for (int i = 0;i < lastMonthCalendar.size();i++) {
+		lastMonthCalendar[i] = NULL;
+	}
 }
 
 Agent::Agent(const Agent &obj){
@@ -135,7 +143,7 @@ float Agent::getWorkingHoursMonth() {
 
 float Agent::getWorkingHoursWeek(Day day, int weekI) {
 	float r = 0;
-	int indice = 7 - day;
+	int indice = day;
 	for(auto day : calendar){
 		if(day != NULL && indice/7 == weekI){
 			r+= day->getTime();
