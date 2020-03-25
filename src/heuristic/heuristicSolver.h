@@ -21,7 +21,7 @@ public:
 
 	static Model greedy(const Model m);
 	static void nullTo(Model* m, Post* post);
-	static bool check(Model* m);
+	static bool check(Model* m, bool CheckALL);
 };
 
 #endif /* SRC_HEURISTIC_HEURISTICSOLVER_H_ */

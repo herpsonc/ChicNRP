@@ -8,6 +8,8 @@
 #include "heuristicSolver.h"
 
 #include "../model/constraint/ConstraintDaysSeq.h"
+#include "../model/constraint/ConstraintInvolved.h"
+#include "../model/constraint/ConstraintSeqMinMax.h"
 using namespace std;
 
 heuristicSolver::heuristicSolver() {
@@ -78,7 +80,9 @@ void heuristicSolver::nullTo(Model* m, Post* post) {
 	}
 }
 
-bool heuristicSolver::check(Model* m) {
+bool heuristicSolver::check(Model* m, bool checkALL) {
+
+	bool isValide = true;
 
 	for(auto s : m->getServices()){
 		for(auto a : m->getAgentFrom(s)){
@@ -91,19 +95,38 @@ bool heuristicSolver::check(Model* m) {
 			for(int i=0;i<6;i++){
 				if(a->getWorkingHoursWeek(m->getFirstDay(),i) > a->getNbHoursWeek()){
 					cout << "Checker: Dépassement d'heure à la semaine " << i << " pour l'agent " << a->getId() << endl;
-					return false;
+					isValide = false;
+					if(checkALL)
+						return false;
 				}
 			}
 
 			for(auto c : s->getConstraints()){
 				if(typeid(*c) == typeid(ConstraintDaysSeq)){
 
-					if(((ConstraintDaysSeq*)c)->check(a)){
-						return false;
+					if(((ConstraintDaysSeq*)c)->check(a,true)){
+						isValide = false;
+						if (checkALL)
+							return false;
+					}
+
+				}
+				else if (typeid(*c) == typeid(ConstraintInvolved)) {
+					if (((ConstraintInvolved*)c)->check(a, true)) {
+						isValide = false;
+						if (checkALL)
+							return false;
+					}
+				}
+				else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
+					if (((ConstraintSeqMinMax*)c)->check(a, true, m->getFirstDay())) {
+						isValide = false;
+						if (checkALL)
+							return false;
 					}
 				}
 			}
 		}
 	}
-	return true;
+	return isValide;
 }

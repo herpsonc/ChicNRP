@@ -35,7 +35,7 @@ public:
 
 	Day getFirstDay() const;
 	void setFirstDay(Day firstDay);
-	Day getNextDay(Day day);
+	static Day getNextDay(Day day);
 
 	int getNbDays() const;
 	void setNbDays(int nbDays);

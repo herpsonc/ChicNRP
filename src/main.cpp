@@ -15,6 +15,8 @@
 #include "model/constraint/Constraint.h"
 #include "model/constraint/ConstraintDaysSeq.h"
 #include "model/Model.h"
+#include "model/constraint/ConstraintInvolved.h"
+#include "model/constraint/ConstraintSeqMinMax.h"
 using namespace std;
 
 Model generateGhr() {
@@ -29,11 +31,13 @@ Model generateGhr() {
 		//Posts
 		Post* jg = new Post("Jg", 12.25);
 		jg->addAttribut("workL");
+		jg->addAttribut("work");
 		jg->addAttribut("day");
 		Post* ng = new Post("Ng", 12.25);
 		ng->addAttribut("workL");
+		ng->addAttribut("work");
 		ng->addAttribut("night");
-		Post* mat = new Post("Mat", 12.25);
+		Post* mat = new Post("Mat", 7.5);
 		mat->addAttribut("work");
 		mat->addAttribut("day");
 		Post* repos = new Post("Repos", 0.0);
@@ -87,9 +91,27 @@ Model generateGhr() {
 		v.push_back("ca");
 		ConstraintDaysSeq* crn = new ConstraintDaysSeq(v, 1);
 
+		//Après 2 jours/nuits au moins 2 repos
+		v = vector<string>();
+		v.push_back("workL");
+		v.push_back("workL");
+		auto v2 = vector<string>();
+		v2.push_back("rest");
+		v2.push_back("rest");
+		ConstraintInvolved* cnr = new ConstraintInvolved(v, v2, 1);
+
+		//2 week ends par mois
+		v = vector<string>();
+		v.push_back("work");
+		v.push_back("work");
+		ConstraintSeqMinMax* cwe = new ConstraintSeqMinMax(Day::Saturday,MinMax::Min,2,v,1);
+
 		ghr->addConstraint(cJN);
 		ghr->addConstraint(c3N);
 		ghr->addConstraint(crn);
+		ghr->addConstraint(cnr);
+		ghr->addConstraint(cwe);
+
 
 		float nbHoursWeek = 48.0;
 
@@ -180,7 +202,7 @@ int main() {
 		}
 	}
 
-	cout << heuristicSolver::check(&m2) << endl;
+	cout << heuristicSolver::check(&m2, false) << endl;
 
 	
 	string t;
