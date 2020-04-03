@@ -42,7 +42,7 @@ public:
 
 	string seqToPrint();
 
-	bool check(const Agent* agent, bool checkALL, Day firstDayMonth);
+	int check(const Agent* agent, bool checkALL, Day firstDayMonth, bool log);
 
 protected:
 	Day firstDay;

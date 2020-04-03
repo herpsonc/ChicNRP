@@ -34,7 +34,7 @@ public:
 
 	int getPriority();
 
-	bool check(const Agent* agent, bool checkALL);
+	int check(const Agent* agent, bool checkALL, bool log);
 
 protected:
 	int priority;

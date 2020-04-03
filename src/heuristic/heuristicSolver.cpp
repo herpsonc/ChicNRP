@@ -80,7 +80,9 @@ void heuristicSolver::nullTo(Model* m, Post* post) {
 	}
 }
 
-bool heuristicSolver::check(Model* m, bool checkALL) {
+int heuristicSolver::check(Model* m, bool checkALL, bool log) {
+
+	int score = 0;
 
 	bool isValide = true;
 
@@ -88,45 +90,43 @@ bool heuristicSolver::check(Model* m, bool checkALL) {
 		for(auto a : m->getAgentFrom(s)){
 			//Check des heures au mois pour les agents
 			if(a->getWorkingHoursMonth() > a->getNbHoursMonth()+m->getOvertime()){
-				cout << "Checker: Dépassement d'heure au mois pour l'agent " << a->getId() << endl;
-				return false;
+				if(log)
+					cout << "Checker: Dépassement d'heure au mois pour l'agent " << a->getId() << endl;
+				isValide = false;
+				if (checkALL)
+					return false;
+
+				score -= 1;
 			}
 			//Check des heures à la semaine pour les agents
 			for(int i=0;i<6;i++){
 				if(a->getWorkingHoursWeek(m->getFirstDay(),i) > a->getNbHoursWeek()){
-					cout << "Checker: Dépassement d'heure à la semaine " << i << " pour l'agent " << a->getId() << endl;
+					if (log)
+						cout << "Checker: Dépassement d'heure à la semaine " << i << " pour l'agent " << a->getId() << endl;
 					isValide = false;
 					if(checkALL)
 						return false;
+
+					score -= 1;
 				}
 			}
 
 			for(auto c : s->getConstraints()){
 				if(typeid(*c) == typeid(ConstraintDaysSeq)){
-
-					if(((ConstraintDaysSeq*)c)->check(a,true)){
-						isValide = false;
-						if (checkALL)
-							return false;
-					}
-
+						score -= ((ConstraintDaysSeq*)c)->check(a, true, log);
 				}
 				else if (typeid(*c) == typeid(ConstraintInvolved)) {
-					if (((ConstraintInvolved*)c)->check(a, true)) {
-						isValide = false;
-						if (checkALL)
-							return false;
-					}
+						score -= ((ConstraintInvolved*)c)->check(a, true, log);
 				}
 				else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
-					if (((ConstraintSeqMinMax*)c)->check(a, true, m->getFirstDay())) {
-						isValide = false;
-						if (checkALL)
-							return false;
-					}
+						score -= ((ConstraintSeqMinMax*)c)->check(a, true, m->getFirstDay(), log);
 				}
 			}
 		}
 	}
-	return isValide;
+
+
+	if(log)
+		cout << "Score: " << score << endl;
+	return score;
 }

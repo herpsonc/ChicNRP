@@ -82,13 +82,14 @@ int ConstraintInvolved::getPriority()
 	return priority;
 }
 
-bool ConstraintInvolved::check(const Agent *agent, bool checkALL) {
+int ConstraintInvolved::check(const Agent *agent, bool checkALL, bool log) {
 
 	unsigned int indice = 0;
 	bool seqDetected = false;
 	bool found = false;
 	bool isValide = true;
 	int i = 0;
+	int nb_fail = 0;
 	//On cherche dans le pré planning
 
 	for (auto post : agent->getLastMonthCalendar()) {
@@ -126,6 +127,7 @@ bool ConstraintInvolved::check(const Agent *agent, bool checkALL) {
 					if(!checkALL)
 						return false;
 					isValide = false;
+					nb_fail++;
 					seqDetected = false;
 					indice = 0;
 				}
@@ -171,11 +173,13 @@ bool ConstraintInvolved::check(const Agent *agent, bool checkALL) {
 				}
 				//Si la 2e séquence n'est pas détecté
 				if (seqDetected && !found) {
-					cout << getSeqToPrint() << ": Agent " << agent->getId() << " Jour "
-						<< i+1 << endl;
+					if(log)
+						cout << getSeqToPrint() << ": Agent " << agent->getId() << " Jour "
+							<< i+1 << endl;
 					if (!checkALL)
 						return false;
 					isValide = false;
+					nb_fail++;
 					seqDetected = false;
 					indice = 0;
 				}
@@ -187,5 +191,5 @@ bool ConstraintInvolved::check(const Agent *agent, bool checkALL) {
 		}
 		i++;
 	}
-	return isValide;
+	return nb_fail;
 }

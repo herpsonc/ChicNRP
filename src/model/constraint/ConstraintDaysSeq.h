@@ -31,7 +31,7 @@ public:
 	void setSequenceAtt(const std::vector<string> &sequenceAtt);
 
 	string getSeqToPrint();
-	bool check(const Agent* agent, bool checkALL);
+	int check(const Agent* agent, bool checkALL, bool log);
 
 
 protected:

@@ -24,6 +24,8 @@ public:
 	Model(const Model &obj);
 	virtual ~Model();
 
+	Model& operator = (const Model& obj);
+
 	const std::set<Service*>& getServices() const;
 
 	std::vector<Agent*> getAgentFrom(Service* service);

@@ -187,7 +187,7 @@ int main() {
 
 	Model m =  generateGhr();
 
-	Model m2 = heuristicSolver::greedy(m);
+	auto m2 = heuristicSolver::greedy(m);
 
 	m.printPlanning();
 	cout << "---------------------------------" << endl;
@@ -202,8 +202,24 @@ int main() {
 		}
 	}
 
-	cout << heuristicSolver::check(&m2, false) << endl;
+	//Test sur plusieurs models généré aléatoirements
+	unsigned int nb = 1000;
+	Model bestModel = m;
+	int bScore = -500;
+	int wScore = 10;
+	for (int i = 0;i < nb;i++) {
+		m2 = heuristicSolver::greedy(m);
+		int tmp = heuristicSolver::check(&m2, false,false);
+		if (tmp > bScore) {
+			bestModel = m2;
+			bScore = tmp;
+		}
+		if (tmp < wScore)
+			wScore = tmp;
+	}
 
+	cout << heuristicSolver::check(&m2, false,true) << endl;
+	cout << "worst " << wScore;
 	
 	string t;
 	cin >> t;

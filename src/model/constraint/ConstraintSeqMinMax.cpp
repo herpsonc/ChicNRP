@@ -88,7 +88,7 @@ string ConstraintSeqMinMax::seqToPrint()
 	return s;
 }
 
-bool ConstraintSeqMinMax::check(const Agent* agent, bool checkALL, Day firstDayMonth) {
+int ConstraintSeqMinMax::check(const Agent* agent, bool checkALL, Day firstDayMonth, bool log) {
 	//TODO
 	unsigned int cptCheck = 0;
 	unsigned int indice = 0;
@@ -130,26 +130,36 @@ bool ConstraintSeqMinMax::check(const Agent* agent, bool checkALL, Day firstDayM
 		day = Model::getNextDay(day);
 	}
 	
-	if (type == Min) {
-		if (cptCheck >= number) {
-			cout << seqToPrint() << " Agent " << agent->getId() << " True " << cptCheck << " found" << endl;
-		}
-		else
-		{
-			cout << seqToPrint() << " Agent " << agent->getId() << " False " << cptCheck << " found" << endl;
-		}
+		if (type == Min) {
+			if (log) {
+				if (cptCheck >= number) {
+					cout << seqToPrint() << " Agent " << agent->getId() << " True " << cptCheck << " found" << endl;
+				}
+				else
+				{
+					cout << seqToPrint() << " Agent " << agent->getId() << " False " << cptCheck << " found" << endl;
+				}
+			}
 		
-		return cptCheck >= number;
-	}
-	else {
-		if (cptCheck <= number) {
-			cout << seqToPrint() << " Agent " << agent->getId() << " True " << cptCheck << " found" << endl;
+			if (cptCheck - number >= 0)
+				return 0;
+			return number - cptCheck;
 		}
-		else
-		{
-			cout << seqToPrint() << " Agent " << agent->getId() << " False" << cptCheck << " found" << endl;
+		else {
+			if (log) {
+				if (cptCheck <= number) {
+					cout << seqToPrint() << " Agent " << agent->getId() << " True " << cptCheck << " found" << endl;
+				}
+				else
+				{
+					cout << seqToPrint() << " Agent " << agent->getId() << " False" << cptCheck << " found" << endl;
+				}
+			}
+
+			if (cptCheck - number <= 0)
+				return 0;
+			return cptCheck - number;
 		}
 
-		return cptCheck <= number;
-	}
+		
 }

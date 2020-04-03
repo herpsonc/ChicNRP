@@ -17,24 +17,34 @@ Model::Model(Day firstDay, int nbDays, float overtime) {
 }
 
 Model::Model(const Model &obj) {
-	this->firstDay=obj.firstDay;
-	this->nbDays=obj.nbDays;
-	this->overtime=obj.overtime;
-	this->services=obj.services;
-	this->posts=obj.posts;
-	this->defaultPost=obj.defaultPost;
+	firstDay=obj.firstDay;
+	nbDays=obj.nbDays;
+	overtime=obj.overtime;
+	services=obj.services;
+	posts=obj.posts;
+	defaultPost=obj.defaultPost;
+	agents = map < Service*, std::vector<Agent*>>();
 
 	for(auto a : obj.agents){
 		for(auto b : a.second){
 			agents[a.first].push_back(new Agent(*b));
 		}
 	}
-
 }
 
 Model::~Model() {
-	// TODO Auto-generated destructor stub
+	for (auto a : agents)
+		for (auto b : a.second) {
+			delete b;
+		}
+	agents.clear();
 }
+
+Model& Model::operator=(const Model& obj)
+{
+	return Model(obj);
+}
+
 
 const std::set<Service*>& Model::getServices() const {
 	return services;

@@ -1,7 +1,7 @@
-/*
+﻿/*
  * Agent.cpp
  *
- *  Created on: 8 f�vr. 2020
+ *  Created on: 8 févr. 2020
  *      Author: Valars
  */
 
@@ -39,7 +39,7 @@ Agent::Agent(const Agent &obj){
 	this->nbHoursWeek=obj.nbHoursWeek;
 	this->status=obj.status;
 	this->calendar=obj.calendar;
-	this->lastMonthCalendar=obj.lastMonthCalendar;
+	this->lastMonthCalendar = obj.lastMonthCalendar;
 	this->impossiblePosts=obj.impossiblePosts;
 	this->constraints=obj.constraints;
 }
@@ -54,7 +54,6 @@ const string& Agent::getId() const {
 void Agent::setId(const string &id) {
 	this->id = id;
 }
-
 
 float Agent::getNbHoursMonth() const {
 	return nbHoursMonth;
