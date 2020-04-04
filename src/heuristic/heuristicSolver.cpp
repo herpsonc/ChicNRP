@@ -7,9 +7,7 @@
 
 #include "heuristicSolver.h"
 
-#include "../model/constraint/ConstraintDaysSeq.h"
-#include "../model/constraint/ConstraintInvolved.h"
-#include "../model/constraint/ConstraintSeqMinMax.h"
+
 using namespace std;
 
 heuristicSolver::heuristicSolver() {
@@ -130,3 +128,46 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 		cout << "Score: " << score << endl;
 	return score;
 }
+
+Model heuristicSolver::getNeighborSwap(Model* m)
+{
+	Model mr = Model(*m);
+
+	srand(time(0));
+
+	//Choix du jour
+	int day = rand()%31;
+
+	//On choisit un service aléatoirement
+	int serviceI = rand()%mr.getServices().size();
+	Service* service = NULL;
+	int i = 0;
+	for (auto s : mr.getServices()) {
+		if (serviceI == i) {
+			service = s;
+			break;
+		}
+		i++;
+	}
+
+	//Choix des deux agents à swap
+	int agent1 = rand() % mr.getAgentFrom(service).size();
+	while(mr.getAgentFrom(service)[agent1]->getCalendarLock()[day] == true)
+		agent1 = rand() % mr.getAgentFrom(service).size();
+
+	int agent2 = rand() % mr.getAgentFrom(service).size();
+	while (mr.getAgentFrom(service)[agent2]->getCalendarLock()[day] == true || agent1 == agent2 ||
+		mr.getAgentFrom(service)[agent1]->getCalendar()[day] == mr.getAgentFrom(service)[agent2]->getCalendar()[day])
+		agent2 = rand() % mr.getAgentFrom(service).size();
+
+	cout << "Swap agent " << mr.getAgentFrom(service)[agent1]->getId() << " et agent " << mr.getAgentFrom(service)[agent2]->getId() << " jour " << day+1 << endl;
+
+	//On swap les poste des deux agents choisit
+	Post* tmp = mr.getAgentFrom(service)[agent1]->getCalendar()[day];
+	mr.getAgentFrom(service)[agent1]->setCalendarDay(mr.getAgentFrom(service)[agent2]->getCalendar()[day], day);
+	mr.getAgentFrom(service)[agent2]->setCalendarDay(tmp, day);
+
+	return mr;
+}
+
+

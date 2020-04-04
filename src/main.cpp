@@ -189,6 +189,13 @@ int main() {
 
 	auto m2 = heuristicSolver::greedy(m);
 
+	auto m3 = heuristicSolver::getNeighborSwap(&m2);
+
+	m2.printPlanning();
+	cout << "---------------------------------" << endl;
+	m3.printPlanning();
+
+	/*
 	m.printPlanning();
 	cout << "---------------------------------" << endl;
 	m2.printPlanning();
@@ -219,7 +226,7 @@ int main() {
 	}
 
 	cout << heuristicSolver::check(&m2, false,true) << endl;
-	cout << "worst " << wScore;
+	cout << "worst " << wScore;*/
 	
 	string t;
 	cin >> t;
