@@ -117,32 +117,32 @@ Model generateGhr() {
 
 		//Agents
 		Agent* a1 = new Agent("1",155, nbHoursWeek,  Status::Confirmed);
-		a1->setCalendarDay(oe,3);
-		a1->setCalendarDay(oe,10);
-		a1->setCalendarDay(oe,17);
-		a1->setCalendarDay(oe,24);
-		a1->setCalendarDay(ca,0);
-		a1->setCalendarDay(ca,1);
-		a1->setCalendarDay(ca,2);
-		a1->setCalendarDay(ca,25);
-		a1->setCalendarDay(ca,26);
-		a1->setCalendarDay(ca,27);
-		a1->setCalendarDay(ca,28);
-		a1->setCalendarDay(ca,29);
-		a1->setCalendarDay(ca,30);
+		a1->setCalendarDay(oe,3, true);
+		a1->setCalendarDay(oe,10, true);
+		a1->setCalendarDay(oe,17, true);
+		a1->setCalendarDay(oe,24, true);
+		a1->setCalendarDay(ca,0, true);
+		a1->setCalendarDay(ca,1, true);
+		a1->setCalendarDay(ca,2, true);
+		a1->setCalendarDay(ca,25, true);
+		a1->setCalendarDay(ca,26, true);
+		a1->setCalendarDay(ca,27, true);
+		a1->setCalendarDay(ca,28, true);
+		a1->setCalendarDay(ca,29, true);
+		a1->setCalendarDay(ca,30, true);
 		m.addAgent(a1,ghr);
 
 
 		Agent* a6 = new Agent("6",155, nbHoursWeek, Status::Beginner);
 		a6->setService(ghr);
-		a6->setCalendarDay(fp,23);
+		a6->setCalendarDay(fp,23, true);
 		m.addAgent(a6,ghr);
 
 		Agent* a33 = new Agent("33",155, nbHoursWeek, Status::Confirmed);
 		a33->setService(ghr);
-		a33->setCalendarDay(cs, 24);
-		a33->setCalendarDay(cs, 25);
-		a33->setCalendarDay(cs, 26);
+		a33->setCalendarDay(cs, 24, true);
+		a33->setCalendarDay(cs, 25, true);
+		a33->setCalendarDay(cs, 26, true);
 		m.addAgent(a33,ghr);
 
 		Agent* a36 = new Agent("36",155, nbHoursWeek, Status::Confirmed);
@@ -160,20 +160,20 @@ Model generateGhr() {
 
 		Agent* a57 = new Agent("57",155, nbHoursWeek, Status::Confirmed);
 		a57->setService(ghr);
-		a57->setCalendarDay(ca,0);
-		a57->setCalendarDay(ca,1);
+		a57->setCalendarDay(ca,0, true);
+		a57->setCalendarDay(ca,1, true);
 		m.addAgent(a57,ghr);
 
 		Agent* a63 = new Agent("63",155, nbHoursWeek, Status::Confirmed);
 		a63->setService(ghr);
-		a63->setCalendarDay(ca,0);
-		a63->setCalendarDay(ca,1);
-		a63->setCalendarDay(ca,2);
-		a63->setCalendarDay(ca,3);
-		a63->setCalendarDay(ca,4);
-		a63->setCalendarDay(ca,5);
-		a63->setCalendarDay(ca,6);
-		a63->setCalendarDay(ca,7);
+		a63->setCalendarDay(ca,0, true);
+		a63->setCalendarDay(ca,1, true);
+		a63->setCalendarDay(ca,2, true);
+		a63->setCalendarDay(ca,3, true);
+		a63->setCalendarDay(ca,4, true);
+		a63->setCalendarDay(ca,5, true);
+		a63->setCalendarDay(ca,6, true);
+		a63->setCalendarDay(ca,7, true);
 		m.addAgent(a63,ghr);
 
 

@@ -23,13 +23,14 @@ Agent::Agent(string id, int nbHourMonth, int nbHoursWeek, Status status)
 	this->nbHoursWeek = nbHoursWeek;
 	this->status = status;
 
-	for (int i = 0;i < calendar.size();i++) {
+	for (int i = 0;i < calendar.size();i++)
 		calendar[i] = NULL;
-	}
 
-	for (int i = 0;i < lastMonthCalendar.size();i++) {
+	for (int i = 0;i < calendarLock.size();i++)
+		calendarLock[i] = false;
+
+	for (int i = 0;i < lastMonthCalendar.size();i++)
 		lastMonthCalendar[i] = NULL;
-	}
 }
 
 Agent::Agent(const Agent &obj){
@@ -65,6 +66,10 @@ void Agent::setNbHoursMonth(float nbHours) {
 
 const array<Post*, 31>& Agent::getCalendar() const {
 	return calendar;
+}
+
+const array<bool, 31>& Agent::getCalendarLock() const {
+	return calendarLock;
 }
 
 void Agent::setCalendar(const array<Post*, 31> &calendar) {
@@ -118,7 +123,16 @@ void Agent::setLastMonthCalendar(const array<Post*, 7> &lastMonthCalendar) {
 void Agent::setCalendarDay(Post *post, int day) {
 	if(day>=0 && day<31)
 	{
-		calendar[day]=post;
+		calendar[day] = post;
+		calendarLock[day] = false;
+	}
+}
+
+void Agent::setCalendarDay(Post* post, int day, bool lock) {
+	if (day >= 0 && day < 31)
+	{
+		calendar[day] = post;
+		calendarLock[day] = lock;
 	}
 }
 
