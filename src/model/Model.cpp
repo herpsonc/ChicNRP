@@ -42,6 +42,21 @@ Model::~Model() {
 
 Model& Model::operator=(const Model& obj)
 {
+	if (this != NULL) {
+		firstDay = obj.firstDay;
+		nbDays = obj.nbDays;
+		overtime = obj.overtime;
+		services = obj.services;
+		posts = obj.posts;
+		defaultPost = obj.defaultPost;
+		agents = map < Service*, std::vector<Agent*>>();
+
+		for (auto a : obj.agents) {
+			for (auto b : a.second) {
+				agents[a.first].push_back(new Agent(*b));
+			}
+		}
+	}
 	return Model(obj);
 }
 
