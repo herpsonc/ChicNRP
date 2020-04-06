@@ -19,7 +19,7 @@ heuristicSolver::~heuristicSolver() {
 	// TODO Auto-generated destructor stub
 }
 
-//Algorithme glouton prenant en compte uniquement les contraintes de postes par jours et d'amplitude horaire sur les agents.
+//Algorithme glouton prenant en compte uniquement les contraintes de postes par jour et d'amplitude horaire sur les agents.
 Model heuristicSolver::greedy(const Model m) {
 	Model mr = Model(m);
 
@@ -27,31 +27,31 @@ Model heuristicSolver::greedy(const Model m) {
 
 	auto day = mr.getFirstDay();
 
-	//Pour chaque jours
+	//Pour chaque jour
 	int indiceWeek = day; //Indice de la semaine en cours
 	for(int i=0;i<mr.getNbDays();i++){
 
 		for(auto s : mr.getServices()){
 
 			//On mélange la liste des agents.
-			vector<Agent*> v = mr.getAgentFrom(s);
-			shuffle(v.begin(),v.end(),default_random_engine(seed));
-			shuffle(v.begin(),v.end(),default_random_engine(seed));
+			vector<Agent*> agents = mr.getAgentFrom(s);
+			shuffle(agents.begin(),agents.end(),default_random_engine(seed));
+			shuffle(agents.begin(),agents.end(),default_random_engine(seed));
 
-			//On récupère les postes necessaires pour le jour day
+			//On récupère les postes necessaires pour le jour day (la variable)
 			auto required = s->getPostRequired()[day];
-			for(auto a : v){
+			for(auto a : agents){
 
-				//Si la journée est affecté à aucun poste
+				//Si la journée n'est affectée à aucun poste
 				if(a->getCalendar()[i]==NULL){
-					//On regarde les poste restant à attribuer
+					//On regarde les postes restants à attribuer
 					for(auto r : required){
 						if(r.second>0){
 							//On respecte les heures par semaine et par mois
 							if(a->getWorkingHoursMonth()+r.first->getTime()<=a->getNbHoursMonth()+mr.getOvertime()
 									&& a->getWorkingHoursWeek(mr.getFirstDay(),indiceWeek/7)+ r.first->getTime() <= a->getNbHoursWeek()){
 								a->setCalendarDay(r.first,i);
-								required[r.first] = r.second-1;
+								required[r.first]--; //on enlève un de ces postes de ceux disponibles
 								break;
 							}
 						}
