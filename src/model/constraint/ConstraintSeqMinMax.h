@@ -40,6 +40,10 @@ public:
 	int getPriority();
 	void setPriority(int priority);
 
+	string seqToPrint();
+
+	int check(const Agent* agent, bool checkALL, Day firstDayMonth, bool log);
+
 protected:
 	Day firstDay;
 	MinMax type;

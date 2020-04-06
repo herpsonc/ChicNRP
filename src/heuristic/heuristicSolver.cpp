@@ -8,6 +8,8 @@
 #include "heuristicSolver.h"
 
 #include "../model/constraint/ConstraintDaysSeq.h"
+#include "../model/constraint/ConstraintInvolved.h"
+#include "../model/constraint/ConstraintSeqMinMax.h"
 using namespace std;
 
 heuristicSolver::heuristicSolver() {
@@ -78,32 +80,53 @@ void heuristicSolver::nullTo(Model* m, Post* post) {
 	}
 }
 
-bool heuristicSolver::check(Model* m) {
+int heuristicSolver::check(Model* m, bool checkALL, bool log) {
+
+	int score = 0;
+
+	bool isValide = true;
 
 	for(auto s : m->getServices()){
 		for(auto a : m->getAgentFrom(s)){
 			//Check des heures au mois pour les agents
 			if(a->getWorkingHoursMonth() > a->getNbHoursMonth()+m->getOvertime()){
-				cout << "Checker: Dépassement d'heure au mois pour l'agent " << a->getId() << endl;
-				return false;
+				if(log)
+					cout << "Checker: Dépassement d'heure au mois pour l'agent " << a->getId() << endl;
+				isValide = false;
+				if (checkALL)
+					return false;
+
+				score -= 1;
 			}
 			//Check des heures à la semaine pour les agents
 			for(int i=0;i<6;i++){
 				if(a->getWorkingHoursWeek(m->getFirstDay(),i) > a->getNbHoursWeek()){
-					cout << "Checker: Dépassement d'heure à la semaine " << i << " pour l'agent " << a->getId() << endl;
-					return false;
+					if (log)
+						cout << "Checker: Dépassement d'heure à la semaine " << i << " pour l'agent " << a->getId() << endl;
+					isValide = false;
+					if(checkALL)
+						return false;
+
+					score -= 1;
 				}
 			}
 
 			for(auto c : s->getConstraints()){
 				if(typeid(*c) == typeid(ConstraintDaysSeq)){
-
-					if(((ConstraintDaysSeq*)c)->check(a)){
-						return false;
-					}
+						score -= ((ConstraintDaysSeq*)c)->check(a, true, log);
+				}
+				else if (typeid(*c) == typeid(ConstraintInvolved)) {
+						score -= ((ConstraintInvolved*)c)->check(a, true, log);
+				}
+				else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
+						score -= ((ConstraintSeqMinMax*)c)->check(a, true, m->getFirstDay(), log);
 				}
 			}
 		}
 	}
-	return true;
+
+
+	if(log)
+		cout << "Score: " << score << endl;
+	return score;
 }

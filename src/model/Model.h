@@ -24,6 +24,8 @@ public:
 	Model(const Model &obj);
 	virtual ~Model();
 
+	Model& operator = (const Model& obj);
+
 	const std::set<Service*>& getServices() const;
 
 	std::vector<Agent*> getAgentFrom(Service* service);
@@ -35,7 +37,7 @@ public:
 
 	Day getFirstDay() const;
 	void setFirstDay(Day firstDay);
-	Day getNextDay(Day day);
+	static Day getNextDay(Day day);
 
 	int getNbDays() const;
 	void setNbDays(int nbDays);

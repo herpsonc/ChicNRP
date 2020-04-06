@@ -59,11 +59,13 @@ string ConstraintDaysSeq::getSeqToPrint() {
 }
 
 //Retourne true si la séquence de la contrainte se retrouve dans le calendrier de l'agent
-bool ConstraintDaysSeq::check(const Agent *agent) {
+int ConstraintDaysSeq::check(const Agent *agent, bool checkALL, bool log) {
 
 	unsigned int indice = 0;
 	bool found = false;
 	int i = 0;
+	bool exist = false;
+	int nb_fail = 0;
 	//On prend en compte les 7 jours avant le debut du mois
 	for(auto post : agent->getLastMonthCalendar()){
 		if(post!=NULL){
@@ -73,9 +75,15 @@ bool ConstraintDaysSeq::check(const Agent *agent) {
 					indice++;
 					//Si on arrive au bout de la séquence, alors elle est présente dans le calendrier
 					if(indice>=sequenceAtt.size()){
-						cout << getSeqToPrint() << ": Agent " << agent->getId() << " Jour "
-								<< i-indice+2 << " à " << i+1 << endl;
-						return true;
+						if(log)
+							cout << getSeqToPrint() << ": Agent " << agent->getId() << " Jour "
+									<< i-indice+2 << " à " << i+1 << endl;
+						exist = true;
+						found = false;
+						nb_fail++;
+						indice = 0;
+						if(!checkALL)
+							return true;
 					}
 					break;
 				}
@@ -98,9 +106,15 @@ bool ConstraintDaysSeq::check(const Agent *agent) {
 						indice++;
 						//Si on arrive au bout de la séquence, alors elle est présente dans le calendrier
 						if(indice>=sequenceAtt.size()){
-							cout << getSeqToPrint() << ": Agent " << agent->getId() << " Jour "
-															<< i-indice+2 << " à " << i+1 << endl;
-							return true;
+							if(log)
+								cout << getSeqToPrint() << ": Agent " << agent->getId() << " Jour "
+										<< i-indice+2 << " à " << i+1 << endl;
+							exist = true;
+							found = false;
+							nb_fail++;
+							indice = 0;
+							if(!checkALL)
+								return true;
 						}
 						break;
 					}
@@ -113,5 +127,5 @@ bool ConstraintDaysSeq::check(const Agent *agent) {
 				indice=0;
 			i++;
 		}
-	return false;
+	return nb_fail;
 }

@@ -29,8 +29,10 @@ public:
 	void setNbHoursMonth(float nbHours);
 
 	const array<Post*, 31>& getCalendar() const;
+	const array<bool, 31>& getCalendarLock() const;
 	void setCalendar(const array<Post*, 31> &calendar);
 	void setCalendarDay(Post* post, int day);
+	void setCalendarDay(Post* post, int day, bool lock);
 
 	const std::vector<Post*>& getImpossiblePosts() const;
 	void setImpossiblePosts(const std::vector<Post*> &impossiblePosts);
@@ -59,6 +61,7 @@ protected:
 	float nbHoursWeek;
 
 	array<Post*, 31> calendar; //Liste où chaque élément = un jour (donc ordonné) avec le poste attribué
+	array<bool, 31> calendarLock;
 	array<Post*, 7> lastMonthCalendar; //Liste des 7 derniers postes avant le début du mois
 	std::vector<Post*> impossiblePosts; // Liste des potes qui ne sont pas attribuables à l'agent (C4)
 

@@ -6,6 +6,7 @@
  */
 
 #include "Post.h"
+#include <iostream>
 
 using namespace std;
 
@@ -21,7 +22,7 @@ Post::Post(string id, float time)
 }
 
 Post::~Post() {
-	// TODO Auto-generated destructor stub
+	std::cout << "post destroyed";
 }
 
 const string& Post::getId() const {

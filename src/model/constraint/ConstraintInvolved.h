@@ -17,14 +17,24 @@
 class ConstraintInvolved: public Constraint {
 public:
 	ConstraintInvolved(std::vector<Post*> first, std::vector<Post*> last, int priority);
+	ConstraintInvolved(std::vector<string> first, std::vector<string> last, int priority);
 	virtual ~ConstraintInvolved();
+
 	const std::vector<Post*>& getFirstSeq() const;
 	void setFirstSeq(const std::vector<Post*> &firstSeq);
 	const std::vector<Post*>& getLastSeq() const;
 	void setLastSeq(const std::vector<Post*> &lastSeq);
+
+	const std::vector<string>& getFirstSeqAtt() const;
+	void setFirstSeqAtt(const std::vector<string>& firstSeq);
+	const std::vector<string>& getLastSeqAtt() const;
+	void setLastSeqAtt(const std::vector<string>& lastSeq);
+
+	string getSeqToPrint();
+
 	int getPriority();
 
-	bool check(const Agent* agent);
+	int check(const Agent* agent, bool checkALL, bool log);
 
 protected:
 	int priority;
