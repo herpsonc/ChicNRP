@@ -59,11 +59,13 @@ Model generateGhr() {
 		cs->addAttribut("day");
 
 		m.setDefaultPost(repos);
+		m.setDefaultPost(ca);
 
 		ghr->addPost(jg);
 		ghr->addPost(ng);
 		ghr->addPost(mat);
 		ghr->addPost(repos);
+		ghr->addPost(ca);
 
 		ghr->addPostRequired(jg, 1);
 		ghr->addPostRequired(mat, 1);
@@ -193,6 +195,8 @@ int main() {
 	cout << "---------------------------------" << endl;
 	m2.printPlanning();
 
+	//Model m3 = Model::generateModelInstance(Day::Sunday, 31, 25, 5, 10, 10, 48.0);
+	
 	for(auto s : m2.getServices()){
 		for(auto a : m2.getAgentFrom(s)){
 			cout << a->getId() << " Mois: " << a->getWorkingHoursMonth() << endl;
@@ -209,7 +213,7 @@ int main() {
 	int wScore = 10;
 	for (int i = 0;i < nb;i++) {
 		m2 = heuristicSolver::greedy(m);
-		int tmp = heuristicSolver::check(&m2, false,false);
+		int tmp = heuristicSolver::check(&m2, false, false);
 		if (tmp > bScore) {
 			bestModel = m2;
 			bScore = tmp;
@@ -218,7 +222,7 @@ int main() {
 			wScore = tmp;
 	}
 
-	cout << heuristicSolver::check(&m2, false,true) << endl;
+	cout << heuristicSolver::check(&m2, false, true) << endl;
 	cout << "worst " << wScore;
 	
 	string t;

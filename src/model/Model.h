@@ -26,7 +26,7 @@ public:
 
 	Model& operator = (const Model& obj);
 
-	const std::set<Service*>& getServices() const;
+	std::vector<Service*>& getServices();
 
 	std::vector<Agent*> getAgentFrom(Service* service);
 
@@ -46,13 +46,15 @@ public:
 	Post* getDefaultPost();
 	void setDefaultPost(Post *defaultPost);
 
+	static Model generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek);
+
 protected:
 	Day firstDay;
 	int nbDays;
 	float overtime; //heure supp (Delta)
 	Post* defaultPost;
 	std::map<Service*,std::vector<Agent*>> agents;
-	std::set<Service*> services;
+	std::vector<Service*> services;
 	std::vector<Post*> posts;
 
 
