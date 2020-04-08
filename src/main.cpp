@@ -151,7 +151,7 @@ Model generateGhr() {
 
 		Agent* a40 = new Agent("40",155, nbHoursWeek, Status::Confirmed);
 		a40->setService(ghr);
-		a40->setCalendarDay(ca,0);
+		a40->setCalendarDay(ca,0, true);
 		m.addAgent(a40,ghr);
 
 		Agent* a49 = new Agent("49",155, nbHoursWeek, Status::Confirmed);
@@ -187,13 +187,13 @@ int main() {
 
 	Model m =  generateGhr();
 
-	auto m2 = heuristicSolver::greedy(m);
+	auto m2 = heuristicSolver::iterative(m,100,700,3);
 
-	auto m3 = heuristicSolver::getNeighborSwap(&m2);
+	cout << "bestScore " << heuristicSolver::check(&m2, false, false) << endl;
 
-	m2.printPlanning();
+	m.printPlanning();
 	cout << "---------------------------------" << endl;
-	m3.printPlanning();
+	m2.printPlanning();
 
 	/*
 	m.printPlanning();

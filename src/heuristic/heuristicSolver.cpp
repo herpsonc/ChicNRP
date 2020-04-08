@@ -129,45 +129,94 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 	return score;
 }
 
-Model heuristicSolver::getNeighborSwap(Model* m)
+Model heuristicSolver::getNeighborSwap(Model* m, int range)
 {
 	Model mr = Model(*m);
 
+	int nbIte = 100;
+
 	srand(time(0));
 
-	//Choix du jour
-	int day = rand()%31;
+	for (int j = 0;j < range;j++) {
+		//Choix du jour
+		int day = rand() % 31;
 
-	//On choisit un service aléatoirement
-	int serviceI = rand()%mr.getServices().size();
-	Service* service = NULL;
-	int i = 0;
-	for (auto s : mr.getServices()) {
-		if (serviceI == i) {
-			service = s;
-			break;
+		//On choisit un service aléatoirement
+		int serviceI = rand() % mr.getServices().size();
+
+		Service* service = NULL;
+		int i = 0;
+		for (auto s : mr.getServices()) {
+			if (serviceI == i) {
+				service = s;
+				break;
+			}
+			i++;
 		}
-		i++;
+
+		bool swap = true;
+		i = 0;
+		//Choix des deux agents à swap
+		int agent1 = rand() % mr.getAgentFrom(service).size();
+		while ((mr.getAgentFrom(service)[agent1]->getCalendarLock()[day] == true) && i < nbIte) {
+			agent1 = rand() % mr.getAgentFrom(service).size();
+			i++;
+			if (i >= nbIte)
+				swap = false;
+		}
+
+		i = 0;
+		int agent2 = rand() % mr.getAgentFrom(service).size();
+		while ((mr.getAgentFrom(service)[agent2]->getCalendarLock()[day] == true || agent1 == agent2 ||
+			mr.getAgentFrom(service)[agent1]->getCalendar()[day] == mr.getAgentFrom(service)[agent2]->getCalendar()[day]) && i < nbIte) {
+			agent2 = rand() % mr.getAgentFrom(service).size();
+			i++;
+			if (i >= nbIte)
+				swap = false;
+		}
+
+		//cout << swap << " Swap agent " << mr.getAgentFrom(service)[agent1]->getId() << " et agent " << mr.getAgentFrom(service)[agent2]->getId() << " jour " << day+1 << endl;
+
+		//On swap les poste des deux agents choisit
+		if (swap) {
+			Post* tmp = mr.getAgentFrom(service)[agent1]->getCalendar()[day];
+			mr.getAgentFrom(service)[agent1]->setCalendarDay(mr.getAgentFrom(service)[agent2]->getCalendar()[day], day);
+			mr.getAgentFrom(service)[agent2]->setCalendarDay(tmp, day);
+		}
 	}
 
-	//Choix des deux agents à swap
-	int agent1 = rand() % mr.getAgentFrom(service).size();
-	while(mr.getAgentFrom(service)[agent1]->getCalendarLock()[day] == true)
-		agent1 = rand() % mr.getAgentFrom(service).size();
-
-	int agent2 = rand() % mr.getAgentFrom(service).size();
-	while (mr.getAgentFrom(service)[agent2]->getCalendarLock()[day] == true || agent1 == agent2 ||
-		mr.getAgentFrom(service)[agent1]->getCalendar()[day] == mr.getAgentFrom(service)[agent2]->getCalendar()[day])
-		agent2 = rand() % mr.getAgentFrom(service).size();
-
-	cout << "Swap agent " << mr.getAgentFrom(service)[agent1]->getId() << " et agent " << mr.getAgentFrom(service)[agent2]->getId() << " jour " << day+1 << endl;
-
-	//On swap les poste des deux agents choisit
-	Post* tmp = mr.getAgentFrom(service)[agent1]->getCalendar()[day];
-	mr.getAgentFrom(service)[agent1]->setCalendarDay(mr.getAgentFrom(service)[agent2]->getCalendar()[day], day);
-	mr.getAgentFrom(service)[agent2]->setCalendarDay(tmp, day);
-
 	return mr;
+}
+
+Model heuristicSolver::iterative(const Model m, int nbPop, int nbGen, int range)
+{
+	auto chronoStart = chrono::system_clock::now();
+
+	Model model = greedy(m);
+	int bestScore = check(&model, false, false);
+	cout << "scoreInit" << bestScore << endl;
+	auto pop = vector<Model>();
+
+	for (int j = 0; j < nbGen;j++) {
+		cout << "Generation: " << j << endl;
+		for (int i = 0;i < nbPop;i++) {
+			pop.push_back(getNeighborSwap(&model, range));
+		}
+
+		for (auto e : pop) {
+			int res = check(&e, false, false);
+			if (res > bestScore) {
+				bestScore = res;
+				model = e;
+			}
+		}
+		pop.clear();
+	}
+
+	auto chronoEnd = chrono::system_clock::now();
+
+	cout << bestScore << " en " << (chronoEnd - chronoStart).count()/10000000 << " secondes" << endl;
+	return model;
 }
 
 

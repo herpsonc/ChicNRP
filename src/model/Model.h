@@ -26,7 +26,7 @@ public:
 
 	Model& operator = (const Model& obj);
 
-	const std::set<Service*>& getServices() const;
+	std::vector<Service*>& getServices();
 
 	std::vector<Agent*> getAgentFrom(Service* service);
 
@@ -52,7 +52,7 @@ protected:
 	float overtime; //heure supp (Delta)
 	Post* defaultPost;
 	std::map<Service*,std::vector<Agent*>> agents;
-	std::set<Service*> services;
+	std::vector<Service*> services;
 	std::vector<Post*> posts;
 
 
