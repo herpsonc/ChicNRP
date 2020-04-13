@@ -6,7 +6,7 @@
  */
 #pragma once
 
-enum Day {Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, None};
+enum Day { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, None };
 
 #ifndef SRC_MODEL_MODEL_H_
 #define SRC_MODEL_MODEL_H_
@@ -21,7 +21,7 @@ enum Day {Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, None};
 class Model {
 public:
 	Model(Day firstDay, int nbDays, float overtime);
-	Model(const Model &obj);
+	Model(const Model& obj);
 	virtual ~Model();
 
 	Model& operator = (const Model& obj);
@@ -44,16 +44,16 @@ public:
 	float getOvertime() const;
 	void setOvertime(float overtime);
 	Post* getDefaultPost();
-	void setDefaultPost(Post *defaultPost);
+	void setDefaultPost(Post* defaultPost);
 
-	static Model generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek);
+	static Model generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, int nbAgentsPerService = -1, int nbPostsPerService = -1);
 
 protected:
 	Day firstDay;
 	int nbDays;
 	float overtime; //heure supp (Delta)
 	Post* defaultPost;
-	std::map<Service*,std::vector<Agent*>> agents;
+	std::map<Service*, std::vector<Agent*>> agents;
 	std::vector<Service*> services;
 	std::vector<Post*> posts;
 
