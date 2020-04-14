@@ -141,7 +141,7 @@ int ConstraintSeqMinMax::check(const Agent* agent, bool checkALL, Day firstDayMo
 				}
 			}
 		
-			if (cptCheck - number >= 0)
+			if (cptCheck >= number)
 				return 0;
 			return number - cptCheck;
 		}
@@ -156,7 +156,7 @@ int ConstraintSeqMinMax::check(const Agent* agent, bool checkALL, Day firstDayMo
 				}
 			}
 
-			if (cptCheck - number <= 0)
+			if (cptCheck <= number)
 				return 0;
 			return cptCheck - number;
 		}

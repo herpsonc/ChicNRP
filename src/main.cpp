@@ -100,11 +100,11 @@ Model generateGhr() {
 		v2.push_back("rest");
 		ConstraintInvolved* cnr = new ConstraintInvolved(v, v2, 1);
 
-		//2 week ends par mois
+		//1 week ends par mois
 		v = vector<string>();
 		v.push_back("work");
 		v.push_back("work");
-		ConstraintSeqMinMax* cwe = new ConstraintSeqMinMax(Day::Saturday,MinMax::Min,2,v,1);
+		ConstraintSeqMinMax* cwe = new ConstraintSeqMinMax(Day::Saturday,MinMax::Min,1,v,1);
 
 		ghr->addConstraint(cJN);
 		ghr->addConstraint(c3N);
@@ -185,11 +185,14 @@ Model generateGhr() {
 
 int main() {
 
+	srand(time(0));
+
 	Model m =  generateGhr();
 
-	auto m2 = heuristicSolver::iterative(m,100,700,3);
+	//auto m2 = heuristicSolver::iterative(m,100,300,3);
+	auto m2 = heuristicSolver::iterative2(m, 20000, 3);
 
-	cout << "bestScore " << heuristicSolver::check(&m2, false, false) << endl;
+	cout << "bestScore " << heuristicSolver::check(&m2, false, true) << endl;
 
 	m.printPlanning();
 	cout << "---------------------------------" << endl;

@@ -48,12 +48,15 @@ Model heuristicSolver::greedy(const Model m) {
 					for(auto r : required){
 						if(r.second>0){
 							//On respecte les heures par semaine et par mois
-							if(a->getWorkingHoursMonth()+r.first->getTime()<=a->getNbHoursMonth()+mr.getOvertime()
+							/*if(a->getWorkingHoursMonth()+r.first->getTime()<=a->getNbHoursMonth()+mr.getOvertime()
 									&& a->getWorkingHoursWeek(mr.getFirstDay(),indiceWeek/7)+ r.first->getTime() <= a->getNbHoursWeek()){
 								a->setCalendarDay(r.first,i);
 								required[r.first] = r.second-1;
 								break;
-							}
+							}*/
+							a->setCalendarDay(r.first, i);
+							required[r.first] = r.second - 1;
+							break;
 						}
 					}
 				}
@@ -85,6 +88,28 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 	bool isValide = true;
 
 	for(auto s : m->getServices()){
+
+		//Check des post requis
+		auto day = m->getFirstDay();
+		for (int i = 0; i < m->getNbDays(); i++) {
+			auto requis = s->getPostRequired()[day];
+
+			for (auto a : m->getAgentFrom(s)) {
+				if(requis.find(a->getCalendar()[i]) != requis.end())
+					requis[a->getCalendar()[i]]--;
+			}
+
+			for (auto r : requis) {
+				if (r.second != 0) {
+					score--;
+					if (log) {
+						cout << "Jour " << day << " Post " << r.first->getId() << " insufisant" << endl;
+					}
+				}
+
+			}
+		}
+
 		for(auto a : m->getAgentFrom(s)){
 			//Check des heures au mois pour les agents
 			if(a->getWorkingHoursMonth() > a->getNbHoursMonth()+m->getOvertime()){
@@ -109,6 +134,7 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 				}
 			}
 
+
 			for(auto c : s->getConstraints()){
 				if(typeid(*c) == typeid(ConstraintDaysSeq)){
 						score -= ((ConstraintDaysSeq*)c)->check(a, true, log);
@@ -117,7 +143,7 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 						score -= ((ConstraintInvolved*)c)->check(a, true, log);
 				}
 				else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
-						score -= ((ConstraintSeqMinMax*)c)->check(a, true, m->getFirstDay(), log);
+						score -= ((ConstraintSeqMinMax*)c)->check(a, true, m->getFirstDay(), log)*2;
 				}
 			}
 		}
@@ -135,9 +161,9 @@ Model heuristicSolver::getNeighborSwap(Model* m, int range)
 
 	int nbIte = 100;
 
-	srand(time(0));
+	int randRange = (rand() % range) + 1;
 
-	for (int j = 0;j < range;j++) {
+	for (int j = 0;j < randRange;j++) {
 		//Choix du jour
 		int day = rand() % 31;
 
@@ -188,6 +214,63 @@ Model heuristicSolver::getNeighborSwap(Model* m, int range)
 	return mr;
 }
 
+Model heuristicSolver::getneighborRandom(Model* m, int range)
+{
+	Model mr = Model(*m);
+	int nbIte = 100;
+
+	int randRange = (rand() % range) + 1;
+
+	for (int j = 0; j < randRange; j++) {
+		//Choix du jour
+		int day = rand() % 31;
+
+		//On choisit un service aléatoirement
+		int serviceI = rand() % mr.getServices().size();
+
+		Service* service = NULL;
+		int i = 0;
+		for (auto s : mr.getServices()) {
+			if (serviceI == i) {
+				service = s;
+				break;
+			}
+			i++;
+		}
+
+		//Choix des deux agents à swap
+		i = 0;
+		bool found = true;
+		int agent1 = rand() % mr.getAgentFrom(service).size();
+		while ((mr.getAgentFrom(service)[agent1]->getCalendarLock()[day] == true) && i < nbIte) {
+			agent1 = rand() % mr.getAgentFrom(service).size();
+			i++;
+			if (i >= nbIte)
+				found = false;
+		}
+
+		//Choix d'un nouveau Post
+		i = 0;
+		Post* post = NULL;
+		int PostI = rand() % service->getPosts().size();
+		for (auto p : service->getPosts()) {
+			if (PostI == i) {
+				post = p;
+				break;
+			}
+			i++;
+		}
+
+		//On change le post de l'agent
+		mr.getAgentFrom(service)[agent1]->setCalendarDay(post, day);
+
+
+	}
+	return mr;
+}
+
+
+
 Model heuristicSolver::iterative(const Model m, int nbPop, int nbGen, int range)
 {
 	auto chronoStart = chrono::system_clock::now();
@@ -200,7 +283,14 @@ Model heuristicSolver::iterative(const Model m, int nbPop, int nbGen, int range)
 	for (int j = 0; j < nbGen;j++) {
 		cout << "Generation: " << j << endl;
 		for (int i = 0;i < nbPop;i++) {
-			pop.push_back(getNeighborSwap(&model, range));
+			int randN = rand() % 2;
+			switch (randN) {
+			case 1:
+				pop.push_back(getNeighborSwap(&model, range));
+			case 2:
+				pop.push_back(getneighborRandom(&model, range));
+			}
+			
 		}
 
 		for (auto e : pop) {
@@ -217,6 +307,71 @@ Model heuristicSolver::iterative(const Model m, int nbPop, int nbGen, int range)
 
 	cout << bestScore << " en " << (chronoEnd - chronoStart).count()/10000000 << " secondes" << endl;
 	return model;
+}
+
+Model heuristicSolver::iterative2(const Model m, int nbIte, int range)
+{
+	auto chronoStart = chrono::system_clock::now();
+	srand(time(0));
+	Model currentModel = greedy(m);
+	Model bestModel = currentModel;
+	Model nextModel = currentModel;
+	int bestScore = check(&currentModel, false, false);
+	int currentScore = bestScore;
+	cout << "scoreInit" << bestScore << endl;
+
+	for (int j = 0; j < nbIte; j++) {
+		if (j % 100 == 0) {
+			cout << "Iteration " << j << endl;
+		}
+		//On choisit un voisinnage à appliquer
+		int randN = rand() % 100;
+
+		if (randN < 95) {
+			nextModel = getNeighborSwap(&currentModel, range);
+		}
+		else {
+			nextModel = getneighborRandom(&currentModel, range);
+		}
+
+		//On regarde si la solution est meilleur
+		int nextScore = check(&nextModel, false, false);
+		if (nextScore > bestScore) {
+			bestModel = nextModel;
+			bestScore = nextScore;
+		}
+		//cout << nextScore << " " << bestScore << " " <<currentScore <<endl;
+		if (nextScore > currentScore) {
+			//80% de chance de choisir le nouveau model
+			int randI = rand() % 1000;
+			if (randI < 900 ) {
+				currentModel = nextModel;
+				currentScore = nextScore;
+			}
+		}
+		else {
+			//20% de chance de choisir le nouveau candidat même si il est moins bon
+			int randI = rand() % 1000;
+			if (randI > 998) {
+				currentModel = nextModel;
+				currentScore = nextScore;
+			}
+			else {
+				int randI = rand() % 1000;
+				if (randI > 998) {
+					currentModel = greedy(m);
+					currentScore = check(&currentModel, false, false);
+				}
+			}
+		}
+
+	}
+
+	auto chronoEnd = chrono::system_clock::now();
+
+	cout << bestScore << " en " << (chronoEnd - chronoStart).count() / 10000000 << " secondes" << endl;
+
+	return bestModel;
 }
 
 
