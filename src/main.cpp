@@ -59,13 +59,12 @@ Model generateGhr() {
 		cs->addAttribut("day");
 
 		m.setDefaultPost(repos);
-		m.setDefaultPost(ca);
 
 		ghr->addPost(jg);
 		ghr->addPost(ng);
 		ghr->addPost(mat);
 		ghr->addPost(repos);
-		ghr->addPost(ca);
+		//ghr->addPost(ca);
 
 		ghr->addPostRequired(jg, 1);
 		ghr->addPostRequired(mat, 1);
