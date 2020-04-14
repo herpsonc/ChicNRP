@@ -53,7 +53,7 @@ protected:
 	int nbDays;
 	float overtime; //heure supp (Delta)
 	Post* defaultPost;
-	std::map<Service*, std::vector<Agent*>> agents;
+	std::map<Service*,std::vector<Agent*>> agents;
 	std::vector<Service*> services;
 	std::vector<Post*> posts;
 

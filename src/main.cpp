@@ -102,11 +102,11 @@ Model generateGhr() {
 		v2.push_back("rest");
 		ConstraintInvolved* cnr = new ConstraintInvolved(v, v2, 1);
 
-		//2 week ends par mois
+		//1 week ends par mois
 		v = vector<string>();
 		v.push_back("work");
 		v.push_back("work");
-		ConstraintSeqMinMax* cwe = new ConstraintSeqMinMax(Day::Saturday,MinMax::Min,2,v,1);
+		ConstraintSeqMinMax* cwe = new ConstraintSeqMinMax(Day::Saturday,MinMax::Min,1,v,1);
 
 		ghr->addConstraint(cJN);
 		ghr->addConstraint(c3N);
@@ -153,7 +153,7 @@ Model generateGhr() {
 
 		Agent* a40 = new Agent("40",155, nbHoursWeek, Status::Confirmed);
 		a40->setService(ghr);
-		a40->setCalendarDay(ca,0);
+		a40->setCalendarDay(ca,0, true);
 		m.addAgent(a40,ghr);
 
 		Agent* a49 = new Agent("49",155, nbHoursWeek, Status::Confirmed);
@@ -187,10 +187,20 @@ Model generateGhr() {
 
 int main() {
 
+	srand(time(0));
+
 	Model m =  generateGhr();
 
-	auto m2 = heuristicSolver::greedy(m);
+	//auto m2 = heuristicSolver::iterative(m,100,300,3);
+	auto m2 = heuristicSolver::iterative2(m, 20000, 3);
 
+	cout << "bestScore " << heuristicSolver::check(&m2, false, true) << endl;
+
+	m.printPlanning();
+	cout << "---------------------------------" << endl;
+	m2.printPlanning();
+
+	/*
 	m.printPlanning();
 	cout << "---------------------------------" << endl;
 	m2.printPlanning();
@@ -222,8 +232,8 @@ int main() {
 			wScore = tmp;
 	}
 
-	cout << heuristicSolver::check(&m2, false, true) << endl;
-	cout << "worst " << wScore;
+	cout << heuristicSolver::check(&m2, false,true) << endl;
+	cout << "worst " << wScore;*/
 	
 	string t;
 	cin >> t;

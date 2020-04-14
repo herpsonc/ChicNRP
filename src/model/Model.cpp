@@ -49,6 +49,11 @@ Model& Model::operator=(const Model& obj)
 		services = obj.services;
 		posts = obj.posts;
 		defaultPost = obj.defaultPost;
+		for (auto a : agents)
+			for (auto b : a.second) {
+				delete b;
+			}
+		agents.clear();
 		agents = map < Service*, std::vector<Agent*>>();
 
 		for (auto a : obj.agents) {
@@ -61,7 +66,7 @@ Model& Model::operator=(const Model& obj)
 }
 
 
-std::vector<Service*>& Model::getServices() {
+std::vector<Service*>& Model::getServices(){
 	return services;
 }
 
@@ -70,15 +75,46 @@ void Model::addAgent(Agent* agent, Service* service) {
 	service->addAgent(agent);
 }
 
-void Model::addService(Service* service) {
+void Model::addService(Service* service ) {
 	services.push_back(service);
 }
 
 void Model::printPlanning() {
 
+	auto day = firstDay;
 	cout << "Jours:\t";
-	for (int i = 0; i < nbDays; i++) {
-		cout << "\t" << i + 1;
+
+	for(int i=0;i<nbDays;i++){
+		cout << "\t" << i+1 << " ";
+
+		switch (day) {
+		case Monday:
+			cout << "M";
+			break;
+		case Tuesday:
+			cout << "T";
+			break;
+		case Wednesday:
+			cout << "W";
+			break;
+		case Thursday:
+			cout << "T";
+			break;
+		case Friday:
+			cout << "F";
+			break;
+		case Saturday:
+			cout << "S";
+			break;
+		case Sunday:
+			cout << "S";
+			break;
+		default:
+			cout << "";
+			break;
+		}
+
+		day = getNextDay(day);
 	}
 	cout << endl;
 	for (auto s : agents)
