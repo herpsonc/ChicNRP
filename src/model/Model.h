@@ -18,6 +18,11 @@ enum Day { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, None 
 #include "Service.h"
 #include "Agent.h"
 
+#include "constraint/Constraint.h"
+#include "constraint/ConstraintDaysSeq.h"
+#include "constraint/ConstraintInvolved.h"
+#include "constraint/ConstraintSeqMinMax.h"
+
 class Model {
 public:
 	Model(Day firstDay, int nbDays, float overtime);
@@ -46,7 +51,8 @@ public:
 	Post* getDefaultPost();
 	void setDefaultPost(Post* defaultPost);
 
-	static Model generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, int nbAgentsPerService = -1, int nbPostsPerService = -1);
+	std::vector<Constraint*> Model::createConstraints();
+	static Model generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService = -1, int nbPostsPerService = -1);
 
 protected:
 	Day firstDay;

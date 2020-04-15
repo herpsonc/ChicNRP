@@ -114,10 +114,10 @@ Model generateGhr() {
 		ghr->addConstraint(cwe);
 
 
-		float nbHoursWeek = 48.0;
+		float nbHoursWeek = 48.0, nbHoursMonth = 155;
 
 		//Agents
-		Agent* a1 = new Agent("1",155, nbHoursWeek,  Status::Confirmed);
+		Agent* a1 = new Agent("1", nbHoursMonth, nbHoursWeek,  Status::Confirmed);
 		a1->setCalendarDay(oe,3, true);
 		a1->setCalendarDay(oe,10, true);
 		a1->setCalendarDay(oe,17, true);
@@ -134,38 +134,38 @@ Model generateGhr() {
 		m.addAgent(a1,ghr);
 
 
-		Agent* a6 = new Agent("6",155, nbHoursWeek, Status::Beginner);
+		Agent* a6 = new Agent("6", nbHoursMonth, nbHoursWeek, Status::Beginner);
 		a6->setService(ghr);
 		a6->setCalendarDay(fp,23, true);
 		m.addAgent(a6,ghr);
 
-		Agent* a33 = new Agent("33",155, nbHoursWeek, Status::Confirmed);
+		Agent* a33 = new Agent("33", nbHoursMonth, nbHoursWeek, Status::Confirmed);
 		a33->setService(ghr);
 		a33->setCalendarDay(cs, 24, true);
 		a33->setCalendarDay(cs, 25, true);
 		a33->setCalendarDay(cs, 26, true);
 		m.addAgent(a33,ghr);
 
-		Agent* a36 = new Agent("36",155, nbHoursWeek, Status::Confirmed);
+		Agent* a36 = new Agent("36", nbHoursMonth, nbHoursWeek, Status::Confirmed);
 		a36->setService(ghr);
 		m.addAgent(a36,ghr);
 
-		Agent* a40 = new Agent("40",155, nbHoursWeek, Status::Confirmed);
+		Agent* a40 = new Agent("40", nbHoursMonth, nbHoursWeek, Status::Confirmed);
 		a40->setService(ghr);
 		a40->setCalendarDay(ca,0, true);
 		m.addAgent(a40,ghr);
 
-		Agent* a49 = new Agent("49",155, nbHoursWeek, Status::Confirmed);
+		Agent* a49 = new Agent("49", nbHoursMonth, nbHoursWeek, Status::Confirmed);
 		a49->setService(ghr);
 		m.addAgent(a49,ghr);
 
-		Agent* a57 = new Agent("57",155, nbHoursWeek, Status::Confirmed);
+		Agent* a57 = new Agent("57", nbHoursMonth, nbHoursWeek, Status::Confirmed);
 		a57->setService(ghr);
 		a57->setCalendarDay(ca,0, true);
 		a57->setCalendarDay(ca,1, true);
 		m.addAgent(a57,ghr);
 
-		Agent* a63 = new Agent("63",155, nbHoursWeek, Status::Confirmed);
+		Agent* a63 = new Agent("63", nbHoursMonth, nbHoursWeek, Status::Confirmed);
 		a63->setService(ghr);
 		a63->setCalendarDay(ca,0, true);
 		a63->setCalendarDay(ca,1, true);
@@ -191,13 +191,19 @@ int main() {
 	Model m =  generateGhr();
 
 	//auto m2 = heuristicSolver::iterative(m,100,300,3);
-	auto m2 = heuristicSolver::iterative2(m, 20000, 3);
 
-	cout << "bestScore " << heuristicSolver::check(&m2, false, true) << endl;
+	auto m2 = Model::generateModelInstance(Day::Sunday, 31, 25, 2, 5, 10, 48.0, 155);
 
-	m.printPlanning();
-	cout << "---------------------------------" << endl;
+	//auto m3 = heuristicSolver::greedy(m2);
+	auto m4 = heuristicSolver::iterative2(m2, 20000, 3);
+
+	cout << "bestScore " << heuristicSolver::check(&m4, false, true) << endl;
+
 	m2.printPlanning();
+	cout << "---------------------------------" << endl;
+	//m3.printPlanning();
+	//cout << "---------------------------------" << endl;
+	m4.printPlanning();
 
 	/*
 	m.printPlanning();
