@@ -30,10 +30,21 @@ Model LPSolver::linearProgramTest(const Model mo) {
 
 	const int n = n_tmp, m = m_tmp, nz = n_tmp*m_tmp;
 
-	try {
-		CMIP prob("PL_GHR_test"); //nouveau problème
-		prob.openMatrix(n, m, nz); //matrice de dim m*n : m = nb_contraintes, n = nb_vars, nz = nb_valeurs des coefficients  à 0 pour chaque var dans chaque contrainte
-		prob.setObjSense(false); //minimiser au lieu de maximiser
+	/*try {*/
+		SCIP* scip;
+		SCIPcreate(&scip);
+
+		SCIPincludeDefaultPlugins(scip);
+		// SCIPmessagehdlrSetQuiet(SCIPgetMessagehdlr(scip), TRUE);
+		// uncomment the above line to disable output
+		
+		SCIPcreateProb(scip, "planning", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+		// The default objective sense for SCIP problems is minimizing.
+
+		// Liste contraintes
+		vector<SCIP_CONS*> consVec = vector<SCIP_CONS*>();
+		// Liste variables
+		vector<SCIP_VAR*> varVec = vector<SCIP_VAR*>();
 
 		int id_contrainte = 0;
 		int id_var = 0; //agent
@@ -47,27 +58,46 @@ Model LPSolver::linearProgramTest(const Model mo) {
 				for (auto job : s->getPosts()) {
 					if (job->getId() != "Repos") {
 
+						// Liste variables contrainte courante
+						int v = 0;
+						SCIP_VAR* varCons[50];
+
 						bool agent_dispo = false;
 						for (auto a : agents) {
 							if (a->getCalendar()[day] == NULL) {
 								if (!agent_dispo) { //permet d'ajouter une contrainte seulement s'il y a au moins un agent dispo pour ce job à cette date
-									prob.addCtr(id_contrainte, 0, 1, 1); //contrainte_jour_j_poste_p = 1
 									agent_dispo = true;
 								}
 								cout << "X_a" << a->getId() << ",j" << day+1 << "," << job->getId() << "= x(" << id_var << ")" << endl;
 
-								prob.addVar(id_var, CMIP::VAR_INT, 1, 0.0, 1.0);  // 0 <= 1*x_i <= 1   : var binaire (fonction objectif)
+								//prob.addVar(id_var, CMIP::VAR_INT, 1, 0.0, 1.0);  // 0 <= 1*x_i <= 1   : var binaire (fonction objectif)
+								SCIP_VAR* var;
 
-								prob.addEntry(1, id_contrainte, id_var); //x_day,job,a0 + x_day,job,a1 + ...
+								SCIPcreateVar(scip, &var, NULL, 0.0, 1.0, 1.0, SCIP_VARTYPE_BINARY, TRUE, FALSE, NULL, NULL, NULL, NULL, NULL);
+								SCIPaddVar(scip, var);
+								auto it = varVec.end();
+								varVec.insert(it, var);
+								varCons[v] = var;
+								v++;
 
 								id_var++;
 							}
 						}
 
+						if (agent_dispo) {
+							// Constraint = 1
+							SCIP_CONS* cons;
+							SCIPcreateConsSetpart(scip, &cons, "agent_dispo", v, varCons, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE);
+							auto it = consVec.end();
+							consVec.insert(it, cons);
+
+							SCIPprintCons(scip, cons, NULL);
+							//cout << endl;
+						}
+
 						id_contrainte++;
 					}
 				}
-
 				//un agent ne peut faire qu'un poste par jour
 				//for (auto a : agents) {
 				//	if (a->getCalendar()[day] == NULL) {
@@ -86,49 +116,46 @@ Model LPSolver::linearProgramTest(const Model mo) {
 
 		}
 
-		prob.printMatrix("LPTestMatrix.txt", true);
-		prob.closeMatrix(); // fermeture de la matrice
-		prob.optimize(); //  résolution du PL
-		prob.printSolution("LPTest2.sol"); //print
+		cout << id_contrainte << endl;
+		/*
 	}
+
 	catch (CException * pe) {
 		std::cerr << pe->what() << std::endl;
 		delete pe;
 		return mr;
-	}
+	}*/
+
+		FILE* file;
+		file = fopen("LPTest.txt", "w+");
+		for (auto v : varVec) {
+			SCIPprintVar(scip, v, NULL);
+		}
+
+		for (auto c : consVec) {
+			SCIPprintCons(scip, c, NULL);
+			cout << endl;
+		}
+
+		SCIPsolve(scip);
+		SCIP_SOL* sol = SCIPgetBestSol(scip);
+
+
+		if (sol == NULL)
+		{
+			cout << "Solution = NULL" << endl;
+		}
+
+		//SCIPgetProbData(scip);
+		//SCIPprintOrigProblem(scip, file, NULL, TRUE);
+		//SCIPprintLPStatistics(scip, file);
+
+		SCIPprintSol(scip, sol, NULL, TRUE);
+
+
 
 	return mr;
 
-	/*
-	try {
-		CMIP prob("MIPCLtest"); //nouveau problème
-		prob.openMatrix(n, m, nz); //matrice de dim n, m, avec nz valeurs != 0
-		
-		//Ajout de variables à la fonction objectif. Paramètres : numéro, type, coefficient, borne inf, borne sup
-		prob.addVar(0, CMIP::VAR_INT, 100.0, 0.0, CLP::VAR_INF); //100*x0
-		prob.addVar(1, CMIP::VAR_INT, 64.0, 0.0, CLP::VAR_INF);  //+64*x1
-
-		//contraintes
-		prob.addCtr(0, 0, -CLP::INF, 250); //contrainte0 < 250
-		prob.addCtr(1, 0, -CLP::INF, 4); // contrainte1 < 4
-
-		//valeur des coefficients
-		prob.addEntry(50.0, 0, 0); //contrainte0 : 50x0
-		prob.addEntry(31.0, 0, 1); //			  +31x1
-		prob.addEntry(-3.0, 1, 0); //contrainte1 : -3x0
-		prob.addEntry(2.0, 1, 1); //			   +2x1
-
-		prob.closeMatrix(); //
-		prob.optimize(); //  résolution du PL
-		prob.printSolution("primer.sol"); //print
-	}
-	catch (CException * pe) {
-		std::cerr << pe->what() << std::endl;
-		delete pe;
-		return m;
-	}
-
-	return m;*/
 }
 
 

@@ -1,8 +1,9 @@
 
 #include "../model/Model.h"
-#include <cmip.h>
-#include <except.h>
 #include <iostream>
+
+#include <scip/scip.h>
+#include <scip/scipdefplugins.h>
 
 class LPSolver {
 public:
