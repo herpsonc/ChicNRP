@@ -37,8 +37,8 @@ Model generateGhr() {
 		ng->addAttribut("workL");
 		ng->addAttribut("work");
 		ng->addAttribut("night");
-		Post* mat = new Post("Mat", 7.5);
-		mat->addAttribut("work");
+		Post* mat = new Post("Mat", 12.25);
+		mat->addAttribut("workL");
 		mat->addAttribut("day");
 		Post* repos = new Post("Repos", 0.0);
 		repos->addAttribut("rest");
@@ -187,16 +187,15 @@ int main() {
 	Model m =  generateGhr();
 
 	//auto m2 = heuristicSolver::iterative(m,100,300,3);
-	//auto m2 = heuristicSolver::iterative2(m, 20000, 3);
+	auto m2 = heuristicSolver::iterative2(m, 40000, 3);
 
 	//cout << "bestScore " << heuristicSolver::check(&m2, false, true) << endl;
-	m = heuristicSolver::greedy(m);
 	m.printPlanning();
-	heuristicSolver::check(&m, false, true);
-	auto v = heuristicSolver::checkValuation(&m);
-	m.setValuation(v);
+	heuristicSolver::check(&m2, false, true);
+	//auto v = heuristicSolver::checkValuation(&m);
+	//m.setValuation(v);
 	cout << "---------------------------------" << endl;
-	//m2.printPlanning();
+	m2.printPlanning();
 
 	/*
 	m.printPlanning();

@@ -87,10 +87,11 @@ int ConstraintDaysSeq::check(const Agent *agent, bool checkALL, bool log) {
 					}
 					break;
 				}
-			if(!found)
-				indice=0;
-			found = false;
+			
 			}
+			if (!found)
+				indice = 0;
+			found = false;
 		}
 		else
 			indice=0;
@@ -118,10 +119,11 @@ int ConstraintDaysSeq::check(const Agent *agent, bool checkALL, bool log) {
 						}
 						break;
 					}
-				if(!found)
-					indice=0;
-				found = false;
+				
 				}
+				if (!found)
+					indice = 0;
+				found = false;
 			}
 			else
 				indice=0;

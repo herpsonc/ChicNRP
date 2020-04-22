@@ -43,6 +43,7 @@ Agent::Agent(const Agent &obj){
 	this->lastMonthCalendar = obj.lastMonthCalendar;
 	this->impossiblePosts=obj.impossiblePosts;
 	this->constraints=obj.constraints;
+	this->calendarLock = obj.calendarLock;
 }
 
 Agent::~Agent() {
