@@ -195,3 +195,139 @@ Post* Model::getDefaultPost() {
 void Model::setDefaultPost(Post *defaultPost) {
 	this->defaultPost = defaultPost;
 }
+
+
+const Valuation& Model::getValuation()
+{
+	return valuation;
+}
+
+void Model::setValuation(const Valuation v)
+{
+	valuation = v;
+}
+
+Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, int nbAgentsPerService, int nbPostsPerService) {
+	/*
+	Si nbPostsPerService est indiqué, le nombre nbPosts ne sera pas respecté si nbPosts < nbPostsPerService*nbServices
+	de même pour nbAgentsPerService
+	*/
+
+	Model m = Model(firstDay, nbDays, overtime);
+	m.defaultPost = NULL;
+
+	int nbPostsAvailable = nbPosts, nbPostsService_i = -1, testLengthPost = -1;
+
+	//Services et Postes
+
+	//poste congé/repos dispos dans chaque service
+	Post* repos = new Post("Repos", 0.0);
+	repos->addAttribut("rest");
+
+	Post* ca = new Post("Ca", 0.0);
+	ca->addAttribut("rest");
+	ca->addAttribut("ca");
+
+	m.setDefaultPost(repos);
+	m.setDefaultPost(ca);
+
+	cout << nbPostsPerService << endl;
+	if (nbPostsPerService > -1) {
+		nbPostsService_i = nbPostsPerService;
+	}
+
+	//attribution de postes pour chaque service
+	for (int i = 0; i < nbServices; i++) {
+		Service* service_i = new Service(std::to_string(i));
+		m.addService(service_i);
+
+		service_i->addPost(repos); //ajout des postes obligatoires en dur
+		service_i->addPost(ca);
+
+		if (nbPostsPerService == -1) {
+			if (i != nbServices - 1 && nbPostsAvailable >= 2) {
+				nbPostsService_i = 2 + rand() % (nbPostsAvailable / 2); //au moins 2 postes par service (nbPosts est donc approximatif)
+			}
+			else { //si c'est le dernier service : lui attribuer tous les posts restants
+				nbPostsService_i = nbPostsAvailable; //solution temporaire : risque d'avoir bcp + de posts dans le dernier service
+			}
+		}
+
+		//pour chaque post qui sera dans ce service
+		for (int j = 0; j < nbPostsService_i; j++) {
+			testLengthPost = rand() % 10 + 1;
+			Post* posti_j;
+			if (testLengthPost >= 5) { //50% de chance de créer un poste à 12.25h, sinon 7.5h
+				posti_j = new Post("P" + std::to_string(i) + "_" + std::to_string(j), 12.25);
+			}
+			else {
+				posti_j = new Post("P" + std::to_string(i) + "_" + std::to_string(j), 7.5);
+			}
+			//i_j->addAttribut("workL");			//comment faire ?
+			service_i->addPost(posti_j);
+			//ghr->addPostRequired(posti_j, 1);     //idem
+		}
+
+		service_i->addPost(repos); //chaque service a un poste Repos
+
+		nbPostsAvailable -= nbPostsService_i;
+	}
+
+	//ajouter contraintes ?
+
+
+	//Agents
+
+	//variables pour les tirages aléatoires
+	int service_rand = 0, post_rand = 0, conges_rand = 0, jour_rand = 0, incr_jour = 0;
+
+	//pour chaque agents
+	for (int i = 0; i < nbAgents; i++) {
+		int dice = rand() % 10 + 1;
+		Agent* a_i;
+		if (dice <= 2) { //20% de chance d'avoir un agent qui débute
+			a_i = new Agent(std::to_string(i), i, nbHoursWeek, Status::Beginner);
+		}
+		else {
+			a_i = new Agent(std::to_string(i), i, nbHoursWeek, Status::Confirmed);
+		}
+
+		//si aucun nombre précis d'agents par service n'est donné, random pour attribuer un service
+		if (nbAgentsPerService == -1) {
+			service_rand = rand() % nbServices;
+			a_i->setService(m.getServices()[service_rand]);
+		}
+		// sinon, ajout de l'agent au premier service libre
+		else {
+			int j = 0;
+			while (m.getServices()[j]->getAgents().size() >= nbAgentsPerService) {
+				j++;
+			}
+			a_i->setService(m.getServices()[j]);
+		}
+
+		for (int jour = 0; jour < nbDays; jour++) {
+			conges_rand = rand() % 100 + 1;
+			//cout << i << ": " << conges_rand << endl;
+			if (conges_rand <= 5) { //5% de chance d'avoir un premier congé dans le mois
+				jour_rand = rand() % nbDays + 1; //random pour choisir le jour du congé
+
+				a_i->setCalendarDay(ca, jour_rand, true);
+
+				//chances de faire une suite de congés après un premier congé = 55%
+				conges_rand = rand() % 100 + 1;
+				//cout << i << " suite de congés : " << conges_rand << endl;
+				while (conges_rand <= 55 && jour_rand + incr_jour <= nbDays) { //ne pas dépasser le dernier jour du mois (pas forcément réaliste)
+					a_i->setCalendarDay(ca, jour_rand + incr_jour, true);
+					conges_rand = rand() % 10 + 1;
+					incr_jour++;
+				}
+				incr_jour = 0;
+			}
+		}
+		m.addAgent(a_i, m.getServices()[service_rand]);
+	}
+
+	return m;
+}
+

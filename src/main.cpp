@@ -176,10 +176,7 @@ Model generateGhr() {
 		a63->setCalendarDay(ca,7, true);
 		m.addAgent(a63,ghr);
 
-
-
 		return m;
-
 }
 
 
@@ -190,13 +187,16 @@ int main() {
 	Model m =  generateGhr();
 
 	//auto m2 = heuristicSolver::iterative(m,100,300,3);
-	auto m2 = heuristicSolver::iterative2(m, 20000, 3);
+	//auto m2 = heuristicSolver::iterative2(m, 20000, 3);
 
-	cout << "bestScore " << heuristicSolver::check(&m2, false, true) << endl;
-
+	//cout << "bestScore " << heuristicSolver::check(&m2, false, true) << endl;
+	m = heuristicSolver::greedy(m);
 	m.printPlanning();
+	heuristicSolver::check(&m, false, true);
+	auto v = heuristicSolver::checkValuation(&m);
+	m.setValuation(v);
 	cout << "---------------------------------" << endl;
-	m2.printPlanning();
+	//m2.printPlanning();
 
 	/*
 	m.printPlanning();

@@ -163,3 +163,54 @@ int ConstraintSeqMinMax::check(const Agent* agent, bool checkALL, Day firstDayMo
 
 		
 }
+
+std::vector<std::pair<int, int>> ConstraintSeqMinMax::checkValuation(const Agent* agent, Day firstDayMonth) {
+	//TODO
+	unsigned int cptCheck = 0;
+	unsigned int indice = 0;
+	Day day = firstDayMonth;
+
+	bool start = false;
+	bool found = false;
+
+	auto v = vector<pair<int, int>>();
+
+	/*
+	for (auto post : agent->getLastMonthCalendar()) {
+
+	}*/
+
+
+	for (auto post : agent->getCalendar()) {
+		if (indice == 0 && firstDay == day) {
+			start = true;
+		}
+
+		if (start || indice != 0) {
+			for (auto att : post->getAttributs()) {
+				if (att == sequenceAtt[indice]) {
+					indice++;
+					found = true;
+					if (indice >= sequenceAtt.size()) {
+						v.push_back(pair<int, int>(indice - sequenceAtt.size(), indice));
+						cptCheck++;
+						indice = 0;
+					}
+					break;
+				}
+			}
+			if (found == false)
+			{
+				indice = 0;
+			}
+			start = false;
+		}
+		found = false;
+		day = Model::getNextDay(day);
+	}
+
+	return v;
+
+
+}
+

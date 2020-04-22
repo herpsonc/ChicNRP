@@ -32,6 +32,7 @@ public:
 
 	string getSeqToPrint();
 	int check(const Agent* agent, bool checkALL, bool log);
+	std::vector<std::pair<int, int>> checkValuation(const Agent* agent);
 
 
 protected:

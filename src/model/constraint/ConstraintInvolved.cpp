@@ -193,3 +193,116 @@ int ConstraintInvolved::check(const Agent *agent, bool checkALL, bool log) {
 	}
 	return nb_fail;
 }
+
+std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInvolved::checkValuation(const Agent* agent) {
+
+	unsigned int indice = 0;
+	bool seqDetected = false;
+	bool found = false;
+	bool isValide = true;
+	int i = 0;
+	int nb_fail = 0;
+	int indiceFirst = 0;
+
+	auto v = std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>>();
+
+	//On cherche dans le pré planning
+	for (auto post : agent->getLastMonthCalendar()) {
+		if (post != NULL) {
+			for (auto att : post->getAttributs()) {
+				found = false;
+				//Le cas où la séquence est déjà detecté.
+				if (seqDetected) {
+					if (att == lastSeqAtt[indice]) {
+						indice++;
+						found = true;
+
+						if (indice == lastSeqAtt.size()) {
+							seqDetected = false;
+							indice = 0;
+						}
+						break;
+					}
+				}
+				//Le cas où la firstSeq est pas trouvé
+				else {
+					if (att == firstSeqAtt[indice]) {
+						indice++;
+						found = true;
+						//Toute la séquence a été trouver
+						if (indice == firstSeqAtt.size()) {
+							indiceFirst = indice;
+							indice = 0;
+							seqDetected = true;
+							
+						}
+						break;
+					}
+				}
+				//Si la 2e séquence n'est pas détecté
+				if (seqDetected && !found) {
+					v.push_back(pair<pair<int, int>, pair<int, int>>(pair<int, int>(indiceFirst - firstSeqAtt.size(), indiceFirst), pair<int, int>(indiceFirst + 1, indiceFirst + 1 + lastSeqAtt.size())));
+					isValide = false;
+					nb_fail++;
+					seqDetected = false;
+					indice = 0;
+				}
+				//Reset de la première séquence
+				else if (!seqDetected && !found) {
+					indice = 0;
+				}
+			}
+		}
+		i++;
+	}
+
+	i = 0;
+	for (auto post : agent->getCalendar()) {
+		if (post != NULL) {
+			for (auto att : post->getAttributs()) {
+				found = false;
+				//Le cas où la séquence est déjà detecté.
+				if (seqDetected) {
+					if (att == lastSeqAtt[indice]) {
+						indice++;
+						found = true;
+
+						if (indice == lastSeqAtt.size()) {
+							seqDetected = false;
+							indice = 0;
+						}
+						break;
+					}
+				}
+				//Le cas où la firstSeq est pas trouvé
+				else {
+					if (att == firstSeqAtt[indice]) {
+						indice++;
+						found = true;
+						//Toute la séquence a été trouver
+						if (indice == firstSeqAtt.size()) {
+							indiceFirst = indice;
+							indice = 0;
+							seqDetected = true;
+						}
+						break;
+					}
+				}
+				//Si la 2e séquence n'est pas détecté
+				if (seqDetected && !found) {
+					v.push_back(pair<pair<int, int>, pair<int, int>>(pair<int, int>(indiceFirst - firstSeqAtt.size(), indiceFirst), pair<int, int>(indiceFirst + 1, indiceFirst + 1 + lastSeqAtt.size())));
+					isValide = false;
+					nb_fail++;
+					seqDetected = false;
+					indice = 0;
+				}
+				//Reset de la première séquence
+				else if (!seqDetected && !found) {
+					indice = 0;
+				}
+			}
+		}
+		i++;
+	}
+	return v;
+}

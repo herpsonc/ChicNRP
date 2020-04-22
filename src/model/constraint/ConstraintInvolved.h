@@ -35,6 +35,7 @@ public:
 	int getPriority();
 
 	int check(const Agent* agent, bool checkALL, bool log);
+	std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> checkValuation(const Agent* agent);
 
 protected:
 	int priority;

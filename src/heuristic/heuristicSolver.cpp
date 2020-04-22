@@ -155,6 +155,108 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 	return score;
 }
 
+Valuation heuristicSolver::checkValuation(Model* m) {
+
+	int score = 0;
+
+	bool isValide = true;
+
+	//Pour Valuation
+	int iS = 0;
+	int iA = 0;
+	int iP = 0;
+	auto hoursMonth = vector<vector<int>>();
+	auto hoursWeeks = vector<vector<array<int, 6>>>();
+	auto daySeq = vector < vector<vector<pair<int, int>>>>();
+	auto involved = vector<vector<vector<pair<pair<int, int>, pair<int, int>>>>>();
+	auto seqMinMax = vector<vector<vector<pair<int, int>>>>();
+
+	for (auto s : m->getServices()) {
+
+		hoursMonth.push_back(vector<int>());
+		hoursWeeks.push_back(vector<array<int, 6>>());
+		daySeq.push_back(vector<vector<pair<int,int>>>());
+		involved.push_back(vector<vector<pair<pair<int, int>, pair<int, int>>>>());
+		seqMinMax.push_back(vector<vector<pair<int, int>>>());
+
+		//Check des post requis
+		auto day = m->getFirstDay();
+		for (int i = 0; i < m->getNbDays(); i++) {
+			auto requis = s->getPostRequired()[day];
+
+			for (auto a : m->getAgentFrom(s)) {
+				if (requis.find(a->getCalendar()[i]) != requis.end())
+					requis[a->getCalendar()[i]]--;
+			}
+
+			for (auto r : requis) {
+				if (r.second != 0) {
+					score--;
+				}
+
+			}
+		}
+
+
+		for (auto a : m->getAgentFrom(s)) {
+			//Check des heures au mois pour les agents
+
+			hoursMonth[iS].push_back(a->getWorkingHoursMonth());
+			hoursWeeks[iS].push_back(std::array<int, 6>());
+			daySeq[iS].push_back(vector<pair<int, int>>());
+			involved[iS].push_back(vector<pair<pair<int, int>, pair<int, int>>>());
+			seqMinMax[iS].push_back(vector<pair<int, int>>());
+
+			if (a->getWorkingHoursMonth() > a->getNbHoursMonth() + m->getOvertime()) {
+				isValide = false;
+				
+				score -= 1;
+			}
+			//Check des heures à la semaine pour les agents
+			for (int i = 0; i < 6; i++) {
+
+				hoursWeeks[iS][iA][i] = a->getWorkingHoursWeek(m->getFirstDay(), i);
+
+				if (a->getWorkingHoursWeek(m->getFirstDay(), i) > a->getNbHoursWeek()) {
+					isValide = false;
+
+					score -= 1;
+				}
+			}
+
+
+			for (auto c : s->getConstraints()) {
+				if (typeid(*c) == typeid(ConstraintDaysSeq)) {
+					daySeq[iS][iA] = ((ConstraintDaysSeq*)c)->checkValuation(a);
+					score -= daySeq[iS][iA].size();
+				}
+				else if (typeid(*c) == typeid(ConstraintInvolved)) {
+					involved[iS][iA] = ((ConstraintInvolved*)c)->checkValuation(a);
+					score -= involved[iS][iA].size();
+				}
+				else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
+					seqMinMax[iS][iA]= ((ConstraintSeqMinMax*)c)->checkValuation(a, m->getFirstDay());
+					score -= 2*abs((int)(seqMinMax[iS][iA].size() - ((ConstraintSeqMinMax*)c)->getNumber()));
+				}
+			}
+			iA++;
+		}
+		iS++;
+	}
+
+
+	Valuation v = Valuation();
+
+	v.setScore(score);
+	v.setHoursMonth(hoursMonth);
+	v.setHoursWeeks(hoursWeeks);
+	v.setDaySeq(daySeq);
+	v.setInvolved(involved);
+	v.setSeqMinMax(seqMinMax);
+
+	return v;
+}
+
 Model heuristicSolver::getNeighborSwap(Model* m, int range)
 {
 	Model mr = Model(*m);
