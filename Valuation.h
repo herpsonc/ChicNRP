@@ -21,6 +21,9 @@ public:
 	const std::vector<std::vector<std::vector<std::pair<int, int>>>>& getDaySeq();
 	void setDaySeq(const std::vector<std::vector<std::vector<std::pair<int, int>>>> daySeq);
 
+	const std::vector<std::vector<std::vector<std::pair<int, int>>>>& gethoursWeekSlide();
+	void sethoursWeekSlide(const std::vector<std::vector<std::vector<std::pair<int, int>>>> hoursWeekSlide);
+
 	const std::vector<std::vector<std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>>>>& getInvolved();
 	void setInvolved(const std::vector<std::vector<std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>>>> involved);
 
@@ -32,6 +35,7 @@ private:
 
 	std::vector<std::vector<int>> hoursMonth;
 	std::vector<std::vector<std::array<int, 6>>> hoursWeeks;
+	std::vector<std::vector<std::vector<std::pair<int, int>>>> hoursWeekSlide;
 
 	std::vector<std::vector<std::vector<std::pair<int, int>>>> daySeq;
 

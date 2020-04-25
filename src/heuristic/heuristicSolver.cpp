@@ -122,7 +122,9 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 				score -= 1;
 			}
 			//Check des heures à la semaine pour les agents
-			for(int i=0;i<6;i++){
+
+			score -= a->checkWorkingHoursWeek(log);
+			/*for(int i=0;i<6;i++){
 				if(a->getWorkingHoursWeek(m->getFirstDay(),i) > a->getNbHoursWeek()){
 					if (log)
 						cout << "Checker: Dépassement d'heure à la semaine " << i << " pour l'agent " << a->getId() << endl;
@@ -132,7 +134,9 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 
 					score -= 1;
 				}
-			}
+			}*/
+
+			score -= a->checkImpossiblePosts(log) * 10;
 
 
 			for(auto c : s->getConstraints()){
@@ -140,10 +144,10 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 						score -= ((ConstraintDaysSeq*)c)->check(a, true, log);
 				}
 				else if (typeid(*c) == typeid(ConstraintInvolved)) {
-						score -= ((ConstraintInvolved*)c)->check(a, true, log);
+					score -= ((ConstraintInvolved*)c)->check(a, m->getFirstDay(), true, log);
 				}
 				else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
-						score -= ((ConstraintSeqMinMax*)c)->check(a, true, m->getFirstDay(), log)*2;
+						score -= ((ConstraintSeqMinMax*)c)->check(a, true, m->getFirstDay(), log);
 				}
 			}
 		}
@@ -167,6 +171,7 @@ Valuation heuristicSolver::checkValuation(Model* m) {
 	int iP = 0;
 	auto hoursMonth = vector<vector<int>>();
 	auto hoursWeeks = vector<vector<array<int, 6>>>();
+	auto hoursWeeksSlide = vector<vector<vector<pair<int, int>>>>();
 	auto daySeq = vector < vector<vector<pair<int, int>>>>();
 	auto involved = vector<vector<vector<pair<pair<int, int>, pair<int, int>>>>>();
 	auto seqMinMax = vector<vector<vector<pair<int, int>>>>();
@@ -175,6 +180,7 @@ Valuation heuristicSolver::checkValuation(Model* m) {
 
 		hoursMonth.push_back(vector<int>());
 		hoursWeeks.push_back(vector<array<int, 6>>());
+		hoursWeeksSlide.push_back(vector<vector<pair<int, int>>>());
 		daySeq.push_back(vector<vector<pair<int,int>>>());
 		involved.push_back(vector<vector<pair<pair<int, int>, pair<int, int>>>>());
 		seqMinMax.push_back(vector<vector<pair<int, int>>>());
@@ -203,6 +209,7 @@ Valuation heuristicSolver::checkValuation(Model* m) {
 
 			hoursMonth[iS].push_back(a->getWorkingHoursMonth());
 			hoursWeeks[iS].push_back(std::array<int, 6>());
+			hoursWeeksSlide[iS].push_back(std::vector<pair<int, int>>());
 			daySeq[iS].push_back(vector<pair<int, int>>());
 			involved[iS].push_back(vector<pair<pair<int, int>, pair<int, int>>>());
 			seqMinMax[iS].push_back(vector<pair<int, int>>());
@@ -223,6 +230,8 @@ Valuation heuristicSolver::checkValuation(Model* m) {
 					score -= 1;
 				}
 			}
+
+			hoursWeeksSlide[iS][iA] = a->checkWorkingHoursWeekValuation();
 
 
 			for (auto c : s->getConstraints()) {
@@ -250,6 +259,7 @@ Valuation heuristicSolver::checkValuation(Model* m) {
 	v.setScore(score);
 	v.setHoursMonth(hoursMonth);
 	v.setHoursWeeks(hoursWeeks);
+	v.sethoursWeekSlide(hoursWeeksSlide);
 	v.setDaySeq(daySeq);
 	v.setInvolved(involved);
 	v.setSeqMinMax(seqMinMax);
@@ -429,7 +439,7 @@ Model heuristicSolver::iterative2(const Model m, int nbIte, int range)
 		//On choisit un voisinnage à appliquer
 		int randN = rand() % 100;
 
-		if (randN < 95) {
+		if (randN < 101) {
 			nextModel = getNeighborSwap(&currentModel, range);
 		}
 		else {

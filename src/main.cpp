@@ -33,6 +33,7 @@ Model generateGhr() {
 		jg->addAttribut("workL");
 		jg->addAttribut("work");
 		jg->addAttribut("day");
+		jg->addAttribut("dayL");
 		Post* ng = new Post("Ng", 12.25);
 		ng->addAttribut("workL");
 		ng->addAttribut("work");
@@ -40,6 +41,7 @@ Model generateGhr() {
 		Post* mat = new Post("Mat", 12.25);
 		mat->addAttribut("workL");
 		mat->addAttribut("day");
+		mat->addAttribut("work");
 		Post* repos = new Post("Repos", 0.0);
 		repos->addAttribut("rest");
 		Post* ca = new Post("Ca", 0.0);
@@ -76,20 +78,27 @@ Model generateGhr() {
 		auto v = vector<string>();
 		v.push_back("night");
 		v.push_back("day");
-		ConstraintDaysSeq* cJN = new ConstraintDaysSeq(v, 1);
+		ConstraintDaysSeq* cJN = new ConstraintDaysSeq(v, 30);
 
 		//Pas 3 jours/nuit de travail d'affilé
 		v = vector<string>();
 		v.push_back("workL");
 		v.push_back("workL");
 		v.push_back("workL");
-		ConstraintDaysSeq* c3N = new ConstraintDaysSeq(v, 1);
+		ConstraintDaysSeq* c3N = new ConstraintDaysSeq(v, 20);
 
 		//Pas de nuit avant un congé posé
 		v = vector<string>();
 		v.push_back("night");
 		v.push_back("ca");
-		ConstraintDaysSeq* crn = new ConstraintDaysSeq(v, 1);
+		ConstraintDaysSeq* crn = new ConstraintDaysSeq(v,30);
+
+		//Evite les journée isolés
+		v = vector<string>();
+		v.push_back("rest");
+		v.push_back("work");
+		v.push_back("rest");
+		ConstraintDaysSeq* cji = new ConstraintDaysSeq(v, 5);
 
 		//Après 2 jours/nuits au moins 2 repos
 		v = vector<string>();
@@ -98,22 +107,42 @@ Model generateGhr() {
 		auto v2 = vector<string>();
 		v2.push_back("rest");
 		v2.push_back("rest");
-		ConstraintInvolved* cnr = new ConstraintInvolved(v, v2, 1);
+		ConstraintInvolved* cnr = new ConstraintInvolved(v, v2, Day::None, 20);
+
+		//Après 1 journée longue + 1 repos  -> +1 repos min
+		v = vector<string>();
+		v.push_back("workL");
+		v.push_back("rest");
+		v2 = vector<string>();
+		v2.push_back("rest");
+		ConstraintInvolved* cwl2r = new ConstraintInvolved(v, v2, Day::None, 20);
+
+		//Si samedi Jg alors Jg dimanche + lundi
+		v = vector<string>();
+		v.push_back("dayL");
+		v2 = vector<string>();
+		v2.push_back("dayL");
+		v2.push_back("dayL");
+		ConstraintInvolved* cwjjj = new ConstraintInvolved(v, v2, Day::Saturday, 500);
 
 		//1 week ends par mois
 		v = vector<string>();
 		v.push_back("work");
 		v.push_back("work");
-		ConstraintSeqMinMax* cwe = new ConstraintSeqMinMax(Day::Saturday,MinMax::Min,1,v,1);
+		ConstraintSeqMinMax* cwe = new ConstraintSeqMinMax(Day::Saturday,MinMax::Min,1,v,5);
 
 		ghr->addConstraint(cJN);
 		ghr->addConstraint(c3N);
 		ghr->addConstraint(crn);
 		ghr->addConstraint(cnr);
 		ghr->addConstraint(cwe);
+		ghr->addConstraint(cji);
+		ghr->addConstraint(cwl2r);
+		ghr->addConstraint(cwjjj);
+		
 
 
-		float nbHoursWeek = 48.0;
+		float nbHoursWeek = 60.0;
 
 		//Agents
 		Agent* a1 = new Agent("1",155, nbHoursWeek,  Status::Confirmed);
@@ -136,6 +165,9 @@ Model generateGhr() {
 		Agent* a6 = new Agent("6",155, nbHoursWeek, Status::Beginner);
 		a6->setService(ghr);
 		a6->setCalendarDay(fp,23, true);
+		auto ip = vector<Post*>();
+		ip.push_back(ng);
+		a6->setImpossiblePosts(ip);
 		m.addAgent(a6,ghr);
 
 		Agent* a33 = new Agent("33",155, nbHoursWeek, Status::Confirmed);
@@ -187,7 +219,7 @@ int main() {
 	Model m =  generateGhr();
 
 	//auto m2 = heuristicSolver::iterative(m,100,300,3);
-	auto m2 = heuristicSolver::iterative2(m, 40000, 3);
+	auto m2 = heuristicSolver::iterative2(m, 100000, 5);
 
 	//cout << "bestScore " << heuristicSolver::check(&m2, false, true) << endl;
 	m.printPlanning();

@@ -166,3 +166,69 @@ float Agent::getWorkingHoursWeek(Day day, int weekI) {
 	}
 	return r;
 }
+
+int Agent::checkWorkingHoursWeek(bool log)
+{
+
+	int cptHours = 0;
+	int nbFail = 0;
+	for (int i = 0; i < 31; i++) {
+		cptHours = 0;
+
+		for (int j = 0; j < 7; j++) {
+			if (i+j < 31 && calendar[i + j] != NULL) {
+				cptHours += calendar[i + j]->getTime();
+			}
+		}
+		if (cptHours > nbHoursWeek) {
+			if(log)
+				cout << "Agent " << id << " heure semaine: jours " << i << " a " << i + 6 << " heures: " << cptHours << endl;
+			nbFail++;
+		}
+	}
+
+	return nbFail;
+}
+
+std::vector<std::pair<int, int>> Agent::checkWorkingHoursWeekValuation()
+{
+	auto v = std::vector<std::pair<int, int>>();
+	int cptHours = 0;
+	int nbFail = 0;
+	for (int i = 0; i < 31; i++) {
+		cptHours = 0;
+
+		for (int j = 0; j < 7; j++) {
+			if (i + j < 31 && calendar[i + j] != NULL) {
+				cptHours += calendar[i + j]->getTime();
+			}
+		}
+		if (cptHours > nbHoursWeek) {
+			nbFail++;
+			v.push_back(std::pair<int, int>(i, i + 6));
+		}
+	}
+
+	return v;
+}
+
+int Agent::checkImpossiblePosts(bool log)
+{
+	int nbFail = 0;
+	int i = 0;
+	for (auto p : calendar) {
+		for (auto ip : impossiblePosts) {
+			if (p == ip) {
+				nbFail++;
+				if (log) {
+					cout << "Agent " << id << " impossible post " << ip->getId() << " jour " << i << endl;
+				}
+			}
+
+		}
+		i++;
+	}
+
+	return nbFail;
+}
+

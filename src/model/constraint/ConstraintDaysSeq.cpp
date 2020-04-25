@@ -66,6 +66,7 @@ int ConstraintDaysSeq::check(const Agent *agent, bool checkALL, bool log) {
 	int i = 0;
 	bool exist = false;
 	int nb_fail = 0;
+	bool first = false;
 	//On prend en compte les 7 jours avant le debut du mois
 	for(auto post : agent->getLastMonthCalendar()){
 		if(post!=NULL){
@@ -87,10 +88,15 @@ int ConstraintDaysSeq::check(const Agent *agent, bool checkALL, bool log) {
 					}
 					break;
 				}
-			
+				else if (att == sequenceAtt[0]) {
+					first = true;
+				}
 			}
-			if (!found)
+			if (!found) {
 				indice = 0;
+				if (first)
+					indice = 1;
+			}
 			found = false;
 		}
 		else
@@ -119,17 +125,24 @@ int ConstraintDaysSeq::check(const Agent *agent, bool checkALL, bool log) {
 						}
 						break;
 					}
+					else if (att == sequenceAtt[0]){
+						first = true;
+					}
 				
 				}
-				if (!found)
+				if (!found) {
 					indice = 0;
+					if (first)
+						indice = 1;
+				}
 				found = false;
+				first = false;
 			}
 			else
 				indice=0;
 			i++;
 		}
-	return nb_fail;
+	return nb_fail*priority;
 }
 
 std::vector<std::pair<int, int>> ConstraintDaysSeq::checkValuation(const Agent* agent) {
@@ -139,7 +152,7 @@ std::vector<std::pair<int, int>> ConstraintDaysSeq::checkValuation(const Agent* 
 	int i = 0;
 	bool exist = false;
 	int nb_fail = 0;
-
+	bool first = false;
 	vector<pair<int, int>> v;
 
 	//On prend en compte les 7 jours avant le debut du mois
@@ -160,10 +173,17 @@ std::vector<std::pair<int, int>> ConstraintDaysSeq::checkValuation(const Agent* 
 					}
 					break;
 				}
-				if (!found)
-					indice = 0;
-				found = false;
+				else if (att == sequenceAtt[0]) {
+					first = true;
+				}
 			}
+			if (!found) {
+				indice = 0;
+				if (first)
+					indice = 1;
+			}
+			found = false;
+			first = false;
 		}
 		else
 			indice = 0;
@@ -187,10 +207,17 @@ std::vector<std::pair<int, int>> ConstraintDaysSeq::checkValuation(const Agent* 
 					}
 					break;
 				}
-				if (!found)
-					indice = 0;
-				found = false;
+				else if (att == sequenceAtt[0]) {
+					first = true;
+				}
 			}
+			if (!found) {
+				indice = 0;
+				if (first)
+					indice = 1;
+			}
+			found = false;
+			first = false;
 		}
 		else
 			indice = 0;

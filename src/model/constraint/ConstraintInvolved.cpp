@@ -16,10 +16,11 @@ ConstraintInvolved::ConstraintInvolved(vector<Post*> first, vector<Post*> last, 
 
 }
 
-ConstraintInvolved::ConstraintInvolved(vector<string> first, vector<string> last, int priority) {
+ConstraintInvolved::ConstraintInvolved(vector<string> first,  vector<string> last, Day firstDay, int priority) {
 	this->firstSeqAtt = first;
 	this->lastSeqAtt = last;
 	this->priority = priority;
+	this->firstDay = firstDay;
 
 }
 
@@ -82,7 +83,7 @@ int ConstraintInvolved::getPriority()
 	return priority;
 }
 
-int ConstraintInvolved::check(const Agent *agent, bool checkALL, bool log) {
+int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool log) {
 
 	unsigned int indice = 0;
 	bool seqDetected = false;
@@ -142,56 +143,59 @@ int ConstraintInvolved::check(const Agent *agent, bool checkALL, bool log) {
 
 	i = 0;
 	for (auto post : agent->getCalendar()) {
-		if (post != NULL) {
-			for (auto att : post->getAttributs()) {
-				found = false;
-				//Le cas où la séquence est déjà detecté.
-				if (seqDetected) {
-					if (att == lastSeqAtt[indice]) {
-						indice++;
-						found = true;
+		if (indice != 0 || firstDay == Day::None || firstDay == day || seqDetected) {
+			if (post != NULL) {
+				for (auto att : post->getAttributs()) {
+					found = false;
+					//Le cas où la séquence est déjà detecté.
+					if (seqDetected) {
+						if (att == lastSeqAtt[indice]) {
+							indice++;
+							found = true;
 
-						if (indice == lastSeqAtt.size()) {
-							seqDetected = false;
-							indice = 0;
+							if (indice == lastSeqAtt.size()) {
+								seqDetected = false;
+								indice = 0;
+							}
+							break;
 						}
-						break;
 					}
-				}
-				//Le cas où la firstSeq est pas trouvé
-				else {
-					if (att == firstSeqAtt[indice]) {
-						indice++;
-						found = true;
-						//Toute la séquence a été trouver
-						if (indice == firstSeqAtt.size()) {
-							indice = 0;
-							seqDetected = true;
+					//Le cas où la firstSeq est pas trouvé
+					else {
+						if (att == firstSeqAtt[indice]) {
+							indice++;
+							found = true;
+							//Toute la séquence a été trouver
+							if (indice == firstSeqAtt.size()) {
+								indice = 0;
+								seqDetected = true;
+							}
+							break;
 						}
-						break;
 					}
-				}
-				//Si la 2e séquence n'est pas détecté
-				if (seqDetected && !found) {
-					if(log)
-						cout << getSeqToPrint() << ": Agent " << agent->getId() << " Jour "
-							<< i+1 << endl;
-					if (!checkALL)
-						return false;
-					isValide = false;
-					nb_fail++;
-					seqDetected = false;
-					indice = 0;
-				}
-				//Reset de la première séquence
-				else if (!seqDetected && !found) {
-					indice = 0;
+					//Si la 2e séquence n'est pas détecté
+					if (seqDetected && !found) {
+						if (log)
+							cout << getSeqToPrint() << ": Agent " << agent->getId() << " Jour "
+							<< i + 1 << endl;
+						if (!checkALL)
+							return false;
+						isValide = false;
+						nb_fail++;
+						seqDetected = false;
+						indice = 0;
+					}
+					//Reset de la première séquence
+					else if (!seqDetected && !found) {
+						indice = 0;
+					}
 				}
 			}
 		}
 		i++;
+		day = Model::getNextDay(day);
 	}
-	return nb_fail;
+	return nb_fail*priority;
 }
 
 std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInvolved::checkValuation(const Agent* agent) {

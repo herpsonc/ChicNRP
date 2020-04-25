@@ -54,6 +54,10 @@ public:
 	float getWorkingHoursMonth();
 	float getWorkingHoursWeek(Day day, int weekI);
 
+	int checkWorkingHoursWeek(bool log);
+	std::vector<std::pair<int, int>> checkWorkingHoursWeekValuation();
+	int checkImpossiblePosts(bool log);
+
 protected:
 	string id;
 	Status status;

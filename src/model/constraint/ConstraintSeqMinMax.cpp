@@ -133,7 +133,7 @@ int ConstraintSeqMinMax::check(const Agent* agent, bool checkALL, Day firstDayMo
 		if (type == Min) {
 			if (log) {
 				if (cptCheck >= number) {
-					cout << seqToPrint() << " Agent " << agent->getId() << " True " << cptCheck << " found" << endl;
+					//cout << seqToPrint() << " Agent " << agent->getId() << " True " << cptCheck << " found" << endl;
 				}
 				else
 				{
@@ -143,12 +143,12 @@ int ConstraintSeqMinMax::check(const Agent* agent, bool checkALL, Day firstDayMo
 		
 			if (cptCheck >= number)
 				return 0;
-			return number - cptCheck;
+			return (number - cptCheck)*priority;
 		}
 		else {
 			if (log) {
 				if (cptCheck <= number) {
-					cout << seqToPrint() << " Agent " << agent->getId() << " True " << cptCheck << " found" << endl;
+					//cout << seqToPrint() << " Agent " << agent->getId() << " True " << cptCheck << " found" << endl;
 				}
 				else
 				{
@@ -158,7 +158,7 @@ int ConstraintSeqMinMax::check(const Agent* agent, bool checkALL, Day firstDayMo
 
 			if (cptCheck <= number)
 				return 0;
-			return cptCheck - number;
+			return (cptCheck - number)*priority;
 		}
 
 		

@@ -48,6 +48,16 @@ void Valuation::setDaySeq(const std::vector<std::vector<std::vector<std::pair<in
 	this->daySeq = daySeq;
 }
 
+const std::vector<std::vector<std::vector<std::pair<int, int>>>>& Valuation::gethoursWeekSlide()
+{
+	return hoursWeekSlide;
+}
+
+void Valuation::sethoursWeekSlide(const std::vector<std::vector<std::vector<std::pair<int, int>>>> hoursWeekSlide)
+{
+	this->hoursWeekSlide = hoursWeekSlide;
+}
+
 const std::vector<std::vector<std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>>>>& Valuation::getInvolved()
 {
 	return involved;
