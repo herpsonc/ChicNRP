@@ -46,8 +46,14 @@ Model LPSolver::linearProgramTest(const Model mo) {
 		// Liste variables
 		vector<SCIP_VAR*> varVec = vector<SCIP_VAR*>();
 
+		map<string, SCIP_VAR*> vars;
+
+		ofstream fileIdVar ("idvar.txt");
+
 		int id_contrainte = 0;
 		int id_var = 0; //agent
+
+		// Nombre d'agents pour un poste
 		for (int day = 0; day < mr.getNbDays(); day++) {
 
 			for (auto s : mr.getServices()) {
@@ -68,15 +74,20 @@ Model LPSolver::linearProgramTest(const Model mo) {
 								if (!agent_dispo) { //permet d'ajouter une contrainte seulement s'il y a au moins un agent dispo pour ce job à cette date
 									agent_dispo = true;
 								}
-								cout << "X_a" << a->getId() << ",j" << day+1 << "," << job->getId() << "= x(" << id_var << ")" << endl;
+								//cout << "X_a" << a->getId() << ",j" << day+1 << "," << job->getId() << "= x(" << id_var << ")" << endl;
+								fileIdVar << "X_a" << a->getId() << ",j" << day + 1 << "," << job->getId() << "= x(" << id_var << ")" << endl;
 
-								//prob.addVar(id_var, CMIP::VAR_INT, 1, 0.0, 1.0);  // 0 <= 1*x_i <= 1   : var binaire (fonction objectif)
+
 								SCIP_VAR* var;
 
 								SCIPcreateVar(scip, &var, NULL, 0.0, 1.0, 1.0, SCIP_VARTYPE_BINARY, TRUE, FALSE, NULL, NULL, NULL, NULL, NULL);
 								SCIPaddVar(scip, var);
+
+								vars[a->getId() + "_" + to_string(day + 1) + "_" + job->getId()] = var;
+
 								auto it = varVec.end();
 								varVec.insert(it, var);
+
 								varCons[v] = var;
 								v++;
 
@@ -87,36 +98,52 @@ Model LPSolver::linearProgramTest(const Model mo) {
 						if (agent_dispo) {
 							// Constraint = 1
 							SCIP_CONS* cons;
-							SCIPcreateConsSetpart(scip, &cons, "agent_dispo", v, varCons, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE);
+							SCIPcreateConsBasicSetpart(scip, &cons, "agent_dispo", v, varCons);
+							SCIPaddCons(scip, cons);
+
 							auto it = consVec.end();
 							consVec.insert(it, cons);
 
-							SCIPprintCons(scip, cons, NULL);
-							//cout << endl;
+							//SCIPprintCons(scip, cons, NULL);
 						}
 
 						id_contrainte++;
 					}
 				}
+
 				//un agent ne peut faire qu'un poste par jour
-				//for (auto a : agents) {
-				//	if (a->getCalendar()[day] == NULL) {
+				for (auto a : agents) {
+					if (a->getCalendar()[day] == NULL) {
 
-				//		prob.addCtr(id_contrainte, 0, 1, 1); //contrainte_jour_j_poste_p = 1
+						// Liste variables contrainte courante
+						int v = 0;
+						SCIP_VAR* varCons[50];
 
-				//		for (auto job : s->getPosts()) {
-				//			if (job->getId() != "Repos") {
+						for (auto job : s->getPosts()) {
+							if (job->getId() != "Repos") {
+								SCIP_VAR* var = vars.find(a->getId() + "_" + to_string(day + 1) + "_" + job->getId())->second;
+								varCons[v] = var;
+								v++;
+							}
+						}
 
-				//			}
-				//		}
-				//		id_contrainte++;
-				//	}
-				//}
+						//Création contrainte
+						SCIP_CONS* cons;
+						SCIPcreateConsBasicSetpart(scip, &cons, "1_poste_par_jour", v, varCons);
+						SCIPaddCons(scip, cons);
+
+						// Ajout liste contraintes
+						auto it = consVec.end();
+						consVec.insert(it, cons);
+
+						id_contrainte++;
+					}
+				}
 			}
 
 		}
 
-		cout << id_contrainte << endl;
+		//cout << id_contrainte << endl;
 		/*
 	}
 
@@ -126,8 +153,7 @@ Model LPSolver::linearProgramTest(const Model mo) {
 		return mr;
 	}*/
 
-		FILE* file;
-		file = fopen("LPTest.txt", "w+");
+		/*
 		for (auto v : varVec) {
 			SCIPprintVar(scip, v, NULL);
 		}
@@ -136,6 +162,12 @@ Model LPSolver::linearProgramTest(const Model mo) {
 			SCIPprintCons(scip, c, NULL);
 			cout << endl;
 		}
+		*/
+
+		fileIdVar.close();
+
+		cout << "Write init pl" << endl;
+		SCIPwriteOrigProblem(scip, "init.txt", "lp", FALSE);
 
 		SCIPsolve(scip);
 		SCIP_SOL* sol = SCIPgetBestSol(scip);
@@ -146,13 +178,17 @@ Model LPSolver::linearProgramTest(const Model mo) {
 			cout << "Solution = NULL" << endl;
 		}
 
-		//SCIPgetProbData(scip);
-		//SCIPprintOrigProblem(scip, file, NULL, TRUE);
-		//SCIPprintLPStatistics(scip, file);
-
 		SCIPprintSol(scip, sol, NULL, TRUE);
 
 
+		// Freeing the SCIP environment
+		for (auto v : varVec) {
+			SCIPreleaseVar(scip, &v);
+		}
+		for (auto c : consVec) {
+			SCIPreleaseCons(scip, &c);
+		}
+		SCIPfree(&scip);
 
 	return mr;
 

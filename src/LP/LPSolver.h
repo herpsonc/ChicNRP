@@ -1,6 +1,7 @@
 
 #include "../model/Model.h"
 #include <iostream>
+#include <fstream>
 
 #include <scip/scip.h>
 #include <scip/scipdefplugins.h>
