@@ -190,11 +190,11 @@ int main() {
 	//auto m2 = heuristicSolver::greedy(m);
 	Model m3 = Model::generateModelInstance(Day::Sunday, 31, 25, 5, 10, 10, 48.0);
 
-	//m.printPlanning();
+	m.printPlanning();
 	//cout << "---------------------------------" << endl;
-	m3.printPlanning();
+	//m3.printPlanning();
 
-	//LPSolver::linearProgramTest(m);
+	LPSolver::linearProgramTest(m);
 	/*
 	for (auto s : m2.getServices()) {
 		for (auto a : m2.getAgentFrom(s)) {

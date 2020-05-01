@@ -1,4 +1,5 @@
 #include "LPSolver.h"
+//using namespace std;
 
 LPSolver::LPSolver() {
 	// TODO Auto-generated constructor stub
@@ -12,7 +13,7 @@ LPSolver::~LPSolver() {
 
 Model LPSolver::linearProgramTest(const Model mo) {
 	Model mr = Model(mo);
-	
+
 	int n_tmp = 0, m_tmp = 0;
 	cout << "nb jours du mois : " << mr.getNbDays() << endl;
 	for (auto s : mr.getServices()) {
@@ -28,173 +29,173 @@ Model LPSolver::linearProgramTest(const Model mo) {
 		}
 	}
 
-	const int n = n_tmp, m = m_tmp, nz = n_tmp*m_tmp;
+	const int n = n_tmp, m = m_tmp, nz = n_tmp * m_tmp;
 
 	/*try {*/
-		SCIP* scip;
-		SCIPcreate(&scip);
+	SCIP* scip;
+	SCIPcreate(&scip);
 
-		SCIPincludeDefaultPlugins(scip);
-		// SCIPmessagehdlrSetQuiet(SCIPgetMessagehdlr(scip), TRUE);
-		// uncomment the above line to disable output
-		
-		SCIPcreateProb(scip, "planning", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-		// The default objective sense for SCIP problems is minimizing.
+	SCIPincludeDefaultPlugins(scip);
+	// SCIPmessagehdlrSetQuiet(SCIPgetMessagehdlr(scip), TRUE);
+	// uncomment the above line to disable output
 
-		// Liste contraintes
-		vector<SCIP_CONS*> consVec = vector<SCIP_CONS*>();
-		// Liste variables
-		vector<SCIP_VAR*> varVec = vector<SCIP_VAR*>();
+	SCIPcreateProb(scip, "planning", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+	// The default objective sense for SCIP problems is minimizing.
 
-		map<string, SCIP_VAR*> vars;
+	// Liste contraintes
+	vector<SCIP_CONS*> consVec = vector<SCIP_CONS*>();
+	// Liste variables
+	vector<SCIP_VAR*> varVec = vector<SCIP_VAR*>();
 
-		ofstream fileIdVar ("idvar.txt");
+	map<string, SCIP_VAR*> vars;
 
-		int id_contrainte = 0;
-		int id_var = 0; //agent
+	ofstream fileIdVar("idvar.txt");
 
-		// Nombre d'agents pour un poste
-		for (int day = 0; day < mr.getNbDays(); day++) {
+	//tableaux qui serviront à reconstituer les données équivalentes à chaque variable
+	vector<Agent*> agentsIndex = vector<Agent*>();
+	vector<Post*> postsIndex = vector<Post*>();
+	vector<int> daysIndex = vector<int>();
 
-			for (auto s : mr.getServices()) {
+	int id_contrainte = 0;
+	int id_var = 0; //agent
 
-				//défaut : prend pas en compte les agents qu'on peut solliciter en dehors du service où ce poste est dédié en général
-				vector<Agent*> agents = mr.getAgentFrom(s); 
+	vector<Agent*> agents = vector<Agent*>();
 
-				for (auto job : s->getPosts()) {
-					if (job->getId() != "Repos") {
+	// Nombre d'agents pour un poste
+	for (int day = 0; day < mr.getNbDays(); day++) {
 
-						// Liste variables contrainte courante
-						int v = 0;
-						SCIP_VAR* varCons[50];
+		for (auto s : mr.getServices()) {
 
-						bool agent_dispo = false;
-						for (auto a : agents) {
-							if (a->getCalendar()[day] == NULL) {
-								if (!agent_dispo) { //permet d'ajouter une contrainte seulement s'il y a au moins un agent dispo pour ce job à cette date
-									agent_dispo = true;
-								}
-								//cout << "X_a" << a->getId() << ",j" << day+1 << "," << job->getId() << "= x(" << id_var << ")" << endl;
-								fileIdVar << "X_a" << a->getId() << ",j" << day + 1 << "," << job->getId() << "= x(" << id_var << ")" << endl;
+			//défaut : prend pas en compte les agents qu'on peut solliciter en dehors du service où ce poste est dédié en général
+			agents = mr.getAgentFrom(s);
 
+			for (auto job : s->getPosts()) {
+				if (job->getId() != "Repos") {
 
-								SCIP_VAR* var;
+					// Liste variables contrainte courante
+					int v = 0;
+					SCIP_VAR* varCons[50];
 
-								SCIPcreateVar(scip, &var, NULL, 0.0, 1.0, 1.0, SCIP_VARTYPE_BINARY, TRUE, FALSE, NULL, NULL, NULL, NULL, NULL);
-								SCIPaddVar(scip, var);
-
-								vars[a->getId() + "_" + to_string(day + 1) + "_" + job->getId()] = var;
-
-								auto it = varVec.end();
-								varVec.insert(it, var);
-
-								varCons[v] = var;
-								v++;
-
-								id_var++;
+					bool agent_dispo = false;
+					for (auto a : agents) {
+						if (a->getCalendar()[day] == NULL) {
+							if (!agent_dispo) { //permet d'ajouter une contrainte seulement s'il y a au moins un agent dispo pour ce job à cette date
+								agent_dispo = true;
 							}
+							//cout << "X_a" << a->getId() << ",j" << day+1 << "," << job->getId() << "= x(" << id_var << ")" << endl;
+							fileIdVar << "X_a" << a->getId() << ",j" << day + 1 << "," << job->getId() << "= x(" << id_var << ")" << endl;
+
+
+							SCIP_VAR* var;
+
+							SCIPcreateVar(scip, &var, NULL, 0.0, 1.0, 1.0, SCIP_VARTYPE_BINARY, TRUE, FALSE, NULL, NULL, NULL, NULL, NULL);
+							SCIPaddVar(scip, var);
+
+							agentsIndex.push_back(a);
+							postsIndex.push_back(job);
+							daysIndex.push_back(day);
+
+							vars[a->getId() + "_" + to_string(day + 1) + "_" + job->getId()] = var;
+
+							auto it = varVec.end();
+							varVec.insert(it, var);
+
+							varCons[v] = var;
+							v++;
+
+							id_var++;
 						}
-
-						if (agent_dispo) {
-							// Constraint = 1
-							SCIP_CONS* cons;
-							SCIPcreateConsBasicSetpart(scip, &cons, "agent_dispo", v, varCons);
-							SCIPaddCons(scip, cons);
-
-							auto it = consVec.end();
-							consVec.insert(it, cons);
-
-							//SCIPprintCons(scip, cons, NULL);
-						}
-
-						id_contrainte++;
 					}
-				}
 
-				//un agent ne peut faire qu'un poste par jour
-				for (auto a : agents) {
-					if (a->getCalendar()[day] == NULL) {
-
-						// Liste variables contrainte courante
-						int v = 0;
-						SCIP_VAR* varCons[50];
-
-						for (auto job : s->getPosts()) {
-							if (job->getId() != "Repos") {
-								SCIP_VAR* var = vars.find(a->getId() + "_" + to_string(day + 1) + "_" + job->getId())->second;
-								varCons[v] = var;
-								v++;
-							}
-						}
-
-						//Création contrainte
+					if (agent_dispo) {
+						// Constraint = 1
 						SCIP_CONS* cons;
-						SCIPcreateConsBasicSetpart(scip, &cons, "1_poste_par_jour", v, varCons);
+						SCIPcreateConsBasicSetpart(scip, &cons, "agent_dispo", v, varCons);
 						SCIPaddCons(scip, cons);
 
-						// Ajout liste contraintes
 						auto it = consVec.end();
 						consVec.insert(it, cons);
 
-						id_contrainte++;
+						//SCIPprintCons(scip, cons, NULL);
 					}
+
+					id_contrainte++;
 				}
 			}
 
+			//un agent ne peut faire qu'un poste par jour
+			for (auto a : agents) {
+				if (a->getCalendar()[day] == NULL) {
+
+					// Liste variables contrainte courante
+					int v = 0;
+					SCIP_VAR* varCons[50];
+
+					for (auto job : s->getPosts()) {
+						if (job->getId() != "Repos") {
+							SCIP_VAR* var = vars.find(a->getId() + "_" + to_string(day + 1) + "_" + job->getId())->second;
+							varCons[v] = var;
+							v++;
+						}
+					}
+
+					//Création contrainte <= 1
+					SCIP_CONS* cons;
+					//SCIPcreateConsBasicSetpart(scip, &cons, "1_poste_par_jour", v, varCons);
+					SCIPcreateConsBasicSetpack(scip, &cons, "un_poste_par_jour", v, varCons);
+					SCIPaddCons(scip, cons);
+
+					// Ajout liste contraintes
+					auto it = consVec.end();
+					consVec.insert(it, cons);
+
+					id_contrainte++;
+				}
+			}
 		}
 
-		//cout << id_contrainte << endl;
-		/*
 	}
 
-	catch (CException * pe) {
-		std::cerr << pe->what() << std::endl;
-		delete pe;
-		return mr;
-	}*/
+	fileIdVar.close();
 
-		/*
-		for (auto v : varVec) {
-			SCIPprintVar(scip, v, NULL);
-		}
+	cout << "Write init pl" << endl;
+	SCIPwriteOrigProblem(scip, "init.txt", "lp", FALSE);
 
-		for (auto c : consVec) {
-			SCIPprintCons(scip, c, NULL);
-			cout << endl;
-		}
-		*/
-
-		fileIdVar.close();
-
-		cout << "Write init pl" << endl;
-		SCIPwriteOrigProblem(scip, "init.txt", "lp", FALSE);
-
-		SCIPsolve(scip);
-		SCIP_SOL* sol = SCIPgetBestSol(scip);
+	SCIPsolve(scip);
+	SCIP_SOL* sol = SCIPgetBestSol(scip);
 
 
-		if (sol == NULL)
-		{
-			cout << "Solution = NULL" << endl;
-		}
+	if (sol == NULL)
+	{
+		cout << "Solution = NULL" << endl;
+	}
 
-		SCIPprintSol(scip, sol, NULL, TRUE);
+	//SCIPprintSol(scip, sol, NULL, TRUE);
 
+	// Release & free +
+	// Changer les calendriers des agents
+	for (int id_var = 0; id_var < varVec.size(); id_var++) {
+		SCIP_Real varValue = SCIPgetSolVal(scip, sol, varVec[id_var]);
 
-		// Freeing the SCIP environment
-		for (auto v : varVec) {
-			SCIPreleaseVar(scip, &v);
-		}
-		for (auto c : consVec) {
-			SCIPreleaseCons(scip, &c);
-		}
-		SCIPfree(&scip);
+			if (varValue == 1.0) {
+				//cout << "we good" << " id: " << id_var << " ag: " << agentsIndex[id_var]->getId() << " j: " << daysIndex[id_var]+1 << " p: " << postsIndex[id_var]->getId() << endl;
+				agentsIndex[id_var]->setCalendarDay(postsIndex[id_var], daysIndex[id_var]);
+			}
+			else if(varValue == .0 && agentsIndex[id_var]->getCalendar()[daysIndex[id_var]] == NULL){ //si on a pas un autre poste attribué plus tôt pour le même jour et le même agent ==> repos
+				//cout << "not good " << id_var << endl;
+				agentsIndex[id_var]->setCalendarDay(new Post("Repos", 0.0), daysIndex[id_var]);
+			}
+
+		SCIPreleaseVar(scip, &varVec[id_var]);
+	}
+
+	for (auto c : consVec) {
+		SCIPreleaseCons(scip, &c);
+	}
+	SCIPfree(&scip);
+
+	mr.printPlanning();
 
 	return mr;
-
-}
-
-
-void nullTo(Model* m, Post* post) {
 
 }

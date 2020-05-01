@@ -78,14 +78,14 @@ void Model::printPlanning() {
 
 	cout << "Jours:\t";
 	for(int i=0;i<nbDays;i++){
-		cout << "\t" << i+1;
+		cout << "  " << i+1;
 	}
 	cout << endl;
 	for(auto s : agents)
 	{
 		for(auto agent : s.second)
 		{
-			cout << "Agent " << agent->getId() << ":\t";
+			cout << "Agent " << agent->getId() << ":   ";
 
 			for(unsigned int j=0;j<agent->getCalendar().size();j++)
 			{
@@ -95,7 +95,7 @@ void Model::printPlanning() {
 				}
 				else
 					cout << "null";
-				cout << "\t";
+				cout << "  ";
 			}
 			cout << endl;
 		}
