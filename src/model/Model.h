@@ -6,7 +6,7 @@
  */
 #pragma once
 
-enum Day {Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, None};
+enum Day { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, None };
 
 #ifndef SRC_MODEL_MODEL_H_
 #define SRC_MODEL_MODEL_H_
@@ -20,10 +20,15 @@ enum Day {Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, None};
 #include "Valuation.h"
 #include "SwapLog.h"
 
+#include "constraint/Constraint.h"
+#include "constraint/ConstraintDaysSeq.h"
+#include "constraint/ConstraintInvolved.h"
+#include "constraint/ConstraintSeqMinMax.h"
+
 class Model {
 public:
 	Model(Day firstDay, int nbDays, float overtime);
-	Model(const Model &obj);
+	Model(const Model& obj);
 	virtual ~Model();
 
 	Model& operator = (const Model& obj);
@@ -55,7 +60,8 @@ public:
 	std::vector<SwapLog> getSwapLog();
 	void resetSwapLog();
 
-	static Model generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, int nbAgentsPerService = -1, int nbPostsPerService = -1);
+	std::vector<Constraint*> Model::createConstraints();
+	static Model generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService = -1, int nbPostsPerService = -1);
 
 
 protected:

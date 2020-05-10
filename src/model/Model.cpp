@@ -29,8 +29,8 @@ Model::Model(const Model &obj) {
 	valuation = new Valuation(*obj.valuation);
 	agents = map < Service*, std::vector<Agent*>>();
 
-	for(auto a : obj.agents){
-		for(auto b : a.second){
+	for (auto a : obj.agents) {
+		for (auto b : a.second) {
 			agents[a.first].push_back(new Agent(*b));
 		}
 	}
@@ -95,6 +95,7 @@ void Model::printPlanning() {
 
 	auto day = firstDay;
 	cout << "Jours:\t";
+
 	for(int i=0;i<nbDays;i++){
 		cout << "\t" << i+1 << " ";
 
@@ -128,15 +129,15 @@ void Model::printPlanning() {
 		day = getNextDay(day);
 	}
 	cout << endl;
-	for(auto s : agents)
+	for (auto s : agents)
 	{
-		for(auto agent : s.second)
+		for (auto agent : s.second)
 		{
 			cout << "Agent " << agent->getId() << ":\t";
 
-			for(unsigned int j=0;j<agent->getCalendar().size();j++)
+			for (unsigned int j = 0; j < agent->getCalendar().size(); j++)
 			{
-				if(agent->getCalendar()[j]!=NULL)
+				if (agent->getCalendar()[j] != NULL)
 				{
 					cout << agent->getCalendar()[j]->getId();
 				}
@@ -171,7 +172,7 @@ float Model::getOvertime() const {
 	return overtime;
 }
 
-std::vector<Agent*> Model::getAgentFrom(Service *service) {
+std::vector<Agent*> Model::getAgentFrom(Service* service) {
 	return agents[service];
 }
 
@@ -180,23 +181,23 @@ void Model::setOvertime(float overtime) {
 }
 
 Day Model::getNextDay(Day day) {
-	switch(day){
-		case Monday:
-			return Tuesday;
-		case Tuesday:
-			return Wednesday;
-		case Wednesday:
-			return Thursday;
-		case Thursday:
-			return Friday;
-		case Friday:
-			return Saturday;
-		case Saturday:
-			return Sunday;
-		case Sunday:
-			return Monday;
-		default:
-			return None;
+	switch (day) {
+	case Monday:
+		return Tuesday;
+	case Tuesday:
+		return Wednesday;
+	case Wednesday:
+		return Thursday;
+	case Thursday:
+		return Friday;
+	case Friday:
+		return Saturday;
+	case Saturday:
+		return Sunday;
+	case Sunday:
+		return Monday;
+	default:
+		return None;
 	}
 }
 
@@ -204,10 +205,9 @@ Post* Model::getDefaultPost() {
 	return defaultPost;
 }
 
-void Model::setDefaultPost(Post *defaultPost) {
+void Model::setDefaultPost(Post* defaultPost) {
 	this->defaultPost = defaultPost;
 }
-
 
 Valuation* Model::getValuation()
 {
@@ -235,7 +235,47 @@ void Model::resetSwapLog()
 	swapLog.clear();
 }
 
-Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, int nbAgentsPerService, int nbPostsPerService) {
+vector<Constraint*> Model::createConstraints() {
+	std::vector<Constraint*> constraints;
+
+	//Pas de Nuit/Jour
+	auto v = vector<string>();
+	v.push_back("night");
+	v.push_back("day");
+	constraints.push_back(new ConstraintDaysSeq(v, 1)); // cJN
+
+	//Pas 3 jours/nuit de travail d'affilé
+	v = vector<string>();
+	v.push_back("workL");
+	v.push_back("workL");
+	v.push_back("workL");
+	constraints.push_back(new ConstraintDaysSeq(v, 1)); // c3N
+
+	//Pas de nuit avant un congé posé
+	v = vector<string>();
+	v.push_back("night");
+	v.push_back("ca");
+	constraints.push_back(new ConstraintDaysSeq(v, 1)); // crn
+
+	//Après 2 jours/nuits au moins 2 repos
+	v = vector<string>();
+	v.push_back("workL");
+	v.push_back("workL");
+	auto v2 = vector<string>();
+	v2.push_back("rest");
+	v2.push_back("rest");
+	constraints.push_back(new ConstraintInvolved(v, v2, Day::None, 1)); // cnr
+
+	//1 week ends par mois
+	v = vector<string>();
+	v.push_back("work");
+	v.push_back("work");
+	constraints.push_back(new ConstraintSeqMinMax(Day::Saturday, MinMax::Min, 1, v, 1));
+
+	return constraints;
+}
+
+Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService, int nbPostsPerService) {
 	/*
 	Si nbPostsPerService est indiqué, le nombre nbPosts ne sera pas respecté si nbPosts < nbPostsPerService*nbServices
 	de même pour nbAgentsPerService
@@ -244,7 +284,7 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 	Model m = Model(firstDay, nbDays, overtime);
 	m.defaultPost = NULL;
 
-	int nbPostsAvailable = nbPosts, nbPostsService_i = -1, testLengthPost = -1;
+	int nbPostsAvailable = nbPosts, nbPostsService_i = -1, testLengthPost = -1, dayOrNight = -1;
 
 	//Services et Postes
 
@@ -257,9 +297,10 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 	ca->addAttribut("ca");
 
 	m.setDefaultPost(repos);
-	m.setDefaultPost(ca);
 
-	cout << nbPostsPerService << endl;
+	std::vector<Constraint*> constraints = m.createConstraints(); //crée toutes les contraintes à respecter par les postes
+
+	//si on a un nombre de postes par service précis à respecter
 	if (nbPostsPerService > -1) {
 		nbPostsService_i = nbPostsPerService;
 	}
@@ -270,14 +311,15 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 		m.addService(service_i);
 
 		service_i->addPost(repos); //ajout des postes obligatoires en dur
-		service_i->addPost(ca);
+
+		//service_i->addPost(ca);
 
 		if (nbPostsPerService == -1) {
 			if (i != nbServices - 1 && nbPostsAvailable >= 2) {
 				nbPostsService_i = 2 + rand() % (nbPostsAvailable / 2); //au moins 2 postes par service (nbPosts est donc approximatif)
 			}
 			else { //si c'est le dernier service : lui attribuer tous les posts restants
-				nbPostsService_i = nbPostsAvailable; //solution temporaire : risque d'avoir bcp + de posts dans le dernier service
+				nbPostsService_i = nbPostsAvailable; //risque d'avoir bcp + de posts dans le dernier service
 			}
 		}
 
@@ -286,38 +328,52 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 			testLengthPost = rand() % 10 + 1;
 			Post* posti_j;
 			if (testLengthPost >= 5) { //50% de chance de créer un poste à 12.25h, sinon 7.5h
-				posti_j = new Post("P" + std::to_string(i) + "_" + std::to_string(j), 12.25);
+
+				posti_j = new Post("S" + std::to_string(i) + "P" + std::to_string(j)+"L", 12.25);
+				posti_j->addAttribut("work");
+				posti_j->addAttribut("workL"); //poste à durée longue
 			}
 			else {
-				posti_j = new Post("P" + std::to_string(i) + "_" + std::to_string(j), 7.5);
+				posti_j = new Post("S" + std::to_string(i) + "P" + std::to_string(j), 7.5);
+				posti_j->addAttribut("work");
 			}
-			//i_j->addAttribut("workL");			//comment faire ?
+
+			dayOrNight = rand() % 3 + 1; // 2 chances /3 d'être un poste en journée
+			if (dayOrNight <= 2) {
+				posti_j->setId(posti_j->getId() + "D");
+				posti_j->addAttribut("day");
+			}
+			else {
+				posti_j->setId(posti_j->getId() + "N");
+				posti_j->addAttribut("night");
+			}
 			service_i->addPost(posti_j);
-			//ghr->addPostRequired(posti_j, 1);     //idem
+			service_i->addPostRequired(posti_j, 1);
 		}
 
 		service_i->addPost(repos); //chaque service a un poste Repos
+		//et on ajoute à chaque service la liste des contraintes
+		for (int id_cstr = 0; id_cstr < constraints.size(); id_cstr++) {
+			service_i->addConstraint(constraints[id_cstr]);
+		}
 
 		nbPostsAvailable -= nbPostsService_i;
 	}
 
-	//ajouter contraintes ?
-
-
 	//Agents
 
 	//variables pour les tirages aléatoires
-	int service_rand = 0, post_rand = 0, conges_rand = 0, jour_rand = 0, incr_jour = 0;
+	int service_rand = 0, post_rand = 0, conges_rand = 0, incr_jour = 0;
 
 	//pour chaque agents
 	for (int i = 0; i < nbAgents; i++) {
 		int dice = rand() % 10 + 1;
 		Agent* a_i;
 		if (dice <= 2) { //20% de chance d'avoir un agent qui débute
-			a_i = new Agent(std::to_string(i), i, nbHoursWeek, Status::Beginner);
+			a_i = new Agent(std::to_string(i), nbHoursMonth, nbHoursWeek, Status::Beginner);
 		}
 		else {
-			a_i = new Agent(std::to_string(i), i, nbHoursWeek, Status::Confirmed);
+			a_i = new Agent(std::to_string(i), nbHoursMonth, nbHoursWeek, Status::Confirmed);
 		}
 
 		//si aucun nombre précis d'agents par service n'est donné, random pour attribuer un service
@@ -337,25 +393,26 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 		for (int jour = 0; jour < nbDays; jour++) {
 			conges_rand = rand() % 100 + 1;
 			//cout << i << ": " << conges_rand << endl;
-			if (conges_rand <= 5) { //5% de chance d'avoir un premier congé dans le mois
-				jour_rand = rand() % nbDays + 1; //random pour choisir le jour du congé
+			if (conges_rand <= 3) { //3% de chance d'avoir un premier congé ce jour ci
 
-				a_i->setCalendarDay(ca, jour_rand, true);
+				a_i->setCalendarDay(ca, jour, true);
 
-				//chances de faire une suite de congés après un premier congé = 55%
+				//chances de faire une suite de congés après un premier congé = 70% puis décrément de 5% par jour à la suite
 				conges_rand = rand() % 100 + 1;
-				//cout << i << " suite de congés : " << conges_rand << endl;
-				while (conges_rand <= 55 && jour_rand + incr_jour <= nbDays) { //ne pas dépasser le dernier jour du mois (pas forcément réaliste)
-					a_i->setCalendarDay(ca, jour_rand + incr_jour, true);
-					conges_rand = rand() % 10 + 1;
-					incr_jour++;
+
+				while (conges_rand <= (70-(incr_jour*5)) && jour + incr_jour <= nbDays) {
+					a_i->setCalendarDay(ca, jour + incr_jour, true);
+					conges_rand = rand() % 100 + 1;
+					//cout << conges_rand << " : " << (70 - (incr_jour * 5) ) << endl;
+					incr_jour++; //permet aussi le décrément de 5% de chance par jour succéssif
 				}
+				jour += incr_jour; //si on a déjà ajouté un congé au jours suivants : on passe
 				incr_jour = 0;
 			}
 		}
+
 		m.addAgent(a_i, m.getServices()[service_rand]);
 	}
 
 	return m;
 }
-
