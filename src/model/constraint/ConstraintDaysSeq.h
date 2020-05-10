@@ -14,6 +14,8 @@
 #include "../Agent.h"
 //Correspondant à la contrainte C2
 
+class Model;
+
 class ConstraintDaysSeq: public Constraint {
 
 public:

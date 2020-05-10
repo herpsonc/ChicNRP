@@ -14,6 +14,8 @@
 #include "../Agent.h"
 //Correspondant à la contrainte C6
 
+class Model;
+
 class ConstraintInvolved: public Constraint {
 public:
 	ConstraintInvolved(std::vector<Post*> first, std::vector<Post*> last, int priority);

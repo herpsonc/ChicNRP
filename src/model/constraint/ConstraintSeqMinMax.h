@@ -11,6 +11,8 @@
 #include "../Model.h"
 #include "Constraint.h"
 
+class Model;
+
 enum MinMax {Min, Max};
 
 //Contrainte qui permet d'assurer la présence de la séquence (à partir d'un jour donné) un minimum ou maximum de fois
