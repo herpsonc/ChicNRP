@@ -35,7 +35,8 @@ public:
 	int getPriority();
 
 	int check(const Agent* agent, Day day, bool checkALL, bool log);
-	std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> checkValuation(const Agent* agent);
+	std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> checkValuation(const Agent* agent, Day day);
+	void checkFast(Model* m, int iCons);
 
 protected:
 	int priority;

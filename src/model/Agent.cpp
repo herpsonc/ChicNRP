@@ -190,6 +190,69 @@ int Agent::checkWorkingHoursWeek(bool log)
 	return nbFail;
 }
 
+void Agent::checkWorkingHoursWeekFast(Valuation*val, int idService, int day, int idA)
+{
+	auto v = std::vector<std::pair<int, int>>();
+	int cptHours = 0;
+	int nbFail = 0;
+	for (int i = day - 6; i < day + 7; i++) {
+		cptHours = 0;
+
+		for (int j = 0; j < 7; j++) {
+			if (i + j >= 0 && i + j < 31 && calendar[i + j] != NULL) {
+				cptHours += calendar[i + j]->getTime();
+			}
+		}
+		if (cptHours > nbHoursWeek) {
+			nbFail++;
+			v.push_back(std::pair<int, int>(i, i + 6));
+		}
+	}
+
+	//Update la valuation
+	auto valuation = val->gethoursWeekSlide()[idService][idA];
+	auto newVec = vector<pair<int, int>>();
+	bool found = false;
+	for (auto value : valuation) {
+		//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
+		if (value.first >= day - 6 && value.second <= day + 7) {
+			found = false;
+			for (auto e : v) {
+				if (value.first == e.first && value.second == e.second) {
+					newVec.push_back(value);
+					found = true;
+				}
+			}
+			//Si on le trouve pas, c'est qu'on a résolu la contrainte
+			if (!found) {
+				val->setScore(val->getScore() + 1);
+			}
+		}
+		else {
+			newVec.push_back(value);
+		}
+	}
+	//Ajout des nouveaux éléments
+	for (auto e : v) {
+		bool isIn = false;
+		for (auto value : valuation) {
+			if (value.first == e.first && value.second == e.second) {
+				isIn = true;
+			}
+		}
+
+		if (!isIn) {
+			newVec.push_back(e);
+			val->setScore(val->getScore() - 1);
+		}
+	}
+
+	auto vecToAdd = val->gethoursWeekSlide();
+	vecToAdd[idService][idA] = newVec;
+	val->sethoursWeekSlide(vecToAdd);
+
+}
+
 std::vector<std::pair<int, int>> Agent::checkWorkingHoursWeekValuation()
 {
 	auto v = std::vector<std::pair<int, int>>();
@@ -230,5 +293,60 @@ int Agent::checkImpossiblePosts(bool log)
 	}
 
 	return nbFail;
+}
+
+void Agent::checkImpossiblePostsFast(Valuation* val, int idService, int day, int idA)
+{
+	
+	bool fail = false;
+	for (auto ip : impossiblePosts) {
+		if (calendar[day] == ip) {
+			fail = true;
+		}
+	}
+
+	bool found = false;
+	auto newVec = vector<int>();
+	//Check dans Valuation
+	auto value = val->getImpossiblePosts()[idService][idA];
+	for (auto e : value) {
+		if (e == day) {
+			found = true;
+			if (fail)
+				newVec.push_back(e);
+			else
+				val->setScore(val->getScore() + 10);
+		}
+		else {
+			newVec.push_back(e);
+		}
+	}
+	if (!found && fail) {
+		newVec.push_back(day);
+		val->setScore(val->getScore() - 10);
+	}
+
+
+	auto vec = val->getImpossiblePosts();
+	vec[idService][idA] = newVec;
+	val->setImpossiblePosts(vec);
+}
+
+std::vector<int> Agent::checkImpossiblePostsValuation()
+{
+	auto vec = vector<int>();
+	int nbFail = 0;
+	int i = 0;
+	for (auto p : calendar) {
+		for (auto ip : impossiblePosts) {
+			if (p == ip) {
+				vec.push_back(i);
+			}
+
+		}
+		i++;
+	}
+
+	return vec;
 }
 

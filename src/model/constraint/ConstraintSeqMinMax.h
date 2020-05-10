@@ -44,6 +44,7 @@ public:
 
 	int check(const Agent* agent, bool checkALL, Day firstDayMonth, bool log);
 	std::vector<std::pair<int, int>> checkValuation(const Agent* agent, Day firstDayMonth);
+	void checkFast(Model* m, int iCons);
 
 protected:
 	Day firstDay;

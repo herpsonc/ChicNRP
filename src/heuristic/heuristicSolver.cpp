@@ -23,7 +23,6 @@ heuristicSolver::~heuristicSolver() {
 Model heuristicSolver::greedy(const Model m) {
 	Model mr = Model(m);
 
-	unsigned seed = chrono::system_clock::now().time_since_epoch().count();
 
 	auto day = mr.getFirstDay();
 
@@ -35,7 +34,7 @@ Model heuristicSolver::greedy(const Model m) {
 
 			//On mélange la liste des agents.
 			vector<Agent*> v = mr.getAgentFrom(s);
-			shuffle(v.begin(),v.end(),default_random_engine(seed));
+			unsigned seed = chrono::system_clock::now().time_since_epoch().count();
 			shuffle(v.begin(),v.end(),default_random_engine(seed));
 
 			//On récupère les postes necessaires pour le jour day
@@ -106,7 +105,6 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 						cout << "Jour " << day << " Post " << r.first->getId() << " insufisant" << endl;
 					}
 				}
-
 			}
 		}
 
@@ -119,7 +117,7 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 				if (checkALL)
 					return false;
 
-				score -= 1;
+				score -= 100;
 			}
 			//Check des heures à la semaine pour les agents
 
@@ -141,13 +139,13 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 
 			for(auto c : s->getConstraints()){
 				if(typeid(*c) == typeid(ConstraintDaysSeq)){
-						score -= ((ConstraintDaysSeq*)c)->check(a, true, log);
+					score -= ((ConstraintDaysSeq*)c)->check(a, true, log);
 				}
 				else if (typeid(*c) == typeid(ConstraintInvolved)) {
 					score -= ((ConstraintInvolved*)c)->check(a, m->getFirstDay(), true, log);
 				}
 				else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
-						score -= ((ConstraintSeqMinMax*)c)->check(a, true, m->getFirstDay(), log);
+					score -= ((ConstraintSeqMinMax*)c)->check(a, true, m->getFirstDay(), log);
 				}
 			}
 		}
@@ -157,6 +155,83 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 	if(log)
 		cout << "Score: " << score << endl;
 	return score;
+}
+
+void heuristicSolver::checkFast(Model* m){
+
+	auto value = m->getValuation();
+	
+	for (auto swap : m->getSwapLog()) {
+		auto agent1 = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent1()];
+		auto agent2 = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent2()];
+
+		
+		//Check heure au mois
+		float dif = agent1->getCalendar()[swap.getDay()]->getTime() - agent2->getCalendar()[swap.getDay()]->getTime();
+		auto hoursMonth = value->getHoursMonth();
+
+		/*if (hoursMonth[swap.getService()][swap.getAgent1()] > agent1->getNbHoursMonth() &&
+			hoursMonth[swap.getService()][swap.getAgent1()] + dif <= agent1->getNbHoursMonth()) {
+
+			value->setScore(value->getScore() + 100);
+		}
+		else if (hoursMonth[swap.getService()][swap.getAgent1()] <= agent1->getNbHoursMonth() &&
+			hoursMonth[swap.getService()][swap.getAgent1()] + dif > agent1->getNbHoursMonth()){
+
+			value->setScore(value->getScore() - 100);
+		}
+
+		if (hoursMonth[swap.getService()][swap.getAgent2()] > agent2->getNbHoursMonth() &&
+			hoursMonth[swap.getService()][swap.getAgent2()] - dif <= agent2->getNbHoursMonth()) {
+
+			value->setScore(value->getScore() + 100);
+		}
+		else if (hoursMonth[swap.getService()][swap.getAgent2()] <= agent2->getNbHoursMonth() &&
+			hoursMonth[swap.getService()][swap.getAgent2()] - dif > agent2->getNbHoursMonth()) {
+
+			value->setScore(value->getScore() - 100);
+		}*/
+
+		hoursMonth[swap.getService()][swap.getAgent1()] += dif;
+		hoursMonth[swap.getService()][swap.getAgent2()] -= dif;
+
+		value->setHoursMonth(hoursMonth);
+
+
+		//Check heure semaine
+		agent1->checkWorkingHoursWeekFast(m->getValuation(), swap.getService(), swap.getDay(), swap.getAgent1());
+		agent2->checkWorkingHoursWeekFast(m->getValuation(), swap.getService(), swap.getDay(), swap.getAgent2());
+
+
+		//Check Posts impossibles
+		agent1->checkImpossiblePostsFast(m->getValuation(), swap.getService(), swap.getDay(), swap.getAgent1());
+		agent2->checkImpossiblePostsFast(m->getValuation(), swap.getService(), swap.getDay(), swap.getAgent2());
+
+	}
+	
+	//Contraintes
+	int i = 0;
+	int j = 0;
+	int k = 0;
+
+	for (int l = 0; l < m->getServices().size();l++) {
+		for (auto c : m->getServices()[l]->getConstraints()) {
+			if (typeid(*c) == typeid(ConstraintDaysSeq)) {
+				((ConstraintDaysSeq*)c)->checkFast(m, i);
+				i++;
+			}
+			else if (typeid(*c) == typeid(ConstraintInvolved)) {
+				((ConstraintInvolved*)c)->checkFast(m, j);
+				j++;
+			}
+			else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
+				((ConstraintSeqMinMax*)c)->checkFast(m, k);
+				k++;
+			}
+		}
+	}
+
+
 }
 
 Valuation heuristicSolver::checkValuation(Model* m) {
@@ -172,18 +247,20 @@ Valuation heuristicSolver::checkValuation(Model* m) {
 	auto hoursMonth = vector<vector<int>>();
 	auto hoursWeeks = vector<vector<array<int, 6>>>();
 	auto hoursWeeksSlide = vector<vector<vector<pair<int, int>>>>();
-	auto daySeq = vector < vector<vector<pair<int, int>>>>();
-	auto involved = vector<vector<vector<pair<pair<int, int>, pair<int, int>>>>>();
-	auto seqMinMax = vector<vector<vector<pair<int, int>>>>();
+	auto impossiblePosts = vector<vector<vector<int>>>();
+	auto daySeq = vector < vector<vector<vector<pair<int, int>>>>>();
+	auto involved = vector<vector<vector<vector<pair<pair<int, int>, pair<int, int>>>>>>();
+	auto seqMinMax = vector<vector<vector<vector<pair<int, int>>>>>();
 
 	for (auto s : m->getServices()) {
 
 		hoursMonth.push_back(vector<int>());
 		hoursWeeks.push_back(vector<array<int, 6>>());
 		hoursWeeksSlide.push_back(vector<vector<pair<int, int>>>());
-		daySeq.push_back(vector<vector<pair<int,int>>>());
-		involved.push_back(vector<vector<pair<pair<int, int>, pair<int, int>>>>());
-		seqMinMax.push_back(vector<vector<pair<int, int>>>());
+		impossiblePosts.push_back(vector<vector<int>>());
+		daySeq.push_back(vector<vector<vector<pair<int,int>>>>());
+		involved.push_back(vector<vector<vector<pair<pair<int, int>, pair<int, int>>>>>());
+		seqMinMax.push_back(vector<vector<vector<pair<int, int>>>>());
 
 		//Check des post requis
 		auto day = m->getFirstDay();
@@ -210,17 +287,18 @@ Valuation heuristicSolver::checkValuation(Model* m) {
 			hoursMonth[iS].push_back(a->getWorkingHoursMonth());
 			hoursWeeks[iS].push_back(std::array<int, 6>());
 			hoursWeeksSlide[iS].push_back(std::vector<pair<int, int>>());
-			daySeq[iS].push_back(vector<pair<int, int>>());
-			involved[iS].push_back(vector<pair<pair<int, int>, pair<int, int>>>());
-			seqMinMax[iS].push_back(vector<pair<int, int>>());
+			impossiblePosts[iS].push_back(std::vector<int>());
+			daySeq[iS].push_back(vector<vector<pair<int, int>>>());
+			involved[iS].push_back(vector<vector<pair<pair<int, int>, pair<int, int>>>>());
+			seqMinMax[iS].push_back(vector<vector<pair<int, int>>>());
 
 			if (a->getWorkingHoursMonth() > a->getNbHoursMonth() + m->getOvertime()) {
 				isValide = false;
 				
-				score -= 1;
+				score -= 100;
 			}
 			//Check des heures à la semaine pour les agents
-			for (int i = 0; i < 6; i++) {
+			/*for (int i = 0; i < 6; i++) {
 
 				hoursWeeks[iS][iA][i] = a->getWorkingHoursWeek(m->getFirstDay(), i);
 
@@ -229,23 +307,31 @@ Valuation heuristicSolver::checkValuation(Model* m) {
 
 					score -= 1;
 				}
-			}
+			}*/
 
 			hoursWeeksSlide[iS][iA] = a->checkWorkingHoursWeekValuation();
+			score -= hoursWeeksSlide[iS][iA].size() * 1;
+			impossiblePosts[iS][iA] = a->checkImpossiblePostsValuation();
+			score -= impossiblePosts[iS][iA].size() * 10;
+
+
 
 
 			for (auto c : s->getConstraints()) {
 				if (typeid(*c) == typeid(ConstraintDaysSeq)) {
-					daySeq[iS][iA] = ((ConstraintDaysSeq*)c)->checkValuation(a);
-					score -= daySeq[iS][iA].size();
+					daySeq[iS][iA].push_back(vector<pair<int, int>>());
+					daySeq[iS][iA][daySeq[iS][iA].size()-1] = ((ConstraintDaysSeq*)c)->checkValuation(a);
+					score -= daySeq[iS][iA].size()*c->getPriority();
 				}
 				else if (typeid(*c) == typeid(ConstraintInvolved)) {
-					involved[iS][iA] = ((ConstraintInvolved*)c)->checkValuation(a);
-					score -= involved[iS][iA].size();
+					involved[iS][iA].push_back(vector<pair<pair<int, int>, pair<int, int>>>());
+					involved[iS][iA][involved[iS][iA].size()-1] = ((ConstraintInvolved*)c)->checkValuation(a,m->getFirstDay());
+					score -= involved[iS][iA].size()*c->getPriority();
 				}
 				else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
-					seqMinMax[iS][iA]= ((ConstraintSeqMinMax*)c)->checkValuation(a, m->getFirstDay());
-					score -= 2*abs((int)(seqMinMax[iS][iA].size() - ((ConstraintSeqMinMax*)c)->getNumber()));
+					seqMinMax[iS][iA].push_back(vector<pair<int, int>>());
+					seqMinMax[iS][iA][seqMinMax[iS][iA].size()-1] = ((ConstraintSeqMinMax*)c)->checkValuation(a, m->getFirstDay());
+					score -= abs((int)(seqMinMax[iS][iA].size() - ((ConstraintSeqMinMax*)c)->getNumber()));
 				}
 			}
 			iA++;
@@ -260,6 +346,7 @@ Valuation heuristicSolver::checkValuation(Model* m) {
 	v.setHoursMonth(hoursMonth);
 	v.setHoursWeeks(hoursWeeks);
 	v.sethoursWeekSlide(hoursWeeksSlide);
+	v.setImpossiblePosts(impossiblePosts);
 	v.setDaySeq(daySeq);
 	v.setInvolved(involved);
 	v.setSeqMinMax(seqMinMax);
@@ -320,6 +407,7 @@ Model heuristicSolver::getNeighborSwap(Model* m, int range)
 			Post* tmp = mr.getAgentFrom(service)[agent1]->getCalendar()[day];
 			mr.getAgentFrom(service)[agent1]->setCalendarDay(mr.getAgentFrom(service)[agent2]->getCalendar()[day], day);
 			mr.getAgentFrom(service)[agent2]->setCalendarDay(tmp, day);
+			mr.addSwapLog(SwapLog(agent1, agent2, day, serviceI));
 		}
 	}
 
@@ -421,6 +509,76 @@ Model heuristicSolver::iterative(const Model m, int nbPop, int nbGen, int range)
 	return model;
 }
 
+Model heuristicSolver::iterative2Fast(const Model m, int nbIte, int range)
+{
+	auto chronoStart = chrono::system_clock::now();
+	srand(time(0));
+	Model currentModel = greedy(m);
+	Model bestModel = currentModel;
+	Model nextModel = currentModel;
+	currentModel.setValuation(heuristicSolver::checkValuation(&currentModel));
+	int bestScore = check(&currentModel, false, false);
+	currentModel.getValuation()->setScore(bestScore);
+	int currentScore = bestScore;
+	cout << "scoreInit" << bestScore << endl;
+
+	for (int j = 0; j < nbIte; j++) {
+		if (j % 100 == 0) {
+			cout << "Iteration " << j << endl;
+		}
+		//On choisit un voisinnage à appliquer
+		int randN = rand() % 100;
+
+		if (randN < 101) {
+			nextModel = getNeighborSwap(&currentModel, range);
+		}
+		else {
+			nextModel = getneighborRandom(&currentModel, range);
+		}
+
+		//On regarde si la solution est meilleur
+		checkFast(&nextModel);
+		int nextScore = nextModel.getValuation()->getScore();
+		if (nextScore > bestScore) {
+			bestModel = nextModel;
+			bestScore = nextScore;
+		}
+		//cout << nextScore << " " << bestScore << " " <<currentScore <<endl;
+		if (nextScore > currentScore) {
+			//80% de chance de choisir le nouveau model
+			int randI = rand() % 1000;
+			if (randI < 900 ) {
+				currentModel = nextModel;
+				currentScore = nextScore;
+			}
+		}
+		else {
+			//20% de chance de choisir le nouveau candidat même si il est moins bon
+			int randI = rand() % 1000;
+			if (randI > 998) {
+				currentModel = nextModel;
+				currentScore = nextScore;
+			}
+			else {
+				int randI = rand() % 1000;
+				if (randI > 998) {
+					currentModel = greedy(m);
+					currentModel.setValuation(heuristicSolver::checkValuation(&currentModel));
+					currentScore = check(&currentModel, false, false);
+					currentModel.getValuation()->setScore(currentScore);
+				}
+			}
+		}
+
+	}
+
+	auto chronoEnd = chrono::system_clock::now();
+
+	cout << bestScore << " en " << (chronoEnd - chronoStart).count() / 10000000 << " secondes" << endl;
+
+	return bestModel;
+}
+
 Model heuristicSolver::iterative2(const Model m, int nbIte, int range)
 {
 	auto chronoStart = chrono::system_clock::now();
@@ -456,7 +614,7 @@ Model heuristicSolver::iterative2(const Model m, int nbIte, int range)
 		if (nextScore > currentScore) {
 			//80% de chance de choisir le nouveau model
 			int randI = rand() % 1000;
-			if (randI < 900 ) {
+			if (randI < 900) {
 				currentModel = nextModel;
 				currentScore = nextScore;
 			}

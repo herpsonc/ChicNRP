@@ -17,7 +17,8 @@ enum Day {Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, None};
 #include "Post.h"
 #include "Service.h"
 #include "Agent.h"
-#include "../../Valuation.h"
+#include "Valuation.h"
+#include "SwapLog.h"
 
 class Model {
 public:
@@ -47,8 +48,12 @@ public:
 	Post* getDefaultPost();
 
 	void setDefaultPost(Post* defaultPost);
-	const Valuation& getValuation();
-	void setValuation(const Valuation v);
+	Valuation* getValuation();
+	void setValuation(Valuation v);
+
+	void addSwapLog(const SwapLog swapLog);
+	std::vector<SwapLog> getSwapLog();
+	void resetSwapLog();
 
 	static Model generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, int nbAgentsPerService = -1, int nbPostsPerService = -1);
 
@@ -61,7 +66,8 @@ protected:
 	std::map<Service*,std::vector<Agent*>> agents;
 	std::vector<Service*> services;
 	std::vector<Post*> posts;
-	Valuation valuation;
+	Valuation* valuation;
+	std::vector<SwapLog> swapLog;
 
 
 

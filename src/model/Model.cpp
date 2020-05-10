@@ -13,7 +13,9 @@ Model::Model(Day firstDay, int nbDays, float overtime) {
 	this->firstDay=firstDay;
 	this->nbDays=nbDays;
 	this->overtime=overtime;
+	swapLog = vector<SwapLog>();
 	defaultPost=NULL;
+	valuation = new Valuation();
 }
 
 Model::Model(const Model &obj) {
@@ -23,6 +25,8 @@ Model::Model(const Model &obj) {
 	services=obj.services;
 	posts=obj.posts;
 	defaultPost=obj.defaultPost;
+	swapLog = obj.swapLog;
+	valuation = new Valuation(*obj.valuation);
 	agents = map < Service*, std::vector<Agent*>>();
 
 	for(auto a : obj.agents){
@@ -38,6 +42,9 @@ Model::~Model() {
 			delete b;
 		}
 	agents.clear();
+	
+	delete valuation;
+
 }
 
 Model& Model::operator=(const Model& obj)
@@ -49,6 +56,11 @@ Model& Model::operator=(const Model& obj)
 		services = obj.services;
 		posts = obj.posts;
 		defaultPost = obj.defaultPost;
+		swapLog = obj.swapLog;
+		if (valuation) {
+			delete valuation;
+		}
+		valuation = new Valuation(*obj.valuation);
 		for (auto a : agents)
 			for (auto b : a.second) {
 				delete b;
@@ -197,14 +209,30 @@ void Model::setDefaultPost(Post *defaultPost) {
 }
 
 
-const Valuation& Model::getValuation()
+Valuation* Model::getValuation()
 {
 	return valuation;
 }
 
-void Model::setValuation(const Valuation v)
+void Model::setValuation(Valuation v)
 {
-	valuation = v;
+	delete valuation;
+	valuation = new Valuation(v);
+}
+
+void Model::addSwapLog(const SwapLog swapLog)
+{
+	this->swapLog.push_back(swapLog);
+}
+
+vector<SwapLog> Model::getSwapLog()
+{
+	return swapLog;
+}
+
+void Model::resetSwapLog()
+{
+	swapLog.clear();
 }
 
 Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, int nbAgentsPerService, int nbPostsPerService) {

@@ -85,7 +85,7 @@ Model generateGhr() {
 		v.push_back("workL");
 		v.push_back("workL");
 		v.push_back("workL");
-		ConstraintDaysSeq* c3N = new ConstraintDaysSeq(v, 20);
+		ConstraintDaysSeq* c3N = new ConstraintDaysSeq(v, 50);
 
 		//Pas de nuit avant un congé posé
 		v = vector<string>();
@@ -98,7 +98,7 @@ Model generateGhr() {
 		v.push_back("rest");
 		v.push_back("work");
 		v.push_back("rest");
-		ConstraintDaysSeq* cji = new ConstraintDaysSeq(v, 5);
+		ConstraintDaysSeq* cji = new ConstraintDaysSeq(v, 10);
 
 		//Après 2 jours/nuits au moins 2 repos
 		v = vector<string>();
@@ -107,7 +107,7 @@ Model generateGhr() {
 		auto v2 = vector<string>();
 		v2.push_back("rest");
 		v2.push_back("rest");
-		ConstraintInvolved* cnr = new ConstraintInvolved(v, v2, Day::None, 20);
+		ConstraintInvolved* cnr = new ConstraintInvolved(v, v2, Day::None, 30);
 
 		//Après 1 journée longue + 1 repos  -> +1 repos min
 		v = vector<string>();
@@ -123,13 +123,13 @@ Model generateGhr() {
 		v2 = vector<string>();
 		v2.push_back("dayL");
 		v2.push_back("dayL");
-		ConstraintInvolved* cwjjj = new ConstraintInvolved(v, v2, Day::Saturday, 500);
+		ConstraintInvolved* cwjjj = new ConstraintInvolved(v, v2, Day::Saturday, 1000);
 
 		//1 week ends par mois
 		v = vector<string>();
 		v.push_back("work");
 		v.push_back("work");
-		ConstraintSeqMinMax* cwe = new ConstraintSeqMinMax(Day::Saturday,MinMax::Min,1,v,5);
+		ConstraintSeqMinMax* cwe = new ConstraintSeqMinMax(Day::Saturday,MinMax::Min,1,v,10);
 
 		ghr->addConstraint(cJN);
 		ghr->addConstraint(c3N);
@@ -183,7 +183,7 @@ Model generateGhr() {
 
 		Agent* a40 = new Agent("40",155, nbHoursWeek, Status::Confirmed);
 		a40->setService(ghr);
-		a40->setCalendarDay(ca,0, true);
+		//a40->setCalendarDay(ca,0, true);
 		m.addAgent(a40,ghr);
 
 		Agent* a49 = new Agent("49",155, nbHoursWeek, Status::Confirmed);
@@ -217,17 +217,41 @@ int main() {
 	srand(time(0));
 
 	Model m =  generateGhr();
-
+	//m = heuristicSolver::greedy(m);
 	//auto m2 = heuristicSolver::iterative(m,100,300,3);
-	auto m2 = heuristicSolver::iterative2(m, 100000, 5);
+	auto m2 = heuristicSolver::iterative2(m, 40000, 5);
 
-	//cout << "bestScore " << heuristicSolver::check(&m2, false, true) << endl;
-	m.printPlanning();
+	//cout << "Score: " << m2.getValuation()->getScore();
+	m2.printPlanning();
+	m2.getValuation()->print();
+
+	//auto m3 = heuristicSolver::iterative2(m, 30000, 3);
 	heuristicSolver::check(&m2, false, true);
+
+	/*
+	auto value = (heuristicSolver::checkValuation(&m2));
+	cout << value.getScore() << " " << heuristicSolver::check(&m2, false, false) << endl;
+	value.setScore(heuristicSolver::check(&m2, false, false));
+	//m.setValuation(&(heuristicSolver::checkValuation(&m)));
+	m2.setValuation(value);
+
+	cout <<  "value " <<&value << endl;
+	
+	cout << "Score check: " << heuristicSolver::check(&m2, false, true) << endl;
+	cout << "Score: " << m2.getValuation()->getScore() << endl;
+	m2.getValuation()->print();
+	m2 = heuristicSolver::getNeighborSwap(&m2, 10);
+	m2.printPlanning();
+	heuristicSolver::checkFast(&m2);
+	cout << "ScoreVal: " << m2.getValuation()->getScore() << endl;
+	cout << "ScoreT: " << heuristicSolver::check(&m2, false, true) << endl;
+	m2.getValuation()->print();*/
+
+	//heuristicSolver::check(&m2, false, true);
 	//auto v = heuristicSolver::checkValuation(&m);
 	//m.setValuation(v);
 	cout << "---------------------------------" << endl;
-	m2.printPlanning();
+	//m2.printPlanning();
 
 	/*
 	m.printPlanning();

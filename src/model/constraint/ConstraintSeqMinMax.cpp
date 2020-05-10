@@ -180,7 +180,7 @@ std::vector<std::pair<int, int>> ConstraintSeqMinMax::checkValuation(const Agent
 
 	}*/
 
-
+	int i = 0;
 	for (auto post : agent->getCalendar()) {
 		if (indice == 0 && firstDay == day) {
 			start = true;
@@ -192,7 +192,7 @@ std::vector<std::pair<int, int>> ConstraintSeqMinMax::checkValuation(const Agent
 					indice++;
 					found = true;
 					if (indice >= sequenceAtt.size()) {
-						v.push_back(pair<int, int>(indice - sequenceAtt.size(), indice));
+						v.push_back(pair<int, int>(i - sequenceAtt.size() + 1, i));
 						cptCheck++;
 						indice = 0;
 					}
@@ -207,10 +207,137 @@ std::vector<std::pair<int, int>> ConstraintSeqMinMax::checkValuation(const Agent
 		}
 		found = false;
 		day = Model::getNextDay(day);
+		i++;
 	}
 
 	return v;
 
 
+}
+
+void ConstraintSeqMinMax::checkFast(Model* m, int iCons){
+
+
+	for (auto swap : m->getSwapLog()) {
+
+		
+		auto a = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent1()];
+		auto aIndice = swap.getAgent1();
+
+		
+
+		for (int j = 0; j < 2; j++) {
+
+			//on récupère le nb de seq detecté auparavant (pour le score)
+			int nbSeq = m->getValuation()->getseqMinMax()[swap.getService()][aIndice][iCons].size();
+
+			unsigned int cptCheck = 0;
+			unsigned int indice = 0;
+			Day day = m->getFirstDay();
+
+			for (int i = 0; i < swap.getDay() - (int)sequenceAtt.size(); i++) {
+				day = Model::getNextDay(day);
+			}
+
+			auto v = vector<pair<int, int>>();
+			bool start = false;
+			bool found = false;
+
+			for (int i = swap.getDay() - (int)this->sequenceAtt.size(); i <= swap.getDay() + (int)this->sequenceAtt.size(); i++) {
+				if (i >= 0 && i < m->getNbDays()) {
+					Post* p = a->getCalendar()[i];
+					if (indice == 0 && firstDay == day) {
+						start = true;
+					}
+
+					if (start || indice != 0) {
+						for (auto att : p->getAttributs()) {
+							if (att == sequenceAtt[indice]) {
+								indice++;
+								found = true;
+								if (indice >= sequenceAtt.size()) {
+									v.push_back(pair<int, int>(i - sequenceAtt.size() + 1, i));
+									cptCheck++;
+									indice = 0;
+								}
+								break;
+							}
+						}
+						if (found == false)
+						{
+							indice = 0;
+						}
+						start = false;
+					}
+					found = false;
+					day = Model::getNextDay(day);
+				}
+			}
+
+			//Update la valuation
+			auto valuation = m->getValuation()->getseqMinMax()[swap.getService()][aIndice][iCons];
+			auto newVec = vector<pair<int, int>>();
+			for (auto value : valuation) {
+				//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
+				if (value.first >= swap.getDay() - (int)this->sequenceAtt.size() && value.second <= swap.getDay() + (int)this->sequenceAtt.size()) {
+					found = false;
+					for (auto e : v) {
+						if (value.first == e.first && value.second == e.second) {
+							newVec.push_back(value);
+							found = true;
+						}
+					}
+					if (!found)
+						;//cout << "removed" << endl;
+				}
+				else {
+					newVec.push_back(value);
+				}
+			}
+			//Ajout des nouveaux éléments
+			for (auto e : v) {
+				bool isIn = false;
+				for (auto value : valuation) {
+					if (value.first == e.first && value.second == e.second) {
+						isIn = true;
+					}
+				}
+
+				if (!isIn) {
+					newVec.push_back(e);
+				}
+			}
+
+			auto vecToAdd = m->getValuation()->getseqMinMax();
+			vecToAdd[swap.getService()][aIndice][iCons] = newVec;
+			m->getValuation()->setSeqMinMax(vecToAdd);
+
+			//Ajuste le score
+			if (type == Min) {
+
+				int scoreA = 0;
+				int scoreB = 0;
+				if(nbSeq < number)
+					scoreA -= (number - nbSeq)* priority;
+				if (newVec.size() < number)
+					scoreB -= (number - newVec.size()) * priority;
+				if (scoreA - scoreB != 0)
+				m->getValuation()->setScore(m->getValuation()->getScore() - (scoreA - scoreB));
+			}
+			else {
+				int scoreA = 0;
+				int scoreB = 0;
+				if (nbSeq > number)
+					scoreA -= (nbSeq - number) * priority;
+				if (newVec.size() > number)
+					scoreB -= (newVec.size() - number) * priority;
+				m->getValuation()->setScore(m->getValuation()->getScore() - (scoreA - scoreB));
+			}
+
+			a = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent2()];
+			aIndice = swap.getAgent2();
+
+		}
+	}
 }
 

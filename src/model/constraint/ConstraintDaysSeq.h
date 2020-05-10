@@ -34,6 +34,8 @@ public:
 	int check(const Agent* agent, bool checkALL, bool log);
 	std::vector<std::pair<int, int>> checkValuation(const Agent* agent);
 
+	void checkFast(Model* m, int iCons);
+
 
 protected:
 	int priority;
