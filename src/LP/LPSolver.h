@@ -11,6 +11,6 @@ public:
 	LPSolver();
 	virtual ~LPSolver();
 
-	static Model linearProgramTest(const Model m);
+	static Model linearProgram(const Model m);
 };
 

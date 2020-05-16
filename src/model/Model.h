@@ -45,7 +45,9 @@ public:
 	void setOvertime(float overtime);
 	Post* getDefaultPost();
 	void setDefaultPost(Post *defaultPost);
-
+	
+	std::vector<Post*>& getPosts();
+	void addPost(Post*);
 	static Model generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek);
 
 protected:

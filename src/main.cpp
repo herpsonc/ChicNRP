@@ -34,30 +34,42 @@ Model generateGhr() {
 		jg->addAttribut("workL");
 		jg->addAttribut("work");
 		jg->addAttribut("day");
+		m.addPost(jg);
+
 		Post* ng = new Post("Ng", 12.25);
 		ng->addAttribut("workL");
 		ng->addAttribut("work");
 		ng->addAttribut("night");
+		m.addPost(ng);
+
 		Post* mat = new Post("Mat", 7.5);
 		mat->addAttribut("work");
 		mat->addAttribut("day");
+		m.addPost(mat);
+
 		Post* repos = new Post("Repos", 0.0);
 		repos->addAttribut("rest");
+		m.addPost(repos);
+
 		Post* ca = new Post("Ca", 0.0);
 		ca->addAttribut("rest");
 		ca->addAttribut("ca");
+		//m.addPost(ca);
 
 		Post* oe = new Post("O/E", 7.5);
 		oe->addAttribut("work");
 		oe->addAttribut("day");
+		//m.addPost(oe);
 
 		Post* fp = new Post("FP", 7.5);
 		fp->addAttribut("work");
 		fp->addAttribut("day");
+		//m.addPost(fp);
 
 		Post* cs = new Post("CS", 7.5);
 		cs->addAttribut("work");
 		cs->addAttribut("day");
+		//m.addPost(cs);
 
 		m.setDefaultPost(repos);
 
@@ -194,7 +206,37 @@ int main() {
 	//cout << "---------------------------------" << endl;
 	//m3.printPlanning();
 
-	LPSolver::linearProgramTest(m);
+	LPSolver::linearProgram(m);
+
+	//SCIP* scip;
+	//SCIPcreate(&scip);
+
+	//SCIPincludeDefaultPlugins(scip);
+
+	//SCIPcreateProb(scip, "planning", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+	//int v = 0;
+	//SCIP_VAR* varCons[50];
+	//SCIP_VAR* var;
+	//double hours[50];
+	//SCIPcreateVar(scip, &var, NULL, 0.0, 1.0, 1.0, SCIP_VARTYPE_BINARY, TRUE, FALSE, NULL, NULL, NULL, NULL, NULL);
+	//SCIPaddVar(scip, var);
+	//
+	//Agent* a = new Agent("6", 155, 48, Status::Confirmed);
+	//map<Agent*, std::pair<std::vector<SCIP_VAR*>, std::vector<float>>> agentLastPosts = map<Agent*, std::pair<std::vector<SCIP_VAR*>, std::vector<float>>>();
+	////agentLastPosts.insert(a, pair<std::vector<SCIP_VAR*>, std::vector<float>>(var, 12.5) );
+
+	//map<Agent*, pair<SCIP_VAR**, double*>> testos = map<Agent*, pair<SCIP_VAR**, double*>>();
+	//testos.insert(pair<Agent*, pair<SCIP_VAR**, double*>>(a, pair<SCIP_VAR**, double*>(varCons, hours)));
+	//varCons[0] = var;
+	//hours[0] = 12.5;
+
+	//for (auto itr = testos.begin(); itr != testos.end(); ++itr) {
+	//	cout << '\t' << itr->first->getId() << '\n';
+	//		for (auto itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2) {
+	//			cout << '\t' << itr2->first << '\n'
+	//			<< '\t' << itr2->second << '\n';
+	//		}
+	//}
 	/*
 	for (auto s : m2.getServices()) {
 		for (auto a : m2.getAgentFrom(s)) {

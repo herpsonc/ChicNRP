@@ -6,8 +6,8 @@
 #include <scip/scip.h>
 //#include <scip/scipdefplugins.h>
 
-#ifndef VARIABLEDATA_H_
-#define VARIABLEDATA_H_
+#ifndef SRC_LP_VARIABLEDATA_H_
+#define SRC_LP_VARIABLEDATA_H_
 
 class VariableData {
 

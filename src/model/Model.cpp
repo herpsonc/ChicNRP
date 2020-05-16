@@ -161,6 +161,16 @@ void Model::setDefaultPost(Post *defaultPost) {
 	this->defaultPost = defaultPost;
 }
 
+
+std::vector<Post*>& Model::getPosts() {
+	return posts;
+}
+
+void Model::addPost(Post* p) {
+	if(find(posts.begin(), posts.end(), p) == posts.end()) //p not already in posts
+		posts.push_back(p);
+}
+
 Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek) {
 	Model m = Model(firstDay, nbDays, overtime);
 	m.defaultPost = NULL;

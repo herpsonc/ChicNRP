@@ -12,7 +12,7 @@ LPSolver::~LPSolver() {
 }
 
 
-Model LPSolver::linearProgramTest(const Model mo) {
+Model LPSolver::linearProgram(const Model mo) {
 	Model mr = Model(mo);
 
 	int n_tmp = 0, m_tmp = 0;
@@ -60,7 +60,7 @@ Model LPSolver::linearProgramTest(const Model mo) {
 			//défaut : prend pas en compte les agents qu'on peut solliciter en dehors du service où ce poste est dédié en général
 			agents = mr.getAgentFrom(s);
 
-			for (auto job : s->getPosts()) {
+			for (auto job : s->getPosts()) { //ou bien mr.getPosts() ?
 				if (job->getId() != "Repos") {
 
 					// Liste variables contrainte courante
@@ -71,13 +71,14 @@ Model LPSolver::linearProgramTest(const Model mo) {
 					for (auto a : agents) {
 
 						SCIP_VAR* var;
-						if (a->getCalendar()[day] == NULL ) {
+						if (a->getCalendar()[day] == NULL) {
 							if (!agent_dispo) { //permet d'ajouter une contrainte seulement s'il y a au moins un agent dispo pour ce job à cette date
 								agent_dispo = true;
 							}
 							//cout << "X_a" << a->getId() << ",j" << day+1 << "," << job->getId() << "= x(" << id_var << ")" << endl;
 							fileIdVar << "X_a" << a->getId() << ",j" << day + 1 << "," << job->getId() << "= _var" << id_var << "_" << endl;
 
+							//job->getTime() possible au lieu de 1.0 pour le coefficient des vars dans la fonction objectif
 							SCIPcreateVar(scip, &var, NULL, 0.0, 1.0, 1.0, SCIP_VARTYPE_BINARY, TRUE, FALSE, NULL, NULL, NULL, NULL, NULL);
 							SCIPaddVar(scip, var);
 
@@ -88,6 +89,20 @@ Model LPSolver::linearProgramTest(const Model mo) {
 
 							id_var++;
 						}
+						/*else {
+							fileIdVar << "X_a" << a->getId() << ",j" << day + 1 << "," << job->getId() << "= _var" << id_var << "_" << endl;
+
+							//job->getTime() possible au lieu de 1.0 pour le coefficient des vars dans la fonction objectif
+							SCIPcreateVar(scip, &var, NULL, 1.0, 1.0, 1.0, SCIP_VARTYPE_BINARY, TRUE, FALSE, NULL, NULL, NULL, NULL, NULL);
+							SCIPaddVar(scip, var);
+
+							varsData.push_back(new VariableData(var, id_var, day, a, a->getCalendar()[day]));
+
+							varCons[v] = var;
+							v++;
+
+							id_var++;
+						}*/
 
 					}
 
@@ -143,10 +158,108 @@ Model LPSolver::linearProgramTest(const Model mo) {
 
 	}
 
+	/*
+	int it = 0;
+	int* tab;
+	vector<VariableData*> varsDataTmp(varsData); //pour ne pas re-avoir les agents déjà vus
+	for (int i = 0; i < agents.size(); i++) {
+		cout << "agent:" << agents[i]->getId() << endl;
+		for (int i = 0; i < varsDataTmp.size(); i++) {
+			if (agents[i] == varsDataTmp[i]->getAgent()) {
+				it++;
+				varsDataTmp.erase(varsDataTmp.begin()+i);
+			
+			}
+		}
+		tab[i] = { it };
+	}
+
+	const int n = a;
+	*/
+
+
+	/*Contraintes horaires par Mois */
+
+	vector<VariableData*> varsDataTmp(varsData); //pour ne pas re-avoir les agents déjà vus
+	int nb_vals = 0;
+	for (auto a : agents) {
+		nb_vals = 0;
+		long long coeffs_hours[200];
+		SCIP_VAR* varsConsHours[200]; //maximum 31*nbPosts vars par mois
+		cout << "tabl 10 : " << coeffs_hours[10] << endl;
+		cout << "agent:" << a->getId() << endl;
+		for (int i = 0; i < varsDataTmp.size(); i++) {
+			if (a->getId() == varsDataTmp[i]->getAgent()->getId()){ //&& varsDataTmp[i]->getVariable() >= 0) {
+				coeffs_hours[nb_vals] = static_cast<long long>(varsDataTmp[i]->getPost()->getTime());
+				varsConsHours[nb_vals] = varsDataTmp[i]->getVariable();
+
+				cout << "id: " << varsDataTmp[i]->getId() << "  " << varsDataTmp[i]->getPost()->getId() << varsDataTmp[i]->getDay() << " heures " << coeffs_hours[nb_vals] << endl;
+				//varsDataTmp.erase(varsDataTmp.begin()+i); //à l'air de faire buguer la contrainte
+				nb_vals++;
+			}
+		}
+
+		cout << "fin agent:" << a->getId() << " " << nb_vals << "  " << sizeof(coeffs_hours)/ sizeof(coeffs_hours[0]) << "  " << sizeof(varsConsHours)/ sizeof(varsConsHours[0]) << endl;
+
+		SCIP_CONS* consHoursMonth;
+		SCIPcreateConsBasicKnapsack(scip, &consHoursMonth, "nb_heures_mois", nb_vals, varsConsHours, coeffs_hours, a->getNbHoursMonth());//+mo.getOvertime());
+		//SCIPcreateConsLinear(scip, &consHoursMonth, NULL, nb_vals, varsConsHours, coeffs_hours, a->getNbHoursMonth(), NULL,);
+		SCIPaddCoefLinear(scip, consHoursMonth, varsConsHours[0], a->getNbHoursMonth());
+		SCIPaddCons(scip, consHoursMonth);
+
+		cout << "contrainte ok" << endl;
+		consVec.push_back(consHoursMonth);
+	}
+
+
+	/*Contraintes horaires par Semaine */
+
+	varsDataTmp = varsData; //pour ne pas re-avoir les agents déjà vus
+	nb_vals = 0;
+	int jour_semaine = 1; 
+	for (auto a : agents) {
+		jour_semaine = 1;
+		nb_vals = 0;
+		long long coeffs_hours[200];
+		SCIP_VAR* varsConsHours[200]; //maximum 7*nbPosts vars par semaine
+		for (int day = 0; day < mr.getNbDays(); day++) {
+
+			//cout << "agent:" << a->getId() << endl;
+			for (int i = 0; i < varsDataTmp.size(); i++) {
+				if (a->getId() == varsDataTmp[i]->getAgent()->getId() && varsDataTmp[i]->getDay() == day) {
+					coeffs_hours[nb_vals] = static_cast<long long>(varsDataTmp[i]->getPost()->getTime());
+					varsConsHours[nb_vals] = varsDataTmp[i]->getVariable();
+
+					//cout << "id: " << varsDataTmp[i]->getId() << "  " << varsDataTmp[i]->getPost()->getId() << varsDataTmp[i]->getDay() << " heures " << coeffs_hours[nb_vals] << endl;
+					//varsDataTmp.erase(varsDataTmp.begin()+i); //à l'air de faire buguer la contrainte
+					nb_vals++;
+				}
+			}
+
+			//cout << "fin agent:" << a->getId() << " " << nb_vals << "  " << sizeof(coeffs_hours) / sizeof(coeffs_hours[0]) << "  " << sizeof(varsConsHours) / sizeof(varsConsHours[0]) << endl;
+
+
+			if (jour_semaine == 7 || day == mr.getNbDays()-1) {
+				SCIP_CONS* consHoursWeek;
+				SCIPcreateConsBasicKnapsack(scip, &consHoursWeek, "nb_heures_semaine", nb_vals, varsConsHours, coeffs_hours, a->getNbHoursWeek());//+mo.getOvertime());
+				SCIPaddCons(scip, consHoursWeek);
+
+				cout << "contrainte ok" << endl;
+				consVec.push_back(consHoursWeek);
+				jour_semaine = 1;
+				nb_vals = 0;
+				long long coeffs_hours[200];
+				SCIP_VAR* varsConsHours[200]; //maximum 7*nbPosts vars par semaine
+			}
+			jour_semaine++;
+		}
+	}
+
+
 	fileIdVar.close();
 
 	cout << "Write init pl" << endl;
-	SCIPwriteOrigProblem(scip, "init3.txt", "lp", FALSE);
+	SCIPwriteOrigProblem(scip, "init2.txt", "lp", FALSE);
 
 	SCIPsolve(scip);
 	SCIP_SOL* sol = SCIPgetBestSol(scip);
@@ -162,18 +275,18 @@ Model LPSolver::linearProgramTest(const Model mo) {
 	// Release & free +
 	// Changer les calendriers des agents
 	SCIP_VAR* var_tmp;
-	for (int id_var = 0; id_var < varsData.size(); id_var++) {
-		SCIP_Real varValue = SCIPgetSolVal(scip, sol, varsData[id_var]->getVariable());
+	for (auto varData : varsData) {
+		SCIP_Real varValue = SCIPgetSolVal(scip, sol, varData->getVariable());
 		if (varValue == 1.0) {
 			//cout << "we good" << " id: " << id_var << " ag: " << agentsIndex[id_var]->getId() << " j: " << daysIndex[id_var]+1 << " p: " << postsIndex[id_var]->getId() << endl;
-			varsData[id_var]->getAgent()->setCalendarDay(varsData[id_var]->getPost(), varsData[id_var]->getDay());
+			varData->getAgent()->setCalendarDay(varData->getPost(), varData->getDay());
 		}
-		else if(varValue == .0 && varsData[id_var]->getAgent()->getCalendar()[varsData[id_var]->getDay()] == NULL){ //si on a pas un autre poste attribué plus tôt pour le même jour et le même agent ==> repos
+		else if(varValue == .0 && varData->getAgent()->getCalendar()[varData->getDay()] == NULL){ //si on a pas un autre poste attribué plus tôt pour le même jour et le même agent ==> repos
 			//cout << "not good " << id_var << endl;
-			varsData[id_var]->getAgent()->setCalendarDay(new Post("Repos", 0.0), varsData[id_var]->getDay());
+			varData->getAgent()->setCalendarDay(new Post("Repos", 0.0), varData->getDay());
 		}
 
-		var_tmp = varsData[id_var]->getVariable();
+		var_tmp = varData->getVariable();
 		SCIPreleaseVar(scip, &var_tmp);
 	}
 
