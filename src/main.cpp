@@ -10,6 +10,7 @@
 #include <vector>
 #include <algorithm>
 
+
 #include "heuristic/heuristicSolver.h"
 #include "model/Agent.h"
 #include "model/constraint/Constraint.h"
@@ -17,6 +18,9 @@
 #include "model/Model.h"
 #include "model/constraint/ConstraintInvolved.h"
 #include "model/constraint/ConstraintSeqMinMax.h"
+
+
+
 using namespace std;
 
 void addConsecutiveSamePost(Agent* a, Post* p, int d_start, int d_end) {
@@ -230,7 +234,7 @@ Model addServiceSDC(Model m) {
 	js->addAttribut("workL");
 	js->addAttribut("work");
 	js->addAttribut("day");
-	Post* ns = new Post("Js", 12.25);
+	Post* ns = new Post("Ns", 12.25);
 	ns->addAttribut("workL");
 	ns->addAttribut("work");
 	ns->addAttribut("night");
@@ -274,20 +278,20 @@ Model addServiceSDC(Model m) {
 	auto v = vector<string>();
 	v.push_back("night");
 	v.push_back("day");
-	ConstraintDaysSeq* cJN = new ConstraintDaysSeq(v, 1);
+	ConstraintDaysSeq* cJN = new ConstraintDaysSeq(v, 30);
 
 	//Pas 3 jours/nuit de travail d'affilé
 	v = vector<string>();
 	v.push_back("workL");
 	v.push_back("workL");
 	v.push_back("workL");
-	ConstraintDaysSeq* c3N = new ConstraintDaysSeq(v, 1);
+	ConstraintDaysSeq* c3N = new ConstraintDaysSeq(v, 50);
 
 	//Pas de nuit avant un congé posé
 	v = vector<string>();
 	v.push_back("night");
 	v.push_back("ca");
-	ConstraintDaysSeq* crn = new ConstraintDaysSeq(v, 1);
+	ConstraintDaysSeq* crn = new ConstraintDaysSeq(v, 30);
 
 	//Après 2 jours/nuits au moins 2 repos
 	v = vector<string>();
@@ -296,13 +300,13 @@ Model addServiceSDC(Model m) {
 	auto v2 = vector<string>();
 	v2.push_back("rest");
 	v2.push_back("rest");
-	ConstraintInvolved* cnr = new ConstraintInvolved(v, v2, Day::None, 1);
+	ConstraintInvolved* cnr = new ConstraintInvolved(v, v2, Day::None, 30);
 
 	//1 week ends par mois
 	v = vector<string>();
 	v.push_back("work");
 	v.push_back("work");
-	ConstraintSeqMinMax* cwe = new ConstraintSeqMinMax(Day::Saturday, MinMax::Min, 1, v, 1);
+	ConstraintSeqMinMax* cwe = new ConstraintSeqMinMax(Day::Saturday, MinMax::Min, 1, v, 10);
 
 	sdc->addConstraint(cJN);
 	sdc->addConstraint(c3N);
@@ -311,7 +315,10 @@ Model addServiceSDC(Model m) {
 	sdc->addConstraint(cwe);
 
 
-	float nbHoursWeek = 48.0, nbHoursMonth = 155;
+	float nbHoursWeek = 60.0, nbHoursMonth = 155;
+
+	auto ip = vector<Post*>();
+	ip.push_back(ns);
 
 	//Agents
 	Agent* a9 = new Agent("9", nbHoursMonth, nbHoursWeek, Status::Confirmed);
@@ -323,6 +330,7 @@ Model addServiceSDC(Model m) {
 	a12->setCalendarDay(fp, 23, true);
 	a12->setCalendarDay(ca, 29, true);
 	a12->setCalendarDay(ca, 30, true);
+	a12->setImpossiblePosts(ip);
 	m.addAgent(a12, sdc);
 
 	Agent* a17 = new Agent("17", nbHoursMonth, nbHoursWeek, Status::Beginner);
@@ -334,6 +342,7 @@ Model addServiceSDC(Model m) {
 	a17->setCalendarDay(ca, 17, true);
 	a17->setCalendarDay(ca, 24, true);
 	a17->setCalendarDay(ca, 26, true);
+	a17->setImpossiblePosts(ip);
 	m.addAgent(a17, sdc);
 
 	Agent* a34 = new Agent("34", nbHoursMonth, nbHoursWeek, Status::Beginner);
@@ -341,6 +350,7 @@ Model addServiceSDC(Model m) {
 	a34->setCalendarDay(fp, 1, true);
 	a34->setCalendarDay(fp, 2, true);
 	addConsecutiveSamePost(a34, ca, 3, 9);
+	a34->setImpossiblePosts(ip);
 	m.addAgent(a34, sdc);
 
 	Agent* a39 = new Agent("39", nbHoursMonth, nbHoursWeek, Status::Confirmed);
@@ -360,6 +370,7 @@ Model addServiceSDC(Model m) {
 	Agent* a50 = new Agent("50", nbHoursMonth, nbHoursWeek, Status::Beginner);
 	a50->setService(sdc);
 	a50->setCalendarDay(fp, 23, true);
+	a50->setImpossiblePosts(ip);
 	m.addAgent(a50, sdc);
 
 	Agent* a61 = new Agent("61", nbHoursMonth, nbHoursWeek, Status::Confirmed);
@@ -378,10 +389,12 @@ Model addServiceSDC(Model m) {
 	a59->setCalendarDay(ca, 0, true);
 	a59->setCalendarDay(ca, 1, true);
 	addConsecutiveSamePost(a59, ca, 27, 30);
+	a59->setImpossiblePosts(ip);
 	m.addAgent(a59, sdc);
 
 	Agent* a48 = new Agent("48", nbHoursMonth, nbHoursWeek, Status::Beginner);
 	a48->setService(sdc); 
+	a48->setImpossiblePosts(ip);
 	m.addAgent(a48, sdc);
 
 	Agent* a15 = new Agent("15", nbHoursMonth, nbHoursWeek, Status::Confirmed);
@@ -399,13 +412,23 @@ int main() {
 	srand(time(0));
 
 	Model m =  generateGhr();
-	auto m2 = heuristicSolver::iterative2(m, 40000, 5);
+	m.generateXML();
+	Model m2 = Model(Tuesday,31,60);
+	m2.loadXML("test.xml");
+	m2.printPlanning();
+
+	//auto m3 = heuristicSolver::greedy(m2);
+	auto m3 = heuristicSolver::iterative2(m2, 10000, 5);
+	m3.printPlanning();
+
+	/*m = addServiceSDC(m); //ajoute le service SDC au modèle
+	auto m2 = heuristicSolver::iterative2(m, 60000, 5);
 	m2.printPlanning();
 	m2.getValuation()->print();
-	heuristicSolver::check(&m2, false, true);
+	heuristicSolver::check(&m2, false, true);*/
 
-/*	m = addServiceSDC(m); //ajoute le service SDC au modèle
-	
+
+	/*
 	//auto m2 = heuristicSolver::iterative(m,100,300,3);
 
 	auto m2 = Model::generateModelInstance(Day::Sunday, 31, 25, 2, 5, 10, 48.0, 155);

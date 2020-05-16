@@ -35,6 +35,7 @@ public:
 	string getSeqToPrint();
 
 	int getPriority();
+	const Day getFirstDay();
 
 	int check(const Agent* agent, Day day, bool checkALL, bool log);
 	std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> checkValuation(const Agent* agent, Day day);

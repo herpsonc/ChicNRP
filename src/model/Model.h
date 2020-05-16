@@ -14,6 +14,8 @@ enum Day { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, None 
 #include <iostream>
 #include <vector>
 #include <set>
+#include <stdio.h>
+#include <fstream>
 #include "Post.h"
 #include "Service.h"
 #include "Agent.h"
@@ -24,6 +26,11 @@ enum Day { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, None 
 #include "constraint/ConstraintDaysSeq.h"
 #include "constraint/ConstraintInvolved.h"
 #include "constraint/ConstraintSeqMinMax.h"
+
+#include "../rapidXml/rapidxml.hpp"
+#include "../rapidXml/rapidxml_utils.hpp"
+
+
 
 class Model {
 public:
@@ -63,6 +70,8 @@ public:
 	std::vector<Constraint*> Model::createConstraints();
 	static Model generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService = -1, int nbPostsPerService = -1);
 
+	void generateXML();
+	void loadXML(string file);
 
 protected:
 	Day firstDay;

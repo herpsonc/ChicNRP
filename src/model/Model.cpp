@@ -6,8 +6,10 @@
  */
 
 #include "Model.h"
+#include "../rapidXml/rapidxml_print.hpp"
 
 using namespace std;
+using namespace rapidxml;
 
 Model::Model(Day firstDay, int nbDays, float overtime) {
 	this->firstDay=firstDay;
@@ -131,6 +133,9 @@ void Model::printPlanning() {
 	cout << endl;
 	for (auto s : agents)
 	{
+		cout << "---------------------------" << endl;
+		cout << "Service " << s.first->getId() << endl;
+		cout << "---------------------------" << endl;
 		for (auto agent : s.second)
 		{
 			cout << "Agent " << agent->getId() << ":\t";
@@ -415,4 +420,342 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 	}
 
 	return m;
+}
+
+void Model::generateXML(){
+	xml_document<> doc;
+
+	xml_node<>* root = doc.allocate_node(node_element, "Model");
+
+	root->append_attribute(doc.allocate_attribute("firstDay", doc.allocate_string(to_string(firstDay).c_str())));
+	cout << to_string(nbDays).c_str() << endl;
+	root->append_attribute(doc.allocate_attribute("nbDays", doc.allocate_string(to_string(nbDays).c_str())));
+	cout << root->first_attribute("nbDays")->value() << endl;
+	root->append_attribute(doc.allocate_attribute("overtime", doc.allocate_string(to_string(overtime).c_str())));
+
+	//DefaultPost
+	xml_node<>* defaultP = doc.allocate_node(node_element, "DefaultPost");
+	defaultP->append_attribute(doc.allocate_attribute("id", doc.allocate_string(defaultPost->getId().c_str())));
+	defaultP->append_attribute(doc.allocate_attribute("nbh", doc.allocate_string(to_string(defaultPost->getTime()).c_str())));
+
+
+	//Attributs du post
+	for (auto attri : defaultPost->getAttributs()) {
+		xml_node<>* att = doc.allocate_node(node_element, "Attribut");
+		att->append_attribute(doc.allocate_attribute("Attribut", doc.allocate_string(attri.c_str())));
+		defaultP->append_node(att);
+	}
+
+	root->append_node(defaultP);
+
+	//Chaque Services
+	for (auto s : agents) {
+		xml_node<>* service = doc.allocate_node(node_element, "Service");
+		service->append_attribute(doc.allocate_attribute("id", doc.allocate_string(s.first->getId().c_str())));
+
+		//On met les posts
+		for (auto p : s.first->getPosts()) {
+			xml_node<>* post = doc.allocate_node(node_element, "Post");
+			post->append_attribute(doc.allocate_attribute("id", doc.allocate_string(p->getId().c_str())));
+			post->append_attribute(doc.allocate_attribute("time", doc.allocate_string(to_string(p->getTime()).c_str())));
+
+			//Attributs du post
+			for (auto a : p->getAttributs()) {
+				xml_node<>* att = doc.allocate_node(node_element, "Attribut");
+				att->append_attribute(doc.allocate_attribute("Attribut", doc.allocate_string(a.c_str())));
+				post->append_node(att);
+			}
+			service->append_node(post);
+		}
+
+		//TODO REFERENTS
+
+		//PostRequired
+		for (auto day : s.first->getPostRequired()) {
+			xml_node<>* requiredPost = doc.allocate_node(node_element, "RequiredPost");
+			for (auto p : day) {
+				xml_node<>* post = doc.allocate_node(node_element, "Post");
+				post->append_attribute(doc.allocate_attribute("id", doc.allocate_string(p.first->getId().c_str())));
+				post->append_attribute(doc.allocate_attribute("nbh", doc.allocate_string(to_string(p.second).c_str())));
+				requiredPost->append_node(post);
+			}
+			service->append_node(requiredPost);
+		}
+
+		//Constraintes du service
+		for (auto c : s.first->getConstraints()) {
+			if (typeid(*c) == typeid(ConstraintDaysSeq)) {
+				xml_node<>* constraint = doc.allocate_node(node_element, "ConstraintDaySeq");
+				constraint->append_attribute(doc.allocate_attribute("priority", doc.allocate_string(to_string(((ConstraintDaysSeq*)c)->getPriority()).c_str())));
+				for (auto sA : ((ConstraintDaysSeq*)c)->getSequenceAtt()) {
+					xml_node<>* att = doc.allocate_node(node_element, "Attribut");
+					att->append_attribute(doc.allocate_attribute("Att", doc.allocate_string(sA.c_str())));
+					constraint->append_node(att);
+				}
+				service->append_node(constraint);
+			}
+			else if (typeid(*c) == typeid(ConstraintInvolved)) {
+				xml_node<>* constraint = doc.allocate_node(node_element, "ConstraintInvolved");
+				constraint->append_attribute(doc.allocate_attribute("priority", doc.allocate_string(to_string(((ConstraintInvolved*)c)->getPriority()).c_str())));
+				constraint->append_attribute(doc.allocate_attribute("day", doc.allocate_string(to_string(((ConstraintInvolved*)c)->getFirstDay()).c_str())));
+				for (auto fs : ((ConstraintInvolved*)c)->getFirstSeqAtt()) {
+					xml_node<>* att = doc.allocate_node(node_element, "FirstAttribut");
+					att->append_attribute(doc.allocate_attribute("Att", doc.allocate_string(fs.c_str())));
+					constraint->append_node(att);
+				}
+				for (auto fs : ((ConstraintInvolved*)c)->getLastSeqAtt()) {
+					xml_node<>* att = doc.allocate_node(node_element, "LastAttribut");
+					att->append_attribute(doc.allocate_attribute("Att", doc.allocate_string(fs.c_str())));
+					constraint->append_node(att);
+				}
+				service->append_node(constraint);
+				
+			}
+			else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
+				xml_node<>* constraint = doc.allocate_node(node_element, "ConstraintSeqMinMax");
+				constraint->append_attribute(doc.allocate_attribute("priority", doc.allocate_string(to_string(((ConstraintSeqMinMax*)c)->getPriority()).c_str())));
+				constraint->append_attribute(doc.allocate_attribute("day", doc.allocate_string(to_string(((ConstraintSeqMinMax*)c)->getFirstDay()).c_str())));
+				constraint->append_attribute(doc.allocate_attribute("number", doc.allocate_string(to_string(((ConstraintSeqMinMax*)c)->getNumber()).c_str())));
+				constraint->append_attribute(doc.allocate_attribute("type", doc.allocate_string(to_string(((ConstraintSeqMinMax*)c)->getType()).c_str())));
+				for (auto fs : ((ConstraintSeqMinMax*)c)->getSequenceAtt()) {
+					xml_node<>* att = doc.allocate_node(node_element, "Attribut");
+					att->append_attribute(doc.allocate_attribute("Att", doc.allocate_string(fs.c_str())));
+					constraint->append_node(att);
+				}
+
+				service->append_node(constraint);
+			}
+		}
+
+		//Agents
+		for (auto a : s.second) {
+			xml_node<>* agent = doc.allocate_node(node_element, "Agent");
+			agent->append_attribute(doc.allocate_attribute("id", doc.allocate_string(a->getId().c_str())));
+			agent->append_attribute(doc.allocate_attribute("status", doc.allocate_string(to_string(a->getStatus()).c_str())));
+			agent->append_attribute(doc.allocate_attribute("nbHoursMonth", doc.allocate_string(to_string(a->getNbHoursMonth()).c_str())));
+			agent->append_attribute(doc.allocate_attribute("nbHoursWeek", doc.allocate_string(to_string(a->getNbHoursWeek()).c_str())));
+
+			//ImpossiblePosts
+			for (auto ip : a->getImpossiblePosts()) {
+				xml_node<>* post = doc.allocate_node(node_element, "ImpossiblePost");
+				post->append_attribute(doc.allocate_attribute("id", doc.allocate_string(ip->getId().c_str())));
+				post->append_attribute(doc.allocate_attribute("nbh", doc.allocate_string(to_string(ip->getTime()).c_str())));
+
+				//Attributs du post
+				for (auto attri : ip->getAttributs()) {
+					xml_node<>* att = doc.allocate_node(node_element, "Attribut");
+					att->append_attribute(doc.allocate_attribute("Attribut", doc.allocate_string(attri.c_str())));
+					post->append_node(att);
+				}
+				agent->append_node(post);
+			}
+
+
+			//On remplit le calendrier
+			for (int i = 0; i < 31; i++) {
+				xml_node<>* day = doc.allocate_node(node_element, "Day");
+				Post* p = a->getCalendar()[i];
+				if (p != NULL) {
+					day->append_attribute(doc.allocate_attribute("id", doc.allocate_string(p->getId().c_str())));
+					day->append_attribute(doc.allocate_attribute("nbh", doc.allocate_string(to_string(p->getTime()).c_str())));
+
+					//Attributs du post
+					for (auto attri : p->getAttributs()) {
+						xml_node<>* att = doc.allocate_node(node_element, "Attribut");
+						att->append_attribute(doc.allocate_attribute("Attribut", doc.allocate_string(attri.c_str())));
+						day->append_node(att);
+					}
+				}
+				else {
+					day->append_attribute(doc.allocate_attribute("id", "null"));
+				}
+				day->append_attribute(doc.allocate_attribute("lock", doc.allocate_string(to_string(a->getCalendarLock()[i]).c_str())));
+				agent->append_node(day);
+			}
+			service->append_node(agent);
+		}
+
+
+
+		root->append_node(service);
+
+	}
+	doc.append_node(root);
+
+	string xml_as_string;
+	rapidxml::print(back_inserter(xml_as_string), doc);
+	ofstream fileStored ("test.xml");
+	fileStored << xml_as_string;
+	fileStored.close();
+	doc.clear();
+
+}
+
+void Model::loadXML(string file){
+
+	//Clear à faire
+
+	xml_document<> doc;
+	rapidxml::file<> xmlFile(file.c_str());
+	doc.parse<0>(xmlFile.data());
+
+	cout << "ok" << endl;
+
+	//Pour garder la trace des nouveaux posts crées
+	 auto mapPosts = map<string, Post*>();
+
+	//Model
+	xml_node<>* root = doc.first_node();
+
+	firstDay = (Day)atoi(root->first_attribute("firstDay")->value());
+	nbDays = atoi(root->first_attribute("nbDays")->value());
+	overtime = atof(root->first_attribute("overtime")->value());
+
+	cout << "ok2" << endl;
+
+	//DefaultPost
+	xml_node<>* defaultPost = root->first_node("DefaultPost");
+	Post* post = new Post(defaultPost->first_attribute("id")->value(), atof(defaultPost->first_attribute("nbh")->value()));
+	//attributs
+	for (auto attNode = defaultPost->first_node("Attribut"); attNode; attNode = attNode->next_sibling("Attribut")) {
+		post->addAttribut(attNode->first_attribute("Attribut")->value());
+	}
+
+	this->defaultPost = post;
+
+	mapPosts.insert(pair<string, Post*>(post->getId(), post));
+
+	cout << "ok3" << endl;
+
+	//Services
+	for (auto serviceNode = root->first_node("Service"); serviceNode; serviceNode = serviceNode->next_sibling("Service")) {
+		auto service = new Service(serviceNode->first_attribute("id")->value());
+		addService(service);
+
+		//Posts
+		for (auto postNode = serviceNode->first_node("Post"); postNode; postNode = postNode->next_sibling("Post")) {
+			//On check si il existe déjà
+			auto search = mapPosts.find(postNode->first_attribute("id")->value());
+
+			//Si il n'y est pas, on la crée
+			if (search == mapPosts.end()) {
+				Post* post = new Post(postNode->first_attribute("id")->value(), atof(postNode->first_attribute("time")->value()));
+				//attributs
+				for (auto attNode = postNode->first_node("Attribut"); attNode; attNode = attNode->next_sibling("Attribut")) {
+					post->addAttribut(attNode->first_attribute("Attribut")->value());
+				}
+				service->addPost(post);
+				mapPosts.insert(pair<string, Post*>(post->getId(), post));
+			}
+			//Si il y est
+			else {
+				service->addPost(mapPosts[postNode->first_attribute("id")->value()]);
+			}
+		}
+
+		cout << "ok4" << endl;
+
+		//PostsRequired
+		int i = 0;
+		for (auto postRequiredNode = serviceNode->first_node("RequiredPost"); postRequiredNode; postRequiredNode = postRequiredNode->next_sibling("RequiredPost")) {
+			for (auto post = postRequiredNode->first_node("Post"); post; post = post->next_sibling("Post")) {
+				//Les posts sont normalement dans la liste de post
+				service->addPostRequired(mapPosts[post->first_attribute("id")->value()], atoi(post->first_attribute("nbh")->value()),i);
+			}
+			i++;
+		}
+
+		cout << "ok5" << endl;
+
+		//Contraintes du service
+		for (auto constraintDaySeqNode = serviceNode->first_node("ConstraintDaySeq"); constraintDaySeqNode; constraintDaySeqNode = constraintDaySeqNode->next_sibling("ConstraintDaySeq")) {
+			cout << constraintDaySeqNode->name();
+			auto v = vector<string>();
+			cout << "test" << endl;
+			for (auto att = constraintDaySeqNode->first_node("Attribut"); att; att = att->next_sibling("Attribut")) {
+				v.push_back(att->first_attribute("Att")->value());
+			}
+			service->addConstraint(new ConstraintDaysSeq(v, atoi(constraintDaySeqNode->first_attribute("priority")->value())));
+			cout << "test2" << endl;
+		}
+
+		cout << "ok6" << endl;
+
+		for (auto constraintInvolved = serviceNode->first_node("ConstraintInvolved"); constraintInvolved; constraintInvolved = constraintInvolved->next_sibling("ConstraintInvolved")) {
+			auto v = vector<string>();
+			auto v2 = vector<string>();
+			for (auto att = constraintInvolved->first_node("FirstAttribut"); att; att = att->next_sibling("FirstAttribut")) {
+				v.push_back(att->first_attribute("Att")->value());
+			}
+			for (auto att = constraintInvolved->first_node("LastAttribut"); att; att = att->next_sibling("LastAttribut")) {
+				v2.push_back(att->first_attribute("Att")->value());
+			}
+			service->addConstraint(new ConstraintInvolved(v, v2, (Day)atoi(constraintInvolved->first_attribute("day")->value()), atoi(constraintInvolved->first_attribute("priority")->value())));
+		}
+
+		cout << "ok7" << endl;
+
+		for (auto constraintSeqMinMax = serviceNode->first_node("ConstraintSeqMinMax"); constraintSeqMinMax; constraintSeqMinMax = constraintSeqMinMax->next_sibling("ConstraintSeqMinMax")) {
+			auto v = vector<string>();
+			for (auto att = constraintSeqMinMax->first_node("Attribut"); att; att = att->next_sibling("Attribut")) {
+				v.push_back(att->first_attribute("Att")->value());
+			}
+			service->addConstraint(new ConstraintSeqMinMax((Day)atoi(constraintSeqMinMax->first_attribute("day")->value()), (MinMax)atoi(constraintSeqMinMax->first_attribute("type")->value()),
+				atoi(constraintSeqMinMax->first_attribute("number")->value()), v, atoi(constraintSeqMinMax->first_attribute("priority")->value())));
+		}
+
+		cout << "ok8" << endl;
+
+		//Agents
+		for (auto agentNode = serviceNode->first_node("Agent"); agentNode; agentNode = agentNode->next_sibling("Agent")) {
+			auto agent = new Agent(agentNode->first_attribute("id")->value(), atoi(agentNode->first_attribute("nbHoursMonth")->value()),
+				atoi(agentNode->first_attribute("nbHoursWeek")->value()), (Status)atoi(agentNode->first_attribute("status")->value()));
+
+			cout << "test8" << endl;
+			//Calendrier
+			int i = 0;
+			for (auto dayNode = agentNode->first_node("Day"); dayNode; dayNode = dayNode->next_sibling("Day")) {
+				if ((string)dayNode->first_attribute("id")->value() != "null") {
+					auto search = mapPosts.find(dayNode->first_attribute("id")->value());
+
+					//Si il n'y est pas, on la crée
+					if (search == mapPosts.end()) {
+						Post* post = new Post(dayNode->first_attribute("id")->value(), atof(dayNode->first_attribute("nbh")->value()));
+						//attributs
+						for (auto attNode = dayNode->first_node("Attribut"); attNode; attNode = attNode->next_sibling("Attribut")) {
+							post->addAttribut(attNode->first_attribute("Attribut")->value());
+						}
+						mapPosts.insert(pair<string, Post*>(post->getId(), post));
+					}
+
+					agent->setCalendarDay(mapPosts[dayNode->first_attribute("id")->value()], i, dayNode->first_attribute("lock")->value());
+				}
+				cout << "test9" << endl;
+				i++;
+			}
+
+
+			cout << "ok9" << endl;
+			//ImpossiblePosts
+			auto v = vector<Post*>();
+			for (auto impossiblePost = agentNode->first_node("ImpossiblePost"); impossiblePost; impossiblePost = impossiblePost->next_sibling("ImpossiblePost")) {
+				//On check si il existe déjà
+				auto search = mapPosts.find(impossiblePost->first_attribute("id")->value());
+
+				//Si il n'y est pas, on la crée
+				if (search == mapPosts.end()) {
+					Post* post = new Post(impossiblePost->first_attribute("id")->value(), atof(impossiblePost->first_attribute("nbh")->value()));
+					//attributs
+					for (auto attNode = impossiblePost->first_node("Attribut"); attNode; attNode = attNode->next_sibling("Attribut")) {
+						post->addAttribut(attNode->first_attribute("Attribut")->value());
+					}
+					mapPosts.insert(pair<string, Post*>(post->getId(), post));
+				}
+				v.push_back(mapPosts[impossiblePost->first_attribute("id")->value()]);
+			}
+			agent->setImpossiblePosts(v);
+
+			addAgent(agent, service);
+		}
+	}
 }

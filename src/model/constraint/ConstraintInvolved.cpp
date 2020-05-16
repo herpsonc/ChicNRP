@@ -83,6 +83,11 @@ int ConstraintInvolved::getPriority()
 	return priority;
 }
 
+const Day ConstraintInvolved::getFirstDay()
+{
+	return firstDay;
+}
+
 int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool log) {
 
 	unsigned int indice = 0;
