@@ -280,7 +280,7 @@ vector<Constraint*> Model::createConstraints() {
 	return constraints;
 }
 
-Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService, int nbPostsPerService) {
+Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService, int nbPostsPerService, int proba_1er_conge, int proba_suite_conge) {
 	/*
 	Si nbPostsPerService est indiqué, le nombre nbPosts ne sera pas respecté si nbPosts < nbPostsPerService*nbServices
 	de même pour nbAgentsPerService
@@ -368,9 +368,14 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 	//Agents
 
 	//variables pour les tirages aléatoires
-	int service_rand = 0, post_rand = 0, conges_rand = 0, incr_jour = 0;
+	int service_rand = 0, post_rand = 0, conges_rand = 0, job_rand = 0, incr_jour = 0, post_ind_rand = 0;
+	if (proba_1er_conge < 0 || proba_1er_conge > 100) 
+		proba_1er_conge = 3; //3% de chance d'avoir un congé si proba perso non déclarée (ou incorrecte)
+	if (proba_suite_conge < 0 || proba_suite_conge > 100)
+		proba_suite_conge = 70; //70% de chance d'avoir un congé à la suite d'un premier congé si proba perso non déclarée (ou incorrecte)
+	
 
-	//pour chaque agents
+	//pour chaque agent
 	for (int i = 0; i < nbAgents; i++) {
 		int dice = rand() % 10 + 1;
 		Agent* a_i;
@@ -395,24 +400,35 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 			a_i->setService(m.getServices()[j]);
 		}
 
+		vector<Post*> posts_possibles = a_i->getService()->getPosts();
+
+		//pour chaque jour
 		for (int jour = 0; jour < nbDays; jour++) {
 			conges_rand = rand() % 100 + 1;
+			job_rand = rand() % 100 + 1;
 			//cout << i << ": " << conges_rand << endl;
-			if (conges_rand <= 3) { //3% de chance d'avoir un premier congé ce jour ci
+			if (conges_rand <= proba_1er_conge) { // proba_1er_conge% de chance d'avoir un premier congé ce jour ci
 
 				a_i->setCalendarDay(ca, jour, true);
 
 				//chances de faire une suite de congés après un premier congé = 70% puis décrément de 5% par jour à la suite
 				conges_rand = rand() % 100 + 1;
 
-				while (conges_rand <= (70-(incr_jour*5)) && jour + incr_jour <= nbDays) {
+				while (conges_rand <= (proba_suite_conge -(incr_jour*5)) && jour + incr_jour <= nbDays) {
 					a_i->setCalendarDay(ca, jour + incr_jour, true);
 					conges_rand = rand() % 100 + 1;
 					//cout << conges_rand << " : " << (70 - (incr_jour * 5) ) << endl;
 					incr_jour++; //permet aussi le décrément de 5% de chance par jour succéssif
 				}
-				jour += incr_jour; //si on a déjà ajouté un congé au jours suivants : on passe
+				jour += incr_jour; //si on a déjà ajouté un congé aux jours suivants : on passe
 				incr_jour = 0;
+			}
+			else if(job_rand <= 5){ //5% chance d'avoir un job pré-défini ce jour là
+				post_ind_rand = rand() % posts_possibles.size();
+				//cout << post_ind_rand << "  " << posts_possibles.size() << endl;
+				if (posts_possibles[post_ind_rand]->getId() != "Repos") {
+					a_i->setCalendarDay(posts_possibles[post_ind_rand], jour, true);
+				}
 			}
 		}
 

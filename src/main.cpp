@@ -412,7 +412,7 @@ int main() {
 	srand(time(0));
 
 	Model m =  generateGhr();
-	m.generateXML();
+	m.generateXML("test.xml");
 	Model m2 = Model(Tuesday,31,60);
 	m2.loadXML("test.xml");
 	m2.printPlanning();
@@ -430,19 +430,64 @@ int main() {
 
 	/*
 	//auto m2 = heuristicSolver::iterative(m,100,300,3);
+	
+	//generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService, int nbPostsPerService)
 
-	auto m2 = Model::generateModelInstance(Day::Sunday, 31, 25, 2, 5, 10, 48.0, 155);
+	auto m_1servicePetit = Model::generateModelInstance(Day::Monday, 31, 25, 1, 4, 7, 48.0, 155); //1 petit service, pas trop contraints
+	auto m_1serviceTresGrand = Model::generateModelInstance(Day::Thursday, 30, 25, 1, 10, 30, 48.0, 155); //1 grand service, pas trop contraints
+
+	auto m_2servicesPetits = Model::generateModelInstance(Day::Sunday, 31, 25, 2, 5, 10, 48.0, 155); //2 petits services, pas trop contraints
+	auto m_2servicesFevrierBissextile = Model::generateModelInstance(Day::Saturday, 29, 0, 2, 5, 10, 48.0, 140); //2 petits services, fevrier, 0 heures supps possibles
+
+
+	auto m_3servicesEte = Model::generateModelInstance(Day::Sunday, 31, 10, 3, 6, 15, 48.0, 155, -1, -1, 5, 100); //3 petits services avec beacoup de congés (simulation vacances d'été potentielle), 10h supps max
+
+	auto m_6servicesPetits = Model::generateModelInstance(Day::Sunday, 31, 25, 6, 7, 20, 48.0, 155); //6 petits services (7 postes, 20 agents)
+	auto m_6servicesGrands = Model::generateModelInstance(Day::Wednesday, 30, 25, 6, 20, 70, 48.0, 155); //6 grands services (20 postes, 70 agents)
 
 	//auto m3 = heuristicSolver::greedy(m2);
-	auto m4 = heuristicSolver::iterative2(m2, 20000, 3);
+	//auto m4 = heuristicSolver::iterative2(m2, 20000, 3);
 
-	cout << "bestScore " << heuristicSolver::check(&m4, false, true) << endl;
+	//cout << "bestScore " << heuristicSolver::check(&m4, false, true) << endl;
 
-	m2.printPlanning();
+	m_3servicesEte.printPlanning();
 	cout << "---------------------------------" << endl;
 	//m3.printPlanning();
 	//cout << "---------------------------------" << endl;
 	m4.printPlanning();*/
+
+
+	/*
+	m.printPlanning();
+	cout << "---------------------------------" << endl;
+	m2.printPlanning();
+
+	//Model m3 = Model::generateModelInstance(Day::Sunday, 31, 25, 5, 10, 10, 48.0);
+	
+	for(auto s : m2.getServices()){
+		for(auto a : m2.getAgentFrom(s)){
+			cout << a->getId() << " Mois: " << a->getWorkingHoursMonth() << endl;
+			for(int i=0;i<5;i++){
+				cout << "Week " << i << ": " << a->getWorkingHoursWeek(m2.getFirstDay(),i) << endl;
+			}
+		}
+	}
+
+	//Test sur plusieurs models généré aléatoirements
+	unsigned int nb = 1000;
+	Model bestModel = m;
+	int bScore = -500;
+	int wScore = 10;
+	for (int i = 0;i < nb;i++) {
+		m2 = heuristicSolver::greedy(m);
+		int tmp = heuristicSolver::check(&m2, false, false);
+		if (tmp > bScore) {
+			bestModel = m2;
+			bScore = tmp;
+		}
+		if (tmp < wScore)
+			wScore = tmp;
+	}*/
 
 	string t;
 	cin >> t;
