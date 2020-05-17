@@ -438,15 +438,13 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 	return m;
 }
 
-void Model::generateXML(){
+void Model::generateXML(string fileName){
 	xml_document<> doc;
 
 	xml_node<>* root = doc.allocate_node(node_element, "Model");
 
 	root->append_attribute(doc.allocate_attribute("firstDay", doc.allocate_string(to_string(firstDay).c_str())));
-	cout << to_string(nbDays).c_str() << endl;
 	root->append_attribute(doc.allocate_attribute("nbDays", doc.allocate_string(to_string(nbDays).c_str())));
-	cout << root->first_attribute("nbDays")->value() << endl;
 	root->append_attribute(doc.allocate_attribute("overtime", doc.allocate_string(to_string(overtime).c_str())));
 
 	//DefaultPost
@@ -600,22 +598,20 @@ void Model::generateXML(){
 
 	string xml_as_string;
 	rapidxml::print(back_inserter(xml_as_string), doc);
-	ofstream fileStored ("test.xml");
+	ofstream fileStored (fileName);
 	fileStored << xml_as_string;
 	fileStored.close();
 	doc.clear();
 
 }
 
-void Model::loadXML(string file){
+void Model::loadXML(string fileName){
 
 	//Clear à faire
 
 	xml_document<> doc;
-	rapidxml::file<> xmlFile(file.c_str());
+	rapidxml::file<> xmlFile(fileName.c_str());
 	doc.parse<0>(xmlFile.data());
-
-	cout << "ok" << endl;
 
 	//Pour garder la trace des nouveaux posts crées
 	 auto mapPosts = map<string, Post*>();
@@ -626,8 +622,6 @@ void Model::loadXML(string file){
 	firstDay = (Day)atoi(root->first_attribute("firstDay")->value());
 	nbDays = atoi(root->first_attribute("nbDays")->value());
 	overtime = atof(root->first_attribute("overtime")->value());
-
-	cout << "ok2" << endl;
 
 	//DefaultPost
 	xml_node<>* defaultPost = root->first_node("DefaultPost");
@@ -640,8 +634,6 @@ void Model::loadXML(string file){
 	this->defaultPost = post;
 
 	mapPosts.insert(pair<string, Post*>(post->getId(), post));
-
-	cout << "ok3" << endl;
 
 	//Services
 	for (auto serviceNode = root->first_node("Service"); serviceNode; serviceNode = serviceNode->next_sibling("Service")) {
@@ -669,7 +661,6 @@ void Model::loadXML(string file){
 			}
 		}
 
-		cout << "ok4" << endl;
 
 		//PostsRequired
 		int i = 0;
@@ -681,21 +672,14 @@ void Model::loadXML(string file){
 			i++;
 		}
 
-		cout << "ok5" << endl;
-
 		//Contraintes du service
 		for (auto constraintDaySeqNode = serviceNode->first_node("ConstraintDaySeq"); constraintDaySeqNode; constraintDaySeqNode = constraintDaySeqNode->next_sibling("ConstraintDaySeq")) {
-			cout << constraintDaySeqNode->name();
 			auto v = vector<string>();
-			cout << "test" << endl;
 			for (auto att = constraintDaySeqNode->first_node("Attribut"); att; att = att->next_sibling("Attribut")) {
 				v.push_back(att->first_attribute("Att")->value());
 			}
 			service->addConstraint(new ConstraintDaysSeq(v, atoi(constraintDaySeqNode->first_attribute("priority")->value())));
-			cout << "test2" << endl;
 		}
-
-		cout << "ok6" << endl;
 
 		for (auto constraintInvolved = serviceNode->first_node("ConstraintInvolved"); constraintInvolved; constraintInvolved = constraintInvolved->next_sibling("ConstraintInvolved")) {
 			auto v = vector<string>();
@@ -709,8 +693,6 @@ void Model::loadXML(string file){
 			service->addConstraint(new ConstraintInvolved(v, v2, (Day)atoi(constraintInvolved->first_attribute("day")->value()), atoi(constraintInvolved->first_attribute("priority")->value())));
 		}
 
-		cout << "ok7" << endl;
-
 		for (auto constraintSeqMinMax = serviceNode->first_node("ConstraintSeqMinMax"); constraintSeqMinMax; constraintSeqMinMax = constraintSeqMinMax->next_sibling("ConstraintSeqMinMax")) {
 			auto v = vector<string>();
 			for (auto att = constraintSeqMinMax->first_node("Attribut"); att; att = att->next_sibling("Attribut")) {
@@ -720,14 +702,11 @@ void Model::loadXML(string file){
 				atoi(constraintSeqMinMax->first_attribute("number")->value()), v, atoi(constraintSeqMinMax->first_attribute("priority")->value())));
 		}
 
-		cout << "ok8" << endl;
-
 		//Agents
 		for (auto agentNode = serviceNode->first_node("Agent"); agentNode; agentNode = agentNode->next_sibling("Agent")) {
 			auto agent = new Agent(agentNode->first_attribute("id")->value(), atoi(agentNode->first_attribute("nbHoursMonth")->value()),
 				atoi(agentNode->first_attribute("nbHoursWeek")->value()), (Status)atoi(agentNode->first_attribute("status")->value()));
 
-			cout << "test8" << endl;
 			//Calendrier
 			int i = 0;
 			for (auto dayNode = agentNode->first_node("Day"); dayNode; dayNode = dayNode->next_sibling("Day")) {
@@ -746,12 +725,9 @@ void Model::loadXML(string file){
 
 					agent->setCalendarDay(mapPosts[dayNode->first_attribute("id")->value()], i, dayNode->first_attribute("lock")->value());
 				}
-				cout << "test9" << endl;
 				i++;
 			}
 
-
-			cout << "ok9" << endl;
 			//ImpossiblePosts
 			auto v = vector<Post*>();
 			for (auto impossiblePost = agentNode->first_node("ImpossiblePost"); impossiblePost; impossiblePost = impossiblePost->next_sibling("ImpossiblePost")) {
