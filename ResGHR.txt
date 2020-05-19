@@ -1,0 +1,87 @@
+ConstraintSeqMinMax work work   Agent 1 False 0 found
+ConstraintDaySeq rest work rest : Agent 1 Jour 3 Ó 5
+ConstraintDaySeq rest work rest : Agent 1 Jour 24 Ó 26
+ConstraitInvolved dayL -> dayL dayL : Agent 1 Jour 22
+ConstraintSeqMinMax work work   Agent 6 False 0 found
+ConstraintDaySeq rest work rest : Agent 6 Jour 12 Ó 14
+ConstraintDaySeq rest work rest : Agent 6 Jour 17 Ó 19
+ConstraintSeqMinMax work work   Agent 36 False 0 found
+ConstraintDaySeq rest work rest : Agent 36 Jour 17 Ó 19
+Checker: DÚpassement d'heure au mois pour l'agent 40
+ConstraintDaySeq rest work rest : Agent 40 Jour 9 Ó 11
+ConstraitInvolved dayL -> dayL dayL : Agent 40 Jour 8
+ConstraitInvolved dayL -> dayL dayL : Agent 40 Jour 15
+ConstraintDaySeq rest work rest : Agent 49 Jour 8 Ó 10
+ConstraintDaySeq rest work rest : Agent 49 Jour 13 Ó 15
+ConstraintDaySeq rest work rest : Agent 49 Jour 16 Ó 18
+ConstraitInvolved workL rest -> rest : Agent 49 Jour 11
+ConstraitInvolved dayL -> dayL dayL : Agent 49 Jour 29
+ConstraintDaySeq rest work rest : Agent 57 Jour 18 Ó 20
+ConstraitInvolved workL workL -> rest rest : Agent 63 Jour 27
+ConstraintSeqMinMax work work   Agent 63 False 0 found
+Score: -2111
+---------------------------------
+Jours:          1 S     2 M     3 T     4 W     5 T     6 F     7 S     8 S     9 M     10 T    11 W    12 T    13 F    14 S    15 S    16 M    17 T    18 W    19 T    20 F    21 S    22 S    23 M    24 T    25 W    26 T    27 F    28 S    29 S    30 M    31 T
+Agent 1:        Ca      Ca      Ca      O/E     Repos   Repos   Repos   Repos   Repos   Mat     O/E     Repos   Repos   Repos   Repos   Repos   Jg      O/E     Repos   Mat     Jg      Repos   Repos   Repos   O/E     Ca      Ca      Ca      Ca      Ca      Ca
+Agent 6:        Mat     Mat     Repos   Repos   Jg      Jg      Repos   Repos   Mat     Jg      Repos   Repos   Mat     Repos   Repos   Repos   Repos   Jg      Repos   Repos   Repos   Repos   Repos   FP      Jg      Mat     Repos   Repos   Jg      Mat     Repos
+Agent 33:       Repos   Repos   Ng      Ng      Repos   Repos   Ng      Ng      Repos   Repos   Repos   Ng      Ng      Repos   Repos   Mat     Mat     Repos   Repos   Repos   Mat     Ng      Repos   Repos   CS      CS      CS      Ng      Ng      Repos   Repos
+Agent 36:       Jg      Repos   Repos   Mat     Mat     Repos   Repos   Mat     Ng      Repos   Repos   Repos   Jg      Ng      Repos   Repos   Repos   Mat     Repos   Repos   Repos   Repos   Jg      Jg      Repos   Repos   Repos   Repos   Repos   Repos   Mat
+Agent 40:       Ca      Jg      Mat     Repos   Repos   Mat     Jg      Repos   Repos   Ng      Repos   Repos   Repos   Jg      Ng      Repos   Repos   Ng      Ng      Repos   Repos   Jg      Ng      Repos   Repos   Jg      Jg      Repos   Repos   Ng      Ng
+Agent 49:       Ng      Ng      Repos   Repos   Ng      Ng      Repos   Repos   Jg      Repos   Ng      Repos   Repos   Mat     Repos   Repos   Ng      Repos   Repos   Jg      Ng      Repos   Repos   Mat     Mat     Repos   Repos   Jg      Mat     Repos   Repos
+Agent 57:       Ca      Ca      Jg      Jg      Repos   Repos   Mat     Jg      Repos   Repos   Mat     Mat     Repos   Repos   Jg      Ng      Repos   Repos   Jg      Repos   Repos   Mat     Mat     Repos   Repos   Ng      Ng      Repos   Repos   Repos   Repos
+Agent 63:       Ca      Ca      Ca      Ca      Ca      Ca      Ca      Ca      Repos   Repos   Jg      Jg      Repos   Repos   Mat     Jg      Repos   Repos   Mat     Ng      Repos   Repos   Repos   Ng      Ng      Repos   Mat     Mat     Repos   Jg      Jg
+
+
+ConstraintSeqMinMax work work   Agent 1 False 0 found
+ConstraintDaySeq rest work rest : Agent 1 Jour 8 Ó 10
+ConstraintDaySeq rest work rest : Agent 1 Jour 17 Ó 19
+ConstraitInvolved dayL -> dayL dayL : Agent 6 Jour 29
+ConstraintDaySeq rest work rest : Agent 33 Jour 16 Ó 18
+ConstraitInvolved dayL -> dayL dayL : Agent 33 Jour 22
+ConstraintDaySeq rest work rest : Agent 36 Jour 3 Ó 5
+ConstraintDaySeq rest work rest : Agent 36 Jour 26 Ó 28
+ConstraintDaySeq rest work rest : Agent 36 Jour 29 Ó 31
+ConstraintDaySeq rest work rest : Agent 40 Jour 13 Ó 15
+ConstraitInvolved dayL -> dayL dayL : Agent 40 Jour 15
+ConstraintDaySeq rest work rest : Agent 57 Jour 25 Ó 27
+ConstraitInvolved dayL -> dayL dayL : Agent 57 Jour 8
+ConstraintDaySeq rest work rest : Agent 63 Jour 2 Ó 4
+ConstraintDaySeq rest work rest : Agent 63 Jour 22 Ó 24
+ConstraitInvolved workL rest -> rest : Agent 63 Jour 5
+Score: -2075
+---------------------------------
+Jours:          1 S     2 M     3 T     4 W     5 T     6 F     7 S     8 S     9 M     10 T    11 W    12 T    13 F    14 S    15 S    16 M    17 T    18 W    19 T    20 F    21 S    22 S    23 M    24 T    25 W    26 T    27 F    28 S    29 S    30 M    31 T
+Agent 1:        Repos   Repos   Repos   Mat     Ng      Repos   Repos   Repos   Ng      Repos   Repos   Repos   Mat     Mat     Repos   Repos   Repos   Ng      Repos   Repos   Repos   Repos   Jg      Jg      Repos   Repos   Jg      Ng      Repos   Repos   Jg
+Agent 6:        Jg      Jg      Repos   Repos   Repos   Repos   Repos   Jg      Jg      Repos   Repos   Repos   Repos   Repos   Jg      Mat     Repos   Repos   Mat     Jg      Repos   Repos   Repos   Mat     Mat     Repos   Repos   Jg      Mat     Repos   Repos
+Agent 33:       Repos   Repos   Mat     Jg      Repos   Repos   Ng      Ng      Repos   Repos   Repos   Mat     Ng      Repos   Repos   Repos   Ng      Repos   Repos   Mat     Jg      Repos   Repos   Ng      Ng      Repos   Repos   Repos   Repos   Repos   Repos
+Agent 36:       Ng      Repos   Repos   Ng      Repos   Repos   Repos   Repos   Repos   Repos   Ng      Ng      Repos   Repos   Mat     Ng      Repos   Repos   Repos   Repos   Ng      Ng      Repos   Repos   Repos   Repos   Ng      Repos   Repos   Ng      Repos
+Agent 40:       Repos   Repos   Repos   Repos   Mat     Ng      Repos   Repos   Repos   Jg      Mat     Repos   Repos   Jg      Repos   Repos   Mat     Jg      Repos   Repos   Repos   Jg      Ng      Repos   Repos   Repos   Repos   Mat     Ng      Repos   Repos
+Agent 49:       Mat     Ng      Repos   Repos   Repos   Mat     Mat     Repos   Repos   Mat     Jg      Repos   Repos   Repos   Repos   Jg      Jg      Repos   Repos   Repos   Mat     Mat     Repos   Repos   Jg      Ng      Repos   Repos   Repos   Repos   Ng
+Agent 57:       Repos   Mat     Ng      Repos   Repos   Repos   Jg      Mat     Repos   Repos   Repos   Jg      Jg      Repos   Repos   Repos   Repos   Repos   Ng      Ng      Repos   Repos   Repos   Repos   Repos   Mat     Repos   Repos   Jg      Jg      Repos
+Agent 63:       Repos   Repos   Jg      Repos   Jg      Jg      Repos   Repos   Mat     Ng      Repos   Repos   Repos   Ng      Ng      Repos   Repos   Mat     Jg      Repos   Repos   Repos   Mat     Repos   Repos   Jg      Mat     Repos   Repos   Mat     Mat
+
+
+ConstraintSeqMinMax work work   Agent 1 False 0 found
+ConstraintDaySeq rest work rest : Agent 1 Jour 15 Ó 17
+ConstraitInvolved dayL -> dayL dayL : Agent 1 Jour 29
+ConstraintSeqMinMax work work   Agent 6 False 0 found
+ConstraintDaySeq rest work rest : Agent 36 Jour 24 Ó 26
+ConstraitInvolved dayL -> dayL dayL : Agent 36 Jour 8
+ConstraintDaySeq rest work rest : Agent 49 Jour 1 Ó 3
+ConstraintDaySeq rest work rest : Agent 49 Jour 4 Ó 6
+ConstraitInvolved dayL -> dayL dayL : Agent 49 Jour 22
+ConstraintSeqMinMax work work   Agent 57 False 0 found
+ConstraintDaySeq rest work rest : Agent 57 Jour 18 Ó 20
+ConstraitInvolved dayL -> dayL dayL : Agent 57 Jour 15
+ConstraintDaySeq rest work rest : Agent 63 Jour 19 Ó 21
+Score: -2045
+---------------------------------
+Jours:          1 S     2 M     3 T     4 W     5 T     6 F     7 S     8 S     9 M     10 T    11 W    12 T    13 F    14 S    15 S    16 M    17 T    18 W    19 T    20 F    21 S    22 S    23 M    24 T    25 W    26 T    27 F    28 S    29 S    30 M    31 T
+Agent 1:        Repos   Mat     Ng      Repos   Repos   Ng      Ng      Repos   Repos   Mat     Mat     Repos   Repos   Repos   Repos   Mat     Repos   Repos   Jg      Mat     Repos   Repos   Mat     Mat     Repos   Repos   Mat     Jg      Repos   Repos   Repos
+Agent 6:        Mat     Repos   Repos   Repos   Jg      Mat     Repos   Repos   Repos   Repos   Jg      Mat     Repos   Repos   Repos   Repos   Mat     Mat     Repos   Repos   Repos   Repos   Repos   Repos   Mat     Jg      Repos   Repos   Repos   Repos   Mat
+Agent 33:       Jg      Ng      Repos   Repos   Repos   Repos   Repos   Repos   Repos   Repos   Repos   Ng      Ng      Repos   Repos   Repos   Jg      Ng      Repos   Repos   Ng      Ng      Repos   Repos   Repos   Ng      Ng      Repos   Repos   Ng      Ng
+Agent 36:       Ng      Repos   Repos   Repos   Repos   Jg      Jg      Repos   Repos   Jg      Ng      Repos   Repos   Mat     Jg      Repos   Repos   Repos   Repos   Repos   Mat     Mat     Repos   Repos   Jg      Repos   Repos   Repos   Mat     Jg      Repos
+Agent 40:       Repos   Repos   Mat     Mat     Repos   Repos   Repos   Repos   Ng      Ng      Repos   Repos   Repos   Ng      Ng      Repos   Repos   Jg      Mat     Repos   Repos   Repos   Repos   Repos   Repos   Repos   Repos   Mat     Jg      Repos   Repos
+Agent 49:       Repos   Jg      Repos   Repos   Mat     Repos   Repos   Mat     Jg      Repos   Repos   Jg      Jg      Repos   Repos   Jg      Ng      Repos   Repos   Jg      Jg      Repos   Repos   Jg      Ng      Repos   Repos   Ng      Ng      Repos   Repos
+Agent 57:       Repos   Repos   Repos   Jg      Ng      Repos   Repos   Jg      Mat     Repos   Repos   Repos   Mat     Jg      Repos   Repos   Repos   Repos   Ng      Repos   Repos   Jg      Ng      Repos   Repos   Mat     Jg      Repos   Repos   Mat     Jg
+Agent 63:       Repos   Repos   Jg      Ng      Repos   Repos   Mat     Ng      Repos   Repos   Repos   Repos   Repos   Repos   Mat     Ng      Repos   Repos   Repos   Ng      Repos   Repos   Jg      Ng      Repos   Repos   Repos   Repos   Repos   Repos   Repos
