@@ -104,27 +104,29 @@ int ConstraintSeqMinMax::check(const Agent* agent, bool checkALL, Day firstDayMo
 
 
 	for (auto post : agent->getCalendar()) {
-		if (indice == 0 && firstDay == day) {
-			start = true;
-		}
+		if (post != NULL) {
+			if (indice == 0 && firstDay == day) {
+				start = true;
+			}
 
-		if (start || indice != 0) {
-			for (auto att : post->getAttributs()) {
-				if (att == sequenceAtt[indice]) {
-					indice++;
-					found = true;
-					if (indice >= sequenceAtt.size()) {
-						cptCheck++;
-						indice = 0;
+			if (start || indice != 0) {
+				for (auto att : post->getAttributs()) {
+					if (att == sequenceAtt[indice]) {
+						indice++;
+						found = true;
+						if (indice >= sequenceAtt.size()) {
+							cptCheck++;
+							indice = 0;
+						}
+						break;
 					}
-					break;
 				}
+				if (found == false)
+				{
+					indice = 0;
+				}
+				start = false;
 			}
-			if (found == false)
-			{
-				indice = 0;
-			}
-			start = false;
 		}
 		found = false;
 		day = Model::getNextDay(day);

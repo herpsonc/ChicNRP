@@ -73,9 +73,9 @@ protected:
 	array<Post*, 7> lastMonthCalendar; //Liste des 7 derniers postes avant le début du mois
 	std::vector<Post*> impossiblePosts; // Liste des potes qui ne sont pas attribuables à l'agent (C4)
 
-	std::vector<Constraint*> constraints;
+	std::vector<Constraint*> constraints; //Not used
 
-	Service* service; //service préféré/affecté
+	Service* service; //service préféré/affecté // Not used
 
 };
 

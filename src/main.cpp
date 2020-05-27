@@ -409,17 +409,24 @@ Model addServiceSDC(Model m) {
 
 int main() {
 
+	//Important pour initialiser l'aléatoire
 	srand(time(0));
 
-	Model m =  generateGhr();
-	m.generateXML("test.xml");
+	/*Model m =  generateGhr();
+	m.generateXML("test.xml");*/
 	Model m2 = Model(Tuesday,31,60);
-	m2.loadXML("test.xml");
+	m2.loadXML("servicesGrands.xml");
 	m2.printPlanning();
+	//auto m3 = heuristicSolver::greedy(m2);
+
+	auto m3 = heuristicSolver::iterative2(m2, 100000, 5, 900);
+	m3.printPlanning();
+	heuristicSolver::check(&m3, false, true);
+
 
 	//auto m3 = heuristicSolver::greedy(m2);
-	auto m3 = heuristicSolver::iterative2(m2, 10000, 5);
-	m3.printPlanning();
+	//auto m3 = heuristicSolver::iterative2(m2, 10000, 5);
+	//m3.printPlanning();
 
 	/*m = addServiceSDC(m); //ajoute le service SDC au modèle
 	auto m2 = heuristicSolver::iterative2(m, 60000, 5);
@@ -428,23 +435,40 @@ int main() {
 	heuristicSolver::check(&m2, false, true);*/
 
 
-	/*
+	
 	//auto m2 = heuristicSolver::iterative(m,100,300,3);
 	
 	//generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService, int nbPostsPerService)
 
-	auto m_1servicePetit = Model::generateModelInstance(Day::Monday, 31, 25, 1, 4, 7, 48.0, 155); //1 petit service, pas trop contraints
-	auto m_1serviceTresGrand = Model::generateModelInstance(Day::Thursday, 30, 25, 1, 10, 30, 48.0, 155); //1 grand service, pas trop contraints
+	/*auto m_1servicePetit = Model::generateModelInstance(Day::Monday, 31, 25, 1, 4, 7, 60.0, 155); //1 petit service, pas trop contraints
+	m_1servicePetit.printPlanning();
+	m_1servicePetit.generateXML("servicePtit.xml");
 
-	auto m_2servicesPetits = Model::generateModelInstance(Day::Sunday, 31, 25, 2, 5, 10, 48.0, 155); //2 petits services, pas trop contraints
-	auto m_2servicesFevrierBissextile = Model::generateModelInstance(Day::Saturday, 29, 0, 2, 5, 10, 48.0, 140); //2 petits services, fevrier, 0 heures supps possibles
+	auto m_1serviceTresGrand = Model::generateModelInstance(Day::Thursday, 30, 25, 1, 10, 30, 60.0, 155); //1 grand service, pas trop contraints
+	m_1serviceTresGrand.printPlanning();
+	m_1serviceTresGrand.generateXML("serviceTresGrand.xml");
 
+	auto m_2servicesPetits = Model::generateModelInstance(Day::Sunday, 31, 25, 2, 5, 10, 60.0, 155); //2 petits services, pas trop contraints
+	m_2servicesPetits.printPlanning();
+	m_2servicesPetits.generateXML("servicesPetits.xml");
 
-	auto m_3servicesEte = Model::generateModelInstance(Day::Sunday, 31, 10, 3, 6, 15, 48.0, 155, -1, -1, 5, 100); //3 petits services avec beacoup de congés (simulation vacances d'été potentielle), 10h supps max
+	auto m_2servicesFevrierBissextile = Model::generateModelInstance(Day::Saturday, 29, 0, 2, 5, 10, 60.0, 140); //2 petits services, fevrier, 0 heures supps possibles
+	m_2servicesFevrierBissextile.printPlanning();
+	m_2servicesFevrierBissextile.generateXML("servicesFevrierBissextile.xml");
 
-	auto m_6servicesPetits = Model::generateModelInstance(Day::Sunday, 31, 25, 6, 7, 20, 48.0, 155); //6 petits services (7 postes, 20 agents)
-	auto m_6servicesGrands = Model::generateModelInstance(Day::Wednesday, 30, 25, 6, 20, 70, 48.0, 155); //6 grands services (20 postes, 70 agents)
+	auto m_3servicesEte = Model::generateModelInstance(Day::Sunday, 31, 10, 3, 6, 15, 60.0, 155, -1, -1, 5, 100); //3 petits services avec beacoup de congés (simulation vacances d'été potentielle), 10h supps max
+	m_3servicesEte.printPlanning();
+	m_3servicesEte.generateXML("servicesEte.xml");
 
+	auto m_6servicesPetits = Model::generateModelInstance(Day::Sunday, 31, 25, 6, 7, 20, 60.0, 155); //6 petits services (7 postes, 20 agents)
+	m_6servicesPetits.printPlanning();
+	m_6servicesPetits.generateXML("servicesPetits2.xml");
+
+	auto m_6servicesGrands = Model::generateModelInstance(Day::Wednesday, 30, 25, 6, 20, 70, 60.0, 155); //6 grands services (20 postes, 70 agents)
+	m_6servicesGrands.printPlanning();
+	m_6servicesGrands.generateXML("servicesGrands.xml");*/
+
+	/*
 	//auto m3 = heuristicSolver::greedy(m2);
 	//auto m4 = heuristicSolver::iterative2(m2, 20000, 3);
 
@@ -471,23 +495,8 @@ int main() {
 				cout << "Week " << i << ": " << a->getWorkingHoursWeek(m2.getFirstDay(),i) << endl;
 			}
 		}
-	}
-
-	//Test sur plusieurs models généré aléatoirements
-	unsigned int nb = 1000;
-	Model bestModel = m;
-	int bScore = -500;
-	int wScore = 10;
-	for (int i = 0;i < nb;i++) {
-		m2 = heuristicSolver::greedy(m);
-		int tmp = heuristicSolver::check(&m2, false, false);
-		if (tmp > bScore) {
-			bestModel = m2;
-			bScore = tmp;
-		}
-		if (tmp < wScore)
-			wScore = tmp;
 	}*/
+
 
 	string t;
 	cin >> t;

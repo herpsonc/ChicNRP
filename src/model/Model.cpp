@@ -79,20 +79,26 @@ Model& Model::operator=(const Model& obj)
 	return Model(obj);
 }
 
-
+//! \return services vector of Services of the model
 std::vector<Service*>& Model::getServices(){
 	return services;
 }
 
+//! Add an agent to the service
+//! \param agent Agent to add
+//! \param service Service where the agent is added
 void Model::addAgent(Agent* agent, Service* service) {
 	agents[service].push_back(agent);
 	service->addAgent(agent);
 }
 
+//! Add a service to the model
+//! \param service Service to add
 void Model::addService(Service* service ) {
 	services.push_back(service);
 }
 
+//! Print the planning to the console
 void Model::printPlanning() {
 
 	auto day = firstDay;
@@ -152,39 +158,50 @@ void Model::printPlanning() {
 			}
 			cout << endl;
 		}
-
-
 	}
 }
 
+//! \return firstDay first day of the month
 Day Model::getFirstDay() const {
 	return firstDay;
 }
 
+//! \param firstday first day to set
 void Model::setFirstDay(Day firstDay) {
 	this->firstDay = firstDay;
 }
 
+//! \return nbDays number of days in the month
 int Model::getNbDays() const {
 	return nbDays;
 }
 
+//! \param nbDays number of days to set
 void Model::setNbDays(int nbDays) {
 	this->nbDays = nbDays;
 }
 
+//! \return overtime overtime allowed for every Agents 
 float Model::getOvertime() const {
 	return overtime;
 }
 
-std::vector<Agent*> Model::getAgentFrom(Service* service) {
-	return agents[service];
-}
-
+//! \param overtime overtime to set
 void Model::setOvertime(float overtime) {
 	this->overtime = overtime;
 }
 
+//! get Agents from a specific service
+//! \param service the Agents returned are from this Service 
+//! \return agents from the specified service
+std::vector<Agent*> Model::getAgentFrom(Service* service) {
+	return agents[service];
+}
+
+
+//! Give the next day of the given day
+//! \param day 
+//! \return Next next day of the given day
 Day Model::getNextDay(Day day) {
 	switch (day) {
 	case Monday:
@@ -206,37 +223,40 @@ Day Model::getNextDay(Day day) {
 	}
 }
 
+//! \return defaultPost post affected by default
 Post* Model::getDefaultPost() {
 	return defaultPost;
 }
 
+//! \param defaultPost Post to set
 void Model::setDefaultPost(Post* defaultPost) {
 	this->defaultPost = defaultPost;
 }
 
-Valuation* Model::getValuation()
-{
+//! \return valuation Valuation of the current instance
+Valuation* Model::getValuation(){
 	return valuation;
 }
 
-void Model::setValuation(Valuation v)
-{
+//! \param v valuation to set
+void Model::setValuation(Valuation v){
 	delete valuation;
 	valuation = new Valuation(v);
 }
 
-void Model::addSwapLog(const SwapLog swapLog)
-{
+//! Add a SwapLog to the list
+//! \param swapLog SwapLog to add to the list
+void Model::addSwapLog(const SwapLog swapLog){
 	this->swapLog.push_back(swapLog);
 }
 
-vector<SwapLog> Model::getSwapLog()
-{
+//! \return swaplog vector of swaplog
+vector<SwapLog> Model::getSwapLog(){
 	return swapLog;
 }
 
-void Model::resetSwapLog()
-{
+//! clear the swapLog vector
+void Model::resetSwapLog(){
 	swapLog.clear();
 }
 
@@ -247,20 +267,20 @@ vector<Constraint*> Model::createConstraints() {
 	auto v = vector<string>();
 	v.push_back("night");
 	v.push_back("day");
-	constraints.push_back(new ConstraintDaysSeq(v, 1)); // cJN
+	constraints.push_back(new ConstraintDaysSeq(v, 30)); // cJN
 
 	//Pas 3 jours/nuit de travail d'affilé
 	v = vector<string>();
 	v.push_back("workL");
 	v.push_back("workL");
 	v.push_back("workL");
-	constraints.push_back(new ConstraintDaysSeq(v, 1)); // c3N
+	constraints.push_back(new ConstraintDaysSeq(v, 50)); // c3N
 
 	//Pas de nuit avant un congé posé
 	v = vector<string>();
 	v.push_back("night");
 	v.push_back("ca");
-	constraints.push_back(new ConstraintDaysSeq(v, 1)); // crn
+	constraints.push_back(new ConstraintDaysSeq(v, 30)); // crn
 
 	//Après 2 jours/nuits au moins 2 repos
 	v = vector<string>();
@@ -269,7 +289,22 @@ vector<Constraint*> Model::createConstraints() {
 	auto v2 = vector<string>();
 	v2.push_back("rest");
 	v2.push_back("rest");
-	constraints.push_back(new ConstraintInvolved(v, v2, Day::None, 1)); // cnr
+	constraints.push_back(new ConstraintInvolved(v, v2, Day::None, 30)); // cnr
+
+	//Après 1 journée longue + 1 repos  -> +1 repos min
+	v = vector<string>();
+	v.push_back("workL");
+	v.push_back("rest");
+	v2 = vector<string>();
+	v2.push_back("rest");
+	constraints.push_back(new ConstraintInvolved(v, v2, Day::None, 20)); //cwl2r
+
+	//Evite les journée isolés
+	v = vector<string>();
+	v.push_back("rest");
+	v.push_back("work");
+	v.push_back("rest");
+	constraints.push_back(new ConstraintDaysSeq(v, 10)); //cji
 
 	//1 week ends par mois
 	v = vector<string>();
@@ -438,7 +473,10 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 	return m;
 }
 
+//! Generate a XML file from the Model
+//! \param fileName name of the xml file saved
 void Model::generateXML(string fileName){
+
 	xml_document<> doc;
 
 	xml_node<>* root = doc.allocate_node(node_element, "Model");
@@ -605,9 +643,18 @@ void Model::generateXML(string fileName){
 
 }
 
+//! Load the given XML file to the Model
+//! \param fileName name of the file to load
 void Model::loadXML(string fileName){
 
-	//Clear à faire
+	//Reset du model
+	for (auto a : agents)
+		for (auto b : a.second) {
+			delete b;
+		}
+	agents.clear();
+	services.clear();
+	posts.clear();
 
 	xml_document<> doc;
 	rapidxml::file<> xmlFile(fileName.c_str());

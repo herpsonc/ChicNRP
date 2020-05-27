@@ -1,0 +1,181 @@
+\hypertarget{classrapidxml_1_1memory__pool}{}\doxysection{rapidxml\+::memory\+\_\+pool$<$ Ch $>$ Class Template Reference}
+\label{classrapidxml_1_1memory__pool}\index{rapidxml::memory\_pool$<$ Ch $>$@{rapidxml::memory\_pool$<$ Ch $>$}}
+
+
+{\ttfamily \#include $<$rapidxml.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classrapidxml_1_1memory__pool_a0b609da81dff28a19ebd704400788429}{memory\+\_\+pool}} ()
+\begin{DoxyCompactList}\small\item\em Constructs empty pool with default allocator functions. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classrapidxml_1_1memory__pool_a0a3e82126e59e4077f41e933130bb5a0}{$\sim$memory\+\_\+pool}} ()
+\item 
+\mbox{\hyperlink{classrapidxml_1_1xml__node}{xml\+\_\+node}}$<$ Ch $>$ $\ast$ \mbox{\hyperlink{classrapidxml_1_1memory__pool_a4118581c29ee9a2f6b55ebf7dac185f8}{allocate\+\_\+node}} (\mbox{\hyperlink{namespacerapidxml_abb456db38f7efb746c4330eed6072a7c}{node\+\_\+type}} type, const Ch $\ast$name=0, const Ch $\ast$value=0, std\+::size\+\_\+t name\+\_\+size=0, std\+::size\+\_\+t value\+\_\+size=0)
+\item 
+\mbox{\hyperlink{classrapidxml_1_1xml__attribute}{xml\+\_\+attribute}}$<$ Ch $>$ $\ast$ \mbox{\hyperlink{classrapidxml_1_1memory__pool_a3de2a66c983336e006ea3844e244ed30}{allocate\+\_\+attribute}} (const Ch $\ast$name=0, const Ch $\ast$value=0, std\+::size\+\_\+t name\+\_\+size=0, std\+::size\+\_\+t value\+\_\+size=0)
+\item 
+Ch $\ast$ \mbox{\hyperlink{classrapidxml_1_1memory__pool_a171941b39d55b868358da97462185f58}{allocate\+\_\+string}} (const Ch $\ast$source=0, std\+::size\+\_\+t size=0)
+\item 
+\mbox{\hyperlink{classrapidxml_1_1xml__node}{xml\+\_\+node}}$<$ Ch $>$ $\ast$ \mbox{\hyperlink{classrapidxml_1_1memory__pool_a0a10679fc17597d339a0dc107f8a94ac}{clone\+\_\+node}} (const \mbox{\hyperlink{classrapidxml_1_1xml__node}{xml\+\_\+node}}$<$ Ch $>$ $\ast$source, \mbox{\hyperlink{classrapidxml_1_1xml__node}{xml\+\_\+node}}$<$ Ch $>$ $\ast$result=0)
+\item 
+void \mbox{\hyperlink{classrapidxml_1_1memory__pool_aad377c835fdaed1cb2cc9df194cf84e4}{clear}} ()
+\item 
+void \mbox{\hyperlink{classrapidxml_1_1memory__pool_a84d3d8d2cdfc00501e1dcf26d889ae03}{set\+\_\+allocator}} (alloc\+\_\+func $\ast$af, free\+\_\+func $\ast$ff)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Ch = char$>$\newline
+class rapidxml\+::memory\+\_\+pool$<$ Ch $>$}
+
+This class is used by the parser to create new nodes and attributes, without overheads of dynamic memory allocation. In most cases, you will not need to use this class directly. However, if you need to create nodes manually or modify names/values of nodes, you are encouraged to use \mbox{\hyperlink{classrapidxml_1_1memory__pool}{memory\+\_\+pool}} of relevant \mbox{\hyperlink{classrapidxml_1_1xml__document}{xml\+\_\+document}} to allocate the memory. Not only is this faster than allocating them by using {\ttfamily new} operator, but also their lifetime will be tied to the lifetime of document, possibly simplyfing memory management. ~\newline
+~\newline
+ Call \mbox{\hyperlink{classrapidxml_1_1memory__pool_a4118581c29ee9a2f6b55ebf7dac185f8}{allocate\+\_\+node()}} or \mbox{\hyperlink{classrapidxml_1_1memory__pool_a3de2a66c983336e006ea3844e244ed30}{allocate\+\_\+attribute()}} functions to obtain new nodes or attributes from the pool. You can also call \mbox{\hyperlink{classrapidxml_1_1memory__pool_a171941b39d55b868358da97462185f58}{allocate\+\_\+string()}} function to allocate strings. Such strings can then be used as names or values of nodes without worrying about their lifetime. Note that there is no {\ttfamily free()} function -- all allocations are freed at once when \mbox{\hyperlink{classrapidxml_1_1memory__pool_aad377c835fdaed1cb2cc9df194cf84e4}{clear()}} function is called, or when the pool is destroyed. ~\newline
+~\newline
+ It is also possible to create a standalone \mbox{\hyperlink{classrapidxml_1_1memory__pool}{memory\+\_\+pool}}, and use it to allocate nodes, whose lifetime will not be tied to any document. ~\newline
+~\newline
+ Pool maintains {\ttfamily R\+A\+P\+I\+D\+X\+M\+L\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+P\+O\+O\+L\+\_\+\+S\+I\+ZE} bytes of statically allocated memory. Until static memory is exhausted, no dynamic memory allocations are done. When static memory is exhausted, pool allocates additional blocks of memory of size {\ttfamily R\+A\+P\+I\+D\+X\+M\+L\+\_\+\+D\+Y\+N\+A\+M\+I\+C\+\_\+\+P\+O\+O\+L\+\_\+\+S\+I\+ZE} each, by using global {\ttfamily new\mbox{[}\mbox{]}} and {\ttfamily delete\mbox{[}\mbox{]}} operators. This behaviour can be changed by setting custom allocation routines. Use \mbox{\hyperlink{classrapidxml_1_1memory__pool_a84d3d8d2cdfc00501e1dcf26d889ae03}{set\+\_\+allocator()}} function to set them. ~\newline
+~\newline
+ Allocations for nodes, attributes and strings are aligned at {\ttfamily R\+A\+P\+I\+D\+X\+M\+L\+\_\+\+A\+L\+I\+G\+N\+M\+E\+NT} bytes. This value defaults to the size of pointer on target architecture. ~\newline
+~\newline
+ To obtain absolutely top performance from the parser, it is important that all nodes are allocated from a single, contiguous block of memory. Otherwise, cache misses when jumping between two (or more) disjoint blocks of memory can slow down parsing quite considerably. If required, you can tweak {\ttfamily R\+A\+P\+I\+D\+X\+M\+L\+\_\+\+S\+T\+A\+T\+I\+C\+\_\+\+P\+O\+O\+L\+\_\+\+S\+I\+ZE}, {\ttfamily R\+A\+P\+I\+D\+X\+M\+L\+\_\+\+D\+Y\+N\+A\+M\+I\+C\+\_\+\+P\+O\+O\+L\+\_\+\+S\+I\+ZE} and {\ttfamily R\+A\+P\+I\+D\+X\+M\+L\+\_\+\+A\+L\+I\+G\+N\+M\+E\+NT} to obtain best wasted memory to performance compromise. To do it, define their values before \mbox{\hyperlink{rapidxml_8hpp}{rapidxml.\+hpp}} file is included. 
+\begin{DoxyParams}{Parameters}
+{\em Ch} & Character type of created nodes. ~\newline
+ \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classrapidxml_1_1memory__pool_a0b609da81dff28a19ebd704400788429}\label{classrapidxml_1_1memory__pool_a0b609da81dff28a19ebd704400788429}} 
+\index{rapidxml::memory\_pool$<$ Ch $>$@{rapidxml::memory\_pool$<$ Ch $>$}!memory\_pool@{memory\_pool}}
+\index{memory\_pool@{memory\_pool}!rapidxml::memory\_pool$<$ Ch $>$@{rapidxml::memory\_pool$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{memory\_pool()}{memory\_pool()}}
+{\footnotesize\ttfamily template$<$class Ch  = char$>$ \\
+\mbox{\hyperlink{classrapidxml_1_1memory__pool}{rapidxml\+::memory\+\_\+pool}}$<$ Ch $>$\+::\mbox{\hyperlink{classrapidxml_1_1memory__pool}{memory\+\_\+pool}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs empty pool with default allocator functions. 
+
+\mbox{\Hypertarget{classrapidxml_1_1memory__pool_a0a3e82126e59e4077f41e933130bb5a0}\label{classrapidxml_1_1memory__pool_a0a3e82126e59e4077f41e933130bb5a0}} 
+\index{rapidxml::memory\_pool$<$ Ch $>$@{rapidxml::memory\_pool$<$ Ch $>$}!````~memory\_pool@{$\sim$memory\_pool}}
+\index{````~memory\_pool@{$\sim$memory\_pool}!rapidxml::memory\_pool$<$ Ch $>$@{rapidxml::memory\_pool$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{$\sim$memory\_pool()}{~memory\_pool()}}
+{\footnotesize\ttfamily template$<$class Ch  = char$>$ \\
+\mbox{\hyperlink{classrapidxml_1_1memory__pool}{rapidxml\+::memory\+\_\+pool}}$<$ Ch $>$\+::$\sim$\mbox{\hyperlink{classrapidxml_1_1memory__pool}{memory\+\_\+pool}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Destroys pool and frees all the memory. This causes memory occupied by nodes allocated by the pool to be freed. Nodes allocated from the pool are no longer valid. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classrapidxml_1_1memory__pool_a3de2a66c983336e006ea3844e244ed30}\label{classrapidxml_1_1memory__pool_a3de2a66c983336e006ea3844e244ed30}} 
+\index{rapidxml::memory\_pool$<$ Ch $>$@{rapidxml::memory\_pool$<$ Ch $>$}!allocate\_attribute@{allocate\_attribute}}
+\index{allocate\_attribute@{allocate\_attribute}!rapidxml::memory\_pool$<$ Ch $>$@{rapidxml::memory\_pool$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{allocate\_attribute()}{allocate\_attribute()}}
+{\footnotesize\ttfamily template$<$class Ch  = char$>$ \\
+\mbox{\hyperlink{classrapidxml_1_1xml__attribute}{xml\+\_\+attribute}}$<$Ch$>$$\ast$ \mbox{\hyperlink{classrapidxml_1_1memory__pool}{rapidxml\+::memory\+\_\+pool}}$<$ Ch $>$\+::allocate\+\_\+attribute (\begin{DoxyParamCaption}\item[{const Ch $\ast$}]{name = {\ttfamily 0},  }\item[{const Ch $\ast$}]{value = {\ttfamily 0},  }\item[{std\+::size\+\_\+t}]{name\+\_\+size = {\ttfamily 0},  }\item[{std\+::size\+\_\+t}]{value\+\_\+size = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Allocates a new attribute from the pool, and optionally assigns name and value to it. If the allocation request cannot be accomodated, this function will throw {\ttfamily std\+::bad\+\_\+alloc}. If exceptions are disabled by defining R\+A\+P\+I\+D\+X\+M\+L\+\_\+\+N\+O\+\_\+\+E\+X\+C\+E\+P\+T\+I\+O\+NS, this function will call rapidxml\+::parse\+\_\+error\+\_\+handler() function. 
+\begin{DoxyParams}{Parameters}
+{\em name} & Name to assign to the attribute, or 0 to assign no name. \\
+\hline
+{\em value} & Value to assign to the attribute, or 0 to assign no value. \\
+\hline
+{\em name\+\_\+size} & Size of name to assign, or 0 to automatically calculate size from name string. \\
+\hline
+{\em value\+\_\+size} & Size of value to assign, or 0 to automatically calculate size from value string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to allocated attribute. This pointer will never be N\+U\+LL. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classrapidxml_1_1memory__pool_a4118581c29ee9a2f6b55ebf7dac185f8}\label{classrapidxml_1_1memory__pool_a4118581c29ee9a2f6b55ebf7dac185f8}} 
+\index{rapidxml::memory\_pool$<$ Ch $>$@{rapidxml::memory\_pool$<$ Ch $>$}!allocate\_node@{allocate\_node}}
+\index{allocate\_node@{allocate\_node}!rapidxml::memory\_pool$<$ Ch $>$@{rapidxml::memory\_pool$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{allocate\_node()}{allocate\_node()}}
+{\footnotesize\ttfamily template$<$class Ch  = char$>$ \\
+\mbox{\hyperlink{classrapidxml_1_1xml__node}{xml\+\_\+node}}$<$Ch$>$$\ast$ \mbox{\hyperlink{classrapidxml_1_1memory__pool}{rapidxml\+::memory\+\_\+pool}}$<$ Ch $>$\+::allocate\+\_\+node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacerapidxml_abb456db38f7efb746c4330eed6072a7c}{node\+\_\+type}}}]{type,  }\item[{const Ch $\ast$}]{name = {\ttfamily 0},  }\item[{const Ch $\ast$}]{value = {\ttfamily 0},  }\item[{std\+::size\+\_\+t}]{name\+\_\+size = {\ttfamily 0},  }\item[{std\+::size\+\_\+t}]{value\+\_\+size = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Allocates a new node from the pool, and optionally assigns name and value to it. If the allocation request cannot be accomodated, this function will throw {\ttfamily std\+::bad\+\_\+alloc}. If exceptions are disabled by defining R\+A\+P\+I\+D\+X\+M\+L\+\_\+\+N\+O\+\_\+\+E\+X\+C\+E\+P\+T\+I\+O\+NS, this function will call rapidxml\+::parse\+\_\+error\+\_\+handler() function. 
+\begin{DoxyParams}{Parameters}
+{\em type} & Type of node to create. \\
+\hline
+{\em name} & Name to assign to the node, or 0 to assign no name. \\
+\hline
+{\em value} & Value to assign to the node, or 0 to assign no value. \\
+\hline
+{\em name\+\_\+size} & Size of name to assign, or 0 to automatically calculate size from name string. \\
+\hline
+{\em value\+\_\+size} & Size of value to assign, or 0 to automatically calculate size from value string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to allocated node. This pointer will never be N\+U\+LL. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classrapidxml_1_1memory__pool_a171941b39d55b868358da97462185f58}\label{classrapidxml_1_1memory__pool_a171941b39d55b868358da97462185f58}} 
+\index{rapidxml::memory\_pool$<$ Ch $>$@{rapidxml::memory\_pool$<$ Ch $>$}!allocate\_string@{allocate\_string}}
+\index{allocate\_string@{allocate\_string}!rapidxml::memory\_pool$<$ Ch $>$@{rapidxml::memory\_pool$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{allocate\_string()}{allocate\_string()}}
+{\footnotesize\ttfamily template$<$class Ch  = char$>$ \\
+Ch$\ast$ \mbox{\hyperlink{classrapidxml_1_1memory__pool}{rapidxml\+::memory\+\_\+pool}}$<$ Ch $>$\+::allocate\+\_\+string (\begin{DoxyParamCaption}\item[{const Ch $\ast$}]{source = {\ttfamily 0},  }\item[{std\+::size\+\_\+t}]{size = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Allocates a char array of given size from the pool, and optionally copies a given string to it. If the allocation request cannot be accomodated, this function will throw {\ttfamily std\+::bad\+\_\+alloc}. If exceptions are disabled by defining R\+A\+P\+I\+D\+X\+M\+L\+\_\+\+N\+O\+\_\+\+E\+X\+C\+E\+P\+T\+I\+O\+NS, this function will call rapidxml\+::parse\+\_\+error\+\_\+handler() function. 
+\begin{DoxyParams}{Parameters}
+{\em source} & String to initialize the allocated memory with, or 0 to not initialize it. \\
+\hline
+{\em size} & Number of characters to allocate, or zero to calculate it automatically from source string length; if size is 0, source string must be specified and null terminated. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to allocated char array. This pointer will never be N\+U\+LL. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classrapidxml_1_1memory__pool_aad377c835fdaed1cb2cc9df194cf84e4}\label{classrapidxml_1_1memory__pool_aad377c835fdaed1cb2cc9df194cf84e4}} 
+\index{rapidxml::memory\_pool$<$ Ch $>$@{rapidxml::memory\_pool$<$ Ch $>$}!clear@{clear}}
+\index{clear@{clear}!rapidxml::memory\_pool$<$ Ch $>$@{rapidxml::memory\_pool$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily template$<$class Ch  = char$>$ \\
+void \mbox{\hyperlink{classrapidxml_1_1memory__pool}{rapidxml\+::memory\+\_\+pool}}$<$ Ch $>$\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Clears the pool. This causes memory occupied by nodes allocated by the pool to be freed. Any nodes or strings allocated from the pool will no longer be valid. \mbox{\Hypertarget{classrapidxml_1_1memory__pool_a0a10679fc17597d339a0dc107f8a94ac}\label{classrapidxml_1_1memory__pool_a0a10679fc17597d339a0dc107f8a94ac}} 
+\index{rapidxml::memory\_pool$<$ Ch $>$@{rapidxml::memory\_pool$<$ Ch $>$}!clone\_node@{clone\_node}}
+\index{clone\_node@{clone\_node}!rapidxml::memory\_pool$<$ Ch $>$@{rapidxml::memory\_pool$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{clone\_node()}{clone\_node()}}
+{\footnotesize\ttfamily template$<$class Ch  = char$>$ \\
+\mbox{\hyperlink{classrapidxml_1_1xml__node}{xml\+\_\+node}}$<$Ch$>$$\ast$ \mbox{\hyperlink{classrapidxml_1_1memory__pool}{rapidxml\+::memory\+\_\+pool}}$<$ Ch $>$\+::clone\+\_\+node (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classrapidxml_1_1xml__node}{xml\+\_\+node}}$<$ Ch $>$ $\ast$}]{source,  }\item[{\mbox{\hyperlink{classrapidxml_1_1xml__node}{xml\+\_\+node}}$<$ Ch $>$ $\ast$}]{result = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Clones an \mbox{\hyperlink{classrapidxml_1_1xml__node}{xml\+\_\+node}} and its hierarchy of child nodes and attributes. Nodes and attributes are allocated from this memory pool. Names and values are not cloned, they are shared between the clone and the source. Result node can be optionally specified as a second parameter, in which case its contents will be replaced with cloned source node. This is useful when you want to clone entire document. 
+\begin{DoxyParams}{Parameters}
+{\em source} & Node to clone. \\
+\hline
+{\em result} & Node to put results in, or 0 to automatically allocate result node \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to cloned node. This pointer will never be N\+U\+LL. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classrapidxml_1_1memory__pool_a84d3d8d2cdfc00501e1dcf26d889ae03}\label{classrapidxml_1_1memory__pool_a84d3d8d2cdfc00501e1dcf26d889ae03}} 
+\index{rapidxml::memory\_pool$<$ Ch $>$@{rapidxml::memory\_pool$<$ Ch $>$}!set\_allocator@{set\_allocator}}
+\index{set\_allocator@{set\_allocator}!rapidxml::memory\_pool$<$ Ch $>$@{rapidxml::memory\_pool$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{set\_allocator()}{set\_allocator()}}
+{\footnotesize\ttfamily template$<$class Ch  = char$>$ \\
+void \mbox{\hyperlink{classrapidxml_1_1memory__pool}{rapidxml\+::memory\+\_\+pool}}$<$ Ch $>$\+::set\+\_\+allocator (\begin{DoxyParamCaption}\item[{alloc\+\_\+func $\ast$}]{af,  }\item[{free\+\_\+func $\ast$}]{ff }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Sets or resets the user-\/defined memory allocation functions for the pool. This can only be called when no memory is allocated from the pool yet, otherwise results are undefined. Allocation function must not return invalid pointer on failure. It should either throw, stop the program, or use {\ttfamily longjmp()} function to pass control to other place of program. If it returns invalid pointer, results are undefined. ~\newline
+~\newline
+ User defined allocation functions must have the following forms\+: ~\newline
+{\ttfamily  ~\newline
+void $\ast$allocate(std\+::size\+\_\+t size); ~\newline
+void free(void $\ast$pointer); }~\newline
+ 
+\begin{DoxyParams}{Parameters}
+{\em af} & Allocation function, or 0 to restore default function \\
+\hline
+{\em ff} & Free function, or 0 to restore default function \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Valars/\+Documents/\+Git\+Hub/\+P-\/\+A\+N\+D\+R\+O\+I\+D\+E-\/\+Construction-\/\+Automatique-\/de-\/planning/src/rapid\+Xml/\mbox{\hyperlink{rapidxml_8hpp}{rapidxml.\+hpp}}\end{DoxyCompactItemize}

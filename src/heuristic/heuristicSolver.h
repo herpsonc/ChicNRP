@@ -31,7 +31,7 @@ public:
 	static Model getNeighborSwap(Model* m, int range);
 	static Model getneighborRandom(Model* m, int range);
 	static Model iterative(const Model m, int nbPop, int nbGen, int range);
-	static Model iterative2(const Model m, int nbIte, int range);
+	static Model iterative2(const Model m, int nbIte, int range, int limitTime);
 	static Model iterative2Fast(const Model m, int nbIte, int range);
 };
 

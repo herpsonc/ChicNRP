@@ -37,34 +37,28 @@ Valuation& Valuation::operator=(const Valuation& obj)
 
 }
 
+//! \return score score of the Valuation
 const int& Valuation::getScore()
 {
 	return score;
 }
 
+//! \param score score to set
 void Valuation::setScore(const int score)
 {
 	this->score = score;
 }
 
+//! \return hoursMonth vector of worked hours in the month for each Agent
 const std::vector<std::vector<int>>& Valuation::getHoursMonth()
 {
 	return hoursMonth;
 }
 
+//! \param h hoursMonth to set
 void Valuation::setHoursMonth(const std::vector<std::vector<int>> h)
 {
 	hoursMonth = h;
-}
-
-const std::vector<std::vector<std::array<int, 6>>>& Valuation::getHoursWeeks()
-{
-	return hoursWeeks;
-}
-
-void Valuation::setHoursWeeks(const std::vector<std::vector<std::array<int, 6>>> hoursWeeks)
-{
-	this->hoursWeeks = hoursWeeks;
 }
 
 const std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>>& Valuation::getDaySeq()

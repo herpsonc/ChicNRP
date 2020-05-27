@@ -39,6 +39,14 @@ Model heuristicSolver::greedy(const Model m) {
 
 			//On récupère les postes necessaires pour le jour day
 			auto required = s->getPostRequired()[day];
+
+			//On check si certains postes ne sont pas déjà attribuées
+			for (auto a : v) {
+				if (a->getCalendar()[i] != NULL && required.find(a->getCalendar()[i]) != required.end()) {
+					required[a->getCalendar()[i]] -= 1;
+				}
+			}
+
 			for(auto a : v){
 
 				//Si la journée est affecté à aucun poste
@@ -579,9 +587,11 @@ Model heuristicSolver::iterative2Fast(const Model m, int nbIte, int range)
 	return bestModel;
 }
 
-Model heuristicSolver::iterative2(const Model m, int nbIte, int range)
+Model heuristicSolver::iterative2(const Model m, int nbIte, int range, int limitTime)
 {
 	auto chronoStart = chrono::system_clock::now();
+	auto chronoBest = chrono::system_clock::now();
+	int iteBest = 0;
 	srand(time(0));
 	Model currentModel = greedy(m);
 	Model bestModel = currentModel;
@@ -609,6 +619,8 @@ Model heuristicSolver::iterative2(const Model m, int nbIte, int range)
 		if (nextScore > bestScore) {
 			bestModel = nextModel;
 			bestScore = nextScore;
+			chronoBest = chrono::system_clock::now();
+			iteBest = j;
 		}
 		//cout << nextScore << " " << bestScore << " " <<currentScore <<endl;
 		if (nextScore > currentScore) {
@@ -635,11 +647,18 @@ Model heuristicSolver::iterative2(const Model m, int nbIte, int range)
 			}
 		}
 
+		auto chrono = chrono::system_clock::now();
+		if ((chrono - chronoStart).count() / 10000000 > limitTime) {
+			cout << "Temps depasse." << " Iteration " << j << endl;
+			break;
+		}
+
 	}
 
 	auto chronoEnd = chrono::system_clock::now();
 
 	cout << bestScore << " en " << (chronoEnd - chronoStart).count() / 10000000 << " secondes" << endl;
+	cout << "Meilleur trouve a " << iteBest << " iterations en " << (chronoBest - chronoStart).count() / 10000000 << "secondes" << endl;
 
 	return bestModel;
 }

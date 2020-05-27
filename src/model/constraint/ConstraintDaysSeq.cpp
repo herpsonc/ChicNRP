@@ -22,8 +22,9 @@ ConstraintDaysSeq::ConstraintDaysSeq(vector<string> seq, int priority) {
 }
 
 ConstraintDaysSeq::~ConstraintDaysSeq() {
-	// TODO Auto-generated destructor stub
 }
+
+//! \return priority priority of the constraint
 
 int ConstraintDaysSeq::getPriority()
 {

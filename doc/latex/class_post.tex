@@ -1,0 +1,205 @@
+\hypertarget{class_post}{}\doxysection{Post Class Reference}
+\label{class_post}\index{Post@{Post}}
+
+
+{\ttfamily \#include $<$Post.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_post_a1327e448954d596eda1868d3badb5892}{Post}} ()
+\item 
+\mbox{\hyperlink{class_post_adb68d23fcd516805380a581153bb3cd0}{Post}} (string \mbox{\hyperlink{class_post_adc42a1d3983a239f94b29329e3dd618b}{id}}, float \mbox{\hyperlink{class_post_afe1a000cdc18871d345e19123cd8eb0a}{time}})
+\item 
+virtual \mbox{\hyperlink{class_post_a6c1e585c0adb3220a154ba20d2144ae1}{$\sim$\+Post}} ()
+\item 
+const string \& \mbox{\hyperlink{class_post_a6802891f4973cbcaf3b4dbfc07fbc1d4}{get\+Id}} () const
+\item 
+void \mbox{\hyperlink{class_post_a5cea9ceee2cbfe9fe037e8c46746f93b}{set\+Id}} (const string \&\mbox{\hyperlink{class_post_adc42a1d3983a239f94b29329e3dd618b}{id}})
+\item 
+float \mbox{\hyperlink{class_post_a4e8c763bde966880cd8e83b6c913f864}{get\+Time}} () const
+\item 
+void \mbox{\hyperlink{class_post_a106644f72d06667fc577356f308ee928}{set\+Time}} (float \mbox{\hyperlink{class_post_afe1a000cdc18871d345e19123cd8eb0a}{time}})
+\item 
+const vector$<$ \mbox{\hyperlink{class_constraint}{Constraint}} $\ast$ $>$ \& \mbox{\hyperlink{class_post_a62d1003dfbd95d036bf4f0b4f185b5e2}{get\+Constraints}} () const
+\item 
+void \mbox{\hyperlink{class_post_aca4592459d00915d381989d8e5adfb55}{set\+Constraints}} (const vector$<$ \mbox{\hyperlink{class_constraint}{Constraint}} $\ast$ $>$ \&\mbox{\hyperlink{class_post_a1079001c2c732eea193753bf29ce5c64}{constraints}})
+\item 
+void \mbox{\hyperlink{class_post_a7a14c6b045cbcf8e32489f6e569576c1}{add\+Constraint}} (\mbox{\hyperlink{class_constraint}{Constraint}} $\ast$constraint)
+\item 
+const vector$<$ string $>$ \& \mbox{\hyperlink{class_post_ad657d9b10e34ac5d19b72c2726b6cde6}{get\+Attributs}} () const
+\item 
+void \mbox{\hyperlink{class_post_a58b1ebc26ddbdc6820738b433f16541d}{set\+Attributs}} (const vector$<$ string $>$ \&\mbox{\hyperlink{class_post_a7ab2e632ae44a83d9036d80e54c5fbd0}{attributs}})
+\item 
+void \mbox{\hyperlink{class_post_a71a6090a89ad63afc413b50bf47ec3d0}{add\+Attribut}} (string attribut)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_post_adc42a1d3983a239f94b29329e3dd618b}{id}}
+\item 
+float \mbox{\hyperlink{class_post_afe1a000cdc18871d345e19123cd8eb0a}{time}}
+\item 
+vector$<$ string $>$ \mbox{\hyperlink{class_post_a7ab2e632ae44a83d9036d80e54c5fbd0}{attributs}}
+\item 
+vector$<$ \mbox{\hyperlink{class_constraint}{Constraint}} $\ast$ $>$ \mbox{\hyperlink{class_post_a1079001c2c732eea193753bf29ce5c64}{constraints}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_post_a1327e448954d596eda1868d3badb5892}\label{class_post_a1327e448954d596eda1868d3badb5892}} 
+\index{Post@{Post}!Post@{Post}}
+\index{Post@{Post}!Post@{Post}}
+\doxysubsubsection{\texorpdfstring{Post()}{Post()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Post\+::\+Post (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_post_adb68d23fcd516805380a581153bb3cd0}\label{class_post_adb68d23fcd516805380a581153bb3cd0}} 
+\index{Post@{Post}!Post@{Post}}
+\index{Post@{Post}!Post@{Post}}
+\doxysubsubsection{\texorpdfstring{Post()}{Post()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Post\+::\+Post (\begin{DoxyParamCaption}\item[{string}]{id,  }\item[{float}]{time }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_post_a6c1e585c0adb3220a154ba20d2144ae1}\label{class_post_a6c1e585c0adb3220a154ba20d2144ae1}} 
+\index{Post@{Post}!````~Post@{$\sim$Post}}
+\index{````~Post@{$\sim$Post}!Post@{Post}}
+\doxysubsubsection{\texorpdfstring{$\sim$Post()}{~Post()}}
+{\footnotesize\ttfamily Post\+::$\sim$\+Post (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_post_a71a6090a89ad63afc413b50bf47ec3d0}\label{class_post_a71a6090a89ad63afc413b50bf47ec3d0}} 
+\index{Post@{Post}!addAttribut@{addAttribut}}
+\index{addAttribut@{addAttribut}!Post@{Post}}
+\doxysubsubsection{\texorpdfstring{addAttribut()}{addAttribut()}}
+{\footnotesize\ttfamily void Post\+::add\+Attribut (\begin{DoxyParamCaption}\item[{string}]{attribut }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em attribut} & attribut to add \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_post_a7a14c6b045cbcf8e32489f6e569576c1}\label{class_post_a7a14c6b045cbcf8e32489f6e569576c1}} 
+\index{Post@{Post}!addConstraint@{addConstraint}}
+\index{addConstraint@{addConstraint}!Post@{Post}}
+\doxysubsubsection{\texorpdfstring{addConstraint()}{addConstraint()}}
+{\footnotesize\ttfamily void Post\+::add\+Constraint (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_constraint}{Constraint}} $\ast$}]{constraint }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em constraint} & \mbox{\hyperlink{class_constraint}{Constraint}} to add \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_post_ad657d9b10e34ac5d19b72c2726b6cde6}\label{class_post_ad657d9b10e34ac5d19b72c2726b6cde6}} 
+\index{Post@{Post}!getAttributs@{getAttributs}}
+\index{getAttributs@{getAttributs}!Post@{Post}}
+\doxysubsubsection{\texorpdfstring{getAttributs()}{getAttributs()}}
+{\footnotesize\ttfamily const vector$<$ string $>$ \& Post\+::get\+Attributs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+attributs vector of attributs of the \mbox{\hyperlink{class_post}{Post}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_post_a62d1003dfbd95d036bf4f0b4f185b5e2}\label{class_post_a62d1003dfbd95d036bf4f0b4f185b5e2}} 
+\index{Post@{Post}!getConstraints@{getConstraints}}
+\index{getConstraints@{getConstraints}!Post@{Post}}
+\doxysubsubsection{\texorpdfstring{getConstraints()}{getConstraints()}}
+{\footnotesize\ttfamily const vector$<$ \mbox{\hyperlink{class_constraint}{Constraint}} $\ast$ $>$ \& Post\+::get\+Constraints (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+constraints vector of \mbox{\hyperlink{class_constraint}{Constraint}} of the \mbox{\hyperlink{class_post}{Post}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_post_a6802891f4973cbcaf3b4dbfc07fbc1d4}\label{class_post_a6802891f4973cbcaf3b4dbfc07fbc1d4}} 
+\index{Post@{Post}!getId@{getId}}
+\index{getId@{getId}!Post@{Post}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily const string \& Post\+::get\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+id id of the \mbox{\hyperlink{class_post}{Post}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_post_a4e8c763bde966880cd8e83b6c913f864}\label{class_post_a4e8c763bde966880cd8e83b6c913f864}} 
+\index{Post@{Post}!getTime@{getTime}}
+\index{getTime@{getTime}!Post@{Post}}
+\doxysubsubsection{\texorpdfstring{getTime()}{getTime()}}
+{\footnotesize\ttfamily float Post\+::get\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+time working time of the \mbox{\hyperlink{class_post}{Post}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_post_a58b1ebc26ddbdc6820738b433f16541d}\label{class_post_a58b1ebc26ddbdc6820738b433f16541d}} 
+\index{Post@{Post}!setAttributs@{setAttributs}}
+\index{setAttributs@{setAttributs}!Post@{Post}}
+\doxysubsubsection{\texorpdfstring{setAttributs()}{setAttributs()}}
+{\footnotesize\ttfamily void Post\+::set\+Attributs (\begin{DoxyParamCaption}\item[{const vector$<$ string $>$ \&}]{attributs }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em attributs} & attributs to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_post_aca4592459d00915d381989d8e5adfb55}\label{class_post_aca4592459d00915d381989d8e5adfb55}} 
+\index{Post@{Post}!setConstraints@{setConstraints}}
+\index{setConstraints@{setConstraints}!Post@{Post}}
+\doxysubsubsection{\texorpdfstring{setConstraints()}{setConstraints()}}
+{\footnotesize\ttfamily void Post\+::set\+Constraints (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{class_constraint}{Constraint}} $\ast$ $>$ \&}]{constraints }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em constraints} & \mbox{\hyperlink{class_constraint}{Constraint}} to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_post_a5cea9ceee2cbfe9fe037e8c46746f93b}\label{class_post_a5cea9ceee2cbfe9fe037e8c46746f93b}} 
+\index{Post@{Post}!setId@{setId}}
+\index{setId@{setId}!Post@{Post}}
+\doxysubsubsection{\texorpdfstring{setId()}{setId()}}
+{\footnotesize\ttfamily void Post\+::set\+Id (\begin{DoxyParamCaption}\item[{const string \&}]{id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & id to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_post_a106644f72d06667fc577356f308ee928}\label{class_post_a106644f72d06667fc577356f308ee928}} 
+\index{Post@{Post}!setTime@{setTime}}
+\index{setTime@{setTime}!Post@{Post}}
+\doxysubsubsection{\texorpdfstring{setTime()}{setTime()}}
+{\footnotesize\ttfamily void Post\+::set\+Time (\begin{DoxyParamCaption}\item[{float}]{time }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em time} & set time of the \mbox{\hyperlink{class_post}{Post}} \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_post_a7ab2e632ae44a83d9036d80e54c5fbd0}\label{class_post_a7ab2e632ae44a83d9036d80e54c5fbd0}} 
+\index{Post@{Post}!attributs@{attributs}}
+\index{attributs@{attributs}!Post@{Post}}
+\doxysubsubsection{\texorpdfstring{attributs}{attributs}}
+{\footnotesize\ttfamily vector$<$string$>$ Post\+::attributs\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_post_a1079001c2c732eea193753bf29ce5c64}\label{class_post_a1079001c2c732eea193753bf29ce5c64}} 
+\index{Post@{Post}!constraints@{constraints}}
+\index{constraints@{constraints}!Post@{Post}}
+\doxysubsubsection{\texorpdfstring{constraints}{constraints}}
+{\footnotesize\ttfamily vector$<$\mbox{\hyperlink{class_constraint}{Constraint}}$\ast$$>$ Post\+::constraints\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_post_adc42a1d3983a239f94b29329e3dd618b}\label{class_post_adc42a1d3983a239f94b29329e3dd618b}} 
+\index{Post@{Post}!id@{id}}
+\index{id@{id}!Post@{Post}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily string Post\+::id\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_post_afe1a000cdc18871d345e19123cd8eb0a}\label{class_post_afe1a000cdc18871d345e19123cd8eb0a}} 
+\index{Post@{Post}!time@{time}}
+\index{time@{time}!Post@{Post}}
+\doxysubsubsection{\texorpdfstring{time}{time}}
+{\footnotesize\ttfamily float Post\+::time\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Valars/\+Documents/\+Git\+Hub/\+P-\/\+A\+N\+D\+R\+O\+I\+D\+E-\/\+Construction-\/\+Automatique-\/de-\/planning/src/model/\mbox{\hyperlink{_post_8h}{Post.\+h}}\item 
+C\+:/\+Users/\+Valars/\+Documents/\+Git\+Hub/\+P-\/\+A\+N\+D\+R\+O\+I\+D\+E-\/\+Construction-\/\+Automatique-\/de-\/planning/src/model/\mbox{\hyperlink{_post_8cpp}{Post.\+cpp}}\end{DoxyCompactItemize}
