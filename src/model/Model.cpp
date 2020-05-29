@@ -356,11 +356,17 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 
 		if (nbPostsPerService == -1) {
 			if (i != nbServices - 1 && nbPostsAvailable >= 2) {
-				nbPostsService_i = 2 + rand() % (nbPostsAvailable / 2); //au moins 2 postes par service (nbPosts est donc approximatif)
+				nbPostsService_i = rand() % (nbPostsAvailable / nbServices); //nbPosts entre 0 (2 en réalité) et nb total des posts/nbServices pour essayer d'avoir quelque chose d'équilibré
 			}
 			else { //si c'est le dernier service : lui attribuer tous les posts restants
 				nbPostsService_i = nbPostsAvailable; //risque d'avoir bcp + de posts dans le dernier service
 			}
+		}
+
+		cout << nbPostsService_i << endl;
+
+		if (nbPostsService_i < 2) {
+			nbPostsService_i = 2; //empêche d'avoir des services sans postes mais => non respect de la valeur nbPosts des fois
 		}
 
 		//pour chaque post qui sera dans ce service

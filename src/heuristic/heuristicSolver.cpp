@@ -352,7 +352,6 @@ Valuation heuristicSolver::checkValuation(Model* m) {
 
 	v.setScore(score);
 	v.setHoursMonth(hoursMonth);
-	v.setHoursWeeks(hoursWeeks);
 	v.sethoursWeekSlide(hoursWeeksSlide);
 	v.setImpossiblePosts(impossiblePosts);
 	v.setDaySeq(daySeq);
