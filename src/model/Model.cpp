@@ -315,6 +315,14 @@ vector<Constraint*> Model::createConstraints() {
 	return constraints;
 }
 
+//raccourci pour attribuer les contraintes à un service via createConstraints
+void Model::addBasicConstraintsTo(Service* s) {
+	vector<Constraint*> cs = this->createConstraints();
+	for each (auto cons in cs){
+		s->addConstraint(cons);
+	}
+}
+
 Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService, int nbPostsPerService, int proba_1er_conge, int proba_suite_conge) {
 	/*
 	Si nbPostsPerService est indiqué, le nombre nbPosts ne sera pas respecté si nbPosts < nbPostsPerService*nbServices
