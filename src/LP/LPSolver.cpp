@@ -79,7 +79,7 @@ Model LPSolver::linearProgram(const Model mo) {
 							fileIdVar << "X_a" << a->getId() << ",j" << day + 1 << "," << job->getId() << "= _var" << id_var << "_" << endl;
 
 							//job->getTime() possible au lieu de 1.0 pour le coefficient des vars dans la fonction objectif
-							SCIPcreateVar(scip, &var, NULL, 0.0, 1.0, 1.0, SCIP_VARTYPE_BINARY, TRUE, FALSE, NULL, NULL, NULL, NULL, NULL);
+							SCIPcreateVar(scip, &var, NULL, 0.0, 1.0, job->getTime(), SCIP_VARTYPE_BINARY, TRUE, FALSE, NULL, NULL, NULL, NULL, NULL);
 							SCIPaddVar(scip, var);
 
 							varsData.push_back(new VariableData(var, id_var, day, a, job));
