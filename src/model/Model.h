@@ -68,6 +68,7 @@ public:
 	void resetSwapLog();
 
 	std::vector<Constraint*> Model::createConstraints();
+	void Model::addBasicConstraintsTo(Service* s);
 	static Model generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService = -1, int nbPostsPerService = -1, int proba_1er_conge = -1, int proba_suite_conge = -1);
 
 	void generateXML(string fileName);
