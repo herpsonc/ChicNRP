@@ -53,7 +53,6 @@ public:
 	void setNbHoursWeek(float nbHoursWeek);
 
 	float getWorkingHoursMonth();
-	float getWorkingHoursWeek(Day day, int weekI);
 
 	int checkWorkingHoursWeek(bool log);
 	void checkWorkingHoursWeekFast(Valuation* val, int idService, int day, int idA);

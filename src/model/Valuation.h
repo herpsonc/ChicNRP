@@ -19,9 +19,6 @@ public:
 	const std::vector<std::vector<int>>& getHoursMonth();
 	void setHoursMonth(const std::vector<std::vector<int>> h);
 
-	const std::vector<std::vector<std::array<int, 6>>>& getHoursWeeks();
-	void setHoursWeeks(const std::vector<std::vector<std::array<int, 6>>> hoursWeeks);
-
 	const std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>>& getDaySeq();
 	void setDaySeq(const std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>> daySeq);
 

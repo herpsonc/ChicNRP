@@ -7,6 +7,7 @@
 
 #include "Constraint.h"
 
+//! \return priority priority of the constraint
 int Constraint::getPriority()
 {
     return 0;

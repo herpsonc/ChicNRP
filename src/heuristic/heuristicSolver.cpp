@@ -352,7 +352,6 @@ Valuation heuristicSolver::checkValuation(Model* m) {
 
 	v.setScore(score);
 	v.setHoursMonth(hoursMonth);
-	v.setHoursWeeks(hoursWeeks);
 	v.sethoursWeekSlide(hoursWeeksSlide);
 	v.setImpossiblePosts(impossiblePosts);
 	v.setDaySeq(daySeq);
@@ -624,7 +623,7 @@ Model heuristicSolver::iterative2(const Model m, int nbIte, int range, int limit
 		}
 		//cout << nextScore << " " << bestScore << " " <<currentScore <<endl;
 		if (nextScore > currentScore) {
-			//80% de chance de choisir le nouveau model
+			//90% de chance de choisir le nouveau model
 			int randI = rand() % 1000;
 			if (randI < 900) {
 				currentModel = nextModel;
@@ -632,7 +631,7 @@ Model heuristicSolver::iterative2(const Model m, int nbIte, int range, int limit
 			}
 		}
 		else {
-			//20% de chance de choisir le nouveau candidat même si il est moins bon
+			//10% de chance de choisir le nouveau candidat même si il est moins bon
 			int randI = rand() % 1000;
 			if (randI > 998) {
 				currentModel = nextModel;

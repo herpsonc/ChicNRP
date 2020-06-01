@@ -798,3 +798,109 @@ void Model::loadXML(string fileName){
 		}
 	}
 }
+
+void Model::generateXlsx(string fileName)
+{
+	ofstream res;
+	// A RECUPERER DE L'INSTANCE
+	string mois = "mois";
+	string line = " ";
+
+	res.open(fileName);
+
+	res << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+	res << "<Workbook xmlns=\"urn:schemas-microsoft-com:office:spreadsheet\"\nxmlns:o=\"urn:schemas-microsoft-com:office:office\"\nxmlns:x=\"urn:schemas-microsoft-com:office:excel\"\nxmlns:ss=\"urn:schemas-microsoft-com:office:spreadsheet\"\nxmlns:html=\"http://www.w3.org/TR/REC-html40\">";
+	res << "<Styles>";
+	// Style pour repos : case blanche
+	res << "<Style ss:ID=\"Default\" ss:Name=\"Repos\">\n<Alignment ss:Horizontal=\"Center\" ss:Vertical=\"Center\"/>\n<Borders>\n<Border ss:Position=\"Bottom\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Left\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Right\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Top\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n</Borders>\n<Font ss:FontName=\"Calibri\" x:Family=\"Swiss\" ss:Size=\"11\" ss:Color=\"#000000\"/>\n<Interior ss:Color=\"#FFFFFF\" ss:Pattern=\"Solid\"/>\n</Style>";
+	// Style pour w-e : case rose pale
+	res << "<Style ss:ID=\"we\" ss:Name=\"Week-End\">\n<Alignment ss:Horizontal=\"Center\" ss:Vertical=\"Center\"/>\n<Borders>\n<Border ss:Position=\"Bottom\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Left\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Right\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Top\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n</Borders>\n<Font ss:FontName=\"Calibri\" x:Family=\"Swiss\" ss:Size=\"11\" ss:Color=\"#000000\"/>\n<Interior ss:Color=\"#F7D9F7\" ss:Pattern=\"Solid\"/>\n</Style>";
+	// Style pour CA : case gris foncé
+	//res << "<Style ss:ID=\"ca\" ss:Name=\"Congé\">\n<Alignment ss:Horizontal=\"Center\" ss:Vertical=\"Center\"/>\n<Borders>\n<Border ss:Position=\"Bottom\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Left\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Right\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Top\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n</Borders>\n<Font ss:FontName=\"Calibri\" x:Family=\"Swiss\" ss:Size=\"11\" ss:Color=\"#000000\"/>\n<Interior ss:Color=\"#888888\" ss:Pattern=\"Solid\"/>\n</Style>";
+	// Style pour les dates+jours : case rouge
+	res << "<Style ss:ID=\"setup\" ss:Name=\"Setup\">\n<Alignment ss:Horizontal=\"Center\" ss:Vertical=\"Center\"/>\n<Borders>\n<Border ss:Position=\"Bottom\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Left\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Right\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Top\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n</Borders>\n<Font ss:FontName=\"Calibri\" x:Family=\"Swiss\" ss:Size=\"11\" ss:Color=\"#000000\" ss:Bold=\"1\"/>\n<Interior ss:Color=\"#FF0000\" ss:Pattern=\"Solid\"/>\n</Style>";
+	// Style pour les jours travaillés : case gris clair
+	res << "<Style ss:ID=\"work\" ss:Name=\"Travail\">\n<Alignment ss:Horizontal=\"Center\" ss:Vertical=\"Center\"/>\n<Borders>\n<Border ss:Position=\"Bottom\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Left\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Right\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Top\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n</Borders>\n<Font ss:FontName=\"Calibri\" x:Family=\"Swiss\" ss:Size=\"11\" ss:Color=\"#000000\"/>\n<Interior ss:Color=\"#E0E0E0\" ss:Pattern=\"Solid\"/>\n</Style>";
+	
+	res << "</Styles>\n";
+	res << "<Worksheet ss:Name =\"" << mois << "\">";
+	res << "<Table>";
+
+	
+	for (auto service : services) {
+		res << "<Row>\n";
+		res << "<Cell ss:StyleID=\"Default\"><Data ss:Type=\"String\">" << service->getId() << "</Data></Cell>\n";
+		res << "</Row\n>";
+		res << "<Row>\n";
+		res << "<Cell ss:StyleID=\"Default\"><Data ss:Type=\"String\">Dates</Data></Cell>\n";
+		// RECUPERER NB JOURS DU MOIS
+		for (int i = 1; i <= nbDays; i++) {
+			res << "<Cell ss:StyleID=\"Default\"><Data ss:Type=\"Number\">" << i << "</Data></Cell>\n";
+		}
+		res << "</Row>\n";
+
+		res << "<Row>\n";
+		res << "<Cell ss:StyleID=\"Default\"><Data ss:Type=\"String\">Jours</Data></Cell>\n";
+
+		auto currentDay = firstDay;
+		for (int i = 0; i < nbDays; i++) {
+			res << "<Cell ss:StyleID=\"Default\"><Data ss:Type=\"String\">";
+			switch (currentDay) {
+			case Monday:
+				res << "M";
+				break;
+			case Tuesday:
+				res << "T";
+				break;
+			case Wednesday:
+				res << "W";
+				break;
+			case Thursday:
+				res << "T";
+				break;
+			case Friday:
+				res << "F";
+				break;
+			case Saturday:
+				res << "S";
+				break;
+			case Sunday:
+				res << "S";
+				break;
+			default:
+				res << "";
+				break;
+			}
+			res << "</Data></Cell>\n";
+			currentDay = getNextDay(currentDay);
+		}
+		res << "</Row>\n";
+
+		// RECUPERER LE NOMBRE D'AGENTS
+		auto lAgents = agents[service];
+		for (auto agent : lAgents) {
+			res << "<Row>\n";
+			res << "<Cell ss:StyleID=\"Default\"><Data ss:Type=\"String\">" << "Agent " << agent->getId() << "</Data></Cell>\n";
+
+			for (int i = 0; i < nbDays; i++) {
+				res << "<Cell ss:StyleID=\"Default\"><Data ss:Type=\"String\">";
+				auto p = agent->getCalendar()[i];
+				if (p != NULL)
+					res << p->getId();
+				else
+					res << " ";
+
+				res << "</Data></Cell>\n";
+			}
+			res << "</Row>\n";
+		}
+		res << "<Row>\n</Row>\n";
+		res << "<Row>\n</Row>\n";
+	}
+
+	res << "</Table>";
+	res << "</Worksheet>";
+	res << "</Workbook>";
+
+	res.close();
+}

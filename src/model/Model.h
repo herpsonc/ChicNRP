@@ -72,6 +72,7 @@ public:
 
 	void generateXML(string fileName);
 	void loadXML(string fileName);
+	void generateXlsx(string fileName);
 
 protected:
 	Day firstDay;

@@ -33,6 +33,7 @@ void addConsecutiveSamePost(Agent* a, Post* p, int d_start, int d_end) {
 Model generateGhr() {
 
 		//Creation du model pour le service GHR
+
 		Model m = Model(Day::Sunday, 31, 25);
 
 		Service* ghr = new Service("GHR");
@@ -193,7 +194,7 @@ Model generateGhr() {
 
 		Agent* a40 = new Agent("40", nbHoursMonth, nbHoursWeek, Status::Confirmed);
 		a40->setService(ghr);
-		//a40->setCalendarDay(ca,0, true);
+		a40->setCalendarDay(ca,0, true);
 		m.addAgent(a40,ghr);
 
 		Agent* a49 = new Agent("49", nbHoursMonth, nbHoursWeek, Status::Confirmed);
@@ -412,16 +413,19 @@ int main() {
 	//Important pour initialiser l'aléatoire
 	srand(time(0));
 
-	/*Model m =  generateGhr();
-	m.generateXML("test.xml");*/
-	Model m2 = Model(Tuesday,31,60);
-	m2.loadXML("servicesGrands.xml");
-	m2.printPlanning();
+	Model m =  generateGhr();
+	auto m2 = addServiceSDC(m);
+	//m.generateXML("test.xml");
+	//Model m2 = Model(Tuesday,31,60);
+	//m2.loadXML("servicesGrands.xml");
+	//auto m2 = heuristicSolver::greedy(m);
+	//m2.printPlanning();
 	//auto m3 = heuristicSolver::greedy(m2);
 
-	auto m3 = heuristicSolver::iterative2(m2, 100000, 5, 900);
+	auto m3 = heuristicSolver::iterative2(m2, 1000, 5, 900);
 	m3.printPlanning();
 	heuristicSolver::check(&m3, false, true);
+	m3.generateXlsx("solution.xlsx");
 
 
 	//auto m3 = heuristicSolver::greedy(m2);

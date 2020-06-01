@@ -61,56 +61,67 @@ void Valuation::setHoursMonth(const std::vector<std::vector<int>> h)
 	hoursMonth = h;
 }
 
+//! \return daySeq vector with informations about where the ConstraintDaysSeq is broken
 const std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>>& Valuation::getDaySeq()
 {
 	return daySeq;
 }
 
+//! \param daySeq daySeq to set
 void Valuation::setDaySeq(const std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>> daySeq)
 {
 	this->daySeq = daySeq;
 }
 
+//! \return hoursWeekSlide vector with the intervals of days where the constraint about the week hours is broken
 const std::vector<std::vector<std::vector<std::pair<int, int>>>>& Valuation::gethoursWeekSlide()
 {
 	return hoursWeekSlide;
 }
 
+//! \param hoursWeekSlide hoursWeekSlide to set
 void Valuation::sethoursWeekSlide(const std::vector<std::vector<std::vector<std::pair<int, int>>>> hoursWeekSlide)
 {
 	this->hoursWeekSlide = hoursWeekSlide;
 }
 
+//! \return vector of which day the constraint about impossible posts is broken
 const std::vector<std::vector<std::vector<int>>>& Valuation::getImpossiblePosts()
 {
 	return impossiblePosts;
 }
 
+//! \param impossiblePosts impossiblePosts to set
 void Valuation::setImpossiblePosts(const std::vector<std::vector<std::vector<int>>> impossiblePosts)
 {
 	this->impossiblePosts = impossiblePosts;
 }
 
+//! \return daySeq vector with informations about where the ConstraintInvolved is broken
 const std::vector<std::vector<std::vector<std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>>>>>& Valuation::getInvolved()
 {
 	return involved;
 }
 
+//! \param involved involved to set
 void Valuation::setInvolved(const std::vector<std::vector<std::vector<std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>>>>> involved)
 {
 	this->involved = involved;
 }
 
+//! \return daySeq vector with informations about where the ConstraintSeqMinMax is detected
 const std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>>& Valuation::getseqMinMax()
 {
 	return seqMinMax;
 }
 
+//! \param seqMinMax seqMinMax to set
 void Valuation::setSeqMinMax(const std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>> seqMinMax)
 {
 	this->seqMinMax = seqMinMax;
 }
 
+//! Print all the informations about each constraints in the Valuation
 void Valuation::print()
 {
 
