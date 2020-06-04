@@ -59,6 +59,12 @@ public:
 	void setOvertime(float overtime);
 	Post* getDefaultPost();
 
+	
+	std::vector<Post*>& getPosts();
+	void addPost(Post*);
+
+
+
 	void setDefaultPost(Post* defaultPost);
 	Valuation* getValuation();
 	void setValuation(Valuation v);
@@ -74,6 +80,7 @@ public:
 	void generateXML(string fileName);
 	void loadXML(string fileName);
 	void generateXlsx(string fileName);
+
 
 protected:
 	Day firstDay;

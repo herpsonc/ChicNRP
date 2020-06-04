@@ -19,28 +19,29 @@ heuristicSolver::~heuristicSolver() {
 	// TODO Auto-generated destructor stub
 }
 
-//Algorithme glouton prenant en compte uniquement les contraintes de postes par jours et d'amplitude horaire sur les agents.
+//Algorithme glouton prenant en compte uniquement les contraintes de postes par jour et d'amplitude horaire sur les agents.
 Model heuristicSolver::greedy(const Model m) {
 	Model mr = Model(m);
 
 
 	auto day = mr.getFirstDay();
 
-	//Pour chaque jours
+	//Pour chaque jour
 	int indiceWeek = day; //Indice de la semaine en cours
 	for(int i=0;i<mr.getNbDays();i++){
 
 		for(auto s : mr.getServices()){
 
-			//On mélange la liste des agents.
+			//On mÃ©lange la liste des agents.
 			vector<Agent*> v = mr.getAgentFrom(s);
 			unsigned seed = chrono::system_clock::now().time_since_epoch().count();
 			shuffle(v.begin(),v.end(),default_random_engine(seed));
 
-			//On récupère les postes necessaires pour le jour day
+			//On rÃ©cupÃ¨re les postes necessaires pour le jour day (la variable)
 			auto required = s->getPostRequired()[day];
 
-			//On check si certains postes ne sont pas déjà attribuées
+
+			//On check si certains postes ne sont pas dÃ©jÃ  attribuÃ©es
 			for (auto a : v) {
 				if (a->getCalendar()[i] != NULL && required.find(a->getCalendar()[i]) != required.end()) {
 					required[a->getCalendar()[i]] -= 1;
@@ -49,16 +50,16 @@ Model heuristicSolver::greedy(const Model m) {
 
 			for(auto a : v){
 
-				//Si la journée est affecté à aucun poste
+				//Si la journÃ©e n'est affectÃ©e Ã  aucun poste
 				if(a->getCalendar()[i]==NULL){
-					//On regarde les poste restant à attribuer
+					//On regarde les postes restants Ã  attribuer
 					for(auto r : required){
 						if(r.second>0){
 							//On respecte les heures par semaine et par mois
 							/*if(a->getWorkingHoursMonth()+r.first->getTime()<=a->getNbHoursMonth()+mr.getOvertime()
 									&& a->getWorkingHoursWeek(mr.getFirstDay(),indiceWeek/7)+ r.first->getTime() <= a->getNbHoursWeek()){
 								a->setCalendarDay(r.first,i);
-								required[r.first] = r.second-1;
+								required[r.first]--; //on enlÃ¨ve un de ces postes de ceux disponibles
 								break;
 							}*/
 							a->setCalendarDay(r.first, i);
@@ -120,20 +121,20 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 			//Check des heures au mois pour les agents
 			if(a->getWorkingHoursMonth() > a->getNbHoursMonth()+m->getOvertime()){
 				if(log)
-					cout << "Checker: Dépassement d'heure au mois pour l'agent " << a->getId() << endl;
+					cout << "Checker: DÃ©passement d'heure au mois pour l'agent " << a->getId() << endl;
 				isValide = false;
 				if (checkALL)
 					return false;
 
 				score -= 100;
 			}
-			//Check des heures à la semaine pour les agents
+			//Check des heures Ã  la semaine pour les agents
 
 			score -= a->checkWorkingHoursWeek(log);
 			/*for(int i=0;i<6;i++){
 				if(a->getWorkingHoursWeek(m->getFirstDay(),i) > a->getNbHoursWeek()){
 					if (log)
-						cout << "Checker: Dépassement d'heure à la semaine " << i << " pour l'agent " << a->getId() << endl;
+						cout << "Checker: DÃ©passement d'heure Ã  la semaine " << i << " pour l'agent " << a->getId() << endl;
 					isValide = false;
 					if(checkALL)
 						return false;
@@ -305,7 +306,7 @@ Valuation heuristicSolver::checkValuation(Model* m) {
 				
 				score -= 100;
 			}
-			//Check des heures à la semaine pour les agents
+			//Check des heures Ã  la semaine pour les agents
 			/*for (int i = 0; i < 6; i++) {
 
 				hoursWeeks[iS][iA][i] = a->getWorkingHoursWeek(m->getFirstDay(), i);
@@ -373,7 +374,7 @@ Model heuristicSolver::getNeighborSwap(Model* m, int range)
 		//Choix du jour
 		int day = rand() % 31;
 
-		//On choisit un service aléatoirement
+		//On choisit un service alÃ©atoirement
 		int serviceI = rand() % mr.getServices().size();
 
 		Service* service = NULL;
@@ -388,7 +389,7 @@ Model heuristicSolver::getNeighborSwap(Model* m, int range)
 
 		bool swap = true;
 		i = 0;
-		//Choix des deux agents à swap
+		//Choix des deux agents Ã  swap
 		int agent1 = rand() % mr.getAgentFrom(service).size();
 		while ((mr.getAgentFrom(service)[agent1]->getCalendarLock()[day] == true) && i < nbIte) {
 			agent1 = rand() % mr.getAgentFrom(service).size();
@@ -432,7 +433,7 @@ Model heuristicSolver::getneighborRandom(Model* m, int range)
 		//Choix du jour
 		int day = rand() % 31;
 
-		//On choisit un service aléatoirement
+		//On choisit un service alÃ©atoirement
 		int serviceI = rand() % mr.getServices().size();
 
 		Service* service = NULL;
@@ -445,7 +446,7 @@ Model heuristicSolver::getneighborRandom(Model* m, int range)
 			i++;
 		}
 
-		//Choix des deux agents à swap
+		//Choix des deux agents Ã  swap
 		i = 0;
 		bool found = true;
 		int agent1 = rand() % mr.getAgentFrom(service).size();
@@ -533,7 +534,7 @@ Model heuristicSolver::iterative2Fast(const Model m, int nbIte, int range)
 		if (j % 100 == 0) {
 			cout << "Iteration " << j << endl;
 		}
-		//On choisit un voisinnage à appliquer
+		//On choisit un voisinnage Ã  appliquer
 		int randN = rand() % 100;
 
 		if (randN < 101) {
@@ -560,7 +561,7 @@ Model heuristicSolver::iterative2Fast(const Model m, int nbIte, int range)
 			}
 		}
 		else {
-			//20% de chance de choisir le nouveau candidat même si il est moins bon
+			//20% de chance de choisir le nouveau candidat mÃªme si il est moins bon
 			int randI = rand() % 1000;
 			if (randI > 998) {
 				currentModel = nextModel;
@@ -603,7 +604,7 @@ Model heuristicSolver::iterative2(const Model m, int nbIte, int range, int limit
 		if (j % 100 == 0) {
 			cout << "Iteration " << j << endl;
 		}
-		//On choisit un voisinnage à appliquer
+		//On choisit un voisinnage Ã  appliquer
 		int randN = rand() % 100;
 
 		if (randN < 101) {
@@ -631,7 +632,7 @@ Model heuristicSolver::iterative2(const Model m, int nbIte, int range, int limit
 			}
 		}
 		else {
-			//10% de chance de choisir le nouveau candidat même si il est moins bon
+			//10% de chance de choisir le nouveau candidat mÃªme si il est moins bon
 			int randI = rand() % 1000;
 			if (randI > 998) {
 				currentModel = nextModel;

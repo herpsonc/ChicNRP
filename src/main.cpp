@@ -12,6 +12,7 @@
 
 
 #include "heuristic/heuristicSolver.h"
+#include "LP/LPSolver.h"
 #include "model/Agent.h"
 #include "model/constraint/Constraint.h"
 #include "model/constraint/ConstraintDaysSeq.h"
@@ -24,7 +25,7 @@
 using namespace std;
 
 void addConsecutiveSamePost(Agent* a, Post* p, int d_start, int d_end) {
-	//permet d'ajouter le même post pendant d_end-d_start jours d'affilé à un agent
+	//permet d'ajouter le mÃªme post pendant d_end-d_start jours d'affilÃ© Ã  un agent
 	for (d_start; d_start <= d_end; d_start++) {
 		a->setCalendarDay(p, d_start, true);
 	}
@@ -44,32 +45,42 @@ Model generateGhr() {
 		jg->addAttribut("workL");
 		jg->addAttribut("work");
 		jg->addAttribut("day");
+		m.addPost(jg);
 		jg->addAttribut("dayL");
+
 		Post* ng = new Post("Ng", 12.25);
 		ng->addAttribut("workL");
 		ng->addAttribut("work");
 		ng->addAttribut("night");
+
 		Post* mat = new Post("Mat", 12.25);
 		mat->addAttribut("workL");
 		mat->addAttribut("day");
 		mat->addAttribut("work");
+
 		Post* repos = new Post("Repos", 0.0);
 		repos->addAttribut("rest");
+		m.addPost(repos);
+
 		Post* ca = new Post("Ca", 0.0);
 		ca->addAttribut("rest");
 		ca->addAttribut("ca");
+		//m.addPost(ca);
 
 		Post* oe = new Post("O/E", 7.5);
 		oe->addAttribut("work");
 		oe->addAttribut("day");
+		//m.addPost(oe);
 
 		Post* fp = new Post("FP", 7.5);
 		fp->addAttribut("work");
 		fp->addAttribut("day");
+		//m.addPost(fp);
 
 		Post* cs = new Post("CS", 7.5);
 		cs->addAttribut("work");
 		cs->addAttribut("day");
+		//m.addPost(cs);
 
 		m.setDefaultPost(repos);
 
@@ -167,7 +178,7 @@ Model generateGhr() {
 
 Model addServiceSDC(Model m) {
 
-	//Ajout du service SDC à un modèle existant
+	//Ajout du service SDC Ã  un modÃ¨le existant
 
 	Service* sdc = new Service("SDC");
 
@@ -313,7 +324,7 @@ Model addServiceSDC(Model m) {
 
 Model addServiceSDN(Model m) {
 
-	//Ajout du service SDN à un modèle existant
+	//Ajout du service SDN Ã  un modÃ¨le existant
 
 	Service* sdn = new Service("SDN");
 
@@ -627,7 +638,7 @@ Model addServiceSDN(Model m) {
 
 Model addServiceCS(Model m) {
 
-	//Ajout du service CS à un modèle existant
+	//Ajout du service CS Ã  un modÃ¨le existant
 	Service* cs_service = new Service("CS");
 
 	m.addService(cs_service);
@@ -801,7 +812,7 @@ Model addServiceCS(Model m) {
 
 Model addServicePool(Model m) {
 
-	//Ajout du service Pool à un modèle existant
+	//Ajout du service Pool Ã  un modÃ¨le existant
 
 	Service* pool = new Service("Pool");
 
@@ -876,7 +887,7 @@ Model addServicePool(Model m) {
 
 int main() {
 
-	//Important pour initialiser l'aléatoire
+	//Important pour initialiser l'alÃ©atoire
 	srand(time(0));
 
 	/*Model m =  generateGhr();
@@ -894,7 +905,7 @@ int main() {
 	m3.generateXlsx("solution.xlsx");*/
 
 
-	//modèle avec les (pré)données de Mars du CHIC
+	//modÃ¨le avec les (prÃ©)donnÃ©es de Mars du CHIC
 	Model m =  generateGhr();
 	m = addServiceSDC(m);
 	m = addServiceCS(m);
@@ -919,11 +930,12 @@ int main() {
 	heuristicSolver::check(&m3, false, true);*/
 
 
+
 	//auto m3 = heuristicSolver::greedy(m2);
 	//auto m3 = heuristicSolver::iterative2(m2, 10000, 5);
 	//m3.printPlanning();
 
-	/*m = addServiceSDC(m); //ajoute le service SDC au modèle
+	/*m = addServiceSDC(m); //ajoute le service SDC au modÃ¨le
 	auto m2 = heuristicSolver::iterative2(m, 60000, 5);
 	m2.printPlanning();
 	m2.getValuation()->print();
@@ -951,7 +963,7 @@ int main() {
 	m_2servicesFevrierBissextile.printPlanning();
 	m_2servicesFevrierBissextile.generateXML("servicesFevrierBissextile.xml");
 
-	auto m_3servicesEte = Model::generateModelInstance(Day::Sunday, 31, 10, 3, 6, 15, 60.0, 155, -1, -1, 5, 100); //3 petits services avec beacoup de congés (simulation vacances d'été potentielle), 10h supps max
+	auto m_3servicesEte = Model::generateModelInstance(Day::Sunday, 31, 10, 3, 6, 15, 60.0, 155, -1, -1, 5, 100); //3 petits services avec beacoup de congÃ©s (simulation vacances d'Ã©tÃ© potentielle), 10h supps max
 	m_3servicesEte.printPlanning();
 	m_3servicesEte.generateXML("servicesEte.xml");
 
@@ -978,6 +990,45 @@ int main() {
 
 	/*
 	m.printPlanning();
+
+	//cout << "---------------------------------" << endl;
+	//m3.printPlanning();
+
+	LPSolver::linearProgram(m);
+
+	//SCIP* scip;
+	//SCIPcreate(&scip);
+
+	//SCIPincludeDefaultPlugins(scip);
+
+	//SCIPcreateProb(scip, "planning", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+	//int v = 0;
+	//SCIP_VAR* varCons[50];
+	//SCIP_VAR* var;
+	//double hours[50];
+	//SCIPcreateVar(scip, &var, NULL, 0.0, 1.0, 1.0, SCIP_VARTYPE_BINARY, TRUE, FALSE, NULL, NULL, NULL, NULL, NULL);
+	//SCIPaddVar(scip, var);
+	//
+	//Agent* a = new Agent("6", 155, 48, Status::Confirmed);
+	//map<Agent*, std::pair<std::vector<SCIP_VAR*>, std::vector<float>>> agentLastPosts = map<Agent*, std::pair<std::vector<SCIP_VAR*>, std::vector<float>>>();
+	////agentLastPosts.insert(a, pair<std::vector<SCIP_VAR*>, std::vector<float>>(var, 12.5) );
+
+	//map<Agent*, pair<SCIP_VAR**, double*>> testos = map<Agent*, pair<SCIP_VAR**, double*>>();
+	//testos.insert(pair<Agent*, pair<SCIP_VAR**, double*>>(a, pair<SCIP_VAR**, double*>(varCons, hours)));
+	//varCons[0] = var;
+	//hours[0] = 12.5;
+
+	//for (auto itr = testos.begin(); itr != testos.end(); ++itr) {
+	//	cout << '\t' << itr->first->getId() << '\n';
+	//		for (auto itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2) {
+	//			cout << '\t' << itr2->first << '\n'
+	//			<< '\t' << itr2->second << '\n';
+	//		}
+	//}
+	/*
+	for (auto s : m2.getServices()) {
+		for (auto a : m2.getAgentFrom(s)) {
+=======
 	cout << "---------------------------------" << endl;
 	m2.printPlanning();
 
@@ -985,13 +1036,37 @@ int main() {
 	
 	for(auto s : m2.getServices()){
 		for(auto a : m2.getAgentFrom(s)){
+
 			cout << a->getId() << " Mois: " << a->getWorkingHoursMonth() << endl;
-			for(int i=0;i<5;i++){
-				cout << "Week " << i << ": " << a->getWorkingHoursWeek(m2.getFirstDay(),i) << endl;
+			for (int i = 0; i < 5; i++) {
+				cout << "Week " << i << ": " << a->getWorkingHoursWeek(m2.getFirstDay(), i) << endl;
 			}
 		}
 	}*/
 
+	cout << heuristicSolver::check(&m2) << endl;
+	*/
+
+	/*
+	//Test sur plusieurs models gÃ©nÃ©rÃ© alÃ©atoirements
+	unsigned int nb = 1000;
+	Model bestModel = m;
+	int bScore = -500;
+	int wScore = 10;
+	for (int i = 0;i < nb;i++) {
+	m2 = heuristicSolver::greedy(m);
+	int tmp = heuristicSolver::check(&m2, false,false);
+	if (tmp > bScore) {
+		bestModel = m2;
+		bScore = tmp;
+	}
+	if (tmp < wScore)
+		wScore = tmp;
+	}
+
+	cout << heuristicSolver::check(&m2, false,true) << endl;
+	cout << "worst " << wScore;
+	*/
 
 	string t;
 	cin >> t;

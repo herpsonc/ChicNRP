@@ -79,6 +79,7 @@ Model& Model::operator=(const Model& obj)
 	return Model(obj);
 }
 
+
 //! \return services vector of Services of the model
 std::vector<Service*>& Model::getServices(){
 	return services;
@@ -144,7 +145,7 @@ void Model::printPlanning() {
 		cout << "---------------------------" << endl;
 		for (auto agent : s.second)
 		{
-			cout << "Agent " << agent->getId() << ":\t";
+			cout << "Agent " << agent->getId() << ":   ";
 
 			for (unsigned int j = 0; j < agent->getCalendar().size(); j++)
 			{
@@ -154,7 +155,7 @@ void Model::printPlanning() {
 				}
 				else
 					cout << "null";
-				cout << "\t";
+				cout << "  ";
 			}
 			cout << endl;
 		}
@@ -233,6 +234,17 @@ void Model::setDefaultPost(Post* defaultPost) {
 	this->defaultPost = defaultPost;
 }
 
+
+
+std::vector<Post*>& Model::getPosts() {
+	return posts;
+}
+
+void Model::addPost(Post* p) {
+	if(find(posts.begin(), posts.end(), p) == posts.end()) //p not already in posts
+		posts.push_back(p);
+}
+
 //! \return valuation Valuation of the current instance
 Valuation* Model::getValuation(){
 	return valuation;
@@ -269,20 +281,20 @@ vector<Constraint*> Model::createConstraints() {
 	v.push_back("day");
 	constraints.push_back(new ConstraintDaysSeq(v, 30)); // cJN
 
-	//Pas 3 jours/nuit de travail d'affilé
+	//Pas 3 jours/nuit de travail d'affilÃ©
 	v = vector<string>();
 	v.push_back("workL");
 	v.push_back("workL");
 	v.push_back("workL");
 	constraints.push_back(new ConstraintDaysSeq(v, 50)); // c3N
 
-	//Pas de nuit avant un congé posé
+	//Pas de nuit avant un congÃ© posÃ©
 	v = vector<string>();
 	v.push_back("night");
 	v.push_back("ca");
 	constraints.push_back(new ConstraintDaysSeq(v, 30)); // crn
 
-	//Après 2 jours/nuits au moins 2 repos
+	//AprÃ¨s 2 jours/nuits au moins 2 repos
 	v = vector<string>();
 	v.push_back("workL");
 	v.push_back("workL");
@@ -291,7 +303,7 @@ vector<Constraint*> Model::createConstraints() {
 	v2.push_back("rest");
 	constraints.push_back(new ConstraintInvolved(v, v2, Day::None, 30)); // cnr
 
-	//Après 1 journée longue + 1 repos  -> +1 repos min
+	//AprÃ¨s 1 journÃ©e longue + 1 repos  -> +1 repos min
 	v = vector<string>();
 	v.push_back("workL");
 	v.push_back("rest");
@@ -299,7 +311,7 @@ vector<Constraint*> Model::createConstraints() {
 	v2.push_back("rest");
 	constraints.push_back(new ConstraintInvolved(v, v2, Day::None, 20)); //cwl2r
 
-	//Evite les journée isolés
+	//Evite les journÃ©e isolÃ©s
 	v = vector<string>();
 	v.push_back("rest");
 	v.push_back("work");
@@ -315,7 +327,7 @@ vector<Constraint*> Model::createConstraints() {
 	return constraints;
 }
 
-//raccourci pour attribuer les contraintes à un service via createConstraints
+//raccourci pour attribuer les contraintes Ã  un service via createConstraints
 void Model::addBasicConstraintsTo(Service* s) {
 	vector<Constraint*> cs = this->createConstraints();
 	for each (auto cons in cs){
@@ -325,8 +337,8 @@ void Model::addBasicConstraintsTo(Service* s) {
 
 Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService, int nbPostsPerService, int proba_1er_conge, int proba_suite_conge) {
 	/*
-	Si nbPostsPerService est indiqué, le nombre nbPosts ne sera pas respecté si nbPosts < nbPostsPerService*nbServices
-	de même pour nbAgentsPerService
+	Si nbPostsPerService est indiquÃ©, le nombre nbPosts ne sera pas respectÃ© si nbPosts < nbPostsPerService*nbServices
+	de mÃªme pour nbAgentsPerService
 	*/
 
 	Model m = Model(firstDay, nbDays, overtime);
@@ -336,7 +348,7 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 
 	//Services et Postes
 
-	//poste congé/repos dispos dans chaque service
+	//poste congÃ©/repos dispos dans chaque service
 	Post* repos = new Post("Repos", 0.0);
 	repos->addAttribut("rest");
 
@@ -346,9 +358,9 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 
 	m.setDefaultPost(repos);
 
-	std::vector<Constraint*> constraints = m.createConstraints(); //crée toutes les contraintes à respecter par les postes
+	std::vector<Constraint*> constraints = m.createConstraints(); //crÃ©e toutes les contraintes Ã  respecter par les postes
 
-	//si on a un nombre de postes par service précis à respecter
+	//si on a un nombre de postes par service prÃ©cis Ã  respecter
 	if (nbPostsPerService > -1) {
 		nbPostsService_i = nbPostsPerService;
 	}
@@ -364,7 +376,7 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 
 		if (nbPostsPerService == -1) {
 			if (i != nbServices - 1 && nbPostsAvailable >= 2) {
-				nbPostsService_i = rand() % (nbPostsAvailable / nbServices); //nbPosts entre 0 (2 en réalité) et nb total des posts/nbServices pour essayer d'avoir quelque chose d'équilibré
+				nbPostsService_i = rand() % (nbPostsAvailable / nbServices); //nbPosts entre 0 (2 en rÃ©alitÃ©) et nb total des posts/nbServices pour essayer d'avoir quelque chose d'Ã©quilibrÃ©
 			}
 			else { //si c'est le dernier service : lui attribuer tous les posts restants
 				nbPostsService_i = nbPostsAvailable; //risque d'avoir bcp + de posts dans le dernier service
@@ -374,25 +386,26 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 		cout << nbPostsService_i << endl;
 
 		if (nbPostsService_i < 2) {
-			nbPostsService_i = 2; //empêche d'avoir des services sans postes mais => non respect de la valeur nbPosts des fois
+			nbPostsService_i = 2; //empÃªche d'avoir des services sans postes mais => non respect de la valeur nbPosts des fois
 		}
 
 		//pour chaque post qui sera dans ce service
 		for (int j = 0; j < nbPostsService_i; j++) {
 			testLengthPost = rand() % 10 + 1;
 			Post* posti_j;
-			if (testLengthPost >= 5) { //50% de chance de créer un poste à 12.25h, sinon 7.5h
+			if (testLengthPost >= 5) { //50% de chance de crÃ©er un poste Ã  12.25h, sinon 7.5h
+
 
 				posti_j = new Post("S" + std::to_string(i) + "P" + std::to_string(j)+"L", 12.25);
 				posti_j->addAttribut("work");
-				posti_j->addAttribut("workL"); //poste à durée longue
+				posti_j->addAttribut("workL"); //poste Ã  durÃ©e longue
 			}
 			else {
 				posti_j = new Post("S" + std::to_string(i) + "P" + std::to_string(j), 7.5);
 				posti_j->addAttribut("work");
 			}
 
-			dayOrNight = rand() % 3 + 1; // 2 chances /3 d'être un poste en journée
+			dayOrNight = rand() % 3 + 1; // 2 chances /3 d'Ãªtre un poste en journÃ©e
 			if (dayOrNight <= 2) {
 				posti_j->setId(posti_j->getId() + "D");
 				posti_j->addAttribut("day");
@@ -406,36 +419,38 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 		}
 
 		service_i->addPost(repos); //chaque service a un poste Repos
-		//et on ajoute à chaque service la liste des contraintes
+		//et on ajoute Ã  chaque service la liste des contraintes
 		for (int id_cstr = 0; id_cstr < constraints.size(); id_cstr++) {
 			service_i->addConstraint(constraints[id_cstr]);
 		}
 
+
 		nbPostsAvailable -= nbPostsService_i;
 	}
 
+
 	//Agents
 
-	//variables pour les tirages aléatoires
+	//variables pour les tirages alÃ©atoires
 	int service_rand = 0, post_rand = 0, conges_rand = 0, job_rand = 0, incr_jour = 0, post_ind_rand = 0;
 	if (proba_1er_conge < 0 || proba_1er_conge > 100) 
-		proba_1er_conge = 3; //3% de chance d'avoir un congé si proba perso non déclarée (ou incorrecte)
+		proba_1er_conge = 3; //3% de chance d'avoir un congÃ© si proba perso non dÃ©clarÃ©e (ou incorrecte)
 	if (proba_suite_conge < 0 || proba_suite_conge > 100)
-		proba_suite_conge = 70; //70% de chance d'avoir un congé à la suite d'un premier congé si proba perso non déclarée (ou incorrecte)
+		proba_suite_conge = 70; //70% de chance d'avoir un congÃ© Ã  la suite d'un premier congÃ© si proba perso non dÃ©clarÃ©e (ou incorrecte)
 	
 
 	//pour chaque agent
 	for (int i = 0; i < nbAgents; i++) {
 		int dice = rand() % 10 + 1;
 		Agent* a_i;
-		if (dice <= 2) { //20% de chance d'avoir un agent qui débute
+		if (dice <= 2) { //20% de chance d'avoir un agent qui dÃ©bute
 			a_i = new Agent(std::to_string(i), nbHoursMonth, nbHoursWeek, Status::Beginner);
 		}
 		else {
 			a_i = new Agent(std::to_string(i), nbHoursMonth, nbHoursWeek, Status::Confirmed);
 		}
 
-		//si aucun nombre précis d'agents par service n'est donné, random pour attribuer un service
+		//si aucun nombre prÃ©cis d'agents par service n'est donnÃ©, random pour attribuer un service
 		if (nbAgentsPerService == -1) {
 			service_rand = rand() % nbServices;
 			a_i->setService(m.getServices()[service_rand]);
@@ -456,23 +471,23 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 			conges_rand = rand() % 100 + 1;
 			job_rand = rand() % 100 + 1;
 			//cout << i << ": " << conges_rand << endl;
-			if (conges_rand <= proba_1er_conge) { // proba_1er_conge% de chance d'avoir un premier congé ce jour ci
+			if (conges_rand <= proba_1er_conge) { // proba_1er_conge% de chance d'avoir un premier congÃ© ce jour ci
 
 				a_i->setCalendarDay(ca, jour, true);
 
-				//chances de faire une suite de congés après un premier congé = 70% puis décrément de 5% par jour à la suite
+				//chances de faire une suite de congÃ©s aprÃ¨s un premier congÃ© = 70% puis dÃ©crÃ©ment de 5% par jour Ã  la suite
 				conges_rand = rand() % 100 + 1;
 
 				while (conges_rand <= (proba_suite_conge -(incr_jour*5)) && jour + incr_jour <= nbDays) {
 					a_i->setCalendarDay(ca, jour + incr_jour, true);
 					conges_rand = rand() % 100 + 1;
 					//cout << conges_rand << " : " << (70 - (incr_jour * 5) ) << endl;
-					incr_jour++; //permet aussi le décrément de 5% de chance par jour succéssif
+					incr_jour++; //permet aussi le dÃ©crÃ©ment de 5% de chance par jour succÃ©ssif
 				}
-				jour += incr_jour; //si on a déjà ajouté un congé aux jours suivants : on passe
+				jour += incr_jour; //si on a dÃ©jÃ  ajoutÃ© un congÃ© aux jours suivants : on passe
 				incr_jour = 0;
 			}
-			else if(job_rand <= 5){ //5% chance d'avoir un job pré-défini ce jour là
+			else if(job_rand <= 5){ //5% chance d'avoir un job prÃ©-dÃ©fini ce jour lÃ 
 				post_ind_rand = rand() % posts_possibles.size();
 				//cout << post_ind_rand << "  " << posts_possibles.size() << endl;
 				if (posts_possibles[post_ind_rand]->getId() != "Repos") {
@@ -481,13 +496,16 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 			}
 		}
 
+
 		m.addAgent(a_i, m.getServices()[service_rand]);
 	}
 
 	return m;
+
 }
 
-//! Generate a XML file from the Model
+//! 
+a XML file from the Model
 //! \param fileName name of the xml file saved
 void Model::generateXML(string fileName){
 
@@ -674,7 +692,7 @@ void Model::loadXML(string fileName){
 	rapidxml::file<> xmlFile(fileName.c_str());
 	doc.parse<0>(xmlFile.data());
 
-	//Pour garder la trace des nouveaux posts crées
+	//Pour garder la trace des nouveaux posts crÃ©es
 	 auto mapPosts = map<string, Post*>();
 
 	//Model
@@ -703,10 +721,10 @@ void Model::loadXML(string fileName){
 
 		//Posts
 		for (auto postNode = serviceNode->first_node("Post"); postNode; postNode = postNode->next_sibling("Post")) {
-			//On check si il existe déjà
+			//On check si il existe dÃ©jÃ 
 			auto search = mapPosts.find(postNode->first_attribute("id")->value());
 
-			//Si il n'y est pas, on la crée
+			//Si il n'y est pas, on la crÃ©e
 			if (search == mapPosts.end()) {
 				Post* post = new Post(postNode->first_attribute("id")->value(), atof(postNode->first_attribute("time")->value()));
 				//attributs
@@ -774,7 +792,7 @@ void Model::loadXML(string fileName){
 				if ((string)dayNode->first_attribute("id")->value() != "null") {
 					auto search = mapPosts.find(dayNode->first_attribute("id")->value());
 
-					//Si il n'y est pas, on la crée
+					//Si il n'y est pas, on la crÃ©e
 					if (search == mapPosts.end()) {
 						Post* post = new Post(dayNode->first_attribute("id")->value(), atof(dayNode->first_attribute("nbh")->value()));
 						//attributs
@@ -792,10 +810,10 @@ void Model::loadXML(string fileName){
 			//ImpossiblePosts
 			auto v = vector<Post*>();
 			for (auto impossiblePost = agentNode->first_node("ImpossiblePost"); impossiblePost; impossiblePost = impossiblePost->next_sibling("ImpossiblePost")) {
-				//On check si il existe déjà
+				//On check si il existe dÃ©jÃ 
 				auto search = mapPosts.find(impossiblePost->first_attribute("id")->value());
 
-				//Si il n'y est pas, on la crée
+				//Si il n'y est pas, on la crÃ©e
 				if (search == mapPosts.end()) {
 					Post* post = new Post(impossiblePost->first_attribute("id")->value(), atof(impossiblePost->first_attribute("nbh")->value()));
 					//attributs
@@ -829,11 +847,11 @@ void Model::generateXlsx(string fileName)
 	res << "<Style ss:ID=\"Default\" ss:Name=\"Repos\">\n<Alignment ss:Horizontal=\"Center\" ss:Vertical=\"Center\"/>\n<Borders>\n<Border ss:Position=\"Bottom\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Left\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Right\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Top\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n</Borders>\n<Font ss:FontName=\"Calibri\" x:Family=\"Swiss\" ss:Size=\"11\" ss:Color=\"#000000\"/>\n<Interior ss:Color=\"#FFFFFF\" ss:Pattern=\"Solid\"/>\n</Style>";
 	// Style pour w-e : case rose pale
 	res << "<Style ss:ID=\"we\" ss:Name=\"Week-End\">\n<Alignment ss:Horizontal=\"Center\" ss:Vertical=\"Center\"/>\n<Borders>\n<Border ss:Position=\"Bottom\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Left\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Right\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Top\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n</Borders>\n<Font ss:FontName=\"Calibri\" x:Family=\"Swiss\" ss:Size=\"11\" ss:Color=\"#000000\"/>\n<Interior ss:Color=\"#F7D9F7\" ss:Pattern=\"Solid\"/>\n</Style>";
-	// Style pour CA : case gris foncé
-	//res << "<Style ss:ID=\"ca\" ss:Name=\"Congé\">\n<Alignment ss:Horizontal=\"Center\" ss:Vertical=\"Center\"/>\n<Borders>\n<Border ss:Position=\"Bottom\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Left\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Right\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Top\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n</Borders>\n<Font ss:FontName=\"Calibri\" x:Family=\"Swiss\" ss:Size=\"11\" ss:Color=\"#000000\"/>\n<Interior ss:Color=\"#888888\" ss:Pattern=\"Solid\"/>\n</Style>";
+	// Style pour CA : case gris foncÃ©
+	//res << "<Style ss:ID=\"ca\" ss:Name=\"CongÃ©\">\n<Alignment ss:Horizontal=\"Center\" ss:Vertical=\"Center\"/>\n<Borders>\n<Border ss:Position=\"Bottom\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Left\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Right\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Top\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n</Borders>\n<Font ss:FontName=\"Calibri\" x:Family=\"Swiss\" ss:Size=\"11\" ss:Color=\"#000000\"/>\n<Interior ss:Color=\"#888888\" ss:Pattern=\"Solid\"/>\n</Style>";
 	// Style pour les dates+jours : case rouge
 	res << "<Style ss:ID=\"setup\" ss:Name=\"Setup\">\n<Alignment ss:Horizontal=\"Center\" ss:Vertical=\"Center\"/>\n<Borders>\n<Border ss:Position=\"Bottom\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Left\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Right\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Top\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n</Borders>\n<Font ss:FontName=\"Calibri\" x:Family=\"Swiss\" ss:Size=\"11\" ss:Color=\"#000000\" ss:Bold=\"1\"/>\n<Interior ss:Color=\"#FF0000\" ss:Pattern=\"Solid\"/>\n</Style>";
-	// Style pour les jours travaillés : case gris clair
+	// Style pour les jours travaillÃ©s : case gris clair
 	res << "<Style ss:ID=\"work\" ss:Name=\"Travail\">\n<Alignment ss:Horizontal=\"Center\" ss:Vertical=\"Center\"/>\n<Borders>\n<Border ss:Position=\"Bottom\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Left\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Right\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n<Border ss:Position=\"Top\" ss:LineStyle=\"Continuous\" ss:Weight=\"1\"/>\n</Borders>\n<Font ss:FontName=\"Calibri\" x:Family=\"Swiss\" ss:Size=\"11\" ss:Color=\"#000000\"/>\n<Interior ss:Color=\"#E0E0E0\" ss:Pattern=\"Solid\"/>\n</Style>";
 	
 	res << "</Styles>\n";
