@@ -11,6 +11,8 @@
 #include "../Model.h"
 #include "Constraint.h"
 
+class Model;
+
 enum MinMax {Min, Max};
 
 //Contrainte qui permet d'assurer la présence de la séquence (à partir d'un jour donné) un minimum ou maximum de fois
@@ -43,6 +45,8 @@ public:
 	string seqToPrint();
 
 	int check(const Agent* agent, bool checkALL, Day firstDayMonth, bool log);
+	std::vector<std::pair<int, int>> checkValuation(const Agent* agent, Day firstDayMonth);
+	void checkFast(Model* m, int iCons);
 
 protected:
 	Day firstDay;

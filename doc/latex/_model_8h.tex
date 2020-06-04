@@ -1,0 +1,95 @@
+\hypertarget{_model_8h}{}\doxysection{C\+:/\+Users/\+Valars/\+Documents/\+Git\+Hub/\+P-\/\+A\+N\+D\+R\+O\+I\+D\+E-\/\+Construction-\/\+Automatique-\/de-\/planning/src/model/\+Model.h File Reference}
+\label{_model_8h}\index{C:/Users/Valars/Documents/GitHub/P-\/ANDROIDE-\/Construction-\/Automatique-\/de-\/planning/src/model/Model.h@{C:/Users/Valars/Documents/GitHub/P-\/ANDROIDE-\/Construction-\/Automatique-\/de-\/planning/src/model/Model.h}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$set$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include \char`\"{}Post.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Service.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Agent.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Valuation.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Swap\+Log.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}constraint/\+Constraint.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}constraint/\+Constraint\+Days\+Seq.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}constraint/\+Constraint\+Involved.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}constraint/\+Constraint\+Seq\+Min\+Max.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../rapid\+Xml/rapidxml.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../rapid\+Xml/rapidxml\+\_\+utils.\+hpp\char`\"{}}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_model}{Model}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_model_8h_a720f4a3bfc7ee286e13d8f35179e4b18}{S\+R\+C\+\_\+\+M\+O\+D\+E\+L\+\_\+\+M\+O\+D\+E\+L\+\_\+\+H\+\_\+}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}{Day}} \{ \newline
+\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adada455141191c205fb8f46e2e9da6b0dd47}{Monday}}, 
+\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adada596327c453efea63ea26096bf041f630}{Tuesday}}, 
+\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adada0ae230de6136f0671e2f13a0332a620c}{Wednesday}}, 
+\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adada8d9721cec5bcce006e98e794d3ff4912}{Thursday}}, 
+\newline
+\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adadaadb8f1f9f2221414dcd35c6e5f8e7d81}{Friday}}, 
+\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adada5a996d296d81b9b8bd3b9201afa4c547}{Saturday}}, 
+\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adada50f766951431e13654ab869ef85e162c}{Sunday}}, 
+\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adadac9d3e887722f2bc482bcca9d41c512af}{None}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{_model_8h_a720f4a3bfc7ee286e13d8f35179e4b18}\label{_model_8h_a720f4a3bfc7ee286e13d8f35179e4b18}} 
+\index{Model.h@{Model.h}!SRC\_MODEL\_MODEL\_H\_@{SRC\_MODEL\_MODEL\_H\_}}
+\index{SRC\_MODEL\_MODEL\_H\_@{SRC\_MODEL\_MODEL\_H\_}!Model.h@{Model.h}}
+\doxysubsubsection{\texorpdfstring{SRC\_MODEL\_MODEL\_H\_}{SRC\_MODEL\_MODEL\_H\_}}
+{\footnotesize\ttfamily \#define S\+R\+C\+\_\+\+M\+O\+D\+E\+L\+\_\+\+M\+O\+D\+E\+L\+\_\+\+H\+\_\+}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}\label{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}} 
+\index{Model.h@{Model.h}!Day@{Day}}
+\index{Day@{Day}!Model.h@{Model.h}}
+\doxysubsubsection{\texorpdfstring{Day}{Day}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}{Day}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Monday@{Monday}!Model.h@{Model.h}}\index{Model.h@{Model.h}!Monday@{Monday}}}\mbox{\Hypertarget{_model_8h_ac572d2be8b3c04018816ba1a6e75adada455141191c205fb8f46e2e9da6b0dd47}\label{_model_8h_ac572d2be8b3c04018816ba1a6e75adada455141191c205fb8f46e2e9da6b0dd47}} 
+Monday&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Tuesday@{Tuesday}!Model.h@{Model.h}}\index{Model.h@{Model.h}!Tuesday@{Tuesday}}}\mbox{\Hypertarget{_model_8h_ac572d2be8b3c04018816ba1a6e75adada596327c453efea63ea26096bf041f630}\label{_model_8h_ac572d2be8b3c04018816ba1a6e75adada596327c453efea63ea26096bf041f630}} 
+Tuesday&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Wednesday@{Wednesday}!Model.h@{Model.h}}\index{Model.h@{Model.h}!Wednesday@{Wednesday}}}\mbox{\Hypertarget{_model_8h_ac572d2be8b3c04018816ba1a6e75adada0ae230de6136f0671e2f13a0332a620c}\label{_model_8h_ac572d2be8b3c04018816ba1a6e75adada0ae230de6136f0671e2f13a0332a620c}} 
+Wednesday&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Thursday@{Thursday}!Model.h@{Model.h}}\index{Model.h@{Model.h}!Thursday@{Thursday}}}\mbox{\Hypertarget{_model_8h_ac572d2be8b3c04018816ba1a6e75adada8d9721cec5bcce006e98e794d3ff4912}\label{_model_8h_ac572d2be8b3c04018816ba1a6e75adada8d9721cec5bcce006e98e794d3ff4912}} 
+Thursday&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Friday@{Friday}!Model.h@{Model.h}}\index{Model.h@{Model.h}!Friday@{Friday}}}\mbox{\Hypertarget{_model_8h_ac572d2be8b3c04018816ba1a6e75adadaadb8f1f9f2221414dcd35c6e5f8e7d81}\label{_model_8h_ac572d2be8b3c04018816ba1a6e75adadaadb8f1f9f2221414dcd35c6e5f8e7d81}} 
+Friday&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Saturday@{Saturday}!Model.h@{Model.h}}\index{Model.h@{Model.h}!Saturday@{Saturday}}}\mbox{\Hypertarget{_model_8h_ac572d2be8b3c04018816ba1a6e75adada5a996d296d81b9b8bd3b9201afa4c547}\label{_model_8h_ac572d2be8b3c04018816ba1a6e75adada5a996d296d81b9b8bd3b9201afa4c547}} 
+Saturday&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Sunday@{Sunday}!Model.h@{Model.h}}\index{Model.h@{Model.h}!Sunday@{Sunday}}}\mbox{\Hypertarget{_model_8h_ac572d2be8b3c04018816ba1a6e75adada50f766951431e13654ab869ef85e162c}\label{_model_8h_ac572d2be8b3c04018816ba1a6e75adada50f766951431e13654ab869ef85e162c}} 
+Sunday&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{None@{None}!Model.h@{Model.h}}\index{Model.h@{Model.h}!None@{None}}}\mbox{\Hypertarget{_model_8h_ac572d2be8b3c04018816ba1a6e75adadac9d3e887722f2bc482bcca9d41c512af}\label{_model_8h_ac572d2be8b3c04018816ba1a6e75adadac9d3e887722f2bc482bcca9d41c512af}} 
+None&\\
+\hline
+
+\end{DoxyEnumFields}

@@ -1,0 +1,327 @@
+\hypertarget{class_service}{}\doxysection{Service Class Reference}
+\label{class_service}\index{Service@{Service}}
+
+
+{\ttfamily \#include $<$Service.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_service_acc246c9f7ed3c51e2d91d10fe257513f}{Service}} ()
+\item 
+\mbox{\hyperlink{class_service_aca3d322e663cba5021285f9a7605cff9}{Service}} (string \mbox{\hyperlink{class_service_ad2a6b9892806da194b7d7060620d0f3b}{id}})
+\item 
+virtual \mbox{\hyperlink{class_service_af6c3577b59652ac817d1d76aaccee904}{$\sim$\+Service}} ()
+\item 
+const string \& \mbox{\hyperlink{class_service_a664e254de8fa44aa3b0bbe6cf19f459a}{get\+Id}} () const
+\item 
+void \mbox{\hyperlink{class_service_a3155b602e41f9ea15d72e91b8f16ba1d}{set\+Id}} (const string \&\mbox{\hyperlink{class_service_ad2a6b9892806da194b7d7060620d0f3b}{id}})
+\item 
+const vector$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$ $>$ \& \mbox{\hyperlink{class_service_a5611c7f8e45c75497963317e6cb019e1}{get\+Posts}} () const
+\item 
+void \mbox{\hyperlink{class_service_af77229c5fa0ede79a8bb96c7cc2e4252}{set\+Posts}} (const vector$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$ $>$ \&\mbox{\hyperlink{class_service_af3bcc71cfa1311b03830b21ab769720c}{posts}})
+\item 
+void \mbox{\hyperlink{class_service_a723c2535f55c121cad30433e2ec4aa68}{add\+Post}} (\mbox{\hyperlink{class_post}{Post}} $\ast$post)
+\item 
+const vector$<$ Agent $\ast$ $>$ \& \mbox{\hyperlink{class_service_ac1a2ae864fd8f750f115af8713c903f7}{get\+Referents}} () const
+\item 
+void \mbox{\hyperlink{class_service_a36e3ea3a360e7a48ba5c62108210247b}{set\+Referents}} (const vector$<$ Agent $\ast$ $>$ \&\mbox{\hyperlink{class_service_a2aa26a116f4832833632bf7552946cfb}{referents}})
+\item 
+void \mbox{\hyperlink{class_service_a9cbc04713a3a2d483ed966e8689f9ee3}{add\+Referent}} (Agent $\ast$referent)
+\item 
+const vector$<$ \mbox{\hyperlink{class_constraint}{Constraint}} $\ast$ $>$ \& \mbox{\hyperlink{class_service_a9f8015d19f4a9c10f78968711e3d60f9}{get\+Constraints}} () const
+\item 
+void \mbox{\hyperlink{class_service_a07350d82a048cf1073462dc8c7bbe1ae}{set\+Constraints}} (const vector$<$ \mbox{\hyperlink{class_constraint}{Constraint}} $\ast$ $>$ \&\mbox{\hyperlink{class_service_aedc0255543d81956ac5dc4a08f10e050}{constraints}})
+\item 
+void \mbox{\hyperlink{class_service_ab1035690e2c137aeb2e6564b937749d2}{add\+Constraint}} (\mbox{\hyperlink{class_constraint}{Constraint}} $\ast$constraint)
+\item 
+const array$<$ map$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$, int $>$, 7 $>$ \& \mbox{\hyperlink{class_service_a1518da790c27bdbe9bd50e1bde4c9664}{get\+Post\+Required}} () const
+\item 
+void \mbox{\hyperlink{class_service_a3ba2f1fb0a7285b73566f8c713d08c40}{set\+Post\+Required}} (const array$<$ map$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$, int $>$, 7 $>$ \&\mbox{\hyperlink{class_service_ab5269462c2d726e662ac8ebf9aaffef3}{post\+Required}})
+\item 
+void \mbox{\hyperlink{class_service_a9e39746243db2d0309087cc2a23a6dc1}{add\+Post\+Required}} (\mbox{\hyperlink{class_post}{Post}} $\ast$post, int nb)
+\item 
+void \mbox{\hyperlink{class_service_ab4e9d85d133e39e42960808c7375ac03}{add\+Post\+Required}} (\mbox{\hyperlink{class_post}{Post}} $\ast$post, int nb, int day)
+\item 
+const vector$<$ Agent $\ast$ $>$ \& \mbox{\hyperlink{class_service_a9c9c4e497cf18958f7190438e4097b2e}{get\+Agents}} () const
+\item 
+void \mbox{\hyperlink{class_service_a83aed51b88c750764d18f5d3f4936740}{set\+Agents}} (const vector$<$ Agent $\ast$ $>$ \&\mbox{\hyperlink{class_service_a24978a57ff779ccf5d2bce85351b7233}{agents}})
+\item 
+void \mbox{\hyperlink{class_service_a182346db654421217195c48cb4732dac}{add\+Agent}} (Agent $\ast$agent)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_service_ad2a6b9892806da194b7d7060620d0f3b}{id}}
+\item 
+vector$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$ $>$ \mbox{\hyperlink{class_service_af3bcc71cfa1311b03830b21ab769720c}{posts}}
+\item 
+vector$<$ Agent $\ast$ $>$ \mbox{\hyperlink{class_service_a2aa26a116f4832833632bf7552946cfb}{referents}}
+\item 
+vector$<$ Agent $\ast$ $>$ \mbox{\hyperlink{class_service_a24978a57ff779ccf5d2bce85351b7233}{agents}}
+\item 
+array$<$ map$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$, int $>$, 7 $>$ \mbox{\hyperlink{class_service_ab5269462c2d726e662ac8ebf9aaffef3}{post\+Required}}
+\item 
+vector$<$ \mbox{\hyperlink{class_constraint}{Constraint}} $\ast$ $>$ \mbox{\hyperlink{class_service_aedc0255543d81956ac5dc4a08f10e050}{constraints}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_service_acc246c9f7ed3c51e2d91d10fe257513f}\label{class_service_acc246c9f7ed3c51e2d91d10fe257513f}} 
+\index{Service@{Service}!Service@{Service}}
+\index{Service@{Service}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{Service()}{Service()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Service\+::\+Service (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_service_aca3d322e663cba5021285f9a7605cff9}\label{class_service_aca3d322e663cba5021285f9a7605cff9}} 
+\index{Service@{Service}!Service@{Service}}
+\index{Service@{Service}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{Service()}{Service()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Service\+::\+Service (\begin{DoxyParamCaption}\item[{string}]{id }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_service_af6c3577b59652ac817d1d76aaccee904}\label{class_service_af6c3577b59652ac817d1d76aaccee904}} 
+\index{Service@{Service}!````~Service@{$\sim$Service}}
+\index{````~Service@{$\sim$Service}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{$\sim$Service()}{~Service()}}
+{\footnotesize\ttfamily Service\+::$\sim$\+Service (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_service_a182346db654421217195c48cb4732dac}\label{class_service_a182346db654421217195c48cb4732dac}} 
+\index{Service@{Service}!addAgent@{addAgent}}
+\index{addAgent@{addAgent}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{addAgent()}{addAgent()}}
+{\footnotesize\ttfamily void Service\+::add\+Agent (\begin{DoxyParamCaption}\item[{Agent $\ast$}]{agent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em agent} & Agent to add \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_service_ab1035690e2c137aeb2e6564b937749d2}\label{class_service_ab1035690e2c137aeb2e6564b937749d2}} 
+\index{Service@{Service}!addConstraint@{addConstraint}}
+\index{addConstraint@{addConstraint}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{addConstraint()}{addConstraint()}}
+{\footnotesize\ttfamily void Service\+::add\+Constraint (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_constraint}{Constraint}} $\ast$}]{constraint }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em constraint} & \mbox{\hyperlink{class_constraint}{Constraint}} to add \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_service_a723c2535f55c121cad30433e2ec4aa68}\label{class_service_a723c2535f55c121cad30433e2ec4aa68}} 
+\index{Service@{Service}!addPost@{addPost}}
+\index{addPost@{addPost}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{addPost()}{addPost()}}
+{\footnotesize\ttfamily void Service\+::add\+Post (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_post}{Post}} $\ast$}]{post }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em post} & post to add \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_service_a9e39746243db2d0309087cc2a23a6dc1}\label{class_service_a9e39746243db2d0309087cc2a23a6dc1}} 
+\index{Service@{Service}!addPostRequired@{addPostRequired}}
+\index{addPostRequired@{addPostRequired}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{addPostRequired()}{addPostRequired()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void Service\+::add\+Post\+Required (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_post}{Post}} $\ast$}]{post,  }\item[{int}]{nb }\end{DoxyParamCaption})}
+
+Add a required \mbox{\hyperlink{class_post}{Post}} for each days 
+\begin{DoxyParams}{Parameters}
+{\em post} & \mbox{\hyperlink{class_post}{Post}} to add \\
+\hline
+{\em nb} & number required for a day \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_service_ab4e9d85d133e39e42960808c7375ac03}\label{class_service_ab4e9d85d133e39e42960808c7375ac03}} 
+\index{Service@{Service}!addPostRequired@{addPostRequired}}
+\index{addPostRequired@{addPostRequired}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{addPostRequired()}{addPostRequired()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void Service\+::add\+Post\+Required (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_post}{Post}} $\ast$}]{post,  }\item[{int}]{nb,  }\item[{int}]{day }\end{DoxyParamCaption})}
+
+Add a required \mbox{\hyperlink{class_post}{Post}} for the given day 
+\begin{DoxyParams}{Parameters}
+{\em post} & \mbox{\hyperlink{class_post}{Post}} to add \\
+\hline
+{\em nb} & number required for a day \\
+\hline
+{\em day} & day where the \mbox{\hyperlink{class_post}{Post}} is added \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_service_a9cbc04713a3a2d483ed966e8689f9ee3}\label{class_service_a9cbc04713a3a2d483ed966e8689f9ee3}} 
+\index{Service@{Service}!addReferent@{addReferent}}
+\index{addReferent@{addReferent}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{addReferent()}{addReferent()}}
+{\footnotesize\ttfamily void Service\+::add\+Referent (\begin{DoxyParamCaption}\item[{Agent $\ast$}]{referent }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em referent} & referent to add \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_service_a9c9c4e497cf18958f7190438e4097b2e}\label{class_service_a9c9c4e497cf18958f7190438e4097b2e}} 
+\index{Service@{Service}!getAgents@{getAgents}}
+\index{getAgents@{getAgents}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{getAgents()}{getAgents()}}
+{\footnotesize\ttfamily const vector$<$ Agent $\ast$ $>$ \& Service\+::get\+Agents (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+agents vector of Agent of the \mbox{\hyperlink{class_service}{Service}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_service_a9f8015d19f4a9c10f78968711e3d60f9}\label{class_service_a9f8015d19f4a9c10f78968711e3d60f9}} 
+\index{Service@{Service}!getConstraints@{getConstraints}}
+\index{getConstraints@{getConstraints}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{getConstraints()}{getConstraints()}}
+{\footnotesize\ttfamily const vector$<$ \mbox{\hyperlink{class_constraint}{Constraint}} $\ast$ $>$ \& Service\+::get\+Constraints (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+constraints vector of \mbox{\hyperlink{class_constraint}{Constraint}} of the \mbox{\hyperlink{class_service}{Service}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_service_a664e254de8fa44aa3b0bbe6cf19f459a}\label{class_service_a664e254de8fa44aa3b0bbe6cf19f459a}} 
+\index{Service@{Service}!getId@{getId}}
+\index{getId@{getId}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily const string \& Service\+::get\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+id id of the \mbox{\hyperlink{class_service}{Service}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_service_a1518da790c27bdbe9bd50e1bde4c9664}\label{class_service_a1518da790c27bdbe9bd50e1bde4c9664}} 
+\index{Service@{Service}!getPostRequired@{getPostRequired}}
+\index{getPostRequired@{getPostRequired}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{getPostRequired()}{getPostRequired()}}
+{\footnotesize\ttfamily const array$<$ map$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$, int $>$, 7 $>$ \& Service\+::get\+Post\+Required (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+post\+Required vector of the required posts for each days of the week 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_service_a5611c7f8e45c75497963317e6cb019e1}\label{class_service_a5611c7f8e45c75497963317e6cb019e1}} 
+\index{Service@{Service}!getPosts@{getPosts}}
+\index{getPosts@{getPosts}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{getPosts()}{getPosts()}}
+{\footnotesize\ttfamily const vector$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$ $>$ \& Service\+::get\+Posts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+posts vector of \mbox{\hyperlink{class_post}{Post}} that are attributed to the service 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_service_ac1a2ae864fd8f750f115af8713c903f7}\label{class_service_ac1a2ae864fd8f750f115af8713c903f7}} 
+\index{Service@{Service}!getReferents@{getReferents}}
+\index{getReferents@{getReferents}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{getReferents()}{getReferents()}}
+{\footnotesize\ttfamily const vector$<$ Agent $\ast$ $>$ \& Service\+::get\+Referents (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+referents vector of referent Agent of the \mbox{\hyperlink{class_service}{Service}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_service_a83aed51b88c750764d18f5d3f4936740}\label{class_service_a83aed51b88c750764d18f5d3f4936740}} 
+\index{Service@{Service}!setAgents@{setAgents}}
+\index{setAgents@{setAgents}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{setAgents()}{setAgents()}}
+{\footnotesize\ttfamily void Service\+::set\+Agents (\begin{DoxyParamCaption}\item[{const vector$<$ Agent $\ast$ $>$ \&}]{agents }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em agents} & agents to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_service_a07350d82a048cf1073462dc8c7bbe1ae}\label{class_service_a07350d82a048cf1073462dc8c7bbe1ae}} 
+\index{Service@{Service}!setConstraints@{setConstraints}}
+\index{setConstraints@{setConstraints}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{setConstraints()}{setConstraints()}}
+{\footnotesize\ttfamily void Service\+::set\+Constraints (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{class_constraint}{Constraint}} $\ast$ $>$ \&}]{constraints }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em constraints} & constraint to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_service_a3155b602e41f9ea15d72e91b8f16ba1d}\label{class_service_a3155b602e41f9ea15d72e91b8f16ba1d}} 
+\index{Service@{Service}!setId@{setId}}
+\index{setId@{setId}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{setId()}{setId()}}
+{\footnotesize\ttfamily void Service\+::set\+Id (\begin{DoxyParamCaption}\item[{const string \&}]{id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & id to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_service_a3ba2f1fb0a7285b73566f8c713d08c40}\label{class_service_a3ba2f1fb0a7285b73566f8c713d08c40}} 
+\index{Service@{Service}!setPostRequired@{setPostRequired}}
+\index{setPostRequired@{setPostRequired}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{setPostRequired()}{setPostRequired()}}
+{\footnotesize\ttfamily void Service\+::set\+Post\+Required (\begin{DoxyParamCaption}\item[{const array$<$ map$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$, int $>$, 7 $>$ \&}]{post\+Required }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em post\+Required} & post required to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_service_af77229c5fa0ede79a8bb96c7cc2e4252}\label{class_service_af77229c5fa0ede79a8bb96c7cc2e4252}} 
+\index{Service@{Service}!setPosts@{setPosts}}
+\index{setPosts@{setPosts}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{setPosts()}{setPosts()}}
+{\footnotesize\ttfamily void Service\+::set\+Posts (\begin{DoxyParamCaption}\item[{const vector$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$ $>$ \&}]{posts }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em posts} & posts to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_service_a36e3ea3a360e7a48ba5c62108210247b}\label{class_service_a36e3ea3a360e7a48ba5c62108210247b}} 
+\index{Service@{Service}!setReferents@{setReferents}}
+\index{setReferents@{setReferents}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{setReferents()}{setReferents()}}
+{\footnotesize\ttfamily void Service\+::set\+Referents (\begin{DoxyParamCaption}\item[{const vector$<$ Agent $\ast$ $>$ \&}]{referents }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em referents} & referents to set \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_service_a24978a57ff779ccf5d2bce85351b7233}\label{class_service_a24978a57ff779ccf5d2bce85351b7233}} 
+\index{Service@{Service}!agents@{agents}}
+\index{agents@{agents}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{agents}{agents}}
+{\footnotesize\ttfamily vector$<$Agent$\ast$$>$ Service\+::agents\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_service_aedc0255543d81956ac5dc4a08f10e050}\label{class_service_aedc0255543d81956ac5dc4a08f10e050}} 
+\index{Service@{Service}!constraints@{constraints}}
+\index{constraints@{constraints}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{constraints}{constraints}}
+{\footnotesize\ttfamily vector$<$\mbox{\hyperlink{class_constraint}{Constraint}}$\ast$$>$ Service\+::constraints\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_service_ad2a6b9892806da194b7d7060620d0f3b}\label{class_service_ad2a6b9892806da194b7d7060620d0f3b}} 
+\index{Service@{Service}!id@{id}}
+\index{id@{id}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily string Service\+::id\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_service_ab5269462c2d726e662ac8ebf9aaffef3}\label{class_service_ab5269462c2d726e662ac8ebf9aaffef3}} 
+\index{Service@{Service}!postRequired@{postRequired}}
+\index{postRequired@{postRequired}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{postRequired}{postRequired}}
+{\footnotesize\ttfamily array$<$map$<$\mbox{\hyperlink{class_post}{Post}}$\ast$,int$>$, 7$>$ Service\+::post\+Required\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_service_af3bcc71cfa1311b03830b21ab769720c}\label{class_service_af3bcc71cfa1311b03830b21ab769720c}} 
+\index{Service@{Service}!posts@{posts}}
+\index{posts@{posts}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{posts}{posts}}
+{\footnotesize\ttfamily vector$<$\mbox{\hyperlink{class_post}{Post}}$\ast$$>$ Service\+::posts\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_service_a2aa26a116f4832833632bf7552946cfb}\label{class_service_a2aa26a116f4832833632bf7552946cfb}} 
+\index{Service@{Service}!referents@{referents}}
+\index{referents@{referents}!Service@{Service}}
+\doxysubsubsection{\texorpdfstring{referents}{referents}}
+{\footnotesize\ttfamily vector$<$Agent$\ast$$>$ Service\+::referents\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/\+Valars/\+Documents/\+Git\+Hub/\+P-\/\+A\+N\+D\+R\+O\+I\+D\+E-\/\+Construction-\/\+Automatique-\/de-\/planning/src/model/\mbox{\hyperlink{_service_8h}{Service.\+h}}\item 
+C\+:/\+Users/\+Valars/\+Documents/\+Git\+Hub/\+P-\/\+A\+N\+D\+R\+O\+I\+D\+E-\/\+Construction-\/\+Automatique-\/de-\/planning/src/model/\mbox{\hyperlink{_service_8cpp}{Service.\+cpp}}\end{DoxyCompactItemize}

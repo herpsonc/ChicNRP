@@ -14,10 +14,12 @@
 #include "../Agent.h"
 //Correspondant à la contrainte C6
 
+class Model;
+
 class ConstraintInvolved: public Constraint {
 public:
 	ConstraintInvolved(std::vector<Post*> first, std::vector<Post*> last, int priority);
-	ConstraintInvolved(std::vector<string> first, std::vector<string> last, int priority);
+	ConstraintInvolved(std::vector<string> first, std::vector<string> last, Day firstDay, int priority);
 	virtual ~ConstraintInvolved();
 
 	const std::vector<Post*>& getFirstSeq() const;
@@ -33,11 +35,15 @@ public:
 	string getSeqToPrint();
 
 	int getPriority();
+	const Day getFirstDay();
 
-	int check(const Agent* agent, bool checkALL, bool log);
+	int check(const Agent* agent, Day day, bool checkALL, bool log);
+	std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> checkValuation(const Agent* agent, Day day);
+	void checkFast(Model* m, int iCons);
 
 protected:
 	int priority;
+	Day firstDay;
 	std::vector<Post*> firstSeq; //Première partie de l'implication
 	std::vector<Post*> lastSeq; //Second partie de l'implication
 	std::vector<string> firstSeqAtt;

@@ -14,6 +14,8 @@
 #include "../Agent.h"
 //Correspondant à la contrainte C2
 
+class Model;
+
 class ConstraintDaysSeq: public Constraint {
 
 public:
@@ -32,6 +34,9 @@ public:
 
 	string getSeqToPrint();
 	int check(const Agent* agent, bool checkALL, bool log);
+	std::vector<std::pair<int, int>> checkValuation(const Agent* agent);
+
+	void checkFast(Model* m, int iCons);
 
 
 protected:
