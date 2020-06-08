@@ -907,16 +907,19 @@ int main() {
 
 	//modèle avec les (pré)données de Mars du CHIC
 	Model m =  generateGhr();
-	m = addServiceSDC(m);
+	/*m = addServiceSDC(m);
 	m = addServiceCS(m);
 	m = addServiceSDN(m);
-	m = addServicePool(m);
+	m = addServicePool(m);*/
 	m.printPlanning();
+
+	LPSolver::linearProgram(m);
+
 	//m.generateXlsx("test.xlsx");
-	auto m3 = heuristicSolver::iterative2(m, 5000000, 5, 14400);
-	m3.printPlanning();
-	heuristicSolver::check(&m3, false, true);
-	m3.generateXlsx("solution.xlsx");
+	//auto m3 = heuristicSolver::iterative2(m, 5000000, 5, 14400);
+	//m3.printPlanning();
+	//heuristicSolver::check(&m3, false, true);
+	//m3.generateXlsx("solution.xlsx");
 
 	//m.generateXML("test.xml");
 	//Model m2 = Model(Tuesday,31,60);
@@ -986,87 +989,6 @@ int main() {
 	//m3.printPlanning();
 	//cout << "---------------------------------" << endl;
 	m4.printPlanning();*/
-
-
-	/*
-	m.printPlanning();
-
-	//cout << "---------------------------------" << endl;
-	//m3.printPlanning();
-
-	LPSolver::linearProgram(m);
-
-	//SCIP* scip;
-	//SCIPcreate(&scip);
-
-	//SCIPincludeDefaultPlugins(scip);
-
-	//SCIPcreateProb(scip, "planning", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-	//int v = 0;
-	//SCIP_VAR* varCons[50];
-	//SCIP_VAR* var;
-	//double hours[50];
-	//SCIPcreateVar(scip, &var, NULL, 0.0, 1.0, 1.0, SCIP_VARTYPE_BINARY, TRUE, FALSE, NULL, NULL, NULL, NULL, NULL);
-	//SCIPaddVar(scip, var);
-	//
-	//Agent* a = new Agent("6", 155, 48, Status::Confirmed);
-	//map<Agent*, std::pair<std::vector<SCIP_VAR*>, std::vector<float>>> agentLastPosts = map<Agent*, std::pair<std::vector<SCIP_VAR*>, std::vector<float>>>();
-	////agentLastPosts.insert(a, pair<std::vector<SCIP_VAR*>, std::vector<float>>(var, 12.5) );
-
-	//map<Agent*, pair<SCIP_VAR**, double*>> testos = map<Agent*, pair<SCIP_VAR**, double*>>();
-	//testos.insert(pair<Agent*, pair<SCIP_VAR**, double*>>(a, pair<SCIP_VAR**, double*>(varCons, hours)));
-	//varCons[0] = var;
-	//hours[0] = 12.5;
-
-	//for (auto itr = testos.begin(); itr != testos.end(); ++itr) {
-	//	cout << '\t' << itr->first->getId() << '\n';
-	//		for (auto itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2) {
-	//			cout << '\t' << itr2->first << '\n'
-	//			<< '\t' << itr2->second << '\n';
-	//		}
-	//}
-	/*
-	for (auto s : m2.getServices()) {
-		for (auto a : m2.getAgentFrom(s)) {
-=======
-	cout << "---------------------------------" << endl;
-	m2.printPlanning();
-
-	//Model m3 = Model::generateModelInstance(Day::Sunday, 31, 25, 5, 10, 10, 48.0);
-	
-	for(auto s : m2.getServices()){
-		for(auto a : m2.getAgentFrom(s)){
-
-			cout << a->getId() << " Mois: " << a->getWorkingHoursMonth() << endl;
-			for (int i = 0; i < 5; i++) {
-				cout << "Week " << i << ": " << a->getWorkingHoursWeek(m2.getFirstDay(), i) << endl;
-			}
-		}
-	}*/
-
-	cout << heuristicSolver::check(&m2) << endl;
-	*/
-
-	/*
-	//Test sur plusieurs models généré aléatoirements
-	unsigned int nb = 1000;
-	Model bestModel = m;
-	int bScore = -500;
-	int wScore = 10;
-	for (int i = 0;i < nb;i++) {
-	m2 = heuristicSolver::greedy(m);
-	int tmp = heuristicSolver::check(&m2, false,false);
-	if (tmp > bScore) {
-		bestModel = m2;
-		bScore = tmp;
-	}
-	if (tmp < wScore)
-		wScore = tmp;
-	}
-
-	cout << heuristicSolver::check(&m2, false,true) << endl;
-	cout << "worst " << wScore;
-	*/
 
 	string t;
 	cin >> t;

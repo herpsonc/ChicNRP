@@ -505,7 +505,7 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 }
 
 //! 
-a XML file from the Model
+//a XML file from the Model
 //! \param fileName name of the xml file saved
 void Model::generateXML(string fileName){
 

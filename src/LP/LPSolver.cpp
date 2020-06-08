@@ -56,11 +56,11 @@ Model LPSolver::linearProgram(const Model mo) {
 	for (int day = 0; day < mr.getNbDays(); day++) {
 
 		for (auto s : mr.getServices()) {
-
-			//défaut : prend pas en compte les agents qu'on peut solliciter en dehors du service où ce poste est dédié en général
+			cout << "Service " << s->getId() << endl;
+			//défaut : ne prend pas en compte les agents qu'on peut solliciter en dehors du service où ce poste est dédié en général
 			agents = mr.getAgentFrom(s);
 
-			for (auto job : s->getPosts()) { //ou bien mr.getPosts() ?
+			for (auto job : s->getPosts()) { //pour généraliser : mr.getPosts() mais il faudrait d'autres changements
 				if (job->getId() != "Repos") {
 
 					// Liste variables contrainte courante
@@ -180,11 +180,11 @@ Model LPSolver::linearProgram(const Model mo) {
 
 	/*Contraintes horaires par Mois */
 
-	vector<VariableData*> varsDataTmp(varsData); //pour ne pas re-avoir les agents déjà vus
+	vector<VariableData*> varsDataTmp(varsData); //sert à ne pas re-avoir les agents déjà vus
 	int nb_vals = 0;
 	for (auto a : agents) {
 		nb_vals = 0;
-		long long coeffs_hours[200];
+		long long coeffs_hours[200];  //taille de tableau en dur à changer dès que possible
 		SCIP_VAR* varsConsHours[200]; //maximum 31*nbPosts vars par mois
 		cout << "tabl 10 : " << coeffs_hours[10] << endl;
 		cout << "agent:" << a->getId() << endl;
@@ -203,8 +203,11 @@ Model LPSolver::linearProgram(const Model mo) {
 
 		SCIP_CONS* consHoursMonth;
 		SCIPcreateConsBasicKnapsack(scip, &consHoursMonth, "nb_heures_mois", nb_vals, varsConsHours, coeffs_hours, a->getNbHoursMonth());//+mo.getOvertime());
+
+		//modifier la contrainte pour la créer plutôt avec une contrainte linéaire :
 		//SCIPcreateConsLinear(scip, &consHoursMonth, NULL, nb_vals, varsConsHours, coeffs_hours, a->getNbHoursMonth(), NULL,);
-		SCIPaddCoefLinear(scip, consHoursMonth, varsConsHours[0], a->getNbHoursMonth());
+		//SCIPaddCoefLinear(scip, consHoursMonth, varsConsHours[0], a->getNbHoursMonth());
+
 		SCIPaddCons(scip, consHoursMonth);
 
 		cout << "contrainte ok" << endl;
@@ -415,7 +418,7 @@ Model LPSolver::linearProgram(const Model mo) {
 															un[i] = (long long)1;
 														}
 
-														SCIPcreateConsBasicKnapsack(scip, &cons, "3_nuits_interdit", nbVar, varCons, un, 2);
+														SCIPcreateConsBasicKnapsack(scip, &cons, "trois_nuits_interdit", nbVar, varCons, un, 2);
 														SCIPaddCons(scip, cons);
 
 														auto it = consVec.end();
@@ -544,7 +547,7 @@ Model LPSolver::linearProgram(const Model mo) {
 																		}
 
 
-																		SCIPcreateConsBasicKnapsack(scip, &cons, "3_jours_exceptionnel", nbVar, varCons, un, 3);
+																		SCIPcreateConsBasicKnapsack(scip, &cons, "trois_jours_exceptionnel", nbVar, varCons, un, 3);
 																		SCIPaddCons(scip, cons);
 
 																		auto it = consVec.end();
@@ -575,6 +578,7 @@ Model LPSolver::linearProgram(const Model mo) {
 
 	fileIdVar.close();
 
+	//stocke les données du PL dans un fichier de log
 	cout << "Write init pl" << endl;
 	SCIPwriteOrigProblem(scip, "init2.txt", "lp", FALSE);
 
