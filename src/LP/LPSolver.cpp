@@ -1,6 +1,6 @@
 #include "LPSolver.h"
 #include "VariableData.h"
-//using namespace std;
+using namespace std;
 
 LPSolver::LPSolver() {
 	// TODO Auto-generated constructor stub
@@ -50,7 +50,13 @@ Model LPSolver::linearProgram(const Model mo) {
 	int id_contrainte = 0;
 	int id_var = 0; //agent
 
+	vector<Agent*> agents_service_i;
 	vector<Agent*> agents;
+
+	for (auto s : mr.getServices()) {
+		agents_service_i = mr.getAgentFrom(s);
+		agents.insert(agents.end(), agents_service_i.begin(), agents_service_i.end());
+	}
 
 
 	for (int day = 0; day < mr.getNbDays(); day++) {
@@ -58,7 +64,7 @@ Model LPSolver::linearProgram(const Model mo) {
 		for (auto s : mr.getServices()) {
 			cout << "Service " << s->getId() << endl;
 			//défaut : ne prend pas en compte les agents qu'on peut solliciter en dehors du service où ce poste est dédié en général
-			agents = mr.getAgentFrom(s);
+			agents_service_i = mr.getAgentFrom(s);
 
 			for (auto job : s->getPosts()) { //pour généraliser : mr.getPosts() mais il faudrait d'autres changements
 				if (job->getId() != "Repos") {
@@ -68,7 +74,7 @@ Model LPSolver::linearProgram(const Model mo) {
 					SCIP_VAR* varCons[50];
 
 					bool agent_dispo = false;
-					for (auto a : agents) {
+					for (auto a : agents_service_i) {
 
 						SCIP_VAR* var;
 						if (a->getCalendar()[day] == NULL) {
@@ -124,7 +130,7 @@ Model LPSolver::linearProgram(const Model mo) {
 
 			//un agent ne peut faire qu'un poste par jour
 			vector<VariableData*> varsDataTmp(varsData); //variable temporaire pour la contrainte
-			for (auto a : agents) {
+			for (auto a : agents_service_i) {
 				if (a->getCalendar()[day] == NULL) {
 
 					// Liste variables contrainte courante
@@ -158,25 +164,6 @@ Model LPSolver::linearProgram(const Model mo) {
 
 	}
 
-	/*
-	int it = 0;
-	int* tab;
-	vector<VariableData*> varsDataTmp(varsData); //pour ne pas re-avoir les agents déjà vus
-	for (int i = 0; i < agents.size(); i++) {
-		cout << "agent:" << agents[i]->getId() << endl;
-		for (int i = 0; i < varsDataTmp.size(); i++) {
-			if (agents[i] == varsDataTmp[i]->getAgent()) {
-				it++;
-				varsDataTmp.erase(varsDataTmp.begin()+i);
-			
-			}
-		}
-		tab[i] = { it };
-	}
-
-	const int n = a;
-	*/
-
 
 	/*Contraintes horaires par Mois */
 
@@ -184,8 +171,8 @@ Model LPSolver::linearProgram(const Model mo) {
 	int nb_vals = 0;
 	for (auto a : agents) {
 		nb_vals = 0;
-		long long coeffs_hours[200];  //taille de tableau en dur à changer dès que possible
-		SCIP_VAR* varsConsHours[200]; //maximum 31*nbPosts vars par mois
+		long long coeffs_hours[500];  //taille de tableau en dur à changer dès que possible
+		SCIP_VAR* varsConsHours[500]; //maximum 31*nbPosts vars par mois
 		cout << "tabl 10 : " << coeffs_hours[10] << endl;
 		cout << "agent:" << a->getId() << endl;
 		for (int i = 0; i < varsDataTmp.size(); i++) {
@@ -193,7 +180,7 @@ Model LPSolver::linearProgram(const Model mo) {
 				coeffs_hours[nb_vals] = static_cast<long long>(varsDataTmp[i]->getPost()->getTime());
 				varsConsHours[nb_vals] = varsDataTmp[i]->getVariable();
 
-				cout << "id: " << varsDataTmp[i]->getId() << "  " << varsDataTmp[i]->getPost()->getId() << varsDataTmp[i]->getDay() << " heures " << coeffs_hours[nb_vals] << endl;
+				//cout << "id: " << varsDataTmp[i]->getId() << "  " << varsDataTmp[i]->getPost()->getId() << varsDataTmp[i]->getDay() << " heures " << coeffs_hours[nb_vals] << endl;
 				//varsDataTmp.erase(varsDataTmp.begin()+i); //à l'air de faire buguer la contrainte
 				nb_vals++;
 			}
@@ -223,8 +210,8 @@ Model LPSolver::linearProgram(const Model mo) {
 	for (auto a : agents) {
 		jour_semaine = 1;
 		nb_vals = 0;
-		long long coeffs_hours[200];
-		SCIP_VAR* varsConsHours[200]; //maximum 7*nbPosts vars par semaine
+		long long coeffs_hours[500];
+		SCIP_VAR* varsConsHours[500]; //maximum 7*nbPosts vars par semaine
 		for (int day = 0; day < mr.getNbDays(); day++) {
 
 			//cout << "agent:" << a->getId() << endl;
@@ -247,16 +234,65 @@ Model LPSolver::linearProgram(const Model mo) {
 				SCIPcreateConsBasicKnapsack(scip, &consHoursWeek, "nb_heures_semaine", nb_vals, varsConsHours, coeffs_hours, a->getNbHoursWeek());//+mo.getOvertime());
 				SCIPaddCons(scip, consHoursWeek);
 
-				cout << "contrainte ok" << endl;
+				//cout << "contrainte ok" << endl;
 				consVec.push_back(consHoursWeek);
 				jour_semaine = 1;
 				nb_vals = 0;
-				long long coeffs_hours[200];
-				SCIP_VAR* varsConsHours[200]; //maximum 7*nbPosts vars par semaine
+				long long coeffs_hours[500];
+				SCIP_VAR* varsConsHours[500]; //maximum 7*nbPosts vars par semaine
 			}
 			jour_semaine++;
 		}
 	}
+
+	/*
+	
+	int i_boucle_jour = 0;
+
+	for (auto a : agents) {
+		jour_semaine = 1;
+		nb_vals = 0;
+		long long coeffs_hours[200];
+		SCIP_VAR* varsConsHours[200]; //maximum 7*nbPosts vars par semaine
+		int nb_vals_ji[200]; //nb_vals pour le jour i de l'agent courant
+
+		for (int i = 0; i < 200; i++) {
+			nb_vals_ji[i] = 0;
+		}
+
+
+		for (int day = 0; day < mr.getNbDays(); day++) {
+
+			//cout << "agent:" << a->getId() << endl;
+			for (int i = 0; i < varsDataTmp.size(); i++) {
+				if (a->getId() == varsDataTmp[i]->getAgent()->getId() && varsDataTmp[i]->getDay() == day) {
+					coeffs_hours[nb_vals] = static_cast<long long>(varsDataTmp[i]->getPost()->getTime());
+					varsConsHours[nb_vals] = varsDataTmp[i]->getVariable();
+
+					//cout << "id: " << varsDataTmp[i]->getId() << "  " << varsDataTmp[i]->getPost()->getId() << varsDataTmp[i]->getDay() << " heures " << coeffs_hours[nb_vals] << endl;
+					//varsDataTmp.erase(varsDataTmp.begin()+i); //à l'air de faire buguer la contrainte
+					nb_vals++;
+					nb_vals_ji[day] += 1;
+				}
+			}
+
+			//cout << "fin agent:" << a->getId() << " " << nb_vals << "  " << sizeof(coeffs_hours) / sizeof(coeffs_hours[0]) << "  " << sizeof(varsConsHours) / sizeof(varsConsHours[0]) << endl;
+
+
+			//7 jours glissants
+			if (jour_semaine >= 7) {
+
+				if (jour_semaine >= 8) {
+
+					for (int i = 0; i < nb_vals_ji[i_boucle_jour]; i++) {
+
+					}
+					i_boucle_jour++;
+				}
+
+	
+	*/
+
 
 	// Nuit puis Jour interdit
 	varsDataTmp = varsData; //variable temporaire pour la contrainte
@@ -599,7 +635,7 @@ Model LPSolver::linearProgram(const Model mo) {
 	for (auto varData : varsData) {
 		SCIP_Real varValue = SCIPgetSolVal(scip, sol, varData->getVariable());
 		if (varValue == 1.0) {
-			//cout << "we good" << " id: " << id_var << " ag: " << agentsIndex[id_var]->getId() << " j: " << daysIndex[id_var]+1 << " p: " << postsIndex[id_var]->getId() << endl;
+			//cout << "we good" << " id: " << id_var << " ag: " << varData->getAgent()->getId() << " j: " << varData->getDay() +1 << " p: " << varData->getPost()->getId() << endl;
 			varData->getAgent()->setCalendarDay(varData->getPost(), varData->getDay());
 		}
 		else if(varValue == .0 && varData->getAgent()->getCalendar()[varData->getDay()] == NULL){ //si on a pas un autre poste attribué plus tôt pour le même jour et le même agent ==> repos

@@ -376,14 +376,14 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 
 		if (nbPostsPerService == -1) {
 			if (i != nbServices - 1 && nbPostsAvailable >= 2) {
-				nbPostsService_i = rand() % (nbPostsAvailable / nbServices); //nbPosts entre 0 (2 en réalité) et nb total des posts/nbServices pour essayer d'avoir quelque chose d'équilibré
+				nbPostsService_i = rand() % (nbPosts / (nbServices / 2)); //nbPosts entre 0 (2 en réalité) et nb total des posts/nbServices pour essayer d'avoir quelque chose d'équilibré
 			}
 			else { //si c'est le dernier service : lui attribuer tous les posts restants
 				nbPostsService_i = nbPostsAvailable; //risque d'avoir bcp + de posts dans le dernier service
 			}
 		}
 
-		cout << nbPostsService_i << endl;
+		cout << "Service " << i << " :" << nbPostsService_i << "poste(s)" << endl;
 
 		if (nbPostsService_i < 2) {
 			nbPostsService_i = 2; //empêche d'avoir des services sans postes mais => non respect de la valeur nbPosts des fois
@@ -395,8 +395,7 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 			Post* posti_j;
 			if (testLengthPost >= 5) { //50% de chance de créer un poste à 12.25h, sinon 7.5h
 
-
-				posti_j = new Post("S" + std::to_string(i) + "P" + std::to_string(j)+"L", 12.25);
+				posti_j = new Post("S" + std::to_string(i) + "P" + std::to_string(j) + "L", 12.25);
 				posti_j->addAttribut("work");
 				posti_j->addAttribut("workL"); //poste à durée longue
 			}
@@ -424,20 +423,18 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 			service_i->addConstraint(constraints[id_cstr]);
 		}
 
-
 		nbPostsAvailable -= nbPostsService_i;
 	}
-
 
 	//Agents
 
 	//variables pour les tirages aléatoires
 	int service_rand = 0, post_rand = 0, conges_rand = 0, job_rand = 0, incr_jour = 0, post_ind_rand = 0;
-	if (proba_1er_conge < 0 || proba_1er_conge > 100) 
+	if (proba_1er_conge < 0 || proba_1er_conge > 100)
 		proba_1er_conge = 3; //3% de chance d'avoir un congé si proba perso non déclarée (ou incorrecte)
 	if (proba_suite_conge < 0 || proba_suite_conge > 100)
 		proba_suite_conge = 70; //70% de chance d'avoir un congé à la suite d'un premier congé si proba perso non déclarée (ou incorrecte)
-	
+
 
 	//pour chaque agent
 	for (int i = 0; i < nbAgents; i++) {
@@ -478,7 +475,7 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 				//chances de faire une suite de congés après un premier congé = 70% puis décrément de 5% par jour à la suite
 				conges_rand = rand() % 100 + 1;
 
-				while (conges_rand <= (proba_suite_conge -(incr_jour*5)) && jour + incr_jour <= nbDays) {
+				while (conges_rand <= (proba_suite_conge - (incr_jour * 5)) && jour + incr_jour <= nbDays) {
 					a_i->setCalendarDay(ca, jour + incr_jour, true);
 					conges_rand = rand() % 100 + 1;
 					//cout << conges_rand << " : " << (70 - (incr_jour * 5) ) << endl;
@@ -487,7 +484,7 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 				jour += incr_jour; //si on a déjà ajouté un congé aux jours suivants : on passe
 				incr_jour = 0;
 			}
-			else if(job_rand <= 5){ //5% chance d'avoir un job pré-défini ce jour là
+			else if (job_rand <= 5) { //5% chance d'avoir un job pré-défini ce jour là
 				post_ind_rand = rand() % posts_possibles.size();
 				//cout << post_ind_rand << "  " << posts_possibles.size() << endl;
 				if (posts_possibles[post_ind_rand]->getId() != "Repos") {
@@ -496,12 +493,10 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 			}
 		}
 
-
 		m.addAgent(a_i, m.getServices()[service_rand]);
 	}
 
 	return m;
-
 }
 
 //! 

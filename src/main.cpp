@@ -107,7 +107,7 @@ Model generateGhr() {
 		ConstraintInvolved* cwjjj = new ConstraintInvolved(v, v2, Day::Saturday, 1000);
 		ghr->addConstraint(cwjjj);
 		
-		float nbHoursWeek = 60.0, nbHoursMonth = 155;
+		float nbHoursWeek = 48., nbHoursMonth = 155;
 
 		//Agents
 		Agent* a1 = new Agent("1", nbHoursMonth, nbHoursWeek,  Status::Confirmed);
@@ -782,24 +782,24 @@ Model addServiceCS(Model m) {
 	a22->setImpossiblePosts(ip);
 	m.addAgent(a22, cs_service);
 
-	Agent* a35 = new Agent("a35", nbHoursMonth, nbHoursWeek, Status::Confirmed);
+	Agent* a35 = new Agent("35", nbHoursMonth, nbHoursWeek, Status::Confirmed);
 	a35->setService(cs_service);
 	addConsecutiveSamePost(a35, ca, 15, 19);
 	a35->setImpossiblePosts(ip);
 	m.addAgent(a35, cs_service);
 
-	Agent* a43 = new Agent("a43", nbHoursMonth, nbHoursWeek, Status::Confirmed);
+	Agent* a43 = new Agent("43", nbHoursMonth, nbHoursWeek, Status::Confirmed);
 	a43->setService(cs_service);
 	addConsecutiveSamePost(a43, ca, 27, 30);
 	a43->setImpossiblePosts(ip);
 	m.addAgent(a43, cs_service);
 
-	Agent* a5 = new Agent("a5", nbHoursMonth, nbHoursWeek, Status::Confirmed);
+	Agent* a5 = new Agent("5", nbHoursMonth, nbHoursWeek, Status::Confirmed);
 	a5->setService(cs_service);
 	a5->setImpossiblePosts(ip);
 	m.addAgent(a5, cs_service);
 
-	Agent* a44 = new Agent("a44", nbHoursMonth, nbHoursWeek, Status::Confirmed);
+	Agent* a44 = new Agent("44", nbHoursMonth, nbHoursWeek, Status::Confirmed);
 	a44->setService(cs_service);
 	addConsecutiveSamePost(a44, ca, 0, 3);
 	addConsecutiveSamePost(a44, ca, 20, 21);
@@ -906,20 +906,23 @@ int main() {
 
 
 	//modèle avec les (pré)données de Mars du CHIC
-	Model m =  generateGhr();
-	/*m = addServiceSDC(m);
-	m = addServiceCS(m);
+	Model m = generateGhr();
+	
+	m = addServiceSDC(m);
 	m = addServiceSDN(m);
-	m = addServicePool(m);*/
+	m = addServicePool(m);
+	m = addServiceCS(m);
 	m.printPlanning();
 
-	LPSolver::linearProgram(m);
+	/*Model m2 = Model::generateModelInstance(Day::Wednesday, 30, 25, 6, 15, 70, 60.0, 155);
+	m2.printPlanning();
+	m2.generateXlsx("service_g6_PL.xlsx");
+	m2 = LPSolver::linearProgram(m2);*/
 
-	//m.generateXlsx("test.xlsx");
-	//auto m3 = heuristicSolver::iterative2(m, 5000000, 5, 14400);
+	auto m3 = heuristicSolver::iterative2(m, 5000000, 5, 14400);
 	//m3.printPlanning();
 	//heuristicSolver::check(&m3, false, true);
-	//m3.generateXlsx("solution.xlsx");
+	//m2.generateXlsx("service_g6_PL_res.xlsx");
 
 	//m.generateXML("test.xml");
 	//Model m2 = Model(Tuesday,31,60);
