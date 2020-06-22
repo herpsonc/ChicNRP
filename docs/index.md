@@ -1,6 +1,6 @@
 # CHIC's Nurse Rostering Problem
 
-The Nurse Rostering Problem (NRP) is a combinatorial problem whose challenge is to find an optimal allocation of agents in a hospital service over a given period (horizon). We present here the first steps of a [Sorbonne University's academic project](androide.lip6.fr/) to create planning for the maternity ward of the [Centre Hospitalier Intercommunal de Créteil (CHIC)](www.chicreteil.fr/), involving 70 midwives
+The Nurse Rostering Problem (NRP) is a combinatorial problem whose challenge is to find an optimal allocation of agents in a hospital service over a given period (horizon). We present here the first steps of a [Sorbonne University's academic project](https://androide.lip6.fr/) to create planning for the maternity ward of the [Centre Hospitalier Intercommunal de Créteil (CHIC)](https://www.chicreteil.fr/), involving 70 midwives
 
 - Our first objective is to generate partial solutions of sufficient quality to allow planning mangers to save time.
 
