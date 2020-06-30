@@ -1,7 +1,9 @@
-/*Classe permettant d'avoir toute les informations liées à une SCIP_VAR */
+/*Classe permettant d'avoir toutes les informations liï¿½es ï¿½ une SCIP_VAR */
+
+#include <iostream>
 
 #include "../model/Agent.h"
-#include "../model/Post.h"
+// #include "../model/Post.h"
 
 #include <scip/scip.h>
 //#include <scip/scipdefplugins.h>

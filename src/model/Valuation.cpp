@@ -33,7 +33,7 @@ Valuation& Valuation::operator=(const Valuation& obj)
 		involved = obj.involved;
 		seqMinMax = obj.seqMinMax;
 	}
-	return Valuation(obj);
+	return *this;
 
 }
 

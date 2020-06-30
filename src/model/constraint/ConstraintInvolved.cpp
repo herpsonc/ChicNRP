@@ -1,7 +1,7 @@
 /*
  * ConstraintInvolved.cpp
  *
- *  Created on: 21 févr. 2020
+ *  Created on: 21 fï¿½vr. 2020
  *      Author: Valars
  */
 
@@ -97,13 +97,13 @@ int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool l
 	bool first = false;
 	int i = 0;
 	int nb_fail = 0;
-	//On cherche dans le pré planning
+	//On cherche dans le prï¿½ planning
 
 	for (auto post : agent->getLastMonthCalendar()) {
 		if (post != NULL) {
 			for (auto att : post->getAttributs()) {
 				found = false;
-				//Le cas où la séquence est déjà detecté.
+				//Le cas oï¿½ la sï¿½quence est dï¿½jï¿½ detectï¿½.
 				if (seqDetected) {
 					if (att == lastSeqAtt[indice]) {
 						indice++;
@@ -116,12 +116,12 @@ int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool l
 						break;
 					}
 				}
-				//Le cas où la firstSeq est pas trouvé
+				//Le cas oï¿½ la firstSeq est pas trouvï¿½
 				else {
 					if (att == firstSeqAtt[indice]) {
 						indice++;
 						found = true;
-						//Toute la séquence a été trouver
+						//Toute la sï¿½quence a ï¿½tï¿½ trouver
 						if (indice == firstSeqAtt.size()) {
 							indice = 0;
 							seqDetected = true;
@@ -129,7 +129,7 @@ int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool l
 						break;
 					}
 				}
-				//Si la 2e séquence n'est pas détecté
+				//Si la 2e sï¿½quence n'est pas dï¿½tectï¿½
 				if (seqDetected && !found) {
 					if(!checkALL)
 						return false;
@@ -138,7 +138,7 @@ int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool l
 					seqDetected = false;
 					indice = 0;
 				}
-				//Reset de la première séquence
+				//Reset de la premiï¿½re sï¿½quence
 				else if (!seqDetected && !found) {
 					indice = 0;
 				}
@@ -153,7 +153,7 @@ int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool l
 		if (indice != 0 || firstDay == Day::None || firstDay == day || seqDetected) {
 			if (post != NULL) {
 				for (auto att : post->getAttributs()) {
-					//Le cas où la séquence est déjà detecté.
+					//Le cas oï¿½ la sï¿½quence est dï¿½jï¿½ detectï¿½.
 					if (!found && seqDetected) {
 						if (att == lastSeqAtt[indice]) {
 							indice++;
@@ -165,12 +165,12 @@ int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool l
 							}
 						}
 					}
-					//Le cas où la firstSeq est pas trouvé
+					//Le cas oï¿½ la firstSeq est pas trouvï¿½
 					else {
 						if (!found && att == firstSeqAtt[indice]) {
 							indice++;
 							found = true;
-							//Toute la séquence a été trouver
+							//Toute la sï¿½quence a ï¿½tï¿½ trouver
 							if (indice == firstSeqAtt.size()) {
 								indice = 0;
 								seqDetected = true;
@@ -183,7 +183,7 @@ int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool l
 				}
 			}
 		}
-		//Si la 2e séquence n'est pas détecté
+		//Si la 2e sï¿½quence n'est pas dï¿½tectï¿½
 		if (seqDetected && !found) {
 			if (log)
 				cout << getSeqToPrint() << ": Agent " << agent->getId() << " Jour "
@@ -201,7 +201,7 @@ int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool l
 				}
 			}
 		}
-		//Reset de la première séquence
+		//Reset de la premiï¿½re sï¿½quence
 		else if (!seqDetected && !found) {
 			indice = 0;
 			if (first)
@@ -228,11 +228,11 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 
 	auto v = std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>>();
 
-	//On cherche dans le pré planning
+	//On cherche dans le prï¿½ planning
 	for (auto post : agent->getLastMonthCalendar()) {
 		if (post != NULL) {
 			for (auto att : post->getAttributs()) {
-				//Le cas où la séquence est déjà detecté.
+				//Le cas oï¿½ la sï¿½quence est dï¿½jï¿½ detectï¿½.
 				if (!found && seqDetected) {
 					if (att == lastSeqAtt[indice]) {
 						indice++;
@@ -245,12 +245,12 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 						break;
 					}
 				}
-				//Le cas où la firstSeq est pas trouvé
+				//Le cas oï¿½ la firstSeq est pas trouvï¿½
 				else {
 					if (!found && att == firstSeqAtt[indice]) {
 						indice++;
 						found = true;
-						//Toute la séquence a été trouver
+						//Toute la sï¿½quence a ï¿½tï¿½ trouver
 						if (indice >= firstSeqAtt.size()) {
 							indiceFirst = i;
 							indice = 0;
@@ -263,7 +263,7 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 				
 			}
 		}
-		//Si la 2e séquence n'est pas détecté
+		//Si la 2e sï¿½quence n'est pas dï¿½tectï¿½
 		if (seqDetected && !found) {
 			v.push_back(pair<pair<int, int>, pair<int, int>>(pair<int, int>(indiceFirst - firstSeqAtt.size(), indiceFirst), pair<int, int>(indiceFirst + 1, indiceFirst + 1 + lastSeqAtt.size())));
 			isValide = false;
@@ -271,7 +271,7 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 			seqDetected = false;
 			indice = 0;
 		}
-		//Reset de la première séquence
+		//Reset de la premiï¿½re sï¿½quence
 		else if (!seqDetected && !found) {
 			indice = 0;
 		}
@@ -285,7 +285,7 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 		if (indice != 0 || firstDay == Day::None || firstDay == day || seqDetected) {
 			if (post != NULL) {
 				for (auto att : post->getAttributs()) {
-					//Le cas où la séquence est déjà detecté.
+					//Le cas oï¿½ la sï¿½quence est dï¿½jï¿½ detectï¿½.
 					if (!found && seqDetected) {
 						if (att == lastSeqAtt[indice]) {
 							indice++;
@@ -297,12 +297,12 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 							}
 						}
 					}
-					//Le cas où la firstSeq est pas trouvé
+					//Le cas oï¿½ la firstSeq est pas trouvï¿½
 					else {
 						if (!found && att == firstSeqAtt[indice]) {
 							indice++;
 							found = true;
-							//Toute la séquence a été trouver
+							//Toute la sï¿½quence a ï¿½tï¿½ trouver
 							if (indice == firstSeqAtt.size()) {
 								indiceFirst = i;
 								indice = 0;
@@ -316,7 +316,7 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 				}
 			}
 		}
-		//Si la 2e séquence n'est pas détecté
+		//Si la 2e sï¿½quence n'est pas dï¿½tectï¿½
 		if (seqDetected && !found) {
 			v.push_back(pair<pair<int, int>, pair<int, int>>(pair<int, int>(indiceFirst - firstSeqAtt.size() + 1, indiceFirst), pair<int, int>(indiceFirst + 1, indiceFirst + lastSeqAtt.size())));
 			isValide = false;
@@ -332,7 +332,7 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 				}
 			}
 		}
-		//Reset de la première séquence
+		//Reset de la premiï¿½re sï¿½quence
 		else if (!seqDetected && !found) {
 			indice = 0;
 			if (first)
@@ -359,6 +359,7 @@ void ConstraintInvolved::checkFast(Model* m, int iCons){
 
 		for (int j = 0; j < 2; j++) {
 			int indice = 0;
+			// Pourquoi redÃ©claration de found ???
 			bool found = false;
 			bool first = false;
 			bool seqDetected = false;
@@ -369,14 +370,14 @@ void ConstraintInvolved::checkFast(Model* m, int iCons){
 				day = Model::getNextDay(day);
 			}
 
-			//On regarde que les jours nécessaires
+			//On regarde que les jours nï¿½cessaires
 			for (int i = swap.getDay() - (int)firstSeqAtt.size() - (int)lastSeqAtt.size() + 1; i <= swap.getDay() + (int)firstSeqAtt.size() + (int)lastSeqAtt.size(); i++) {
 				if (i >= 0 && i < m->getNbDays()) {
 					Post* p = a->getCalendar()[i];
 					if (indice != 0 || firstDay == Day::None || firstDay == day || seqDetected) {
 						if (p != NULL) {
 							for (auto att : p->getAttributs()) {
-								//Le cas où la séquence est déjà detecté.
+								//Le cas oÃ¹ la sÃ©quence est dÃ©jÃ  dÃ©tectÃ©e
 								if (!found && seqDetected) {
 									if (att == lastSeqAtt[indice]) {
 										indice++;
@@ -388,12 +389,12 @@ void ConstraintInvolved::checkFast(Model* m, int iCons){
 										}
 									}
 								}
-								//Le cas où la firstSeq est pas trouvé
+								//Le cas oÃ¹ la firstSeq est pas trouvÃ©e
 								else {
 									if (!found && att == firstSeqAtt[indice]) {
 										indice++;
 										found = true;
-										//Toute la séquence a été trouver
+										//Toute la sÃ©quence a Ã©tÃ© trouvÃ©e
 										if (indice == firstSeqAtt.size()) {
 											indiceFirst = i;
 											indice = 0;
@@ -407,7 +408,7 @@ void ConstraintInvolved::checkFast(Model* m, int iCons){
 							}
 						}
 					}
-					//Si la 2e séquence n'est pas détecté
+					//Si la 2e sÃ©quence n'est pas dÃ©tectÃ©e
 					if (seqDetected && !found) {
 						v.push_back(pair<pair<int, int>, pair<int, int>>(pair<int, int>(indiceFirst - firstSeqAtt.size() + 1, indiceFirst), pair<int, int>(indiceFirst + 1, indiceFirst + lastSeqAtt.size())));
 						isValide = false;
@@ -422,7 +423,7 @@ void ConstraintInvolved::checkFast(Model* m, int iCons){
 							}
 						}
 					}
-					//Reset de la première séquence
+					//Reset de la premiï¿½re sï¿½quence
 					else if (!seqDetected && !found) {
 						indice = 0;
 						if (first)
@@ -438,7 +439,7 @@ void ConstraintInvolved::checkFast(Model* m, int iCons){
 			auto valuation = m->getValuation()->getInvolved()[swap.getService()][aIndice][iCons];
 			auto newVec = vector<pair<pair<int, int>, pair<int, int>>>();
 			for (auto value : valuation) {
-				//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
+				//Si la contrainte est dans l'intervalle, on vï¿½rifie qu'elle est toujours active
 				if (value.first.first >= swap.getDay() - (int)firstSeqAtt.size() - (int)lastSeqAtt.size() + 1 && value.second.second <= swap.getDay() + (int)firstSeqAtt.size() + (int)lastSeqAtt.size() - 1) {
 					found = false;
 					for (auto e : v) {
@@ -448,7 +449,7 @@ void ConstraintInvolved::checkFast(Model* m, int iCons){
 							found = true;
 						}
 					}
-					//Si on le trouve pas, c'est qu'on a résolu la contrainte
+					//Si on le trouve pas, c'est qu'on a rï¿½solu la contrainte
 					if (!found) {
 						m->getValuation()->setScore(m->getValuation()->getScore() + this->priority);
 					}
@@ -457,7 +458,7 @@ void ConstraintInvolved::checkFast(Model* m, int iCons){
 					newVec.push_back(value);
 				}
 			}
-			//Ajout des nouveaux éléments
+			//Ajout des nouveaux ï¿½lï¿½ments
 			for (auto e : v) {
 				bool isIn = false;
 				for (auto value : valuation) {

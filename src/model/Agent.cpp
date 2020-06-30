@@ -9,7 +9,7 @@
 
 Agent::Agent() {
 	id ="";
-	service = NULL;
+	// service = NULL;
 	nbHoursMonth = 0;
 	nbHoursWeek = 0;
 	status = Confirmed;
@@ -18,7 +18,7 @@ Agent::Agent() {
 Agent::Agent(string id, int nbHourMonth, int nbHoursWeek, Status status)
 {
 	this->id = id;
-	service = NULL;
+	// service = NULL;
 	this->nbHoursMonth = nbHourMonth;
 	this->nbHoursWeek = nbHoursWeek;
 	this->status = status;
@@ -35,14 +35,14 @@ Agent::Agent(string id, int nbHourMonth, int nbHoursWeek, Status status)
 
 Agent::Agent(const Agent &obj){
 	this->id=obj.id;
-	this->service=obj.service;
+	// this->service=obj.service;
 	this->nbHoursMonth=obj.nbHoursMonth;
 	this->nbHoursWeek=obj.nbHoursWeek;
 	this->status=obj.status;
 	this->calendar=obj.calendar;
 	this->lastMonthCalendar = obj.lastMonthCalendar;
 	this->impossiblePosts=obj.impossiblePosts;
-	this->constraints=obj.constraints;
+	// this->constraints=obj.constraints;
 	this->calendarLock = obj.calendarLock;
 }
 
@@ -95,7 +95,7 @@ void Agent::setImpossiblePosts(const std::vector<Post*> &impossiblePosts) {
 }
 
 //! \return service service affected to the Agent
-Service*& Agent::getService() {
+/*Service*& Agent::getService() {
 	return service;
 }
 
@@ -118,7 +118,7 @@ void Agent::setService(Service *&service) {
 //! \param constraint Constraint to add
 void Agent::addConstraint(Constraint *constraint) {
 	constraints.push_back(constraint);
-}
+}*/
 
 //! \return status status of the Agent
 Status Agent::getStatus() const {
@@ -299,7 +299,7 @@ std::vector<std::pair<int, int>> Agent::checkWorkingHoursWeekValuation(){
 }
 
 //! \param true to print log on the console
-//! \return nbFail +1 everytime an impossible Post is detected ine the calendar
+//! \return nbFail +1 everytime an impossible Post is detected in the calendar
 int Agent::checkImpossiblePosts(bool log){
 	int nbFail = 0;
 	int i = 0;

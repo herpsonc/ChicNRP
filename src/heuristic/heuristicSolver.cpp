@@ -32,16 +32,16 @@ Model heuristicSolver::greedy(const Model m) {
 
 		for(auto s : mr.getServices()){
 
-			//On mélange la liste des agents.
+			//On mélange la liste des agents
 			vector<Agent*> v = mr.getAgentFrom(s);
 			unsigned seed = chrono::system_clock::now().time_since_epoch().count();
 			shuffle(v.begin(),v.end(),default_random_engine(seed));
 
-			//On récupère les postes necessaires pour le jour day (la variable)
+			//On récupère les postes nécessaires pour le jour day (la variable)
 			auto required = s->getPostRequired()[day];
 
 
-			//On check si certains postes ne sont pas déjà attribuées
+			//On check si certains postes ne sont pas déjà attribués
 			for (auto a : v) {
 				if (a->getCalendar()[i] != NULL && required.find(a->getCalendar()[i]) != required.end()) {
 					required[a->getCalendar()[i]] -= 1;
@@ -410,7 +410,7 @@ Model heuristicSolver::getNeighborSwap(Model* m, int range)
 
 		//cout << swap << " Swap agent " << mr.getAgentFrom(service)[agent1]->getId() << " et agent " << mr.getAgentFrom(service)[agent2]->getId() << " jour " << day+1 << endl;
 
-		//On swap les poste des deux agents choisit
+		//On swap les postes des deux agents choisis
 		if (swap) {
 			Post* tmp = mr.getAgentFrom(service)[agent1]->getCalendar()[day];
 			mr.getAgentFrom(service)[agent1]->setCalendarDay(mr.getAgentFrom(service)[agent2]->getCalendar()[day], day);
@@ -534,7 +534,7 @@ Model heuristicSolver::iterative2Fast(const Model m, int nbIte, int range)
 		if (j % 100 == 0) {
 			cout << "Iteration " << j << endl;
 		}
-		//On choisit un voisinnage à appliquer
+		//On choisit un voisinage à appliquer
 		int randN = rand() % 100;
 
 		if (randN < 101) {
@@ -544,7 +544,7 @@ Model heuristicSolver::iterative2Fast(const Model m, int nbIte, int range)
 			nextModel = getneighborRandom(&currentModel, range);
 		}
 
-		//On regarde si la solution est meilleur
+		//On regarde si la solution est meilleure
 		checkFast(&nextModel);
 		int nextScore = nextModel.getValuation()->getScore();
 		if (nextScore > bestScore) {
@@ -561,7 +561,7 @@ Model heuristicSolver::iterative2Fast(const Model m, int nbIte, int range)
 			}
 		}
 		else {
-			//20% de chance de choisir le nouveau candidat même si il est moins bon
+			//20% de chance de choisir le nouveau candidat même s'il est moins bon
 			int randI = rand() % 1000;
 			if (randI > 998) {
 				currentModel = nextModel;
@@ -604,7 +604,7 @@ Model heuristicSolver::iterative2(const Model m, int nbIte, int range, int limit
 		if (j % 100 == 0) {
 			cout << "Iteration " << j << endl;
 		}
-		//On choisit un voisinnage à appliquer
+		//On choisit un voisinage à appliquer
 		int randN = rand() % 100;
 
 		if (randN < 101) {
@@ -614,7 +614,7 @@ Model heuristicSolver::iterative2(const Model m, int nbIte, int range, int limit
 			nextModel = getneighborRandom(&currentModel, range);
 		}
 
-		//On regarde si la solution est meilleur
+		//On regarde si la solution est meilleure
 		int nextScore = check(&nextModel, false, false);
 		if (nextScore > bestScore) {
 			bestModel = nextModel;
@@ -632,7 +632,7 @@ Model heuristicSolver::iterative2(const Model m, int nbIte, int range, int limit
 			}
 		}
 		else {
-			//10% de chance de choisir le nouveau candidat même si il est moins bon
+			//10% de chance de choisir le nouveau candidat même s'il est moins bon
 			int randI = rand() % 1000;
 			if (randI > 998) {
 				currentModel = nextModel;

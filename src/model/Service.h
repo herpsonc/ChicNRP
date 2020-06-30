@@ -1,7 +1,7 @@
 /*
  * Service.h
  *
- *  Created on: 8 févr. 2020
+ *  Created on: 8 fï¿½vr. 2020
  *      Author: Valars
  */
 
@@ -9,8 +9,9 @@
 #include <vector>
 #include <map>
 #include <array>
-#include "Post.h"
-#include "constraint/Constraint.h"
+// #include "Post.h"
+// #include "constraint/Constraint.h"
+#include "Agent.h"
 
 
 using namespace std;
@@ -18,7 +19,7 @@ using namespace std;
 #ifndef MODEL_SERVICE_H_
 #define MODEL_SERVICE_H_
 
-class Agent;
+// class Agent;
 
 class Service {
 public:
@@ -42,7 +43,7 @@ public:
 
 	const array<map<Post*, int>, 7>& getPostRequired() const;
 	void setPostRequired(const array<map<Post*, int>, 7> &postRequired);
-	void addPostRequired(Post* post, int nb); //Ajoute pour tout les jours
+	void addPostRequired(Post* post, int nb); //Ajoute pour tous les jours
 	void addPostRequired(Post* post, int nb, int day);
 
 	const vector<Agent*>& getAgents() const;
@@ -52,8 +53,8 @@ public:
 protected:
 	string id;
 	vector<Post*> posts;
-	vector<Agent*> referents; //Les référents ne sont pas forcément affectés à ce service
-	vector<Agent*> agents; //Agents affectés au service
+	vector<Agent*> referents; //Les rï¿½fï¿½rents ne sont pas forcï¿½ment affectï¿½s ï¿½ ce service
+	vector<Agent*> agents; //Agents affectï¿½s au service
 	array<map<Post*,int>, 7> postRequired; //tableau de 7 map, chaque map correspond a des couples Poste/nbRequis (C5)
 	vector<Constraint*> constraints;
 };

@@ -14,9 +14,9 @@
 #include <random>
 #include <typeinfo>
 
-#include "../model/constraint/ConstraintDaysSeq.h"
-#include "../model/constraint/ConstraintInvolved.h"
-#include "../model/constraint/ConstraintSeqMinMax.h"
+// #include "../model/constraint/ConstraintDaysSeq.h"
+// #include "../model/constraint/ConstraintInvolved.h"
+// #include "../model/constraint/ConstraintSeqMinMax.h"
 
 class heuristicSolver {
 public:

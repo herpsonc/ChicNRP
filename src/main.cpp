@@ -13,12 +13,12 @@
 
 #include "heuristic/heuristicSolver.h"
 #include "LP/LPSolver.h"
-#include "model/Agent.h"
-#include "model/constraint/Constraint.h"
-#include "model/constraint/ConstraintDaysSeq.h"
-#include "model/Model.h"
-#include "model/constraint/ConstraintInvolved.h"
-#include "model/constraint/ConstraintSeqMinMax.h"
+// #include "model/Agent.h"
+// #include "model/constraint/Constraint.h"
+// #include "model/constraint/ConstraintDaysSeq.h"
+// #include "model/Model.h"
+// #include "model/constraint/ConstraintInvolved.h"
+// #include "model/constraint/ConstraintSeqMinMax.h"
 
 
 
@@ -128,7 +128,7 @@ Model generateGhr() {
 
 
 		Agent* a6 = new Agent("6", nbHoursMonth, nbHoursWeek, Status::Beginner);
-		a6->setService(ghr);
+		// a6->setService(ghr);
 		a6->setCalendarDay(fp,23, true);
 		auto ip = vector<Post*>();
 		ip.push_back(ng);
@@ -136,33 +136,33 @@ Model generateGhr() {
 		m.addAgent(a6, ghr);
 
 		Agent* a33 = new Agent("33", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-		a33->setService(ghr);
+		// a33->setService(ghr);
 		a33->setCalendarDay(cs, 24, true);
 		a33->setCalendarDay(cs, 25, true);
 		a33->setCalendarDay(cs, 26, true);
 		m.addAgent(a33,ghr);
 
 		Agent* a36 = new Agent("36", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-		a36->setService(ghr);
+		// a36->setService(ghr);
 		m.addAgent(a36,ghr);
 
 		Agent* a40 = new Agent("40", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-		a40->setService(ghr);
+		// a40->setService(ghr);
 		a40->setCalendarDay(ca,0, true);
 		m.addAgent(a40,ghr);
 
 		Agent* a49 = new Agent("49", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-		a49->setService(ghr);
+		// a49->setService(ghr);
 		m.addAgent(a49,ghr);
 
 		Agent* a57 = new Agent("57", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-		a57->setService(ghr);
+		// a57->setService(ghr);
 		a57->setCalendarDay(ca,0, true);
 		a57->setCalendarDay(ca,1, true);
 		m.addAgent(a57,ghr);
 
 		Agent* a63 = new Agent("63", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-		a63->setService(ghr);
+		// a63->setService(ghr);
 		a63->setCalendarDay(ca,0, true);
 		a63->setCalendarDay(ca,1, true);
 		a63->setCalendarDay(ca,2, true);
@@ -242,7 +242,7 @@ Model addServiceSDC(Model m) {
 
 
 	Agent* a12 = new Agent("12", nbHoursMonth, nbHoursWeek, Status::Beginner);
-	a12->setService(sdc);
+	// a12->setService(sdc);
 	a12->setCalendarDay(fp, 23, true);
 	a12->setCalendarDay(ca, 29, true);
 	a12->setCalendarDay(ca, 30, true);
@@ -250,7 +250,7 @@ Model addServiceSDC(Model m) {
 	m.addAgent(a12, sdc);
 
 	Agent* a17 = new Agent("17", nbHoursMonth, nbHoursWeek, Status::Beginner);
-	a17->setService(sdc);
+	// a17->setService(sdc);
 	a17->setCalendarDay(ca, 3, true);
 	a17->setCalendarDay(ca, 5, true);
 	a17->setCalendarDay(ca, 10, true);
@@ -262,7 +262,7 @@ Model addServiceSDC(Model m) {
 	m.addAgent(a17, sdc);
 
 	Agent* a34 = new Agent("34", nbHoursMonth, nbHoursWeek, Status::Beginner);
-	a34->setService(sdc);
+	// a34->setService(sdc);
 	a34->setCalendarDay(fp, 1, true);
 	a34->setCalendarDay(fp, 2, true);
 	addConsecutiveSamePost(a34, ca, 3, 9);
@@ -270,7 +270,7 @@ Model addServiceSDC(Model m) {
 	m.addAgent(a34, sdc);
 
 	Agent* a39 = new Agent("39", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a39->setService(sdc);
+	// a39->setService(sdc);
 	a39->setCalendarDay(ca, 27, true);
 	a39->setCalendarDay(ca, 28, true);
 	a39->setCalendarDay(ca, 29, true);
@@ -278,30 +278,30 @@ Model addServiceSDC(Model m) {
 	m.addAgent(a39, sdc);
 
 	Agent* a46 = new Agent("46", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a46->setService(sdc);
+	// a46->setService(sdc);
 	a46->setCalendarDay(fp, 23, true);
 	addConsecutiveSamePost(a46, ca, 25, 30);
 	m.addAgent(a46, sdc);
 
 	Agent* a50 = new Agent("50", nbHoursMonth, nbHoursWeek, Status::Beginner);
-	a50->setService(sdc);
+	// a50->setService(sdc);
 	a50->setCalendarDay(fp, 23, true);
 	a50->setImpossiblePosts(ip);
 	m.addAgent(a50, sdc);
 
 	Agent* a61 = new Agent("61", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a61->setService(sdc);
+	// a61->setService(sdc);
 	a61->setCalendarDay(ca, 0, true);
 	addConsecutiveSamePost(a61, ca, 8, 14);
 	m.addAgent(a61, sdc);
 
 
 	Agent* a29 = new Agent("29", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a29->setService(sdc);
+	// a29->setService(sdc);
 	m.addAgent(a29, sdc);
 
 	Agent* a59 = new Agent("59", nbHoursMonth, nbHoursWeek, Status::Beginner);
-	a59->setService(sdc);
+	// a59->setService(sdc);
 	a59->setCalendarDay(ca, 0, true);
 	a59->setCalendarDay(ca, 1, true);
 	addConsecutiveSamePost(a59, ca, 27, 30);
@@ -309,12 +309,12 @@ Model addServiceSDC(Model m) {
 	m.addAgent(a59, sdc);
 
 	Agent* a48 = new Agent("48", nbHoursMonth, nbHoursWeek, Status::Beginner);
-	a48->setService(sdc); 
+	// a48->setService(sdc); 
 	a48->setImpossiblePosts(ip);
 	m.addAgent(a48, sdc);
 
 	Agent* a15 = new Agent("15", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a15->setService(sdc);
+	// a15->setService(sdc);
 	addConsecutiveSamePost(a15, ca, 0, 30);
 	m.addAgent(a15, sdc);
 
@@ -396,12 +396,12 @@ Model addServiceSDN(Model m) {
 
 	//Agents
 	Agent* a2 = new Agent("2", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a2->setService(sdn);
+	// a2->setService(sdn);
 	a2->setImpossiblePosts(ip);
 	m.addAgent(a2, sdn);
 
 	Agent* a3 = new Agent("3", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a3->setService(sdn);
+	// a3->setService(sdn);
 	a3->setCalendarDay(ca, 3, true);
 	a3->setCalendarDay(ca, 10, true);
 	a3->setCalendarDay(ca, 17, true);
@@ -410,7 +410,7 @@ Model addServiceSDN(Model m) {
 	m.addAgent(a3, sdn);
 
 	Agent* a4 = new Agent("4", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a4->setService(sdn);
+	// a4->setService(sdn);
 	addConsecutiveSamePost(a4, ca, 0, 7);
 	a4->setCalendarDay(ca, 12, true);
 	a4->setCalendarDay(ca, 19, true);
@@ -420,13 +420,13 @@ Model addServiceSDN(Model m) {
 
 
 	Agent* a7 = new Agent("7", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a7->setService(sdn);
+	// a7->setService(sdn);
 	addConsecutiveSamePost(a7, ca, 18, 22);
 	a7->setImpossiblePosts(ip);
 	m.addAgent(a7, sdn);
 
 	Agent* a10 = new Agent("10", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a10->setService(sdn);
+	// a10->setService(sdn);
 	a10->setCalendarDay(cs, 1, true);
 	a10->setCalendarDay(cgh, 4, true);
 	a10->setCalendarDay(cs, 7, true);
@@ -442,20 +442,20 @@ Model addServiceSDN(Model m) {
 
 
 	Agent* a14 = new Agent("14", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a14->setService(sdn);
+	// a14->setService(sdn);
 	addConsecutiveSamePost(a14, ca, 22, 24);
 	a14->setImpossiblePosts(ip);
 	m.addAgent(a14, sdn);
 
 	Agent* a19 = new Agent("19", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a19->setService(sdn);
+	// a19->setService(sdn);
 	addConsecutiveSamePost(a19, ca, 8, 14);
 	addConsecutiveSamePost(a19, ca, 18, 21);
 	a19->setImpossiblePosts(ip);
 	m.addAgent(a19, sdn);
 
 	Agent* a20 = new Agent("20", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a20->setService(sdn);
+	// a20->setService(sdn);
 	a20->setCalendarDay(cs, 1, true);
 	a20->setCalendarDay(ort, 2, true);
 	a20->setCalendarDay(cs, 3, true);
@@ -472,14 +472,14 @@ Model addServiceSDN(Model m) {
 	m.addAgent(a20, sdn);
 
 	Agent* a23 = new Agent("23", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a23->setService(sdn);
+	// a23->setService(sdn);
 	a23->setCalendarDay(eo, 4, true);
 	addConsecutiveSamePost(a23, ca, 5, 28);
 	a23->setImpossiblePosts(ip);
 	m.addAgent(a23, sdn);
 
 	Agent* a24 = new Agent("24", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a24->setService(sdn);
+	// a24->setService(sdn);
 	a24->setCalendarDay(fp, 1, true); //fp == fp* ????
 	a24->setCalendarDay(fp, 2, true);
 	a24->setCalendarDay(ca, 8, true);
@@ -491,29 +491,29 @@ Model addServiceSDN(Model m) {
 
 
 	Agent* a26 = new Agent("26", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a26->setService(sdn);
+	// a26->setService(sdn);
 	addConsecutiveSamePost(a26, ca, 12, 14);
 	a26->setImpossiblePosts(ip);
 	m.addAgent(a26, sdn);
 
 	Agent* a28 = new Agent("28", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a28->setService(sdn);
+	// a28->setService(sdn);
 	a28->setImpossiblePosts(ip);
 	m.addAgent(a28, sdn);
 
 	Agent* a30 = new Agent("30", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a30->setService(sdn);
+	// a30->setService(sdn);
 	a30->setImpossiblePosts(ip);
 	m.addAgent(a30, sdn);
 
 	Agent* a32 = new Agent("32", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a32->setService(sdn);
+	// a32->setService(sdn);
 	a32->setCalendarDay(fp, 23, true);
 	a32->setImpossiblePosts(ip);
 	m.addAgent(a32, sdn);
 
 	Agent* a38 = new Agent("38", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a38->setService(sdn);
+	// a38->setService(sdn);
 	a38->setCalendarDay(cgh, 2, true);
 	addConsecutiveSamePost(a38, ca, 6, 14);
 	a38->setCalendarDay(cgh, 16, true);
@@ -524,27 +524,27 @@ Model addServiceSDN(Model m) {
 	m.addAgent(a38, sdn);
 
 	Agent* a51 = new Agent("51", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a51->setService(sdn);
+	// a51->setService(sdn);
 	addConsecutiveSamePost(a51, ca, 2, 10);
 	a51->setImpossiblePosts(ip);
 	m.addAgent(a51, sdn);
 
 	Agent* a52 = new Agent("52", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a52->setService(sdn);
+	// a52->setService(sdn);
 	a52->setCalendarDay(ca, 0, true);
 	addConsecutiveSamePost(a52, ca, 6, 14);
 	a52->setImpossiblePosts(ip);
 	m.addAgent(a52, sdn);
 
 	Agent* a53 = new Agent("53", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a53->setService(sdn);
+	// a53->setService(sdn);
 	addConsecutiveSamePost(a53, ca, 0, 7);
 	a53->setCalendarDay(ca, 30, true);
 	a53->setImpossiblePosts(ip);
 	m.addAgent(a53, sdn);
 
 	Agent* a55 = new Agent("55", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a55->setService(sdn);
+	// a55->setService(sdn);
 	a55->setCalendarDay(ca, 3, true);
 	a55->setCalendarDay(cgh, 5, true);
 	a55->setCalendarDay(ca, 10, true);
@@ -558,74 +558,74 @@ Model addServiceSDN(Model m) {
 	m.addAgent(a55, sdn);
 
 	Agent* a58 = new Agent("58", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a58->setService(sdn);
+	// a58->setService(sdn);
 	addConsecutiveSamePost(a58, cs, 10, 12);
 	addConsecutiveSamePost(a58, cs, 13, 21);
 	a58->setImpossiblePosts(ip);
 	m.addAgent(a58, sdn);
 
 	Agent* a62 = new Agent("62", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a62->setService(sdn);
+	// a62->setService(sdn);
 	addConsecutiveSamePost(a62, ca, 0, 2);
 	addConsecutiveSamePost(a62, ca, 12, 13);
 	a62->setImpossiblePosts(ip);
 	m.addAgent(a62, sdn);
 
 	Agent* a64 = new Agent("64", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a64->setService(sdn);
+	// a64->setService(sdn);
 	addConsecutiveSamePost(a64, ca, 0, 1);
 	a64->setImpossiblePosts(ip);
 	m.addAgent(a64, sdn);
 
 	Agent* a8 = new Agent("8", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a8->setService(sdn);
+	// a8->setService(sdn);
 	addConsecutiveSamePost(a8, ca, 0, 30);
 	a8->setImpossiblePosts(ip);
 	m.addAgent(a8, sdn);
 
 	Agent* a21 = new Agent("21", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a21->setService(sdn);
+	// a21->setService(sdn);
 	addConsecutiveSamePost(a21, ca, 0, 30);
 	a21->setImpossiblePosts(ip);
 	m.addAgent(a21, sdn);
 
 	Agent* a27 = new Agent("27", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a27->setService(sdn);
+	// a27->setService(sdn);
 	addConsecutiveSamePost(a27, ca, 0, 30);
 	a27->setImpossiblePosts(ip);
 	m.addAgent(a27, sdn);
 
 	Agent* a41 = new Agent("41", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a41->setService(sdn);
+	// a41->setService(sdn);
 	addConsecutiveSamePost(a41, ca, 0, 30);
 	a41->setImpossiblePosts(ip);
 	m.addAgent(a41, sdn);
 
 	Agent* a42 = new Agent("42", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a42->setService(sdn);
+	// a42->setService(sdn);
 	addConsecutiveSamePost(a42, ca, 0, 30);
 	a42->setImpossiblePosts(ip);
 	m.addAgent(a42, sdn);
 
 	Agent* a45 = new Agent("45", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a45->setService(sdn);
+	// a45->setService(sdn);
 	a45->setCalendarDay(ca, 0, true);
 	a45->setImpossiblePosts(ip);
 	m.addAgent(a45, sdn);
 
 	Agent* a60 = new Agent("60", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a60->setService(sdn);
+	// a60->setService(sdn);
 	a60->setImpossiblePosts(ip);
 	m.addAgent(a60, sdn);
 
 	Agent* a54 = new Agent("54", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a54->setService(sdn);
+	// a54->setService(sdn);
 	a54->setCalendarDay(ca, 23, true);
 	a54->setImpossiblePosts(ip);
 	m.addAgent(a54, sdn);
 
 	Agent* a37 = new Agent("37", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a37->setService(sdn);
+	// a37->setService(sdn);
 	a37->setCalendarDay(ca, 23, true);
 	a37->setImpossiblePosts(ip);
 	m.addAgent(a37, sdn);
@@ -722,7 +722,7 @@ Model addServiceCS(Model m) {
 	//Agents
 
 	Agent* a31 = new Agent("31", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a31->setService(cs_service);
+	// a31->setService(cs_service);
 	addConsecutiveSamePost(a31, diag, 0, 5);
 	addConsecutiveSamePost(a31, diag, 8, 12);
 	addConsecutiveSamePost(a31, diag, 15, 19);
@@ -732,7 +732,7 @@ Model addServiceCS(Model m) {
 	m.addAgent(a31, cs_service);
 
 	Agent* a11 = new Agent("11", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a11->setService(cs_service);
+	// a11->setService(cs_service);
 	a11->setCalendarDay(ca, 1, true);
 	a11->setCalendarDay(cs, 2, true);
 	a11->setCalendarDay(ca, 3, true);
@@ -751,7 +751,7 @@ Model addServiceCS(Model m) {
 	m.addAgent(a11, cs_service);
 
 	Agent* a13 = new Agent("13", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a13->setService(cs_service);
+	// a13->setService(cs_service);
 	a13->setCalendarDay(cs, 1, true);
 	a13->setCalendarDay(ban, 2, true);
 	a13->setCalendarDay(eo, 3, true);
@@ -769,7 +769,7 @@ Model addServiceCS(Model m) {
 	m.addAgent(a13, cs_service);
 
 	Agent* a22 = new Agent("22", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a22->setService(cs_service);
+	// a22->setService(cs_service);
 	a22->setCalendarDay(cgh, 1, true);
 	a22->setCalendarDay(acu, 4, true);
 	a22->setCalendarDay(cgh, 8, true);
@@ -783,24 +783,24 @@ Model addServiceCS(Model m) {
 	m.addAgent(a22, cs_service);
 
 	Agent* a35 = new Agent("35", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a35->setService(cs_service);
+	// a35->setService(cs_service);
 	addConsecutiveSamePost(a35, ca, 15, 19);
 	a35->setImpossiblePosts(ip);
 	m.addAgent(a35, cs_service);
 
 	Agent* a43 = new Agent("43", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a43->setService(cs_service);
+	// a43->setService(cs_service);
 	addConsecutiveSamePost(a43, ca, 27, 30);
 	a43->setImpossiblePosts(ip);
 	m.addAgent(a43, cs_service);
 
 	Agent* a5 = new Agent("5", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a5->setService(cs_service);
+	// a5->setService(cs_service);
 	a5->setImpossiblePosts(ip);
 	m.addAgent(a5, cs_service);
 
 	Agent* a44 = new Agent("44", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a44->setService(cs_service);
+	// a44->setService(cs_service);
 	addConsecutiveSamePost(a44, ca, 0, 3);
 	addConsecutiveSamePost(a44, ca, 20, 21);
 	a44->setImpossiblePosts(ip);
@@ -851,7 +851,7 @@ Model addServicePool(Model m) {
 	//Agents
 
 	Agent* a16 = new Agent("16", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a16->setService(pool);
+	// a16->setService(pool);
 	addConsecutiveSamePost(a16, cs, 3, 5);
 	addConsecutiveSamePost(a16, ca, 13, 14);
 	addConsecutiveSamePost(a16, cs, 26, 28);
@@ -859,13 +859,13 @@ Model addServicePool(Model m) {
 	m.addAgent(a16, pool);
 
 	Agent* a25 = new Agent("25", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a25->setService(pool);
+	// a25->setService(pool);
 	addConsecutiveSamePost(a25, ca, 20, 30);
 	a25->setImpossiblePosts(ip);
 	m.addAgent(a25, pool);
 
 	Agent* a47 = new Agent("47", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a47->setService(pool);
+	// a47->setService(pool);
 	addConsecutiveSamePost(a47, fp, 10, 12);
 	a47->setCalendarDay(cs, 22, true);
 	a47->setCalendarDay(fp, 23, true);
@@ -874,7 +874,7 @@ Model addServicePool(Model m) {
 	m.addAgent(a47, pool);
 
 	Agent* a18 = new Agent("18", nbHoursMonth, nbHoursWeek, Status::Confirmed);
-	a18->setService(pool);
+	// a18->setService(pool);
 	addConsecutiveSamePost(a18, ca, 10, 16);
 	addConsecutiveSamePost(a18, cs, 17, 19);
 	a18->setImpossiblePosts(ip);

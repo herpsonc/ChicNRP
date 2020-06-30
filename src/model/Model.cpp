@@ -6,7 +6,7 @@
  */
 
 #include "Model.h"
-#include "../rapidXml/rapidxml_print.hpp"
+// #include "../rapidXml/rapidxml_print.hpp"
 
 using namespace std;
 using namespace rapidxml;
@@ -76,7 +76,7 @@ Model& Model::operator=(const Model& obj)
 			}
 		}
 	}
-	return Model(obj);
+	return *this;
 }
 
 
@@ -206,21 +206,21 @@ std::vector<Agent*> Model::getAgentFrom(Service* service) {
 Day Model::getNextDay(Day day) {
 	switch (day) {
 	case Monday:
-		return Tuesday;
+		return Day::Tuesday;
 	case Tuesday:
-		return Wednesday;
+		return Day::Wednesday;
 	case Wednesday:
-		return Thursday;
+		return Day::Thursday;
 	case Thursday:
-		return Friday;
+		return Day::Friday;
 	case Friday:
-		return Saturday;
+		return Day::Saturday;
 	case Saturday:
-		return Sunday;
+		return Day::Sunday;
 	case Sunday:
-		return Monday;
+		return Day::Monday;
 	default:
-		return None;
+		return Day::None;
 	}
 }
 
@@ -241,7 +241,7 @@ std::vector<Post*>& Model::getPosts() {
 }
 
 void Model::addPost(Post* p) {
-	if(find(posts.begin(), posts.end(), p) == posts.end()) //p not already in posts
+	if(std::find(posts.begin(), posts.end(), p) == posts.end()) //p not already in posts
 		posts.push_back(p);
 }
 
@@ -330,16 +330,16 @@ vector<Constraint*> Model::createConstraints() {
 //raccourci pour attribuer les contraintes à un service via createConstraints
 void Model::addBasicConstraintsTo(Service* s) {
 	vector<Constraint*> cs = this->createConstraints();
-	for each (auto cons in cs){
+	for (auto cons : cs){
 		s->addConstraint(cons);
 	}
 }
 
-Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService, int nbPostsPerService, int proba_1er_conge, int proba_suite_conge) {
-	/*
-	Si nbPostsPerService est indiqué, le nombre nbPosts ne sera pas respecté si nbPosts < nbPostsPerService*nbServices
-	de même pour nbAgentsPerService
-	*/
+/* Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService, int nbPostsPerService, int proba_1er_conge, int proba_suite_conge) {
+
+	//Si nbPostsPerService est indiqué, le nombre nbPosts ne sera pas respecté si nbPosts < nbPostsPerService*nbServices
+	//de même pour nbAgentsPerService
+
 
 	Model m = Model(firstDay, nbDays, overtime);
 	m.defaultPost = NULL;
@@ -497,7 +497,7 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 	}
 
 	return m;
-}
+} */
 
 //! 
 //a XML file from the Model

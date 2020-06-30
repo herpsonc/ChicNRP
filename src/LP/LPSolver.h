@@ -1,5 +1,6 @@
 
 #include "../model/Model.h"
+#include "VariableData.h"
 #include <iostream>
 #include <fstream>
 
