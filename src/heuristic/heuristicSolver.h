@@ -9,6 +9,7 @@
 #define SRC_HEURISTIC_HEURISTICSOLVER_H_
 
 #include "../model/Model.h"
+#include "HeuristicToolBox.h"
 #include <algorithm>
 #include <chrono>
 #include <random>

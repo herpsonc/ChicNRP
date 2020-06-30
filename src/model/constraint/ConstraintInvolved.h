@@ -9,12 +9,9 @@
 #define SRC_MODEL_CONSTRAINT_CONSTRAINTINVOLVED_H_
 
 #include "Constraint.h"
-#include "../Post.h"
-#include <vector>
 #include "../Agent.h"
 //Correspondant à la contrainte C6
 
-class Model;
 
 class ConstraintInvolved: public Constraint {
 public:
@@ -39,7 +36,6 @@ public:
 
 	int check(const Agent* agent, Day day, bool checkALL, bool log);
 	std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> checkValuation(const Agent* agent, Day day);
-	void checkFast(Model* m, int iCons);
 
 protected:
 	int priority;

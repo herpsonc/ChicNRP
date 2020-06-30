@@ -226,15 +226,15 @@ void heuristicSolver::checkFast(Model* m){
 	for (int l = 0; l < m->getServices().size();l++) {
 		for (auto c : m->getServices()[l]->getConstraints()) {
 			if (typeid(*c) == typeid(ConstraintDaysSeq)) {
-				((ConstraintDaysSeq*)c)->checkFast(m, i);
+				HeuristicToolBox::checkFastDaySeq(m, (ConstraintDaysSeq*)c, i);
 				i++;
 			}
 			else if (typeid(*c) == typeid(ConstraintInvolved)) {
-				((ConstraintInvolved*)c)->checkFast(m, j);
+				HeuristicToolBox::checkFastInvolved(m, (ConstraintInvolved*)c, j);
 				j++;
 			}
 			else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
-				((ConstraintSeqMinMax*)c)->checkFast(m, k);
+				HeuristicToolBox::checkFastSeqMinMax(m, (ConstraintSeqMinMax*)c, k);
 				k++;
 			}
 		}

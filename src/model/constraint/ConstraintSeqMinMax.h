@@ -8,10 +8,9 @@
 #ifndef SRC_MODEL_CONSTRAINT_CONSTRAINTSEQMINMAX_H_
 #define SRC_MODEL_CONSTRAINT_CONSTRAINTSEQMINMAX_H_
 
-#include "../Model.h"
 #include "Constraint.h"
+#include "../Agent.h"
 
-class Model;
 
 enum MinMax {Min, Max};
 
@@ -46,7 +45,6 @@ public:
 
 	int check(const Agent* agent, bool checkALL, Day firstDayMonth, bool log);
 	std::vector<std::pair<int, int>> checkValuation(const Agent* agent, Day firstDayMonth);
-	void checkFast(Model* m, int iCons);
 
 protected:
 	Day firstDay;
