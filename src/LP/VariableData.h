@@ -1,4 +1,4 @@
-/*Classe permettant d'avoir toutes les informations li�es � une SCIP_VAR */
+/*Classe permettant d'avoir toutes les informations liées à une SCIP_VAR */
 
 #include <iostream>
 

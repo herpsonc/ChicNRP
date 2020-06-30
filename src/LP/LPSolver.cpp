@@ -43,7 +43,7 @@ Model LPSolver::linearProgram(const Model mo) {
 	// Liste contraintes
 	vector<SCIP_CONS*> consVec = vector<SCIP_CONS*>();
 	// Liste variables
-	vector<VariableData*> varsData = vector<VariableData*>(); //contient les variables SCIP + donn�es li�es (id, agent, jour, poste)
+	vector<VariableData*> varsData = vector<VariableData*>(); //contient les variables SCIP + données liées (id, agent, jour, poste)
 
 	ofstream fileIdVar("idvar.txt");
 
@@ -63,10 +63,10 @@ Model LPSolver::linearProgram(const Model mo) {
 
 		for (auto s : mr.getServices()) {
 			cout << "Service " << s->getId() << endl;
-			//d�faut : ne prend pas en compte les agents qu'on peut solliciter en dehors du service o� ce poste est d�di� en g�n�ral
+			//défaut : ne prend pas en compte les agents qu'on peut solliciter en dehors du service où ce poste est dédié en général
 			agents_service_i = mr.getAgentFrom(s);
 
-			for (auto job : s->getPosts()) { //pour g�n�raliser : mr.getPosts() mais il faudrait d'autres changements
+			for (auto job : s->getPosts()) { //pour généraliser : mr.getPosts() mais il faudrait d'autres changements
 				if (job->getId() != "Repos") {
 
 					// Liste variables contrainte courante
@@ -78,7 +78,7 @@ Model LPSolver::linearProgram(const Model mo) {
 
 						SCIP_VAR* var;
 						if (a->getCalendar()[day] == NULL) {
-							if (!agent_dispo) { //permet d'ajouter une contrainte seulement s'il y a au moins un agent dispo pour ce job � cette date
+							if (!agent_dispo) { //permet d'ajouter une contrainte seulement s'il y a au moins un agent dispo pour ce job à cette date
 								agent_dispo = true;
 							}
 							//cout << "X_a" << a->getId() << ",j" << day+1 << "," << job->getId() << "= x(" << id_var << ")" << endl;
@@ -149,7 +149,7 @@ Model LPSolver::linearProgram(const Model mo) {
 						}
 					}
 
-					//Cr�ation contrainte <= 1
+					//Création contrainte <= 1
 					SCIP_CONS* cons;
 					SCIPcreateConsBasicSetpack(scip, &cons, "un_poste_par_jour", v, varCons);
 					SCIPaddCons(scip, cons);
@@ -167,11 +167,11 @@ Model LPSolver::linearProgram(const Model mo) {
 
 	/*Contraintes horaires par Mois */
 
-	vector<VariableData*> varsDataTmp(varsData); //sert � ne pas re-avoir les agents d�j� vus
+	vector<VariableData*> varsDataTmp(varsData); //sert à ne pas re-sélectionner les agents déjà vus
 	int nb_vals = 0;
 	for (auto a : agents) {
 		nb_vals = 0;
-		long long coeffs_hours[500];  //taille de tableau en dur � changer d�s que possible
+		long long coeffs_hours[500];  //taille de tableau en dur, à changer dès que possible
 		SCIP_VAR* varsConsHours[500]; //maximum 31*nbPosts vars par mois
 		cout << "tabl 10 : " << coeffs_hours[10] << endl;
 		cout << "agent:" << a->getId() << endl;
@@ -191,7 +191,7 @@ Model LPSolver::linearProgram(const Model mo) {
 		SCIP_CONS* consHoursMonth;
 		SCIPcreateConsBasicKnapsack(scip, &consHoursMonth, "nb_heures_mois", nb_vals, varsConsHours, coeffs_hours, a->getNbHoursMonth());//+mo.getOvertime());
 
-		//modifier la contrainte pour la cr�er plut�t avec une contrainte lin�aire :
+		//modifier la contrainte pour la créer plutôt avec une contrainte linéaire :
 		//SCIPcreateConsLinear(scip, &consHoursMonth, NULL, nb_vals, varsConsHours, coeffs_hours, a->getNbHoursMonth(), NULL,);
 		//SCIPaddCoefLinear(scip, consHoursMonth, varsConsHours[0], a->getNbHoursMonth());
 
@@ -204,7 +204,7 @@ Model LPSolver::linearProgram(const Model mo) {
 
 	/*Contraintes horaires par Semaine */
 
-	varsDataTmp = varsData; //pour ne pas re-avoir les agents d�j� vus
+	varsDataTmp = varsData; //pour ne pas re-sélectionner les agents déjà vus
 	nb_vals = 0;
 	int jour_semaine = 1; 
 	for (auto a : agents) {
@@ -301,7 +301,7 @@ Model LPSolver::linearProgram(const Model mo) {
 			if (day < mr.getNbDays() - 1) {
 				for (auto a : agents) {
 
-					// V�rifier si l'agent ne travaille pas d�j� de jour le jour suivant
+					// Vérifier si l'agent ne travaille pas déjà de jour le jour suivant
 					bool workByDayAfter = false;
 					int d1 = day + 1;
 
@@ -358,7 +358,7 @@ Model LPSolver::linearProgram(const Model mo) {
 												id_contrainte++;
 												noVar = false;
 
-												//Break si variable trouv�e
+												//Break si variable trouvée
 												break;
 											}
 										}
@@ -387,7 +387,7 @@ Model LPSolver::linearProgram(const Model mo) {
 				}
 			}
 
-			// 3 nuits d'affil�e interdit
+			// 3 nuits d'affilée interdit
 			if (day < mr.getNbDays() - 2) {
 				for (auto a : agents) {
 					if (a->getCalendar()[day] == NULL) {
@@ -478,7 +478,7 @@ Model LPSolver::linearProgram(const Model mo) {
 				}
 			}
 
-			// 3 jours d'affil�e possible en GHR, SDC et UK
+			// 3 jours d'affilée possible en GHR, SDC et UK
 			string idService = s->getId();
 			if (idService == "GHR" || idService == "SDC" || idService == "UK") {
 				if (day < mr.getNbDays() - 3 && ((day + 1) % 4 == 0 || day == 0)) {
@@ -614,7 +614,7 @@ Model LPSolver::linearProgram(const Model mo) {
 
 	fileIdVar.close();
 
-	//stocke les donn�es du PL dans un fichier de log
+	//stocke les données du PL dans un fichier de log
 	cout << "Write init pl" << endl;
 	SCIPwriteOrigProblem(scip, "init2.txt", "lp", FALSE);
 

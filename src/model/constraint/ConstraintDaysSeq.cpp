@@ -1,7 +1,7 @@
 /*
  * ConstraintDaysSeq.cpp
  *
- *  Created on: 10 févr. 2020
+ *  Created on: 10 fï¿½vr. 2020
  *      Author: Valars
  */
 
@@ -59,7 +59,7 @@ string ConstraintDaysSeq::getSeqToPrint() {
 	return s;
 }
 
-//Retourne true si la séquence de la contrainte se retrouve dans le calendrier de l'agent
+//Retourne true si la sÃ©quence de la contrainte se retrouve dans le calendrier de l'agent
 int ConstraintDaysSeq::check(const Agent *agent, bool checkALL, bool log) {
 
 	unsigned int indice = 0;
@@ -75,11 +75,11 @@ int ConstraintDaysSeq::check(const Agent *agent, bool checkALL, bool log) {
 				if(att==sequenceAtt[indice]){
 					found = true;
 					indice++;
-					//Si on arrive au bout de la séquence, alors elle est présente dans le calendrier
+					//Si on arrive au bout de la sÃ©quence, alors elle est prÃ©sente dans le calendrier
 					if(indice>=sequenceAtt.size()){
 						if(log)
 							cout << getSeqToPrint() << ": Agent " << agent->getId() << " Jour "
-									<< i-indice+2 << " à " << i+1 << endl;
+									<< i-indice+2 << " ï¿½ " << i+1 << endl;
 						exist = true;
 						found = false;
 						nb_fail++;
@@ -104,18 +104,18 @@ int ConstraintDaysSeq::check(const Agent *agent, bool checkALL, bool log) {
 		i++;
 	}
 	i=0;
-	//On continu sur le calendrier
+	//On continue sur le calendrier
 		for(auto post : agent->getCalendar()){
 			if(post!=NULL){
 				for(auto att : post->getAttributs()){
 					if(!found && att==sequenceAtt[indice]){
 						found = true;
 						indice++;
-						//Si on arrive au bout de la séquence, alors elle est présente dans le calendrier
+						//Si on arrive au bout de la sÃ©quence, alors elle est prÃ©sente dans le calendrier
 						if(indice>=sequenceAtt.size()){
 							if(log)
 								cout << getSeqToPrint() << ": Agent " << agent->getId() << " Jour "
-										<< i-indice+2 << " à " << i+1 << endl;
+										<< i-indice+2 << " ï¿½ " << i+1 << endl;
 							exist = true;
 							found = false;
 							nb_fail++;
@@ -161,7 +161,7 @@ std::vector<std::pair<int, int>> ConstraintDaysSeq::checkValuation(const Agent* 
 				if (att == sequenceAtt[indice]) {
 					found = true;
 					indice++;
-					//Si on arrive au bout de la séquence, alors elle est présente dans le calendrier
+					//Si on arrive au bout de la sÃ©quence, alors elle est prÃ©sente dans le calendrier
 					if (indice >= sequenceAtt.size()) {
 						exist = true;
 						found = false;
@@ -189,14 +189,14 @@ std::vector<std::pair<int, int>> ConstraintDaysSeq::checkValuation(const Agent* 
 		i++;
 	}
 	i = 0;
-	//On continu sur le calendrier
+	//On continue sur le calendrier
 	for (auto post : agent->getCalendar()) {
 		if (post != NULL) {
 			for (auto att : post->getAttributs()) {
 				if (!found && att == sequenceAtt[indice]) {
 					found = true;
 					indice++;
-					//Si on arrive au bout de la séquence, alors elle est présente dans le calendrier
+					//Si on arrive au bout de la sÃ©quence, alors elle est prÃ©sente dans le calendrier
 					if (indice >= sequenceAtt.size()) {
 						exist = true;
 						found = false;

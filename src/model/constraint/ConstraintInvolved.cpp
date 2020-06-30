@@ -16,7 +16,7 @@ ConstraintInvolved::ConstraintInvolved(vector<Post*> first, vector<Post*> last, 
 
 }
 
-ConstraintInvolved::ConstraintInvolved(vector<string> first,  vector<string> last, Day firstDay, int priority) {
+ConstraintInvolved::ConstraintInvolved(vector<string> first,  vector<string> last, int firstDay, int priority) {
 	this->firstSeqAtt = first;
 	this->lastSeqAtt = last;
 	this->priority = priority;
@@ -83,12 +83,12 @@ int ConstraintInvolved::getPriority()
 	return priority;
 }
 
-const Day ConstraintInvolved::getFirstDay()
+int ConstraintInvolved::getFirstDay()
 {
 	return firstDay;
 }
 
-int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool log) {
+int ConstraintInvolved::check(const Agent *agent, int day, bool checkALL, bool log) {
 
 	unsigned int indice = 0;
 	bool seqDetected = false;
@@ -97,13 +97,13 @@ int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool l
 	bool first = false;
 	int i = 0;
 	int nb_fail = 0;
-	//On cherche dans le pr� planning
+	//Recherche dans le pré-planning
 
 	for (auto post : agent->getLastMonthCalendar()) {
 		if (post != NULL) {
 			for (auto att : post->getAttributs()) {
 				found = false;
-				//Le cas o� la s�quence est d�j� detect�.
+				//Si la séquence est déjà detectée
 				if (seqDetected) {
 					if (att == lastSeqAtt[indice]) {
 						indice++;
@@ -116,12 +116,12 @@ int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool l
 						break;
 					}
 				}
-				//Le cas o� la firstSeq est pas trouv�
+				//Si la firstSeq n'est pas trouvée
 				else {
 					if (att == firstSeqAtt[indice]) {
 						indice++;
 						found = true;
-						//Toute la s�quence a �t� trouver
+						//Toute la séquence a été trouvée
 						if (indice == firstSeqAtt.size()) {
 							indice = 0;
 							seqDetected = true;
@@ -129,7 +129,7 @@ int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool l
 						break;
 					}
 				}
-				//Si la 2e s�quence n'est pas d�tect�
+				//Si la 2e séquence n'est pas détectée
 				if (seqDetected && !found) {
 					if(!checkALL)
 						return false;
@@ -138,7 +138,7 @@ int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool l
 					seqDetected = false;
 					indice = 0;
 				}
-				//Reset de la premi�re s�quence
+				//Reset de la première séquence
 				else if (!seqDetected && !found) {
 					indice = 0;
 				}
@@ -150,10 +150,11 @@ int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool l
 	found = false;
 	i = 0;
 	for (auto post : agent->getCalendar()) {
-		if (indice != 0 || firstDay == Day::None || firstDay == day || seqDetected) {
+		// Trouver une alternative au None (ici, on a mis -1)
+		if (indice != 0 || firstDay == -1 || firstDay == day || seqDetected) {
 			if (post != NULL) {
 				for (auto att : post->getAttributs()) {
-					//Le cas o� la s�quence est d�j� detect�.
+					//Si la séquence est déjà detectée
 					if (!found && seqDetected) {
 						if (att == lastSeqAtt[indice]) {
 							indice++;
@@ -165,12 +166,12 @@ int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool l
 							}
 						}
 					}
-					//Le cas o� la firstSeq est pas trouv�
+					//Si la firstSeq n'est pas trouvée
 					else {
 						if (!found && att == firstSeqAtt[indice]) {
 							indice++;
 							found = true;
-							//Toute la s�quence a �t� trouver
+							//Toute la séquence a été trouvée
 							if (indice == firstSeqAtt.size()) {
 								indice = 0;
 								seqDetected = true;
@@ -183,7 +184,7 @@ int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool l
 				}
 			}
 		}
-		//Si la 2e s�quence n'est pas d�tect�
+		//Si la 2e séquence n'est pas détectée
 		if (seqDetected && !found) {
 			if (log)
 				cout << getSeqToPrint() << ": Agent " << agent->getId() << " Jour "
@@ -201,7 +202,7 @@ int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool l
 				}
 			}
 		}
-		//Reset de la premi�re s�quence
+		//Reset de la première séquence
 		else if (!seqDetected && !found) {
 			indice = 0;
 			if (first)
@@ -210,12 +211,12 @@ int ConstraintInvolved::check(const Agent *agent, Day day, bool checkALL, bool l
 		first = false;
 		found = false;
 		i++;
-		day = Model::getNextDay(day);
+		day = (day+1)%7;
 	}
 	return nb_fail*priority;
 }
 
-std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInvolved::checkValuation(const Agent* agent, Day day) {
+std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInvolved::checkValuation(const Agent* agent, int day) {
 
 	unsigned int indice = 0;
 	bool seqDetected = false;
@@ -228,11 +229,11 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 
 	auto v = std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>>();
 
-	//On cherche dans le pr� planning
+	//Recherche dans le pré-planning
 	for (auto post : agent->getLastMonthCalendar()) {
 		if (post != NULL) {
 			for (auto att : post->getAttributs()) {
-				//Le cas o� la s�quence est d�j� detect�.
+				//Si la séquence est déjà détectée
 				if (!found && seqDetected) {
 					if (att == lastSeqAtt[indice]) {
 						indice++;
@@ -245,12 +246,12 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 						break;
 					}
 				}
-				//Le cas o� la firstSeq est pas trouv�
+				//Si la firstSeq n'est pas trouvée
 				else {
 					if (!found && att == firstSeqAtt[indice]) {
 						indice++;
 						found = true;
-						//Toute la s�quence a �t� trouver
+						//Toute la séquence a été trouvée
 						if (indice >= firstSeqAtt.size()) {
 							indiceFirst = i;
 							indice = 0;
@@ -263,7 +264,7 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 				
 			}
 		}
-		//Si la 2e s�quence n'est pas d�tect�
+		//Si la 2e séquence n'est pas détectée
 		if (seqDetected && !found) {
 			v.push_back(pair<pair<int, int>, pair<int, int>>(pair<int, int>(indiceFirst - firstSeqAtt.size(), indiceFirst), pair<int, int>(indiceFirst + 1, indiceFirst + 1 + lastSeqAtt.size())));
 			isValide = false;
@@ -271,7 +272,7 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 			seqDetected = false;
 			indice = 0;
 		}
-		//Reset de la premi�re s�quence
+		//Reset de la première séquence
 		else if (!seqDetected && !found) {
 			indice = 0;
 		}
@@ -282,10 +283,11 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 	i = 0;
 	found = false;
 	for (auto post : agent->getCalendar()) {
-		if (indice != 0 || firstDay == Day::None || firstDay == day || seqDetected) {
+		// Trouver une alternative au None (ici, on a mis -1)
+		if (indice != 0 || firstDay == -1 || firstDay == day || seqDetected) {
 			if (post != NULL) {
 				for (auto att : post->getAttributs()) {
-					//Le cas o� la s�quence est d�j� detect�.
+					//Si la séquence est déjà détectée
 					if (!found && seqDetected) {
 						if (att == lastSeqAtt[indice]) {
 							indice++;
@@ -297,12 +299,12 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 							}
 						}
 					}
-					//Le cas o� la firstSeq est pas trouv�
+					//Si la firstSeq n'est pas trouvée
 					else {
 						if (!found && att == firstSeqAtt[indice]) {
 							indice++;
 							found = true;
-							//Toute la s�quence a �t� trouver
+							//Toute la séquence a été trouvée
 							if (indice == firstSeqAtt.size()) {
 								indiceFirst = i;
 								indice = 0;
@@ -316,7 +318,7 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 				}
 			}
 		}
-		//Si la 2e s�quence n'est pas d�tect�
+		//Si la 2e séquence n'est pas détectée
 		if (seqDetected && !found) {
 			v.push_back(pair<pair<int, int>, pair<int, int>>(pair<int, int>(indiceFirst - firstSeqAtt.size() + 1, indiceFirst), pair<int, int>(indiceFirst + 1, indiceFirst + lastSeqAtt.size())));
 			isValide = false;
@@ -332,7 +334,7 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 				}
 			}
 		}
-		//Reset de la premi�re s�quence
+		//Reset de la première séquence
 		else if (!seqDetected && !found) {
 			indice = 0;
 			if (first)
@@ -341,7 +343,7 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 		i++;
 		first = false;
 		found = false;
-		day = Model::getNextDay(day);
+		day = (day+1)%7;
 	}
 	return v;
 }

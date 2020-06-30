@@ -114,17 +114,17 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 			bool first = false;
 			bool seqDetected = false;
 			auto v = vector<pair<pair<int, int>, pair<int, int>>>();
-			Day day = m->getFirstDay();
+			int day = m->getFirstDay();
 
 			for (int i = 0; i < swap.getDay() - (int)constraint->getFirstSeqAtt().size() - (int)constraint->getLastSeqAtt().size() + 1; i++) {
 				day = Model::getNextDay(day);
 			}
 
-			//On regarde que les jours n�cessaires
+			//On regarde que les jours nécessaires
 			for (int i = swap.getDay() - (int)constraint->getFirstSeqAtt().size() - (int)constraint->getLastSeqAtt().size() + 1; i <= swap.getDay() + (int)constraint->getFirstSeqAtt().size() + (int)constraint->getLastSeqAtt().size(); i++) {
 				if (i >= 0 && i < m->getNbDays()) {
 					Post* p = a->getCalendar()[i];
-					if (indice != 0 || constraint->getFirstDay() == Day::None || constraint->getFirstDay() == day || seqDetected) {
+					if (indice != 0 || constraint->getFirstDay() == -1 || constraint->getFirstDay() == day || seqDetected) {
 						if (p != NULL) {
 							for (auto att : p->getAttributs()) {
 								//Le cas où la séquence est déjà détectée
@@ -139,7 +139,7 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 										}
 									}
 								}
-								//Le cas où la firstSeq est pas trouvée
+								//Le cas où la firstSeq n'est pas trouvée
 								else {
 									if (!found && att == constraint->getFirstSeqAtt()[indice]) {
 										indice++;
@@ -173,7 +173,7 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 							}
 						}
 					}
-					//Reset de la premi�re s�quence
+					//Reset de la première séquence
 					else if (!seqDetected && !found) {
 						indice = 0;
 						if (first)
@@ -189,7 +189,7 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 			auto valuation = m->getValuation()->getInvolved()[swap.getService()][aIndice][iCons];
 			auto newVec = vector<pair<pair<int, int>, pair<int, int>>>();
 			for (auto value : valuation) {
-				//Si la contrainte est dans l'intervalle, on v�rifie qu'elle est toujours active
+				//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
 				if (value.first.first >= swap.getDay() - (int)constraint->getFirstSeqAtt().size() - (int)constraint->getLastSeqAtt().size() + 1 && value.second.second <= swap.getDay() + (int)constraint->getFirstSeqAtt().size() + (int)constraint->getLastSeqAtt().size() - 1) {
 					found = false;
 					for (auto e : v) {
@@ -199,7 +199,7 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 							found = true;
 						}
 					}
-					//Si on le trouve pas, c'est qu'on a r�solu la contrainte
+					//Si on ne la trouve pas, c'est qu'on a résolu la contrainte
 					if (!found) {
 						m->getValuation()->setScore(m->getValuation()->getScore() + constraint->getPriority());
 					}
@@ -208,7 +208,7 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 					newVec.push_back(value);
 				}
 			}
-			//Ajout des nouveaux �l�ments
+			//Ajout des nouveaux éléments
 			for (auto e : v) {
 				bool isIn = false;
 				for (auto value : valuation) {
@@ -248,12 +248,12 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 
 		for (int j = 0; j < 2; j++) {
 
-			//on récupère le nb de seq detecté auparavant (pour le score)
+			//on récupère le nb de seq detectées auparavant (pour le score)
 			int nbSeq = m->getValuation()->getseqMinMax()[swap.getService()][aIndice][iCons].size();
 
 			unsigned int cptCheck = 0;
 			unsigned int indice = 0;
-			Day day = m->getFirstDay();
+			int day = m->getFirstDay();
 
 			for (int i = 0; i < swap.getDay() - (int)constraint->getSequenceAtt().size(); i++) {
 				day = Model::getNextDay(day);

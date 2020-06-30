@@ -7,7 +7,7 @@
 
 #include "ConstraintSeqMinMax.h"
 
-ConstraintSeqMinMax::ConstraintSeqMinMax(Day day, MinMax type, int number, std::vector<Post*> sequence, int priority) {
+ConstraintSeqMinMax::ConstraintSeqMinMax(int day, MinMax type, int number, std::vector<Post*> sequence, int priority) {
 	this->firstDay=day;
 	this->type=type;
 	this->number=number;
@@ -16,7 +16,7 @@ ConstraintSeqMinMax::ConstraintSeqMinMax(Day day, MinMax type, int number, std::
 
 }
 
-ConstraintSeqMinMax::ConstraintSeqMinMax(Day day, MinMax type, int number, std::vector<string> sequence, int priority) {
+ConstraintSeqMinMax::ConstraintSeqMinMax(int day, MinMax type, int number, std::vector<string> sequence, int priority) {
 	this->firstDay=day;
 	this->type=type;
 	this->number=number;
@@ -46,11 +46,11 @@ void ConstraintSeqMinMax::setSequenceAtt(
 	this->sequenceAtt = sequenceAtt;
 }
 
-Day ConstraintSeqMinMax::getFirstDay() const {
+int ConstraintSeqMinMax::getFirstDay() const {
 	return firstDay;
 }
 
-void ConstraintSeqMinMax::setFirstDay(Day firstDay) {
+void ConstraintSeqMinMax::setFirstDay(int firstDay) {
 	this->firstDay = firstDay;
 }
 
@@ -88,11 +88,11 @@ string ConstraintSeqMinMax::seqToPrint()
 	return s;
 }
 
-int ConstraintSeqMinMax::check(const Agent* agent, bool checkALL, Day firstDayMonth, bool log) {
+int ConstraintSeqMinMax::check(const Agent* agent, bool checkALL, int firstDayMonth, bool log) {
 	//TODO
 	unsigned int cptCheck = 0;
 	unsigned int indice = 0;
-	Day day = firstDayMonth;
+	int day = firstDayMonth;
 
 	bool start = false;
 	bool found = false;
@@ -129,7 +129,7 @@ int ConstraintSeqMinMax::check(const Agent* agent, bool checkALL, Day firstDayMo
 			}
 		}
 		found = false;
-		day = Model::getNextDay(day);
+		day = (day+1)%7;
 	}
 	
 		if (type == Min) {
@@ -166,11 +166,11 @@ int ConstraintSeqMinMax::check(const Agent* agent, bool checkALL, Day firstDayMo
 		
 }
 
-std::vector<std::pair<int, int>> ConstraintSeqMinMax::checkValuation(const Agent* agent, Day firstDayMonth) {
+std::vector<std::pair<int, int>> ConstraintSeqMinMax::checkValuation(const Agent* agent, int firstDayMonth) {
 	//TODO
 	unsigned int cptCheck = 0;
 	unsigned int indice = 0;
-	Day day = firstDayMonth;
+	int day = firstDayMonth;
 
 	bool start = false;
 	bool found = false;
@@ -208,7 +208,7 @@ std::vector<std::pair<int, int>> ConstraintSeqMinMax::checkValuation(const Agent
 			start = false;
 		}
 		found = false;
-		day = Model::getNextDay(day);
+		day = (day+1)%7;
 		i++;
 	}
 

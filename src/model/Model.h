@@ -36,7 +36,7 @@
 
 class Model {
 public:
-	Model(Day firstDay, int nbDays, float overtime);
+	Model(int firstDay, int nbDays, float overtime);
 	Model(const Model& obj);
 	virtual ~Model();
 
@@ -51,9 +51,9 @@ public:
 
 	void printPlanning();
 
-	Day getFirstDay() const;
-	void setFirstDay(Day firstDay);
-	static Day getNextDay(Day day);
+	int getFirstDay() const;
+	void setFirstDay(int firstDay);
+	static int getNextDay(int day);
 
 	int getNbDays() const;
 	void setNbDays(int nbDays);
@@ -74,7 +74,7 @@ public:
 
 	std::vector<Constraint*> createConstraints();
 	void addBasicConstraintsTo(Service* s);
-	static Model generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService = -1, int nbPostsPerService = -1, int proba_1er_conge = -1, int proba_suite_conge = -1);
+	static Model generateModelInstance(int firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService = -1, int nbPostsPerService = -1, int proba_1er_conge = -1, int proba_suite_conge = -1);
 
 	void generateXML(string fileName);
 	void loadXML(string fileName);
@@ -82,7 +82,7 @@ public:
 
 
 protected:
-	Day firstDay;
+	int firstDay;
 	int nbDays;
 	float overtime; //heure supp (Delta)
 	Post* defaultPost;

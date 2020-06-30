@@ -245,7 +245,7 @@ void Agent::checkWorkingHoursWeekFast(Valuation*val, int idService, int day, int
 					found = true;
 				}
 			}
-			//Si on le trouve pas, c'est qu'on a résolu la contrainte
+			//Si on ne la trouve pas, c'est qu'on a résolu la contrainte
 			if (!found) {
 				val->setScore(val->getScore() + 1);
 			}

@@ -68,10 +68,11 @@ protected:
 	float nbHoursMonth;
 	float nbHoursWeek;
 
-	array<Post*, 31> calendar; //Liste o� chaque �l�ment = un jour (donc ordonn�) avec le poste attribu�
+	//Chaque élément de calendar correspond à un jour (donc ordonné) avec le poste attribué
+	array<Post*, 31> calendar; 
 	array<bool, 31> calendarLock;
-	array<Post*, 7> lastMonthCalendar; //Liste des 7 derniers postes avant le d�but du mois
-	std::vector<Post*> impossiblePosts; // Liste des potes qui ne sont pas attribuables � l'agent (C4)
+	array<Post*, 7> lastMonthCalendar; //Liste des 7 derniers postes du mois précédent
+	std::vector<Post*> impossiblePosts; // Liste des postes qui ne sont pas attribuables à l'agent (C4)
 
 	// std::vector<Constraint*> constraints; //Not used
 

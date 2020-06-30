@@ -1,7 +1,7 @@
 /*
  * ConstraintDaysSeq.h
  *
- *  Created on: 10 févr. 2020
+ *  Created on: 10 fï¿½vr. 2020
  *      Author: Valars
  */
 
@@ -10,7 +10,7 @@
 
 #include "Constraint.h"
 #include "../Agent.h"
-//Correspondant à la contrainte C2
+//Correspondant Ã  la contrainte C2
 
 class ConstraintDaysSeq: public Constraint {
 

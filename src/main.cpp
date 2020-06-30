@@ -25,16 +25,16 @@
 using namespace std;
 
 void addConsecutiveSamePost(Agent* a, Post* p, int d_start, int d_end) {
-	//permet d'ajouter le même post pendant d_end-d_start jours d'affilé à un agent
+	//permet d'ajouter le même post pendant d_end-d_start jours d'affilée à un agent
 	for (d_start; d_start <= d_end; d_start++) {
 		a->setCalendarDay(p, d_start, true);
 	}
 }
 
 Model generateGhr() {
-		//Creation du model pour le service GHR
+		//Creation du Model pour le service GHR
 
-		Model m = Model(Day::Sunday, 31, 25);
+		Model m = Model(6, 31, 25);
 
 		Service* ghr = new Service("GHR");
 
@@ -104,7 +104,7 @@ Model generateGhr() {
 		auto v2 = vector<string>();
 		v2.push_back("dayL");
 		v2.push_back("dayL");
-		ConstraintInvolved* cwjjj = new ConstraintInvolved(v, v2, Day::Saturday, 1000);
+		ConstraintInvolved* cwjjj = new ConstraintInvolved(v, v2, 5, 1000);
 		ghr->addConstraint(cwjjj);
 		
 		float nbHoursWeek = 48., nbHoursMonth = 155;
@@ -905,7 +905,7 @@ int main() {
 	m3.generateXlsx("solution.xlsx");*/
 
 
-	//modèle avec les (pré)données de Mars du CHIC
+	//modèle avec les (pré)données de Mars 2020 du CHIC
 	Model m = generateGhr();
 	
 	m = addServiceSDC(m);
@@ -914,7 +914,7 @@ int main() {
 	m = addServiceCS(m);
 	m.printPlanning();
 
-	/*Model m2 = Model::generateModelInstance(Day::Wednesday, 30, 25, 6, 15, 70, 60.0, 155);
+	/*Model m2 = Model::generateModelInstance(2, 30, 25, 6, 15, 70, 60.0, 155);
 	m2.printPlanning();
 	m2.generateXlsx("service_g6_PL.xlsx");
 	m2 = LPSolver::linearProgram(m2);*/
@@ -953,31 +953,31 @@ int main() {
 	
 	//generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService, int nbPostsPerService)
 
-	/*auto m_1servicePetit = Model::generateModelInstance(Day::Monday, 31, 25, 1, 4, 7, 60.0, 155); //1 petit service, pas trop contraints
+	/*auto m_1servicePetit = Model::generateModelInstance(0, 31, 25, 1, 4, 7, 60.0, 155); //1 petit service, pas trop contraints
 	m_1servicePetit.printPlanning();
 	m_1servicePetit.generateXML("servicePtit.xml");
 
-	auto m_1serviceTresGrand = Model::generateModelInstance(Day::Thursday, 30, 25, 1, 10, 30, 60.0, 155); //1 grand service, pas trop contraints
+	auto m_1serviceTresGrand = Model::generateModelInstance(3, 30, 25, 1, 10, 30, 60.0, 155); //1 grand service, pas trop contraints
 	m_1serviceTresGrand.printPlanning();
 	m_1serviceTresGrand.generateXML("serviceTresGrand.xml");
 
-	auto m_2servicesPetits = Model::generateModelInstance(Day::Sunday, 31, 25, 2, 5, 10, 60.0, 155); //2 petits services, pas trop contraints
+	auto m_2servicesPetits = Model::generateModelInstance(6, 31, 25, 2, 5, 10, 60.0, 155); //2 petits services, pas trop contraints
 	m_2servicesPetits.printPlanning();
 	m_2servicesPetits.generateXML("servicesPetits.xml");
 
-	auto m_2servicesFevrierBissextile = Model::generateModelInstance(Day::Saturday, 29, 0, 2, 5, 10, 60.0, 140); //2 petits services, fevrier, 0 heures supps possibles
+	auto m_2servicesFevrierBissextile = Model::generateModelInstance(5, 29, 0, 2, 5, 10, 60.0, 140); //2 petits services, fevrier, 0 heures supps possibles
 	m_2servicesFevrierBissextile.printPlanning();
 	m_2servicesFevrierBissextile.generateXML("servicesFevrierBissextile.xml");
 
-	auto m_3servicesEte = Model::generateModelInstance(Day::Sunday, 31, 10, 3, 6, 15, 60.0, 155, -1, -1, 5, 100); //3 petits services avec beacoup de congés (simulation vacances d'été potentielle), 10h supps max
+	auto m_3servicesEte = Model::generateModelInstance(6, 31, 10, 3, 6, 15, 60.0, 155, -1, -1, 5, 100); //3 petits services avec beacoup de congés (simulation vacances d'été potentielle), 10h supps max
 	m_3servicesEte.printPlanning();
 	m_3servicesEte.generateXML("servicesEte.xml");
 
-	auto m_6servicesPetits = Model::generateModelInstance(Day::Sunday, 31, 25, 6, 7, 20, 60.0, 155); //6 petits services (7 postes, 20 agents)
+	auto m_6servicesPetits = Model::generateModelInstance(6, 31, 25, 6, 7, 20, 60.0, 155); //6 petits services (7 postes, 20 agents)
 	m_6servicesPetits.printPlanning();
 	m_6servicesPetits.generateXML("servicesPetits2.xml");
 
-	auto m_6servicesGrands = Model::generateModelInstance(Day::Wednesday, 30, 25, 6, 20, 70, 60.0, 155); //6 grands services (20 postes, 70 agents)
+	auto m_6servicesGrands = Model::generateModelInstance(2, 30, 25, 6, 20, 70, 60.0, 155); //6 grands services (20 postes, 70 agents)
 	m_6servicesGrands.printPlanning();
 	m_6servicesGrands.generateXML("servicesGrands.xml");*/
 
