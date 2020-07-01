@@ -50,13 +50,13 @@ void Valuation::setScore(const int score)
 }
 
 //! \return hoursMonth vector of worked hours in the month for each Agent
-const std::vector<std::vector<int>>& Valuation::getHoursMonth()
+const std::vector<std::vector<float>>& Valuation::getHoursMonth()
 {
 	return hoursMonth;
 }
 
 //! \param h hoursMonth to set
-void Valuation::setHoursMonth(const std::vector<std::vector<int>> h)
+void Valuation::setHoursMonth(const std::vector<std::vector<float>> h)
 {
 	hoursMonth = h;
 }

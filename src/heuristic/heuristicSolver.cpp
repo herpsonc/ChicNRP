@@ -34,7 +34,7 @@ Model heuristicSolver::greedy(const Model m) {
 
 			//On mélange la liste des agents
 			vector<Agent*> v = mr.getAgentFrom(s);
-			unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+			unsigned int seed = chrono::system_clock::now().time_since_epoch().count();
 			shuffle(v.begin(),v.end(),default_random_engine(seed));
 
 			//On récupère les postes nécessaires pour le jour day (la variable)
@@ -70,7 +70,7 @@ Model heuristicSolver::greedy(const Model m) {
 				}
 			}
 		}
-		day = mr.getNextDay(day);
+		day = HeuristicToolBox::getNextDay(day);
 		indiceWeek++;
 	}
 	heuristicSolver::nullTo(&mr,mr.getDefaultPost());
@@ -223,7 +223,7 @@ void heuristicSolver::checkFast(Model* m){
 	int j = 0;
 	int k = 0;
 
-	for (int l = 0; l < m->getServices().size();l++) {
+	for (unsigned int l = 0; l < m->getServices().size();l++) {
 		for (auto c : m->getServices()[l]->getConstraints()) {
 			if (typeid(*c) == typeid(ConstraintDaysSeq)) {
 				HeuristicToolBox::checkFastDaySeq(m, (ConstraintDaysSeq*)c, i);
@@ -253,7 +253,7 @@ Valuation heuristicSolver::checkValuation(Model* m) {
 	int iS = 0;
 	int iA = 0;
 	int iP = 0;
-	auto hoursMonth = vector<vector<int>>();
+	auto hoursMonth = vector<vector<float>>();
 	auto hoursWeeks = vector<vector<array<int, 6>>>();
 	auto hoursWeeksSlide = vector<vector<vector<pair<int, int>>>>();
 	auto impossiblePosts = vector<vector<vector<int>>>();
@@ -263,7 +263,7 @@ Valuation heuristicSolver::checkValuation(Model* m) {
 
 	for (auto s : m->getServices()) {
 
-		hoursMonth.push_back(vector<int>());
+		hoursMonth.push_back(vector<float>());
 		hoursWeeks.push_back(vector<array<int, 6>>());
 		hoursWeeksSlide.push_back(vector<vector<pair<int, int>>>());
 		impossiblePosts.push_back(vector<vector<int>>());

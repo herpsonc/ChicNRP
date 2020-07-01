@@ -109,15 +109,14 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 
 		for (int j = 0; j < 2; j++) {
 			int indice = 0;
-			// Pourquoi redéclaration de found ???
-			bool found = false;
+			found = false;
 			bool first = false;
 			bool seqDetected = false;
 			auto v = vector<pair<pair<int, int>, pair<int, int>>>();
 			int day = m->getFirstDay();
 
 			for (int i = 0; i < swap.getDay() - (int)constraint->getFirstSeqAtt().size() - (int)constraint->getLastSeqAtt().size() + 1; i++) {
-				day = Model::getNextDay(day);
+				day = getNextDay(day);
 			}
 
 			//On regarde que les jours nécessaires
@@ -181,7 +180,7 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 					}
 					first = false;
 					found = false;
-					day = Model::getNextDay(day);
+					day = getNextDay(day);
 				}
 			}
 
@@ -256,7 +255,7 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 			int day = m->getFirstDay();
 
 			for (int i = 0; i < swap.getDay() - (int)constraint->getSequenceAtt().size(); i++) {
-				day = Model::getNextDay(day);
+				day = getNextDay(day);
 			}
 
 			auto v = vector<pair<int, int>>();
@@ -290,7 +289,7 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 						start = false;
 					}
 					found = false;
-					day = Model::getNextDay(day);
+					day = getNextDay(day);
 				}
 			}
 
@@ -359,4 +358,11 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 
 		}
 	}
+}
+
+int HeuristicToolBox::getNextDay(int day)
+{
+	if (day < 0)
+		return day;
+	return (day + 1) % 7;
 }

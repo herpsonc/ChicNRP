@@ -135,7 +135,8 @@ void Model::printPlanning() {
 			break;
 		}
 
-		day = getNextDay(day);
+		if (day >= 0)
+		day = (day + 1) % 7;
 	}
 	cout << endl;
 	for (auto s : agents)
@@ -899,7 +900,8 @@ void Model::generateXlsx(string fileName)
 				break;
 			}
 			res << "</Data></Cell>\n";
-			currentDay = getNextDay(currentDay);
+
+			currentDay = (currentDay + 1) % 7;
 		}
 		res << "</Row>\n";
 

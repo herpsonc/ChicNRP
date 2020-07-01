@@ -53,7 +53,7 @@ public:
 
 	int getFirstDay() const;
 	void setFirstDay(int firstDay);
-	static int getNextDay(int day);
+	//static int getNextDay(int day);
 
 	int getNbDays() const;
 	void setNbDays(int nbDays);
