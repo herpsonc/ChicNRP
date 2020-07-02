@@ -93,7 +93,7 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 
 	int score = 0;
 
-	bool isValide = true;
+	// bool isValide = true;
 
 	for(auto s : m->getServices()){
 
@@ -122,7 +122,7 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 			if(a->getWorkingHoursMonth() > a->getNbHoursMonth()+m->getOvertime()){
 				if(log)
 					cout << "Checker: Dépassement d'heure au mois pour l'agent " << a->getId() << endl;
-				isValide = false;
+				// isValide = false;
 				if (checkALL)
 					return false;
 
@@ -247,12 +247,12 @@ Valuation heuristicSolver::checkValuation(Model* m) {
 
 	int score = 0;
 
-	bool isValide = true;
+	// bool isValide = true;
 
 	//Pour Valuation
 	int iS = 0;
 	int iA = 0;
-	int iP = 0;
+	// int iP = 0;
 	auto hoursMonth = vector<vector<float>>();
 	auto hoursWeeks = vector<vector<array<int, 6>>>();
 	auto hoursWeeksSlide = vector<vector<vector<pair<int, int>>>>();
@@ -302,7 +302,7 @@ Valuation heuristicSolver::checkValuation(Model* m) {
 			seqMinMax[iS].push_back(vector<vector<pair<int, int>>>());
 
 			if (a->getWorkingHoursMonth() > a->getNbHoursMonth() + m->getOvertime()) {
-				isValide = false;
+				// isValide = false;
 				
 				score -= 100;
 			}
@@ -448,13 +448,13 @@ Model heuristicSolver::getneighborRandom(Model* m, int range)
 
 		//Choix des deux agents à swap
 		i = 0;
-		bool found = true;
+		// bool found = true;
 		int agent1 = rand() % mr.getAgentFrom(service).size();
 		while ((mr.getAgentFrom(service)[agent1]->getCalendarLock()[day] == true) && i < nbIte) {
 			agent1 = rand() % mr.getAgentFrom(service).size();
 			i++;
-			if (i >= nbIte)
-				found = false;
+			/*if (i >= nbIte)
+				found = false;*/
 		}
 
 		//Choix d'un nouveau Post
@@ -491,13 +491,29 @@ Model heuristicSolver::iterative(const Model m, int nbPop, int nbGen, int range)
 	for (int j = 0; j < nbGen;j++) {
 		cout << "Generation: " << j << endl;
 		for (int i = 0;i < nbPop;i++) {
-			int randN = rand() % 2;
+			if(rand()%2 == 0){
+				pop.push_back(getNeighborSwap(&model, range));
+			} else{
+				pop.push_back(getneighborRandom(&model, range));
+			}
+			/*int randN = rand() % 2;
+			
+			switch (randN)
+			{
+			case 0:
+				pop.push_back(getNeighborSwap(&model, range));
+				break;
+			default:
+				pop.push_back(getneighborRandom(&model, range));
+				break;
+			}
+
 			switch (randN) {
 			case 1:
 				pop.push_back(getNeighborSwap(&model, range));
 			case 2:
 				pop.push_back(getneighborRandom(&model, range));
-			}
+			}*/
 			
 		}
 

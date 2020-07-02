@@ -23,7 +23,8 @@ Valuation::~Valuation()
 
 Valuation& Valuation::operator=(const Valuation& obj)
 {
-	if (this != NULL) {
+	// if (this != NULL) {
+	if(this){
 		score = obj.score;
 		hoursMonth = obj.hoursMonth;
 		hoursWeeks = obj.hoursWeeks;
@@ -125,10 +126,10 @@ void Valuation::setSeqMinMax(const std::vector<std::vector<std::vector<std::vect
 void Valuation::print()
 {
 
-	for (int i = 0; i < daySeq.size(); i++) {
-		for (int j = 0; j < daySeq[i].size(); j++) {
-			for (int k = 0; k < daySeq[i][j].size(); k++) {
-				for (int l = 0; l < daySeq[i][j][k].size(); l++) {
+	for (int i = 0; i < (int)daySeq.size(); i++) {
+		for (int j = 0; j < (int)daySeq[i].size(); j++) {
+			for (int k = 0; k < (int)daySeq[i][j].size(); k++) {
+				for (int l = 0; l < (int)daySeq[i][j][k].size(); l++) {
 					std::cout << "ConstraintDaySeq: Service " << i << " Agent " << j << " constraint " << k << " Jours "
 						<< daySeq[i][j][k][l].first << " " << daySeq[i][j][k][l].second << std::endl;
 				}
@@ -136,10 +137,10 @@ void Valuation::print()
 		}
 	}
 
-	for (int i = 0; i < involved.size(); i++) {
-		for (int j = 0; j < involved[i].size(); j++) {
-			for (int k = 0; k < involved[i][j].size(); k++) {
-				for (int l = 0; l < involved[i][j][k].size(); l++) {
+	for (int i = 0; i < (int)involved.size(); i++) {
+		for (int j = 0; j < (int)involved[i].size(); j++) {
+			for (int k = 0; k < (int)involved[i][j].size(); k++) {
+				for (int l = 0; l < (int)involved[i][j][k].size(); l++) {
 					std::cout << "ConstraintInvolved: Service " << i << " Agent " << j << " constraint " << k << " Jours "
 						<< involved[i][j][k][l].first.first << "-" << involved[i][j][k][l].first.second
 						<< " "<< involved[i][j][k][l].second.first << "-" << involved[i][j][k][l].second.second << std::endl;
@@ -148,10 +149,10 @@ void Valuation::print()
 		}
 	}
 
-	for (int i = 0; i < seqMinMax.size(); i++) {
-		for (int j = 0; j < seqMinMax[i].size(); j++) {
-			for (int k = 0; k < seqMinMax[i][j].size(); k++) {
-				for (int l = 0; l < seqMinMax[i][j][k].size(); l++) {
+	for (int i = 0; i < (int)seqMinMax.size(); i++) {
+		for (int j = 0; j < (int)seqMinMax[i].size(); j++) {
+			for (int k = 0; k < (int)seqMinMax[i][j].size(); k++) {
+				for (int l = 0; l < (int)seqMinMax[i][j][k].size(); l++) {
 					std::cout << "ConstraintseqMinMax: Service " << i << " Agent " << j << " constraint " << k << " Jours "
 						<< seqMinMax[i][j][k][l].first << " " << seqMinMax[i][j][k][l].second << std::endl;
 				}

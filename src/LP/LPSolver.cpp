@@ -139,7 +139,7 @@ Model LPSolver::linearProgram(const Model mo) {
 
 					for (auto job : s->getPosts()) {
 						if (job->getId() != "Repos") {
-							for (int i = 0; i < varsDataTmp.size(); i++) {
+							for (int i = 0; i < (int)varsDataTmp.size(); i++) {
 								if (varsDataTmp[i]->getAgent() == a && varsDataTmp[i]->getDay() == day && varsDataTmp[i]->getPost() == job) {
 									varCons[v] = varsDataTmp[i]->getVariable();
 									varsDataTmp.erase(varsDataTmp.begin() + i); //pour optimiser les prochaines recherches de variables
@@ -175,7 +175,7 @@ Model LPSolver::linearProgram(const Model mo) {
 		SCIP_VAR* varsConsHours[500]; //maximum 31*nbPosts vars par mois
 		cout << "tabl 10 : " << coeffs_hours[10] << endl;
 		cout << "agent:" << a->getId() << endl;
-		for (int i = 0; i < varsDataTmp.size(); i++) {
+		for (int i = 0; i < (int)varsDataTmp.size(); i++) {
 			if (a->getId() == varsDataTmp[i]->getAgent()->getId()){ //&& varsDataTmp[i]->getVariable() >= 0) {
 				coeffs_hours[nb_vals] = static_cast<long long>(varsDataTmp[i]->getPost()->getTime());
 				varsConsHours[nb_vals] = varsDataTmp[i]->getVariable();
@@ -215,7 +215,7 @@ Model LPSolver::linearProgram(const Model mo) {
 		for (int day = 0; day < mr.getNbDays(); day++) {
 
 			//cout << "agent:" << a->getId() << endl;
-			for (int i = 0; i < varsDataTmp.size(); i++) {
+			for (int i = 0; i < (int)varsDataTmp.size(); i++) {
 				if (a->getId() == varsDataTmp[i]->getAgent()->getId() && varsDataTmp[i]->getDay() == day) {
 					coeffs_hours[nb_vals] = static_cast<long long>(varsDataTmp[i]->getPost()->getTime());
 					varsConsHours[nb_vals] = varsDataTmp[i]->getVariable();
@@ -238,8 +238,8 @@ Model LPSolver::linearProgram(const Model mo) {
 				consVec.push_back(consHoursWeek);
 				jour_semaine = 1;
 				nb_vals = 0;
-				long long coeffs_hours[500];
-				SCIP_VAR* varsConsHours[500]; //maximum 7*nbPosts vars par semaine
+				// long long coeffs_hours[500];
+				// SCIP_VAR* varsConsHours[500]; //maximum 7*nbPosts vars par semaine
 			}
 			jour_semaine++;
 		}
@@ -323,7 +323,7 @@ Model LPSolver::linearProgram(const Model mo) {
 								int v = 0;
 								SCIP_VAR* varCons[10];
 								SCIP_VAR* varNight;
-								for (int i = 0; i < varsDataTmp.size(); i++) {
+								for (int i = 0; i < (int)varsDataTmp.size(); i++) {
 									if (varsDataTmp[i]->getAgent() == a && varsDataTmp[i]->getDay() == day && varsDataTmp[i]->getPost() == nightJob) {
 										varNight = varsDataTmp[i]->getVariable();
 										varCons[v] = varNight;
@@ -341,7 +341,7 @@ Model LPSolver::linearProgram(const Model mo) {
 										SCIP_VAR* varDay;
 										bool noVar = true;
 
-										for (int i = 0; i < varsDataTmp.size(); i++) {
+										for (int i = 0; i < (int)varsDataTmp.size(); i++) {
 											// Poste jour suivant == NULL
 											if (varsDataTmp[i]->getAgent() == a && varsDataTmp[i]->getDay() == (day + 1) && varsDataTmp[i]->getPost() == dayJob && v == 1) {
 												varDay = varsDataTmp[i]->getVariable();
@@ -401,7 +401,7 @@ Model LPSolver::linearProgram(const Model mo) {
 
 								SCIP_VAR* varNightOne;
 
-								for (int i = 0; i < varsDataTmp.size(); i++) {
+								for (int i = 0; i < (int)varsDataTmp.size(); i++) {
 									if (varsDataTmp[i]->getAgent() == a && varsDataTmp[i]->getDay() == day && varsDataTmp[i]->getPost() == nightOne) {
 										//cout << varsDataTmp[i]->getDay() << " " << varsDataTmp[i]->getAgent()->getId() << endl;
 										varNightOne = varsDataTmp[i]->getVariable();
@@ -419,7 +419,7 @@ Model LPSolver::linearProgram(const Model mo) {
 										if (count(attNightTwo.begin(), attNightTwo.end(), "night")) {
 											SCIP_VAR* varNightTwo;
 
-											for (int i = 0; i < varsDataTmp.size(); i++) {
+											for (int i = 0; i < (int)varsDataTmp.size(); i++) {
 												if (varsDataTmp[i]->getAgent() == a && varsDataTmp[i]->getDay() == d1 && varsDataTmp[i]->getPost() == nightTwo) {
 													//cout << varsDataTmp[i]->getDay() << " " << varsDataTmp[i]->getAgent()->getId() << endl;
 													varNightTwo = varsDataTmp[i]->getVariable();
@@ -438,7 +438,7 @@ Model LPSolver::linearProgram(const Model mo) {
 													if (count(attNightThree.begin(), attNightThree.end(), "night")) {
 														SCIP_VAR* varNightThree;
 
-														for (int i = 0; i < varsDataTmp.size(); i++) {
+														for (int i = 0; i < (int)varsDataTmp.size(); i++) {
 															if (varsDataTmp[i]->getAgent() == a && varsDataTmp[i]->getDay() == d2 && varsDataTmp[i]->getPost() == nightThree) {
 																//cout << varsDataTmp[i]->getDay() << " " << varsDataTmp[i]->getAgent()->getId() << endl;
 																varNightThree = varsDataTmp[i]->getVariable();
@@ -489,13 +489,13 @@ Model LPSolver::linearProgram(const Model mo) {
 
 							if (nbVar >= 3) {
 								nbVar = 0;
-								SCIP_VAR* varCons[10];
+								// SCIP_VAR* varCons[10];
 							}
 							vector<string> attDayOne = dayOne->getAttributs();
 
 							if (count(attDayOne.begin(), attDayOne.end(), "day")) {
 								SCIP_VAR* varDayOne;
-								for (int i = 0; i < varsDataTmp.size(); i++) {
+								for (int i = 0; i < (int)varsDataTmp.size(); i++) {
 									if (varsDataTmp[i]->getAgent() == a && varsDataTmp[i]->getDay() == day && varsDataTmp[i]->getPost() == dayOne) {
 										//cout << varsDataTmp[i]->getDay() << " " << varsDataTmp[i]->getAgent()->getId() << " " << varsDataTmp[i]->getPost()->getId() << endl;
 										varDayOne = varsDataTmp[i]->getVariable();
@@ -518,7 +518,7 @@ Model LPSolver::linearProgram(const Model mo) {
 												nbVar = 1;
 											}
 
-											for (int i = 0; i < varsDataTmp.size(); i++) {
+											for (int i = 0; i < (int)varsDataTmp.size(); i++) {
 												if (varsDataTmp[i]->getAgent() == a && varsDataTmp[i]->getDay() == d1 && varsDataTmp[i]->getPost() == dayTwo) {
 													//cout << varsDataTmp[i]->getDay() << " " << varsDataTmp[i]->getAgent()->getId() << " " << varsDataTmp[i]->getPost()->getId() << endl;
 													varDayTwo = varsDataTmp[i]->getVariable();
@@ -541,7 +541,7 @@ Model LPSolver::linearProgram(const Model mo) {
 															nbVar = 2;
 														}
 
-														for (int i = 0; i < varsDataTmp.size(); i++) {
+														for (int i = 0; i < (int)varsDataTmp.size(); i++) {
 															if (varsDataTmp[i]->getAgent() == a && varsDataTmp[i]->getDay() == d2 && varsDataTmp[i]->getPost() == dayThree) {
 																//cout << varsDataTmp[i]->getDay() << " " << varsDataTmp[i]->getAgent()->getId() << " " << varsDataTmp[i]->getPost()->getId() << endl;
 																varDayThree = varsDataTmp[i]->getVariable();
@@ -565,7 +565,7 @@ Model LPSolver::linearProgram(const Model mo) {
 																		nbVar = 3;
 																	}
 
-																	for (int i = 0; i < varsDataTmp.size(); i++) {
+																	for (int i = 0; i < (int)varsDataTmp.size(); i++) {
 																		if (varsDataTmp[i]->getAgent() == a && varsDataTmp[i]->getDay() == d3 && varsDataTmp[i]->getPost() == dayFour) {
 																			//cout << varsDataTmp[i]->getDay() << " " << varsDataTmp[i]->getAgent()->getId() << " " << varsDataTmp[i]->getPost()->getId() << endl;
 																			varDayFour = varsDataTmp[i]->getVariable();
