@@ -43,7 +43,8 @@ public:
 
 	string seqToPrint();
 
-	int check(const Agent* agent, bool checkALL, int firstDayMonth, bool log);
+	// int check(const Agent* agent, bool checkALL, int firstDayMonth, bool log);
+	int check(const Agent* agent, int firstDayMonth, bool log);
 	std::vector<std::pair<int, int>> checkValuation(const Agent* agent, int firstDayMonth);
 
 protected:

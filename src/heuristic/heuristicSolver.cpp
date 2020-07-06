@@ -154,7 +154,8 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 					score -= ((ConstraintInvolved*)c)->check(a, m->getFirstDay(), true, log);
 				}
 				else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
-					score -= ((ConstraintSeqMinMax*)c)->check(a, true, m->getFirstDay(), log);
+					// score -= ((ConstraintSeqMinMax*)c)->check(a, true, m->getFirstDay(), log);
+					score -= ((ConstraintSeqMinMax*)c)->check(a, m->getFirstDay(), log);
 				}
 			}
 		}

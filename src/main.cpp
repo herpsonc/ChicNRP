@@ -26,7 +26,7 @@ using namespace std;
 
 void addConsecutiveSamePost(Agent* a, Post* p, int d_start, int d_end) {
 	//permet d'ajouter le même post pendant d_end-d_start jours d'affilée à un agent
-	for (d_start; d_start <= d_end; d_start++) {
+	for ( ; d_start <= d_end; d_start++) {
 		a->setCalendarDay(p, d_start, true);
 	}
 }

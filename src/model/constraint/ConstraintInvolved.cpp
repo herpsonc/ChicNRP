@@ -93,7 +93,7 @@ int ConstraintInvolved::check(const Agent *agent, int day, bool checkALL, bool l
 	unsigned int indice = 0;
 	bool seqDetected = false;
 	bool found = false;
-	bool isValide = true;
+	// bool isValide = true;
 	bool first = false;
 	int i = 0;
 	int nb_fail = 0;
@@ -133,7 +133,7 @@ int ConstraintInvolved::check(const Agent *agent, int day, bool checkALL, bool l
 				if (seqDetected && !found) {
 					if(!checkALL)
 						return false;
-					isValide = false;
+					// isValide = false;
 					nb_fail++;
 					seqDetected = false;
 					indice = 0;
@@ -189,7 +189,7 @@ int ConstraintInvolved::check(const Agent *agent, int day, bool checkALL, bool l
 			if (log)
 				cout << getSeqToPrint() << ": Agent " << agent->getId() << " Jour "
 				<< i + 1 << endl;
-			isValide = false;
+			// isValide = false;
 			nb_fail++;
 			seqDetected = false;
 			indice = 0;
@@ -221,7 +221,7 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 	unsigned int indice = 0;
 	bool seqDetected = false;
 	bool found = false;
-	bool isValide = true;
+	// bool isValide = true;
 	bool first = false;
 	int i = 0;
 	int nb_fail = 0;
@@ -267,7 +267,7 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 		//Si la 2e séquence n'est pas détectée
 		if (seqDetected && !found) {
 			v.push_back(pair<pair<int, int>, pair<int, int>>(pair<int, int>(indiceFirst - firstSeqAtt.size(), indiceFirst), pair<int, int>(indiceFirst + 1, indiceFirst + 1 + lastSeqAtt.size())));
-			isValide = false;
+			// isValide = false;
 			nb_fail++;
 			seqDetected = false;
 			indice = 0;
@@ -321,7 +321,7 @@ std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> ConstraintInv
 		//Si la 2e séquence n'est pas détectée
 		if (seqDetected && !found) {
 			v.push_back(pair<pair<int, int>, pair<int, int>>(pair<int, int>(indiceFirst - firstSeqAtt.size() + 1, indiceFirst), pair<int, int>(indiceFirst + 1, indiceFirst + lastSeqAtt.size())));
-			isValide = false;
+			// isValide = false;
 			nb_fail++;
 			seqDetected = false;
 			indice = 0;

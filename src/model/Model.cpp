@@ -51,7 +51,8 @@ Model::~Model() {
 
 Model& Model::operator=(const Model& obj)
 {
-	if (this != NULL) {
+	// if (this != NULL) {
+	if(this) {
 		firstDay = obj.firstDay;
 		nbDays = obj.nbDays;
 		overtime = obj.overtime;

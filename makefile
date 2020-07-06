@@ -42,7 +42,7 @@ VariableData.o : src/LP/VariableData.cpp src/LP/VariableData.h
 	g++ -c src/LP/VariableData.cpp -o VariableData.o -W -Wall -Werror
 
 LPSolver.o : src/LP/LPSolver.cpp src/LP/LPSolver.h
-	g++ -I/$(SCIPDIR) -L/$(SCIPDIR) -c src/LP/LPSolver.cpp -o LPSolver.o -lm -lscip -W -Wall -Werror
+	g++ -c src/LP/LPSolver.cpp -o LPSolver.o -W -Wall -Werror
 
 main : heuristicSolver.o LPSolver.o Constraint.o Valuation.o SwapLog.o Post.o Agent.o Service.o ConstraintInvolved.o ConstraintDaysSeq.o ConstraintSeqMinMax.o Model.o HeuristicToolBox.o VariableData.o
 	g++ -I/$(SCIPDIR) -L/$(SCIPDIR) heuristicSolver.o LPSolver.o Constraint.o Valuation.o SwapLog.o Post.o Agent.o Service.o ConstraintInvolved.o ConstraintDaysSeq.o ConstraintSeqMinMax.o Model.o HeuristicToolBox.o VariableData.o src/main.cpp -o main -lm -lscip -W -Wall -Werror

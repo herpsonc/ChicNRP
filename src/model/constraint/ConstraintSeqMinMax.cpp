@@ -88,9 +88,11 @@ string ConstraintSeqMinMax::seqToPrint()
 	return s;
 }
 
-int ConstraintSeqMinMax::check(const Agent* agent, bool checkALL, int firstDayMonth, bool log) {
+// int ConstraintSeqMinMax::check(const Agent* agent, bool checkALL, int firstDayMonth, bool log) {
+int ConstraintSeqMinMax::check(const Agent* agent, int firstDayMonth, bool log) {
 	//TODO
-	unsigned int cptCheck = 0;
+	// unsigned int cptCheck = 0;
+	int cptCheck = 0;
 	unsigned int indice = 0;
 	int day = firstDayMonth;
 

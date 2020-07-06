@@ -23,7 +23,7 @@ void HeuristicToolBox::checkFastDaySeq(Model* m, ConstraintDaysSeq* constraint, 
 								found = true;
 								indice++;
 								//Si on arrive au bout de la séquence, alors elle est présente dans le calendrier
-								if (indice >= constraint->getSequenceAtt().size()) {
+								if (indice >= (int)constraint->getSequenceAtt().size()) {
 									found = false;
 									v.push_back(pair<int, int>(i - indice + 1, i));
 									indice = 0;
@@ -97,10 +97,11 @@ void HeuristicToolBox::checkFastDaySeq(Model* m, ConstraintDaysSeq* constraint, 
 
 void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constraint, int iCons)
 {
-	bool seqDetected = false;
+	// bool seqDetected = false;
+	bool seqDetected;
 	bool found = false;
-	bool isValide = true;
-	int i = 0;
+	// bool isValide = true;
+	// int i = 0;
 	int indiceFirst = 0;
 
 	for (auto swap : m->getSwapLog()) {
@@ -111,7 +112,8 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 			int indice = 0;
 			found = false;
 			bool first = false;
-			bool seqDetected = false;
+			// bool seqDetected = false;
+			seqDetected = false;
 			auto v = vector<pair<pair<int, int>, pair<int, int>>>();
 			int day = m->getFirstDay();
 
@@ -132,7 +134,7 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 										indice++;
 										found = true;
 
-										if (indice == constraint->getLastSeqAtt().size()) {
+										if (indice == (int)constraint->getLastSeqAtt().size()) {
 											seqDetected = false;
 											indice = 0;
 										}
@@ -144,7 +146,7 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 										indice++;
 										found = true;
 										//Toute la séquence a été trouvée
-										if (indice == constraint->getFirstSeqAtt().size()) {
+										if (indice == (int)constraint->getFirstSeqAtt().size()) {
 											indiceFirst = i;
 											indice = 0;
 											seqDetected = true;
@@ -160,7 +162,7 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 					//Si la 2e séquence n'est pas détectée
 					if (seqDetected && !found) {
 						v.push_back(pair<pair<int, int>, pair<int, int>>(pair<int, int>(indiceFirst - constraint->getFirstSeqAtt().size() + 1, indiceFirst), pair<int, int>(indiceFirst + 1, indiceFirst + constraint->getLastSeqAtt().size())));
-						isValide = false;
+						// isValide = false;
 						seqDetected = false;
 						indice = 0;
 						if (first) {
@@ -306,8 +308,8 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 							found = true;
 						}
 					}
-					if (!found)
-						;//cout << "removed" << endl;
+					// if (!found)
+						//cout << "removed" << endl;
 				}
 				else {
 					newVec.push_back(value);
@@ -338,7 +340,7 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 				int scoreB = 0;
 				if (nbSeq < constraint->getNumber())
 					scoreA -= (constraint->getNumber() - nbSeq) * constraint->getPriority();
-				if (newVec.size() < constraint->getNumber())
+				if ((int)newVec.size() < constraint->getNumber())
 					scoreB -= (constraint->getNumber() - newVec.size()) * constraint->getPriority();
 				if (scoreA - scoreB != 0)
 					m->getValuation()->setScore(m->getValuation()->getScore() - (scoreA - scoreB));
@@ -348,7 +350,7 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 				int scoreB = 0;
 				if (nbSeq > constraint->getNumber())
 					scoreA -= (nbSeq - constraint->getNumber()) * constraint->getPriority();
-				if (newVec.size() > constraint->getNumber())
+				if ((int)newVec.size() > constraint->getNumber())
 					scoreB -= (newVec.size() - constraint->getNumber()) * constraint->getPriority();
 				m->getValuation()->setScore(m->getValuation()->getScore() - (scoreA - scoreB));
 			}

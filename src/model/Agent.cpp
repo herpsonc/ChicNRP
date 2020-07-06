@@ -23,13 +23,13 @@ Agent::Agent(string id, int nbHourMonth, int nbHoursWeek, Status status)
 	this->nbHoursWeek = nbHoursWeek;
 	this->status = status;
 
-	for (int i = 0;i < calendar.size();i++)
+	for (int i = 0;i < (int)calendar.size();i++)
 		calendar[i] = NULL;
 
-	for (int i = 0;i < calendarLock.size();i++)
+	for (int i = 0;i < (int)calendarLock.size();i++)
 		calendarLock[i] = false;
 
-	for (int i = 0;i < lastMonthCalendar.size();i++)
+	for (int i = 0;i < (int)lastMonthCalendar.size();i++)
 		lastMonthCalendar[i] = NULL;
 }
 
@@ -363,7 +363,7 @@ void Agent::checkImpossiblePostsFast(Valuation* val, int idService, int day, int
 //! \return vec vector of each day where this constraint is broken
 std::vector<int> Agent::checkImpossiblePostsValuation(){
 	auto vec = vector<int>();
-	int nbFail = 0;
+	// int nbFail = 0;
 	int i = 0;
 	for (auto p : calendar) {
 		for (auto ip : impossiblePosts) {

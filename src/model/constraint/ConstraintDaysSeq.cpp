@@ -65,7 +65,7 @@ int ConstraintDaysSeq::check(const Agent *agent, bool checkALL, bool log) {
 	unsigned int indice = 0;
 	bool found = false;
 	int i = 0;
-	bool exist = false;
+	// bool exist = false;
 	int nb_fail = 0;
 	bool first = false;
 	//On prend en compte les 7 jours avant le debut du mois
@@ -80,7 +80,7 @@ int ConstraintDaysSeq::check(const Agent *agent, bool checkALL, bool log) {
 						if(log)
 							cout << getSeqToPrint() << ": Agent " << agent->getId() << " Jour "
 									<< i-indice+2 << " � " << i+1 << endl;
-						exist = true;
+						// exist = true;
 						found = false;
 						nb_fail++;
 						indice = 0;
@@ -116,7 +116,7 @@ int ConstraintDaysSeq::check(const Agent *agent, bool checkALL, bool log) {
 							if(log)
 								cout << getSeqToPrint() << ": Agent " << agent->getId() << " Jour "
 										<< i-indice+2 << " � " << i+1 << endl;
-							exist = true;
+							// exist = true;
 							found = false;
 							nb_fail++;
 							indice = 0;
@@ -149,7 +149,7 @@ std::vector<std::pair<int, int>> ConstraintDaysSeq::checkValuation(const Agent* 
 	unsigned int indice = 0;
 	bool found = false;
 	int i = 0;
-	bool exist = false;
+	// bool exist = false;
 	int nb_fail = 0;
 	bool first = false;
 	vector<pair<int, int>> v;
@@ -163,7 +163,7 @@ std::vector<std::pair<int, int>> ConstraintDaysSeq::checkValuation(const Agent* 
 					indice++;
 					//Si on arrive au bout de la séquence, alors elle est présente dans le calendrier
 					if (indice >= sequenceAtt.size()) {
-						exist = true;
+						// exist = true;
 						found = false;
 						v.push_back(pair<int,int>(i - indice+1, i));
 						nb_fail++;
@@ -198,7 +198,7 @@ std::vector<std::pair<int, int>> ConstraintDaysSeq::checkValuation(const Agent* 
 					indice++;
 					//Si on arrive au bout de la séquence, alors elle est présente dans le calendrier
 					if (indice >= sequenceAtt.size()) {
-						exist = true;
+						// exist = true;
 						found = false;
 						v.push_back(pair<int, int>(i - indice + 1, i));
 						nb_fail++;
