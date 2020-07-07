@@ -9,13 +9,6 @@
 
 using namespace std;
 
-ConstraintInvolved::ConstraintInvolved(vector<Post*> first, vector<Post*> last, int priority) {
-	this->firstSeq = first;
-	this->lastSeq = last;
-	this->priority = priority;
-
-}
-
 ConstraintInvolved::ConstraintInvolved(vector<string> first,  vector<string> last, int firstDay, int priority) {
 	this->firstSeqAtt = first;
 	this->lastSeqAtt = last;
@@ -26,23 +19,6 @@ ConstraintInvolved::ConstraintInvolved(vector<string> first,  vector<string> las
 
 ConstraintInvolved::~ConstraintInvolved() {
 	// TODO Auto-generated destructor stub
-}
-
-const std::vector<Post*>& ConstraintInvolved::getFirstSeq() const {
-	return firstSeq;
-}
-
-void ConstraintInvolved::setFirstSeq(const std::vector<Post*> &firstSeq) {
-	this->firstSeq = firstSeq;
-}
-
-const std::vector<Post*>& ConstraintInvolved::getLastSeq() const {
-	return lastSeq;
-}
-
-
-void ConstraintInvolved::setLastSeq(const std::vector<Post*> &lastSeq) {
-	this->lastSeq = lastSeq;
 }
 
 const std::vector<string>& ConstraintInvolved::getFirstSeqAtt() const
@@ -88,7 +64,7 @@ int ConstraintInvolved::getFirstDay()
 	return firstDay;
 }
 
-int ConstraintInvolved::check(const Agent *agent, int day, bool checkALL, bool log) {
+int ConstraintInvolved::check(const Agent *agent, int day, bool log) {
 
 	unsigned int indice = 0;
 	bool seqDetected = false;
@@ -131,9 +107,6 @@ int ConstraintInvolved::check(const Agent *agent, int day, bool checkALL, bool l
 				}
 				//Si la 2e séquence n'est pas détectée
 				if (seqDetected && !found) {
-					if(!checkALL)
-						return false;
-					// isValide = false;
 					nb_fail++;
 					seqDetected = false;
 					indice = 0;

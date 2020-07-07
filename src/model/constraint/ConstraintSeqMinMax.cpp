@@ -7,14 +7,6 @@
 
 #include "ConstraintSeqMinMax.h"
 
-ConstraintSeqMinMax::ConstraintSeqMinMax(int day, MinMax type, int number, std::vector<Post*> sequence, int priority) {
-	this->firstDay=day;
-	this->type=type;
-	this->number=number;
-	this->sequence=sequence;
-	this->priority=priority;
-
-}
 
 ConstraintSeqMinMax::ConstraintSeqMinMax(int day, MinMax type, int number, std::vector<string> sequence, int priority) {
 	this->firstDay=day;
@@ -27,14 +19,6 @@ ConstraintSeqMinMax::ConstraintSeqMinMax(int day, MinMax type, int number, std::
 
 ConstraintSeqMinMax::~ConstraintSeqMinMax() {
 	// TODO Auto-generated destructor stub
-}
-
-const std::vector<Post*>& ConstraintSeqMinMax::getSequence() const {
-	return sequence;
-}
-
-void ConstraintSeqMinMax::setSequence(const std::vector<Post*> &sequence) {
-	this->sequence = sequence;
 }
 
 const std::vector<string>& ConstraintSeqMinMax::getSequenceAtt() const {
@@ -88,7 +72,6 @@ string ConstraintSeqMinMax::seqToPrint()
 	return s;
 }
 
-// int ConstraintSeqMinMax::check(const Agent* agent, bool checkALL, int firstDayMonth, bool log) {
 int ConstraintSeqMinMax::check(const Agent* agent, int firstDayMonth, bool log) {
 	//TODO
 	// unsigned int cptCheck = 0;

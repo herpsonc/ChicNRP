@@ -89,7 +89,7 @@ void heuristicSolver::nullTo(Model* m, Post* post) {
 	}
 }
 
-int heuristicSolver::check(Model* m, bool checkALL, bool log) {
+int heuristicSolver::check(Model* m, bool log) {
 
 	int score = 0;
 
@@ -122,9 +122,6 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 			if(a->getWorkingHoursMonth() > a->getNbHoursMonth()+m->getOvertime()){
 				if(log)
 					cout << "Checker: Dépassement d'heure au mois pour l'agent " << a->getId() << endl;
-				// isValide = false;
-				if (checkALL)
-					return false;
 
 				score -= 100;
 			}
@@ -148,10 +145,10 @@ int heuristicSolver::check(Model* m, bool checkALL, bool log) {
 
 			for(auto c : s->getConstraints()){
 				if(typeid(*c) == typeid(ConstraintDaysSeq)){
-					score -= ((ConstraintDaysSeq*)c)->check(a, true, log);
+					score -= ((ConstraintDaysSeq*)c)->check(a, log);
 				}
 				else if (typeid(*c) == typeid(ConstraintInvolved)) {
-					score -= ((ConstraintInvolved*)c)->check(a, m->getFirstDay(), true, log);
+					score -= ((ConstraintInvolved*)c)->check(a, m->getFirstDay(), log);
 				}
 				else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
 					// score -= ((ConstraintSeqMinMax*)c)->check(a, true, m->getFirstDay(), log);
@@ -483,7 +480,7 @@ Model heuristicSolver::iterative(const Model m, int nbPop, int nbGen, int range)
 	auto chronoStart = chrono::system_clock::now();
 
 	Model model = greedy(m);
-	int bestScore = check(&model, false, false);
+	int bestScore = check(&model, false);
 	cout << "scoreInit" << bestScore << endl;
 	auto pop = vector<Model>();
 
@@ -498,7 +495,7 @@ Model heuristicSolver::iterative(const Model m, int nbPop, int nbGen, int range)
 		}
 
 		for (auto e : pop) {
-			int res = check(&e, false, false);
+			int res = check(&e, false);
 			if (res > bestScore) {
 				bestScore = res;
 				model = e;
@@ -521,7 +518,7 @@ Model heuristicSolver::iterative2Fast(const Model m, int nbIte, int range)
 	Model bestModel = currentModel;
 	Model nextModel = currentModel;
 	currentModel.setValuation(heuristicSolver::checkValuation(&currentModel));
-	int bestScore = check(&currentModel, false, false);
+	int bestScore = check(&currentModel, false);
 	currentModel.getValuation()->setScore(bestScore);
 	int currentScore = bestScore;
 	cout << "scoreInit" << bestScore << endl;
@@ -568,7 +565,7 @@ Model heuristicSolver::iterative2Fast(const Model m, int nbIte, int range)
 				if (randI > 998) {
 					currentModel = greedy(m);
 					currentModel.setValuation(heuristicSolver::checkValuation(&currentModel));
-					currentScore = check(&currentModel, false, false);
+					currentScore = check(&currentModel, false);
 					currentModel.getValuation()->setScore(currentScore);
 				}
 			}
@@ -592,7 +589,7 @@ Model heuristicSolver::iterative2(const Model m, int nbIte, int range, int limit
 	Model currentModel = greedy(m);
 	Model bestModel = currentModel;
 	Model nextModel = currentModel;
-	int bestScore = check(&currentModel, false, false);
+	int bestScore = check(&currentModel, false);
 	int currentScore = bestScore;
 	cout << "scoreInit" << bestScore << endl;
 
@@ -611,7 +608,7 @@ Model heuristicSolver::iterative2(const Model m, int nbIte, int range, int limit
 		}
 
 		//On regarde si la solution est meilleure
-		int nextScore = check(&nextModel, false, false);
+		int nextScore = check(&nextModel, false);
 		if (nextScore > bestScore) {
 			bestModel = nextModel;
 			bestScore = nextScore;
@@ -638,7 +635,7 @@ Model heuristicSolver::iterative2(const Model m, int nbIte, int range, int limit
 				int randI = rand() % 1000;
 				if (randI > 998) {
 					currentModel = greedy(m);
-					currentScore = check(&currentModel, false, false);
+					currentScore = check(&currentModel, false);
 				}
 			}
 		}

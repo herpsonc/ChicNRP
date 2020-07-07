@@ -19,12 +19,8 @@ enum MinMax {Min, Max};
 
 class ConstraintSeqMinMax: public Constraint {
 public:
-	ConstraintSeqMinMax(int day, MinMax type, int number, std::vector<Post*> sequence, int priority);
 	ConstraintSeqMinMax(int day, MinMax type, int number, std::vector<string> sequence, int priority);
 	virtual ~ConstraintSeqMinMax();
-
-	const std::vector<Post*>& getSequence() const;
-	void setSequence(const std::vector<Post*> &sequence);
 
 	const std::vector<string>& getSequenceAtt() const;
 	void setSequenceAtt(const std::vector<string> &sequenceAtt);
@@ -43,7 +39,6 @@ public:
 
 	string seqToPrint();
 
-	// int check(const Agent* agent, bool checkALL, int firstDayMonth, bool log);
 	int check(const Agent* agent, int firstDayMonth, bool log);
 	std::vector<std::pair<int, int>> checkValuation(const Agent* agent, int firstDayMonth);
 
@@ -53,7 +48,6 @@ protected:
 	int number;
 	int priority;
 
-	std::vector<Post*> sequence;
 	std::vector<string> sequenceAtt;
 
 

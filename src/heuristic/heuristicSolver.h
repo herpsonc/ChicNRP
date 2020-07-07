@@ -21,7 +21,7 @@ public:
 
 	static Model greedy(const Model m);
 	static void nullTo(Model* m, Post* post);
-	static int check(Model* m, bool CheckALL, bool log);
+	static int check(Model* m, bool log);
 	static void checkFast(Model* m);
 	static Valuation checkValuation(Model* m);
 	static Model getNeighborSwap(Model* m, int range);

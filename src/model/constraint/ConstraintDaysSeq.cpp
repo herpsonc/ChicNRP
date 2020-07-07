@@ -9,12 +9,6 @@
 
 using namespace std;
 
-ConstraintDaysSeq::ConstraintDaysSeq(vector<Post*> seq, int priority) {
-	sequence = seq;
-	this->priority = priority;
-
-}
-
 ConstraintDaysSeq::ConstraintDaysSeq(vector<string> seq, int priority) {
 	sequenceAtt = seq;
 	this->priority = priority;
@@ -35,14 +29,6 @@ void ConstraintDaysSeq::setPriority(int priority) {
 	this->priority = priority;
 }
 
-const std::vector<Post*>& ConstraintDaysSeq::getSequence() const {
-	return sequence;
-}
-
-void ConstraintDaysSeq::setSequence(const std::vector<Post*> &sequence) {
-	this->sequence = sequence;
-}
-
 const std::vector<string>& ConstraintDaysSeq::getSequenceAtt() const {
 	return sequenceAtt;
 }
@@ -60,12 +46,11 @@ string ConstraintDaysSeq::getSeqToPrint() {
 }
 
 //Retourne true si la séquence de la contrainte se retrouve dans le calendrier de l'agent
-int ConstraintDaysSeq::check(const Agent *agent, bool checkALL, bool log) {
+int ConstraintDaysSeq::check(const Agent *agent, bool log) {
 
 	unsigned int indice = 0;
 	bool found = false;
 	int i = 0;
-	// bool exist = false;
 	int nb_fail = 0;
 	bool first = false;
 	//On prend en compte les 7 jours avant le debut du mois
@@ -120,8 +105,6 @@ int ConstraintDaysSeq::check(const Agent *agent, bool checkALL, bool log) {
 							found = false;
 							nb_fail++;
 							indice = 0;
-							if(!checkALL)
-								return true;
 						}
 					}
 					if (att == sequenceAtt[0]){
