@@ -44,21 +44,6 @@ void Post::setTime(float time) {
 	this->time = time;
 }
 
-//! \return constraints vector of Constraint of the Post 
-const vector<Constraint*>& Post::getConstraints() const {
-	return constraints;
-}
-
-//! \param constraints  Constraint to set
-void Post::setConstraints(const vector<Constraint*> &constraints) {
-	this->constraints = constraints;
-}
-
-//! \param constraint Constraint to add
-void Post::addConstraint(Constraint *constraint) {
-	constraints.push_back(constraint);
-}
-
 //! \return attributs vector of attributs of the Post
 const vector<string>& Post::getAttributs() const {
 	return attributs;

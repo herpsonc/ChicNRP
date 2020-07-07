@@ -5,12 +5,8 @@
  *      Author: Valars
  */
 
-#include <string>
-#include <vector>
 #include <map>
 #include <array>
-// #include "Post.h"
-// #include "constraint/Constraint.h"
 #include "Agent.h"
 
 

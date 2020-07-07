@@ -6,9 +6,6 @@
  */
 
 #include <string>
-// #include "Service.h"
-// #include "constraint/Constraint.h"
-// #include "Model.h"
 #include "Valuation.h"
 #include "Post.h"
 
@@ -20,7 +17,7 @@ enum Status {Beginner, Rooki, Confirmed};
 class Agent {
 public:
 	Agent();
-	Agent(string id, int nbHourMonth,int nbHoursWeek, Status status);
+	Agent(string id, float nbHourMonth, float nbHoursWeek, Status status);
 	Agent(const Agent &obj);
 	virtual ~Agent();
 
@@ -38,13 +35,6 @@ public:
 
 	const std::vector<Post*>& getImpossiblePosts() const;
 	void setImpossiblePosts(const std::vector<Post*> &impossiblePosts);
-
-	// Service*& getService();
-	// void setService(Service *&service);
-
-	// const std::vector<Constraint*>& getConstraints() const;
-	// void setConstraints(const std::vector<Constraint*> &constraints);
-	// void addConstraint(Constraint* constraint);
 
 	Status getStatus() const;
 	void setStatus(Status status);
@@ -73,10 +63,6 @@ protected:
 	array<bool, 31> calendarLock;
 	array<Post*, 7> lastMonthCalendar; //Liste des 7 derniers postes du mois précédent
 	std::vector<Post*> impossiblePosts; // Liste des postes qui ne sont pas attribuables à l'agent (C4)
-
-	// std::vector<Constraint*> constraints; //Not used
-
-	// Service* service; //service pr�f�r�/affect� // Not used
 
 };
 

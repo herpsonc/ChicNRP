@@ -12,10 +12,10 @@ Agent::Agent() {
 	// service = NULL;
 	nbHoursMonth = 0;
 	nbHoursWeek = 0;
-	status = Confirmed;
+	status = Status::Confirmed;
 }
 
-Agent::Agent(string id, int nbHourMonth, int nbHoursWeek, Status status)
+Agent::Agent(string id, float nbHourMonth, float nbHoursWeek, Status status)
 {
 	this->id = id;
 	// service = NULL;
@@ -94,32 +94,6 @@ void Agent::setImpossiblePosts(const std::vector<Post*> &impossiblePosts) {
 	this->impossiblePosts = impossiblePosts;
 }
 
-//! \return service service affected to the Agent
-/*Service*& Agent::getService() {
-	return service;
-}
-
-//! \return constraints vector of Constraint of the Agent (Not used)
-const std::vector<Constraint*>& Agent::getConstraints() const {
-	return constraints;
-}
-
-//! \param constraints Constraint to set
-void Agent::setConstraints(const std::vector<Constraint*> &constraints) {
-	this->constraints = constraints;
-}
-
-//! \param service Service to set
-void Agent::setService(Service *&service) {
-	this->service = service;
-}
-
-//! Add a Constraint to the Agent
-//! \param constraint Constraint to add
-void Agent::addConstraint(Constraint *constraint) {
-	constraints.push_back(constraint);
-}*/
-
 //! \return status status of the Agent
 Status Agent::getStatus() const {
 	return status;
@@ -188,7 +162,7 @@ float Agent::getWorkingHoursMonth() {
 //! \return nbFail number of fail (+1 everytime there is more than nbHoursWeek in 7 consecutive days)
 int Agent::checkWorkingHoursWeek(bool log){
 
-	int cptHours = 0;
+	float cptHours = 0;
 	int nbFail = 0;
 	for (int i = 0; i < 31; i++) {
 		cptHours = 0;
@@ -215,7 +189,7 @@ int Agent::checkWorkingHoursWeek(bool log){
 //! \param idA index(on the Model) of the Agent
 void Agent::checkWorkingHoursWeekFast(Valuation*val, int idService, int day, int idA){
 	auto v = std::vector<std::pair<int, int>>();
-	int cptHours = 0;
+	float cptHours = 0;
 	int nbFail = 0;
 	for (int i = day - 6; i < day + 7; i++) {
 		cptHours = 0;
@@ -279,7 +253,7 @@ void Agent::checkWorkingHoursWeekFast(Valuation*val, int idService, int day, int
 //! return v vector of intervals where this constraint is broken
 std::vector<std::pair<int, int>> Agent::checkWorkingHoursWeekValuation(){
 	auto v = std::vector<std::pair<int, int>>();
-	int cptHours = 0;
+	float cptHours = 0;
 	int nbFail = 0;
 	for (int i = 0; i < 31; i++) {
 		cptHours = 0;

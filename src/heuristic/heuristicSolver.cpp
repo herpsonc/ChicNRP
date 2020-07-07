@@ -34,7 +34,7 @@ Model heuristicSolver::greedy(const Model m) {
 
 			//On mélange la liste des agents
 			vector<Agent*> v = mr.getAgentFrom(s);
-			unsigned int seed = chrono::system_clock::now().time_since_epoch().count();
+			auto seed = chrono::system_clock::now().time_since_epoch().count();
 			shuffle(v.begin(),v.end(),default_random_engine(seed));
 
 			//On récupère les postes nécessaires pour le jour day (la variable)
@@ -454,8 +454,6 @@ Model heuristicSolver::getneighborRandom(Model* m, int range)
 		while ((mr.getAgentFrom(service)[agent1]->getCalendarLock()[day] == true) && i < nbIte) {
 			agent1 = rand() % mr.getAgentFrom(service).size();
 			i++;
-			/*if (i >= nbIte)
-				found = false;*/
 		}
 
 		//Choix d'un nouveau Post
@@ -497,25 +495,6 @@ Model heuristicSolver::iterative(const Model m, int nbPop, int nbGen, int range)
 			} else{
 				pop.push_back(getneighborRandom(&model, range));
 			}
-			/*int randN = rand() % 2;
-			
-			switch (randN)
-			{
-			case 0:
-				pop.push_back(getNeighborSwap(&model, range));
-				break;
-			default:
-				pop.push_back(getneighborRandom(&model, range));
-				break;
-			}
-
-			switch (randN) {
-			case 1:
-				pop.push_back(getNeighborSwap(&model, range));
-			case 2:
-				pop.push_back(getneighborRandom(&model, range));
-			}*/
-			
 		}
 
 		for (auto e : pop) {
@@ -570,7 +549,7 @@ Model heuristicSolver::iterative2Fast(const Model m, int nbIte, int range)
 		}
 		//cout << nextScore << " " << bestScore << " " <<currentScore <<endl;
 		if (nextScore > currentScore) {
-			//80% de chance de choisir le nouveau model
+			//90% de chance de choisir le nouveau model
 			int randI = rand() % 1000;
 			if (randI < 900 ) {
 				currentModel = nextModel;
@@ -578,7 +557,7 @@ Model heuristicSolver::iterative2Fast(const Model m, int nbIte, int range)
 			}
 		}
 		else {
-			//20% de chance de choisir le nouveau candidat même s'il est moins bon
+			//10% de chance de choisir le nouveau candidat même s'il est moins bon
 			int randI = rand() % 1000;
 			if (randI > 998) {
 				currentModel = nextModel;

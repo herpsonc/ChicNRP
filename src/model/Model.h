@@ -12,18 +12,13 @@
 #define SRC_MODEL_MODEL_H_
 
 #include <iostream>
-#include <vector>
 #include <set>
 #include <stdio.h>
 #include <fstream>
 #include <algorithm>
-// #include "Post.h"
 #include "Service.h"
-// #include "Agent.h"
-// #include "Valuation.h"
 #include "SwapLog.h"
 
-// #include "constraint/Constraint.h"
 #include "constraint/ConstraintDaysSeq.h"
 #include "constraint/ConstraintInvolved.h"
 #include "constraint/ConstraintSeqMinMax.h"

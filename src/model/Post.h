@@ -27,10 +27,6 @@ public:
 	float getTime() const;
 	void setTime(float time);
 
-	const vector<Constraint*>& getConstraints() const;
-	void setConstraints(const vector<Constraint*> &constraints);
-	void addConstraint(Constraint* constraint);
-
 	const vector<string>& getAttributs() const;
 	void setAttributs(const vector<string> &attributs);
 	void addAttribut(string attribut);
@@ -40,7 +36,6 @@ protected:
 	float time;
 
 	vector<string> attributs;
-	vector<Constraint*> constraints;
 };
 
 #endif /* MODEL_POST_H_ */
