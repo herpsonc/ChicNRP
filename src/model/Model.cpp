@@ -6,12 +6,12 @@
  */
 
 #include "Model.h"
-#include "../rapidXml/rapidxml_print.hpp"
+// #include "../rapidXml/rapidxml_print.hpp"
 
 using namespace std;
 using namespace rapidxml;
 
-Model::Model(Day firstDay, int nbDays, float overtime) {
+Model::Model(int firstDay, int nbDays, float overtime) {
 	this->firstDay=firstDay;
 	this->nbDays=nbDays;
 	this->overtime=overtime;
@@ -51,7 +51,8 @@ Model::~Model() {
 
 Model& Model::operator=(const Model& obj)
 {
-	if (this != NULL) {
+	// if (this != NULL) {
+	if(this) {
 		firstDay = obj.firstDay;
 		nbDays = obj.nbDays;
 		overtime = obj.overtime;
@@ -76,7 +77,7 @@ Model& Model::operator=(const Model& obj)
 			}
 		}
 	}
-	return Model(obj);
+	return *this;
 }
 
 
@@ -109,33 +110,34 @@ void Model::printPlanning() {
 		cout << "\t" << i+1 << " ";
 
 		switch (day) {
-		case Monday:
+		case 0:
 			cout << "M";
 			break;
-		case Tuesday:
+		case 1:
 			cout << "T";
 			break;
-		case Wednesday:
+		case 2:
 			cout << "W";
 			break;
-		case Thursday:
-			cout << "T";
+		case 3:
+			cout << "Th";
 			break;
-		case Friday:
+		case 4:
 			cout << "F";
 			break;
-		case Saturday:
-			cout << "S";
+		case 5:
+			cout << "Sat";
 			break;
-		case Sunday:
-			cout << "S";
+		case 6:
+			cout << "Su";
 			break;
 		default:
 			cout << "";
 			break;
 		}
 
-		day = getNextDay(day);
+		if (day >= 0)
+		day = (day + 1) % 7;
 	}
 	cout << endl;
 	for (auto s : agents)
@@ -163,12 +165,12 @@ void Model::printPlanning() {
 }
 
 //! \return firstDay first day of the month
-Day Model::getFirstDay() const {
+int Model::getFirstDay() const {
 	return firstDay;
 }
 
 //! \param firstday first day to set
-void Model::setFirstDay(Day firstDay) {
+void Model::setFirstDay(int firstDay) {
 	this->firstDay = firstDay;
 }
 
@@ -203,26 +205,26 @@ std::vector<Agent*> Model::getAgentFrom(Service* service) {
 //! Give the next day of the given day
 //! \param day 
 //! \return Next next day of the given day
-Day Model::getNextDay(Day day) {
+/*Day Model::getNextDay(Day day) {
 	switch (day) {
 	case Monday:
-		return Tuesday;
+		return Day::Tuesday;
 	case Tuesday:
-		return Wednesday;
+		return Day::Wednesday;
 	case Wednesday:
-		return Thursday;
+		return Day::Thursday;
 	case Thursday:
-		return Friday;
+		return Day::Friday;
 	case Friday:
-		return Saturday;
+		return Day::Saturday;
 	case Saturday:
-		return Sunday;
+		return Day::Sunday;
 	case Sunday:
-		return Monday;
+		return Day::Monday;
 	default:
-		return None;
+		return Day::None;
 	}
-}
+}*/
 
 //! \return defaultPost post affected by default
 Post* Model::getDefaultPost() {
@@ -241,7 +243,7 @@ std::vector<Post*>& Model::getPosts() {
 }
 
 void Model::addPost(Post* p) {
-	if(find(posts.begin(), posts.end(), p) == posts.end()) //p not already in posts
+	if(std::find(posts.begin(), posts.end(), p) == posts.end()) //p not already in posts
 		posts.push_back(p);
 }
 
@@ -281,7 +283,7 @@ vector<Constraint*> Model::createConstraints() {
 	v.push_back("day");
 	constraints.push_back(new ConstraintDaysSeq(v, 30)); // cJN
 
-	//Pas 3 jours/nuit de travail d'affilé
+	//Pas 3 jours/nuit de travail d'affilée
 	v = vector<string>();
 	v.push_back("workL");
 	v.push_back("workL");
@@ -301,7 +303,7 @@ vector<Constraint*> Model::createConstraints() {
 	auto v2 = vector<string>();
 	v2.push_back("rest");
 	v2.push_back("rest");
-	constraints.push_back(new ConstraintInvolved(v, v2, Day::None, 30)); // cnr
+	constraints.push_back(new ConstraintInvolved(v, v2, -1, 30)); // cnr
 
 	//Après 1 journée longue + 1 repos  -> +1 repos min
 	v = vector<string>();
@@ -309,20 +311,20 @@ vector<Constraint*> Model::createConstraints() {
 	v.push_back("rest");
 	v2 = vector<string>();
 	v2.push_back("rest");
-	constraints.push_back(new ConstraintInvolved(v, v2, Day::None, 20)); //cwl2r
+	constraints.push_back(new ConstraintInvolved(v, v2, -1, 20)); //cwl2r
 
-	//Evite les journée isolés
+	//Evite les journées isolées
 	v = vector<string>();
 	v.push_back("rest");
 	v.push_back("work");
 	v.push_back("rest");
 	constraints.push_back(new ConstraintDaysSeq(v, 10)); //cji
 
-	//1 week ends par mois
+	//1 week-end par mois
 	v = vector<string>();
 	v.push_back("work");
 	v.push_back("work");
-	constraints.push_back(new ConstraintSeqMinMax(Day::Saturday, MinMax::Min, 1, v, 1));
+	constraints.push_back(new ConstraintSeqMinMax(5, MinMax::Min, 1, v, 1));
 
 	return constraints;
 }
@@ -330,16 +332,16 @@ vector<Constraint*> Model::createConstraints() {
 //raccourci pour attribuer les contraintes à un service via createConstraints
 void Model::addBasicConstraintsTo(Service* s) {
 	vector<Constraint*> cs = this->createConstraints();
-	for each (auto cons in cs){
+	for (auto cons : cs){
 		s->addConstraint(cons);
 	}
 }
 
-Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService, int nbPostsPerService, int proba_1er_conge, int proba_suite_conge) {
-	/*
-	Si nbPostsPerService est indiqué, le nombre nbPosts ne sera pas respecté si nbPosts < nbPostsPerService*nbServices
-	de même pour nbAgentsPerService
-	*/
+/* Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService, int nbPostsPerService, int proba_1er_conge, int proba_suite_conge) {
+
+	//Si nbPostsPerService est indiqué, le nombre nbPosts ne sera pas respecté si nbPosts < nbPostsPerService*nbServices
+	//de même pour nbAgentsPerService
+
 
 	Model m = Model(firstDay, nbDays, overtime);
 	m.defaultPost = NULL;
@@ -497,7 +499,7 @@ Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int
 	}
 
 	return m;
-}
+} */
 
 //! 
 //a XML file from the Model
@@ -693,7 +695,7 @@ void Model::loadXML(string fileName){
 	//Model
 	xml_node<>* root = doc.first_node();
 
-	firstDay = (Day)atoi(root->first_attribute("firstDay")->value());
+	firstDay = atoi(root->first_attribute("firstDay")->value());
 	nbDays = atoi(root->first_attribute("nbDays")->value());
 	overtime = atof(root->first_attribute("overtime")->value());
 
@@ -719,7 +721,7 @@ void Model::loadXML(string fileName){
 			//On check si il existe déjà
 			auto search = mapPosts.find(postNode->first_attribute("id")->value());
 
-			//Si il n'y est pas, on la crée
+			//S'il n'y est pas, on le crée
 			if (search == mapPosts.end()) {
 				Post* post = new Post(postNode->first_attribute("id")->value(), atof(postNode->first_attribute("time")->value()));
 				//attributs
@@ -729,7 +731,7 @@ void Model::loadXML(string fileName){
 				service->addPost(post);
 				mapPosts.insert(pair<string, Post*>(post->getId(), post));
 			}
-			//Si il y est
+			//S'il y est
 			else {
 				service->addPost(mapPosts[postNode->first_attribute("id")->value()]);
 			}
@@ -764,7 +766,7 @@ void Model::loadXML(string fileName){
 			for (auto att = constraintInvolved->first_node("LastAttribut"); att; att = att->next_sibling("LastAttribut")) {
 				v2.push_back(att->first_attribute("Att")->value());
 			}
-			service->addConstraint(new ConstraintInvolved(v, v2, (Day)atoi(constraintInvolved->first_attribute("day")->value()), atoi(constraintInvolved->first_attribute("priority")->value())));
+			service->addConstraint(new ConstraintInvolved(v, v2, atoi(constraintInvolved->first_attribute("day")->value()), atoi(constraintInvolved->first_attribute("priority")->value())));
 		}
 
 		for (auto constraintSeqMinMax = serviceNode->first_node("ConstraintSeqMinMax"); constraintSeqMinMax; constraintSeqMinMax = constraintSeqMinMax->next_sibling("ConstraintSeqMinMax")) {
@@ -772,7 +774,7 @@ void Model::loadXML(string fileName){
 			for (auto att = constraintSeqMinMax->first_node("Attribut"); att; att = att->next_sibling("Attribut")) {
 				v.push_back(att->first_attribute("Att")->value());
 			}
-			service->addConstraint(new ConstraintSeqMinMax((Day)atoi(constraintSeqMinMax->first_attribute("day")->value()), (MinMax)atoi(constraintSeqMinMax->first_attribute("type")->value()),
+			service->addConstraint(new ConstraintSeqMinMax(atoi(constraintSeqMinMax->first_attribute("day")->value()), (MinMax)atoi(constraintSeqMinMax->first_attribute("type")->value()),
 				atoi(constraintSeqMinMax->first_attribute("number")->value()), v, atoi(constraintSeqMinMax->first_attribute("priority")->value())));
 		}
 
@@ -787,7 +789,7 @@ void Model::loadXML(string fileName){
 				if ((string)dayNode->first_attribute("id")->value() != "null") {
 					auto search = mapPosts.find(dayNode->first_attribute("id")->value());
 
-					//Si il n'y est pas, on la crée
+					//S'il n'y est pas, on le crée
 					if (search == mapPosts.end()) {
 						Post* post = new Post(dayNode->first_attribute("id")->value(), atof(dayNode->first_attribute("nbh")->value()));
 						//attributs
@@ -805,10 +807,10 @@ void Model::loadXML(string fileName){
 			//ImpossiblePosts
 			auto v = vector<Post*>();
 			for (auto impossiblePost = agentNode->first_node("ImpossiblePost"); impossiblePost; impossiblePost = impossiblePost->next_sibling("ImpossiblePost")) {
-				//On check si il existe déjà
+				//On check s'il existe déjà
 				auto search = mapPosts.find(impossiblePost->first_attribute("id")->value());
 
-				//Si il n'y est pas, on la crée
+				//S'il n'y est pas, on le crée
 				if (search == mapPosts.end()) {
 					Post* post = new Post(impossiblePost->first_attribute("id")->value(), atof(impossiblePost->first_attribute("nbh")->value()));
 					//attributs
@@ -873,33 +875,34 @@ void Model::generateXlsx(string fileName)
 		for (int i = 0; i < nbDays; i++) {
 			res << "<Cell ss:StyleID=\"Default\"><Data ss:Type=\"String\">";
 			switch (currentDay) {
-			case Monday:
+			case 0:
 				res << "M";
 				break;
-			case Tuesday:
+			case 1:
 				res << "T";
 				break;
-			case Wednesday:
+			case 2:
 				res << "W";
 				break;
-			case Thursday:
-				res << "T";
+			case 3:
+				res << "Th";
 				break;
-			case Friday:
+			case 4:
 				res << "F";
 				break;
-			case Saturday:
-				res << "S";
+			case 5:
+				res << "Sat";
 				break;
-			case Sunday:
-				res << "S";
+			case 6:
+				res << "Su";
 				break;
 			default:
 				res << "";
 				break;
 			}
 			res << "</Data></Cell>\n";
-			currentDay = getNextDay(currentDay);
+
+			currentDay = (currentDay + 1) % 7;
 		}
 		res << "</Row>\n";
 

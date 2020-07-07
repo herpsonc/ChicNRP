@@ -8,20 +8,19 @@
 #ifndef SRC_MODEL_CONSTRAINT_CONSTRAINTSEQMINMAX_H_
 #define SRC_MODEL_CONSTRAINT_CONSTRAINTSEQMINMAX_H_
 
-#include "../Model.h"
 #include "Constraint.h"
+#include "../Agent.h"
 
-class Model;
 
 enum MinMax {Min, Max};
 
-//Contrainte qui permet d'assurer la présence de la séquence (à partir d'un jour donné) un minimum ou maximum de fois
+//Contrainte qui permet d'assurer la prÃ©sence de la sÃ©quence (Ã  partir d'un jour donnÃ©) un minimum ou maximum de fois
 
 
 class ConstraintSeqMinMax: public Constraint {
 public:
-	ConstraintSeqMinMax(Day day, MinMax type, int number, std::vector<Post*> sequence, int priority);
-	ConstraintSeqMinMax(Day day, MinMax type, int number, std::vector<string> sequence, int priority);
+	ConstraintSeqMinMax(int day, MinMax type, int number, std::vector<Post*> sequence, int priority);
+	ConstraintSeqMinMax(int day, MinMax type, int number, std::vector<string> sequence, int priority);
 	virtual ~ConstraintSeqMinMax();
 
 	const std::vector<Post*>& getSequence() const;
@@ -30,8 +29,8 @@ public:
 	const std::vector<string>& getSequenceAtt() const;
 	void setSequenceAtt(const std::vector<string> &sequenceAtt);
 
-	Day getFirstDay() const;
-	void setFirstDay(Day firstDay);
+	int getFirstDay() const;
+	void setFirstDay(int firstDay);
 
 	int getNumber() const;
 	void setNumber(int number);
@@ -44,12 +43,12 @@ public:
 
 	string seqToPrint();
 
-	int check(const Agent* agent, bool checkALL, Day firstDayMonth, bool log);
-	std::vector<std::pair<int, int>> checkValuation(const Agent* agent, Day firstDayMonth);
-	void checkFast(Model* m, int iCons);
+	// int check(const Agent* agent, bool checkALL, int firstDayMonth, bool log);
+	int check(const Agent* agent, int firstDayMonth, bool log);
+	std::vector<std::pair<int, int>> checkValuation(const Agent* agent, int firstDayMonth);
 
 protected:
-	Day firstDay;
+	int firstDay;
 	MinMax type;
 	int number;
 	int priority;

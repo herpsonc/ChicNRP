@@ -1,7 +1,7 @@
-/*Classe permettant d'avoir toute les informations liées à une SCIP_VAR */
+/*Classe permettant d'avoir toute les informations liÃ©es Ã  une SCIP_VAR */
 
 #include "VariableData.h"
-#include <iostream>
+// #include <iostream>
 
 using namespace std;
 

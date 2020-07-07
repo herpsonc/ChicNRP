@@ -16,8 +16,8 @@ public:
 	const int& getScore();
 	void setScore(const int score);
 
-	const std::vector<std::vector<int>>& getHoursMonth();
-	void setHoursMonth(const std::vector<std::vector<int>> h);
+	const std::vector<std::vector<float>>& getHoursMonth();
+	void setHoursMonth(const std::vector<std::vector<float>> h);
 
 	const std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>>& getDaySeq();
 	void setDaySeq(const std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>> daySeq);
@@ -38,7 +38,7 @@ public:
 private:
 	int score;
 
-	std::vector<std::vector<int>> hoursMonth;
+	std::vector<std::vector<float>> hoursMonth;
 	std::vector<std::vector<std::array<int, 6>>> hoursWeeks;
 	std::vector<std::vector<std::vector<std::pair<int, int>>>> hoursWeekSlide;
 	std::vector<std::vector<std::vector<int>>> impossiblePosts;

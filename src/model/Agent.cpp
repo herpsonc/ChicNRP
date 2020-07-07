@@ -9,7 +9,7 @@
 
 Agent::Agent() {
 	id ="";
-	service = NULL;
+	// service = NULL;
 	nbHoursMonth = 0;
 	nbHoursWeek = 0;
 	status = Confirmed;
@@ -18,31 +18,31 @@ Agent::Agent() {
 Agent::Agent(string id, int nbHourMonth, int nbHoursWeek, Status status)
 {
 	this->id = id;
-	service = NULL;
+	// service = NULL;
 	this->nbHoursMonth = nbHourMonth;
 	this->nbHoursWeek = nbHoursWeek;
 	this->status = status;
 
-	for (int i = 0;i < calendar.size();i++)
+	for (int i = 0;i < (int)calendar.size();i++)
 		calendar[i] = NULL;
 
-	for (int i = 0;i < calendarLock.size();i++)
+	for (int i = 0;i < (int)calendarLock.size();i++)
 		calendarLock[i] = false;
 
-	for (int i = 0;i < lastMonthCalendar.size();i++)
+	for (int i = 0;i < (int)lastMonthCalendar.size();i++)
 		lastMonthCalendar[i] = NULL;
 }
 
 Agent::Agent(const Agent &obj){
 	this->id=obj.id;
-	this->service=obj.service;
+	// this->service=obj.service;
 	this->nbHoursMonth=obj.nbHoursMonth;
 	this->nbHoursWeek=obj.nbHoursWeek;
 	this->status=obj.status;
 	this->calendar=obj.calendar;
 	this->lastMonthCalendar = obj.lastMonthCalendar;
 	this->impossiblePosts=obj.impossiblePosts;
-	this->constraints=obj.constraints;
+	// this->constraints=obj.constraints;
 	this->calendarLock = obj.calendarLock;
 }
 
@@ -95,7 +95,7 @@ void Agent::setImpossiblePosts(const std::vector<Post*> &impossiblePosts) {
 }
 
 //! \return service service affected to the Agent
-Service*& Agent::getService() {
+/*Service*& Agent::getService() {
 	return service;
 }
 
@@ -118,7 +118,7 @@ void Agent::setService(Service *&service) {
 //! \param constraint Constraint to add
 void Agent::addConstraint(Constraint *constraint) {
 	constraints.push_back(constraint);
-}
+}*/
 
 //! \return status status of the Agent
 Status Agent::getStatus() const {
@@ -245,7 +245,7 @@ void Agent::checkWorkingHoursWeekFast(Valuation*val, int idService, int day, int
 					found = true;
 				}
 			}
-			//Si on le trouve pas, c'est qu'on a résolu la contrainte
+			//Si on ne la trouve pas, c'est qu'on a résolu la contrainte
 			if (!found) {
 				val->setScore(val->getScore() + 1);
 			}
@@ -299,7 +299,7 @@ std::vector<std::pair<int, int>> Agent::checkWorkingHoursWeekValuation(){
 }
 
 //! \param true to print log on the console
-//! \return nbFail +1 everytime an impossible Post is detected ine the calendar
+//! \return nbFail +1 everytime an impossible Post is detected in the calendar
 int Agent::checkImpossiblePosts(bool log){
 	int nbFail = 0;
 	int i = 0;
@@ -363,7 +363,7 @@ void Agent::checkImpossiblePostsFast(Valuation* val, int idService, int day, int
 //! \return vec vector of each day where this constraint is broken
 std::vector<int> Agent::checkImpossiblePostsValuation(){
 	auto vec = vector<int>();
-	int nbFail = 0;
+	// int nbFail = 0;
 	int i = 0;
 	for (auto p : calendar) {
 		for (auto ip : impossiblePosts) {

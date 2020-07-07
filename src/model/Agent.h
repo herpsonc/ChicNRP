@@ -1,15 +1,16 @@
 /*
  * Agent.h
  *
- *  Created on: 8 févr. 2020
+ *  Created on: 8 fï¿½vr. 2020
  *      Author: Valars
  */
 
 #include <string>
-#include "Service.h"
-#include "constraint/Constraint.h"
-#include "Model.h"
+// #include "Service.h"
+// #include "constraint/Constraint.h"
+// #include "Model.h"
 #include "Valuation.h"
+#include "Post.h"
 
 #ifndef MODEL_AGENT_H_
 #define MODEL_AGENT_H_
@@ -38,12 +39,12 @@ public:
 	const std::vector<Post*>& getImpossiblePosts() const;
 	void setImpossiblePosts(const std::vector<Post*> &impossiblePosts);
 
-	Service*& getService();
-	void setService( Service *&service);
+	// Service*& getService();
+	// void setService(Service *&service);
 
-	const std::vector<Constraint*>& getConstraints() const;
-	void setConstraints(const std::vector<Constraint*> &constraints);
-	void addConstraint(Constraint* constraint);
+	// const std::vector<Constraint*>& getConstraints() const;
+	// void setConstraints(const std::vector<Constraint*> &constraints);
+	// void addConstraint(Constraint* constraint);
 
 	Status getStatus() const;
 	void setStatus(Status status);
@@ -67,14 +68,15 @@ protected:
 	float nbHoursMonth;
 	float nbHoursWeek;
 
-	array<Post*, 31> calendar; //Liste où chaque élément = un jour (donc ordonné) avec le poste attribué
+	//Chaque Ã©lÃ©ment de calendar correspond Ã  un jour (donc ordonnÃ©) avec le poste attribuÃ©
+	array<Post*, 31> calendar; 
 	array<bool, 31> calendarLock;
-	array<Post*, 7> lastMonthCalendar; //Liste des 7 derniers postes avant le début du mois
-	std::vector<Post*> impossiblePosts; // Liste des potes qui ne sont pas attribuables à l'agent (C4)
+	array<Post*, 7> lastMonthCalendar; //Liste des 7 derniers postes du mois prÃ©cÃ©dent
+	std::vector<Post*> impossiblePosts; // Liste des postes qui ne sont pas attribuables Ã  l'agent (C4)
 
-	std::vector<Constraint*> constraints; //Not used
+	// std::vector<Constraint*> constraints; //Not used
 
-	Service* service; //service préféré/affecté // Not used
+	// Service* service; //service prï¿½fï¿½rï¿½/affectï¿½ // Not used
 
 };
 

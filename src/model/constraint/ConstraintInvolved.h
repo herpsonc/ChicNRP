@@ -1,7 +1,7 @@
 /*
  * ConstraintInvolved.h
  *
- *  Created on: 21 févr. 2020
+ *  Created on: 21 fï¿½vr. 2020
  *      Author: Valars
  */
 
@@ -9,17 +9,14 @@
 #define SRC_MODEL_CONSTRAINT_CONSTRAINTINVOLVED_H_
 
 #include "Constraint.h"
-#include "../Post.h"
-#include <vector>
 #include "../Agent.h"
-//Correspondant à la contrainte C6
+//Correspondant Ã  la contrainte C6
 
-class Model;
 
 class ConstraintInvolved: public Constraint {
 public:
 	ConstraintInvolved(std::vector<Post*> first, std::vector<Post*> last, int priority);
-	ConstraintInvolved(std::vector<string> first, std::vector<string> last, Day firstDay, int priority);
+	ConstraintInvolved(std::vector<string> first, std::vector<string> last, int firstDay, int priority);
 	virtual ~ConstraintInvolved();
 
 	const std::vector<Post*>& getFirstSeq() const;
@@ -35,17 +32,16 @@ public:
 	string getSeqToPrint();
 
 	int getPriority();
-	const Day getFirstDay();
+	int getFirstDay();
 
-	int check(const Agent* agent, Day day, bool checkALL, bool log);
-	std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> checkValuation(const Agent* agent, Day day);
-	void checkFast(Model* m, int iCons);
+	int check(const Agent* agent, int day, bool checkALL, bool log);
+	std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> checkValuation(const Agent* agent, int day);
 
 protected:
 	int priority;
-	Day firstDay;
-	std::vector<Post*> firstSeq; //Première partie de l'implication
-	std::vector<Post*> lastSeq; //Second partie de l'implication
+	int firstDay;
+	std::vector<Post*> firstSeq; //PremiÃ¨re partie de l'implication
+	std::vector<Post*> lastSeq; //Seconde partie de l'implication
 	std::vector<string> firstSeqAtt;
 	std::vector<string> lastSeqAtt;
 };

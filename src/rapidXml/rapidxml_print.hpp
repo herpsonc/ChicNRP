@@ -102,6 +102,15 @@ namespace rapidxml
         ///////////////////////////////////////////////////////////////////////////
         // Internal printing operations
     
+        template<class OutIt, class Ch> inline OutIt print_children(OutIt out, const xml_node<Ch> *node, int flags, int indent);
+        template<class OutIt, class Ch> inline OutIt print_element_node(OutIt out, const xml_node<Ch> *node, int flags, int indent);
+        template<class OutIt, class Ch> inline OutIt print_data_node(OutIt out, const xml_node<Ch> *node, int flags, int indent);
+        template<class OutIt, class Ch> inline OutIt print_cdata_node(OutIt out, const xml_node<Ch> *node, int flags, int indent);
+        template<class OutIt, class Ch> inline OutIt print_declaration_node(OutIt out, const xml_node<Ch> *node, int flags, int indent);
+        template<class OutIt, class Ch> inline OutIt print_comment_node(OutIt out, const xml_node<Ch> *node, int flags, int indent);
+        template<class OutIt, class Ch> inline OutIt print_doctype_node(OutIt out, const xml_node<Ch> *node, int flags, int indent);
+        template<class OutIt, class Ch> inline OutIt print_pi_node(OutIt out, const xml_node<Ch> *node, int flags, int indent);
+
         // Print node
         template<class OutIt, class Ch>
         inline OutIt print_node(OutIt out, const xml_node<Ch> *node, int flags, int indent)
@@ -175,7 +184,8 @@ namespace rapidxml
 
         // Print attributes of the node
         template<class OutIt, class Ch>
-        inline OutIt print_attributes(OutIt out, const xml_node<Ch> *node, int flags)
+        // inline OutIt print_attributes(OutIt out, const xml_node<Ch> *node, int flags)
+        inline OutIt print_attributes(OutIt out, const xml_node<Ch> *node)
         {
             for (xml_attribute<Ch> *attribute = node->first_attribute(); attribute; attribute = attribute->next_attribute())
             {
@@ -248,8 +258,9 @@ namespace rapidxml
                 out = fill_chars(out, indent, Ch('\t'));
             *out = Ch('<'), ++out;
             out = copy_chars(node->name(), node->name() + node->name_size(), out);
-            out = print_attributes(out, node, flags);
-            
+            // out = print_attributes(out, node, flags);
+            out = print_attributes(out, node);
+
             // If node is childless
             if (node->value_size() == 0 && !node->first_node())
             {
@@ -307,8 +318,9 @@ namespace rapidxml
             *out = Ch('l'), ++out;
 
             // Print attributes
-            out = print_attributes(out, node, flags);
-            
+            // out = print_attributes(out, node, flags);
+            out = print_attributes(out, node);
+
             // Print declaration end
             *out = Ch('?'), ++out;
             *out = Ch('>'), ++out;

@@ -1,7 +1,7 @@
 /*
  * ConstraintDaysSeq.h
  *
- *  Created on: 10 févr. 2020
+ *  Created on: 10 fï¿½vr. 2020
  *      Author: Valars
  */
 
@@ -9,12 +9,8 @@
 #define SRC_MODEL_CONSTRAINT_CONSTRAINTDAYSSEQ_H_
 
 #include "Constraint.h"
-#include "../Post.h"
-#include <vector>
 #include "../Agent.h"
-//Correspondant à la contrainte C2
-
-class Model;
+//Correspondant Ã  la contrainte C2
 
 class ConstraintDaysSeq: public Constraint {
 
@@ -35,8 +31,6 @@ public:
 	string getSeqToPrint();
 	int check(const Agent* agent, bool checkALL, bool log);
 	std::vector<std::pair<int, int>> checkValuation(const Agent* agent);
-
-	void checkFast(Model* m, int iCons);
 
 
 protected:
