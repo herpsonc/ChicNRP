@@ -866,6 +866,7 @@ void Model::generateXlsx(string fileName)
 		for (int i = 1; i <= nbDays; i++) {
 			res << "<Cell ss:StyleID=\"Default\"><Data ss:Type=\"Number\">" << i << "</Data></Cell>\n";
 		}
+		res << "<Cell ss:StyleID=\"Default\"><Data ss:Type=\"String\">" << "nbHours" << "</Data></Cell>\n";
 		res << "</Row>\n";
 
 		res << "<Row>\n";
@@ -922,6 +923,7 @@ void Model::generateXlsx(string fileName)
 
 				res << "</Data></Cell>\n";
 			}
+			res << "<Cell ss:StyleID = \"Default\"><Data ss:Type=\"Number\">" << agent->getWorkingHoursMonth() << "</Data></Cell>\n";
 			res << "</Row>\n";
 		}
 		res << "<Row>\n</Row>\n";
