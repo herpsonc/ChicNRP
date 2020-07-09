@@ -26,6 +26,7 @@
 #include "../rapidXml/rapidxml.hpp"
 #include "../rapidXml/rapidxml_utils.hpp"
 #include "../rapidXml/rapidxml_print.hpp"
+#include "Valuation.h"
 
 
 
@@ -36,6 +37,7 @@ public:
 	virtual ~Model();
 
 	Model& operator = (const Model& obj);
+
 
 	std::vector<Service*>& getServices();
 
@@ -48,7 +50,6 @@ public:
 
 	int getFirstDay() const;
 	void setFirstDay(int firstDay);
-	//static int getNextDay(int day);
 
 	int getNbDays() const;
 	void setNbDays(int nbDays);

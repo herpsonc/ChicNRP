@@ -8,6 +8,7 @@
 #include <map>
 #include <array>
 #include "Agent.h"
+#include "constraint/Constraint.h"
 
 
 using namespace std;

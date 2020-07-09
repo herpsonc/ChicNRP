@@ -201,31 +201,6 @@ std::vector<Agent*> Model::getAgentFrom(Service* service) {
 	return agents[service];
 }
 
-
-//! Give the next day of the given day
-//! \param day 
-//! \return Next next day of the given day
-/*Day Model::getNextDay(Day day) {
-	switch (day) {
-	case Monday:
-		return Day::Tuesday;
-	case Tuesday:
-		return Day::Wednesday;
-	case Wednesday:
-		return Day::Thursday;
-	case Thursday:
-		return Day::Friday;
-	case Friday:
-		return Day::Saturday;
-	case Saturday:
-		return Day::Sunday;
-	case Sunday:
-		return Day::Monday;
-	default:
-		return Day::None;
-	}
-}*/
-
 //! \return defaultPost post affected by default
 Post* Model::getDefaultPost() {
 	return defaultPost;
@@ -235,8 +210,6 @@ Post* Model::getDefaultPost() {
 void Model::setDefaultPost(Post* defaultPost) {
 	this->defaultPost = defaultPost;
 }
-
-
 
 std::vector<Post*>& Model::getPosts() {
 	return posts;

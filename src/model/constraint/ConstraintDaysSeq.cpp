@@ -20,7 +20,7 @@ ConstraintDaysSeq::~ConstraintDaysSeq() {
 
 //! \return priority priority of the constraint
 
-int ConstraintDaysSeq::getPriority()
+const int ConstraintDaysSeq::getPriority() const
 {
 	return priority;
 }

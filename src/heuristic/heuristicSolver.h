@@ -13,6 +13,7 @@
 #include <chrono>
 #include <random>
 #include <typeinfo>
+#include "../model/Valuation.h"
 
 class heuristicSolver {
 public:

@@ -14,7 +14,7 @@ class Constraint {
 
 public:
 
-	virtual int getPriority();
+	virtual const int getPriority() const;
 };
 
 #endif /* SRC_MODEL_CONSTRAINT_CONSTRAINT_H_ */

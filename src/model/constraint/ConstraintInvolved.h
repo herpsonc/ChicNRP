@@ -10,6 +10,7 @@
 
 #include "Constraint.h"
 #include "../Agent.h"
+#include <iostream>
 //Correspondant à la contrainte C6
 
 
@@ -25,7 +26,7 @@ public:
 
 	string getSeqToPrint();
 
-	int getPriority();
+	const int getPriority() const;
 	int getFirstDay();
 
 	int check(const Agent* agent, int day, bool log);

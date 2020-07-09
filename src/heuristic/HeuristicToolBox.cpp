@@ -2,6 +2,8 @@
 
 void HeuristicToolBox::checkFastDaySeq(Model* m, ConstraintDaysSeq* constraint, int iCons)
 {
+	auto valuation = m->getValuation()->getDaySeq();
+
 	for (auto swap : m->getSwapLog()) {
 		auto a = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent1()];
 		auto aIndice = swap.getAgent1();
@@ -47,46 +49,7 @@ void HeuristicToolBox::checkFastDaySeq(Model* m, ConstraintDaysSeq* constraint, 
 				}
 			}
 
-			//Update la valuation
-			auto valuation = m->getValuation()->getDaySeq()[swap.getService()][aIndice][iCons];
-			auto newVec = vector<pair<int, int>>();
-			for (auto value : valuation) {
-				//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
-				if (value.first >= swap.getDay() - (int)constraint->getSequenceAtt().size() && value.second <= swap.getDay() + (int)constraint->getSequenceAtt().size()) {
-					found = false;
-					for (auto e : v) {
-						if (value.first == e.first && value.second == e.second) {
-							newVec.push_back(value);
-							found = true;
-						}
-					}
-					//Si on le trouve pas, c'est qu'on a résolu la contrainte
-					if (!found) {
-						m->getValuation()->setScore(m->getValuation()->getScore() + constraint->getPriority());
-					}
-				}
-				else {
-					newVec.push_back(value);
-				}
-			}
-			//Ajout des nouveaux éléments
-			for (auto e : v) {
-				bool isIn = false;
-				for (auto value : valuation) {
-					if (value.first == e.first && value.second == e.second) {
-						isIn = true;
-					}
-				}
-
-				if (!isIn) {
-					newVec.push_back(e);
-					m->getValuation()->setScore(m->getValuation()->getScore() - constraint->getPriority());
-				}
-			}
-
-			auto vecToAdd = m->getValuation()->getDaySeq();
-			vecToAdd[swap.getService()][aIndice][iCons] = newVec;
-			m->getValuation()->setDaySeq(vecToAdd);
+			m->getValuation()->mergeDaySeq(v, swap.getDay(), swap.getService(), aIndice, constraint, iCons);
 
 			a = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent2()];
 			aIndice = swap.getAgent2();

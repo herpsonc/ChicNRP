@@ -908,18 +908,43 @@ int main() {
 	//modèle avec les (pré)données de Mars 2020 du CHIC
 	Model m = generateGhr();
 	
-	m = addServiceSDC(m);
-	m = addServiceSDN(m);
-	m = addServicePool(m);
-	m = addServiceCS(m);
+	//m = addServiceSDC(m);
+	//m = addServiceSDN(m);
+	//m = addServicePool(m);
+	//m = addServiceCS(m);
 	m.printPlanning();
+
+	auto m3 = heuristicSolver::greedy(m);
+	m3.setValuation(heuristicSolver::checkValuation(&m3));
+	m3 = heuristicSolver::getNeighborSwap(&m3,3);
+
+	Constraint* cons;
+	for (auto c : m3.getServices()[0]->getConstraints()) {
+		if (typeid(*c) == typeid(ConstraintDaysSeq)) {
+			cons = c;
+			break;
+		}
+	}
+
+	auto chronoStart = chrono::system_clock::now();
+	for (int i = 0; i < 1000; i++) {
+		for (auto a : m3.getAgentFrom(m3.getServices()[0]))
+			((ConstraintDaysSeq*)cons)->check(a, false);
+	}
+	cout << (chrono::system_clock::now() - chronoStart).count() << endl;
+
+	chronoStart = chrono::system_clock::now();
+	for (int i = 0; i < 1000; i++) {
+		HeuristicToolBox::checkFastDaySeq(&m3, (ConstraintDaysSeq*)cons, 0);
+	}
+	cout << (chrono::system_clock::now() - chronoStart).count() << endl;
 
 	/*Model m2 = Model::generateModelInstance(2, 30, 25, 6, 15, 70, 60.0, 155);
 	m2.printPlanning();
 	m2.generateXlsx("service_g6_PL.xlsx");
 	m2 = LPSolver::linearProgram(m2);*/
 
-	auto m3 = heuristicSolver::iterative2(m, 5000000, 5, 14400);
+	//auto m3 = heuristicSolver::iterative2(m, 5000000, 5, 14400);
 	//m3.printPlanning();
 	//heuristicSolver::check(&m3, false, true);
 	//m2.generateXlsx("service_g6_PL_res.xlsx");

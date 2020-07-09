@@ -10,7 +10,7 @@
 
 #include "Constraint.h"
 #include "../Agent.h"
-
+#include <iostream>
 
 enum MinMax {Min, Max};
 
@@ -34,7 +34,7 @@ public:
 	MinMax getType() const;
 	void setType(MinMax type);
 
-	int getPriority();
+	const int getPriority() const;
 	void setPriority(int priority);
 
 	string seqToPrint();

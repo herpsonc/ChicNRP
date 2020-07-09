@@ -206,13 +206,13 @@ void heuristicSolver::checkFast(Model* m){
 
 
 		//Check heure semaine
-		agent1->checkWorkingHoursWeekFast(m->getValuation(), swap.getService(), swap.getDay(), swap.getAgent1());
-		agent2->checkWorkingHoursWeekFast(m->getValuation(), swap.getService(), swap.getDay(), swap.getAgent2());
+		//agent1->checkWorkingHoursWeekFast(m->getValuation(), swap.getService(), swap.getDay(), swap.getAgent1());
+		//agent2->checkWorkingHoursWeekFast(m->getValuation(), swap.getService(), swap.getDay(), swap.getAgent2());
 
 
 		//Check Posts impossibles
-		agent1->checkImpossiblePostsFast(m->getValuation(), swap.getService(), swap.getDay(), swap.getAgent1());
-		agent2->checkImpossiblePostsFast(m->getValuation(), swap.getService(), swap.getDay(), swap.getAgent2());
+		//agent1->checkImpossiblePostsFast(m->getValuation(), swap.getService(), swap.getDay(), swap.getAgent1());
+		//agent2->checkImpossiblePostsFast(m->getValuation(), swap.getService(), swap.getDay(), swap.getAgent2());
 
 	}
 	

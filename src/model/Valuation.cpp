@@ -122,6 +122,45 @@ void Valuation::setSeqMinMax(const std::vector<std::vector<std::vector<std::vect
 	this->seqMinMax = seqMinMax;
 }
 
+void Valuation::mergeDaySeq(const std::vector<std::pair<int, int>> cons, const int day, const int service, const int agent, const ConstraintDaysSeq* constraint,const int iCons)
+{
+	bool found = false;
+	//Update la valuation
+	for (auto value : daySeq[service][agent][iCons]) {
+		int i = 0;
+		//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
+		if (value.first >= day - (int)constraint->getSequenceAtt().size() && value.second <= day + (int)constraint->getSequenceAtt().size()) {
+			found = false;
+			for (auto e : cons) {
+				if (value.first == e.first && value.second == e.second) {
+					found = true;
+				}
+			}
+			//Si on le trouve pas, c'est qu'on a résolu la contrainte
+			if (!found) {
+				daySeq[service][agent][iCons].erase(daySeq[service][agent][iCons].begin() + i);
+				score += constraint->getPriority();
+			}
+		}
+
+		i++;
+	}
+	//Ajout des nouveaux éléments
+	for (auto e : cons) {
+		bool isIn = false;
+		for (auto value : daySeq[service][agent][iCons]) {
+			if (value.first == e.first && value.second == e.second) {
+				isIn = true;
+			}
+		}
+
+		if (!isIn) {
+			daySeq[service][agent][iCons].push_back(e);
+			score -= constraint->getPriority();
+		}
+	}
+}
+
 //! Print all the informations about each constraints in the Valuation
 void Valuation::print()
 {

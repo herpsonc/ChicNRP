@@ -6,6 +6,9 @@
  */
 
 #include "Agent.h"
+#include <iostream>
+
+using namespace std;
 
 Agent::Agent() {
 	id ="";
@@ -187,7 +190,7 @@ int Agent::checkWorkingHoursWeek(bool log){
 //! \param idService index(on the Model) of the Service
 //! \param day this func only check around this day
 //! \param idA index(on the Model) of the Agent
-void Agent::checkWorkingHoursWeekFast(Valuation*val, int idService, int day, int idA){
+/*void Agent::checkWorkingHoursWeekFast(Valuation*val, int idService, int day, int idA){
 	auto v = std::vector<std::pair<int, int>>();
 	float cptHours = 0;
 	int nbFail = 0;
@@ -247,7 +250,7 @@ void Agent::checkWorkingHoursWeekFast(Valuation*val, int idService, int day, int
 	vecToAdd[idService][idA] = newVec;
 	val->sethoursWeekSlide(vecToAdd);
 
-}
+}*/
 
 //! Used to build the valuation of the Model from 0
 //! return v vector of intervals where this constraint is broken
@@ -298,7 +301,7 @@ int Agent::checkImpossiblePosts(bool log){
 //! \param idService index(on the Model) of the Service
 //! \param day day to check
 //! \param idA index(on the Model) of the Agent
-void Agent::checkImpossiblePostsFast(Valuation* val, int idService, int day, int idA){
+/*void Agent::checkImpossiblePostsFast(Valuation* val, int idService, int day, int idA){
 	
 	bool fail = false;
 	for (auto ip : impossiblePosts) {
@@ -331,7 +334,7 @@ void Agent::checkImpossiblePostsFast(Valuation* val, int idService, int day, int
 	auto vec = val->getImpossiblePosts();
 	vec[idService][idA] = newVec;
 	val->setImpossiblePosts(vec);
-}
+}*/
 
 //! Used to build the valuation of the Model from 0
 //! \return vec vector of each day where this constraint is broken

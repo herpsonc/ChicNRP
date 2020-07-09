@@ -2,6 +2,7 @@
 #include <array>
 #include <vector>
 #include <iostream>
+#include "constraint/ConstraintDaysSeq.h"
 
 class Valuation
 {
@@ -33,6 +34,8 @@ public:
 
 	const std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>>& getseqMinMax();
 	void setSeqMinMax(const std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>> seqMinMax);
+
+	void mergeDaySeq(const std::vector<std::pair<int, int>> cons, const int day, const int service, const int agent, const ConstraintDaysSeq* constraint, const int iCons);
 
 	void print();
 private:
