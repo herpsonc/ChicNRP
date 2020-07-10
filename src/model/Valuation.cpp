@@ -125,9 +125,9 @@ void Valuation::setSeqMinMax(const std::vector<std::vector<std::vector<std::vect
 void Valuation::mergeDaySeq(const std::vector<std::pair<int, int>> cons, const int day, const int service, const int agent, const ConstraintDaysSeq* constraint,const int iCons)
 {
 	bool found = false;
+	int i = 0;
 	//Update la valuation
 	for (auto value : daySeq[service][agent][iCons]) {
-		int i = 0;
 		//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
 		if (value.first >= day - (int)constraint->getSequenceAtt().size() && value.second <= day + (int)constraint->getSequenceAtt().size()) {
 			found = false;
@@ -158,6 +158,104 @@ void Valuation::mergeDaySeq(const std::vector<std::pair<int, int>> cons, const i
 			daySeq[service][agent][iCons].push_back(e);
 			score -= constraint->getPriority();
 		}
+	}
+}
+
+void Valuation::mergeInvolved(const std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> cons, const int day, const int service, const int agent, const ConstraintInvolved* constraint, const int iCons)
+{
+	bool found;
+	//Update la valuation
+	int i = 0;
+	for (auto value : involved[service][agent][iCons]) {
+		//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
+		if (value.first.first >= day - (int)constraint->getFirstSeqAtt().size() - (int)constraint->getLastSeqAtt().size() + 1 && value.second.second <= day + (int)constraint->getFirstSeqAtt().size() + (int)constraint->getLastSeqAtt().size() - 1) {
+			found = false;
+			for (auto e : cons) {
+				if (value.first.first == e.first.first && value.second.second == e.second.second &&
+					value.first.second == e.first.second && value.second.first == e.second.first) {
+					found = true;
+				}
+			}
+			//Si on ne la trouve pas, c'est qu'on a résolu la contrainte
+			if (!found) {
+				involved[service][agent][iCons].erase(involved[service][agent][iCons].begin() + i);
+				score += constraint->getPriority();
+			}
+		}
+		i++;
+	}
+	//Ajout des nouveaux éléments
+	for (auto e : cons) {
+		bool isIn = false;
+		for (auto value : involved[service][agent][iCons]) {
+			if (value.first.first == e.first.first && value.second.second == e.second.second &&
+				value.first.second == e.first.second && value.second.first == e.second.first) {
+				isIn = true;
+			}
+		}
+
+		if (!isIn) {
+			involved[service][agent][iCons].push_back(e);
+			score -= constraint->getPriority();
+		}
+	}
+}
+
+void Valuation::mergeSeqMinMax(const std::vector<std::pair<int, int>> cons, const int day, const int service, const int agent, const ConstraintSeqMinMax* constraint, const int iCons)
+{
+	bool found;
+	int nbSeq = seqMinMax[service][agent][iCons].size();
+	//Update la valuation
+	int i = 0;
+	for (auto value : seqMinMax[service][agent][iCons]) {
+		//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
+		if (value.first >= day - (int)constraint->getSequenceAtt().size() && value.second <= day + (int)constraint->getSequenceAtt().size()) {
+			found = false;
+			for (auto e : cons) {
+				if (value.first == e.first && value.second == e.second) {
+					found = true;
+				}
+			}
+			if (!found) {
+				seqMinMax[service][agent][iCons].erase(seqMinMax[service][agent][iCons].begin() + i);
+			}
+		}
+		i++;
+	}
+	//Ajout des nouveaux éléments
+	for (auto e : cons) {
+		bool isIn = false;
+		for (auto value : seqMinMax[service][agent][iCons]) {
+			if (value.first == e.first && value.second == e.second) {
+				isIn = true;
+			}
+		}
+
+		if (!isIn) {
+			seqMinMax[service][agent][iCons].push_back(e);
+		}
+	}
+
+	//Ajuste le score
+	if (constraint->getType() == Min) {
+
+		int scoreA = 0;
+		int scoreB = 0;
+		if (nbSeq < constraint->getNumber())
+			scoreA -= (constraint->getNumber() - nbSeq) * constraint->getPriority();
+		if ((int)seqMinMax[service][agent][iCons].size() < constraint->getNumber())
+			scoreB -= (constraint->getNumber() - seqMinMax[service][agent][iCons].size()) * constraint->getPriority();
+		if (scoreA - scoreB != 0)
+			score -= (scoreA - scoreB);
+	}
+	else {
+		int scoreA = 0;
+		int scoreB = 0;
+		if (nbSeq > constraint->getNumber())
+			scoreA -= (nbSeq - constraint->getNumber()) * constraint->getPriority();
+		if ((int)seqMinMax[service][agent][iCons].size() > constraint->getNumber())
+			scoreB -= (seqMinMax[service][agent][iCons].size() - constraint->getNumber()) * constraint->getPriority();
+		score -= (scoreA - scoreB);
 	}
 }
 

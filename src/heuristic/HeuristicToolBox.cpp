@@ -60,11 +60,8 @@ void HeuristicToolBox::checkFastDaySeq(Model* m, ConstraintDaysSeq* constraint, 
 
 void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constraint, int iCons)
 {
-	// bool seqDetected = false;
 	bool seqDetected;
 	bool found = false;
-	// bool isValide = true;
-	// int i = 0;
 	int indiceFirst = 0;
 
 	for (auto swap : m->getSwapLog()) {
@@ -75,7 +72,6 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 			int indice = 0;
 			found = false;
 			bool first = false;
-			// bool seqDetected = false;
 			seqDetected = false;
 			auto v = vector<pair<pair<int, int>, pair<int, int>>>();
 			int day = m->getFirstDay();
@@ -149,48 +145,7 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 				}
 			}
 
-			//Update la valuation
-			auto valuation = m->getValuation()->getInvolved()[swap.getService()][aIndice][iCons];
-			auto newVec = vector<pair<pair<int, int>, pair<int, int>>>();
-			for (auto value : valuation) {
-				//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
-				if (value.first.first >= swap.getDay() - (int)constraint->getFirstSeqAtt().size() - (int)constraint->getLastSeqAtt().size() + 1 && value.second.second <= swap.getDay() + (int)constraint->getFirstSeqAtt().size() + (int)constraint->getLastSeqAtt().size() - 1) {
-					found = false;
-					for (auto e : v) {
-						if (value.first.first == e.first.first && value.second.second == e.second.second &&
-							value.first.second == e.first.second && value.second.first == e.second.first) {
-							newVec.push_back(value);
-							found = true;
-						}
-					}
-					//Si on ne la trouve pas, c'est qu'on a résolu la contrainte
-					if (!found) {
-						m->getValuation()->setScore(m->getValuation()->getScore() + constraint->getPriority());
-					}
-				}
-				else {
-					newVec.push_back(value);
-				}
-			}
-			//Ajout des nouveaux éléments
-			for (auto e : v) {
-				bool isIn = false;
-				for (auto value : valuation) {
-					if (value.first.first == e.first.first && value.second.second == e.second.second &&
-						value.first.second == e.first.second && value.second.first == e.second.first) {
-						isIn = true;
-					}
-				}
-
-				if (!isIn) {
-					newVec.push_back(e);
-					m->getValuation()->setScore(m->getValuation()->getScore() - constraint->getPriority());
-				}
-			}
-
-			auto vecToAdd = m->getValuation()->getInvolved();
-			vecToAdd[swap.getService()][aIndice][iCons] = newVec;
-			m->getValuation()->setInvolved(vecToAdd);
+			m->getValuation()->mergeInvolved(v, swap.getDay(), swap.getService(), aIndice, constraint, iCons);
 
 			a = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent2()];
 			aIndice = swap.getAgent2();
@@ -211,9 +166,6 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 
 
 		for (int j = 0; j < 2; j++) {
-
-			//on récupère le nb de seq detectées auparavant (pour le score)
-			int nbSeq = m->getValuation()->getseqMinMax()[swap.getService()][aIndice][iCons].size();
 
 			unsigned int cptCheck = 0;
 			unsigned int indice = 0;
@@ -258,65 +210,7 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 				}
 			}
 
-			//Update la valuation
-			auto valuation = m->getValuation()->getseqMinMax()[swap.getService()][aIndice][iCons];
-			auto newVec = vector<pair<int, int>>();
-			for (auto value : valuation) {
-				//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
-				if (value.first >= swap.getDay() - (int)constraint->getSequenceAtt().size() && value.second <= swap.getDay() + (int)constraint->getSequenceAtt().size()) {
-					found = false;
-					for (auto e : v) {
-						if (value.first == e.first && value.second == e.second) {
-							newVec.push_back(value);
-							found = true;
-						}
-					}
-					// if (!found)
-						//cout << "removed" << endl;
-				}
-				else {
-					newVec.push_back(value);
-				}
-			}
-			//Ajout des nouveaux éléments
-			for (auto e : v) {
-				bool isIn = false;
-				for (auto value : valuation) {
-					if (value.first == e.first && value.second == e.second) {
-						isIn = true;
-					}
-				}
-
-				if (!isIn) {
-					newVec.push_back(e);
-				}
-			}
-
-			auto vecToAdd = m->getValuation()->getseqMinMax();
-			vecToAdd[swap.getService()][aIndice][iCons] = newVec;
-			m->getValuation()->setSeqMinMax(vecToAdd);
-
-			//Ajuste le score
-			if (constraint->getType() == Min) {
-
-				int scoreA = 0;
-				int scoreB = 0;
-				if (nbSeq < constraint->getNumber())
-					scoreA -= (constraint->getNumber() - nbSeq) * constraint->getPriority();
-				if ((int)newVec.size() < constraint->getNumber())
-					scoreB -= (constraint->getNumber() - newVec.size()) * constraint->getPriority();
-				if (scoreA - scoreB != 0)
-					m->getValuation()->setScore(m->getValuation()->getScore() - (scoreA - scoreB));
-			}
-			else {
-				int scoreA = 0;
-				int scoreB = 0;
-				if (nbSeq > constraint->getNumber())
-					scoreA -= (nbSeq - constraint->getNumber()) * constraint->getPriority();
-				if ((int)newVec.size() > constraint->getNumber())
-					scoreB -= (newVec.size() - constraint->getNumber()) * constraint->getPriority();
-				m->getValuation()->setScore(m->getValuation()->getScore() - (scoreA - scoreB));
-			}
+			m->getValuation()->mergeSeqMinMax(v, swap.getDay(), swap.getService(), aIndice, constraint, iCons);
 
 			a = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent2()];
 			aIndice = swap.getAgent2();
