@@ -165,7 +165,6 @@ int heuristicSolver::check(Model* m, bool log) {
 }
 
 void heuristicSolver::checkFast(Model* m){
-
 	auto value = m->getValuation();
 	
 	for (auto swap : m->getSwapLog()) {
@@ -204,15 +203,13 @@ void heuristicSolver::checkFast(Model* m){
 
 		value->setHoursMonth(hoursMonth);
 
-
 		//Check heure semaine
-		//agent1->checkWorkingHoursWeekFast(m->getValuation(), swap.getService(), swap.getDay(), swap.getAgent1());
-		//agent2->checkWorkingHoursWeekFast(m->getValuation(), swap.getService(), swap.getDay(), swap.getAgent2());
-
+		HeuristicToolBox::checkWorkingHoursWeekFast(m, agent1, swap.getService(),swap.getDay(),swap.getAgent1());
+		HeuristicToolBox::checkWorkingHoursWeekFast(m, agent2, swap.getService(), swap.getDay(), swap.getAgent2());
 
 		//Check Posts impossibles
-		//agent1->checkImpossiblePostsFast(m->getValuation(), swap.getService(), swap.getDay(), swap.getAgent1());
-		//agent2->checkImpossiblePostsFast(m->getValuation(), swap.getService(), swap.getDay(), swap.getAgent2());
+		HeuristicToolBox::checkImpossiblePostsFast(m, agent1, swap.getService(), swap.getDay(), swap.getAgent1());
+		HeuristicToolBox::checkImpossiblePostsFast(m, agent2, swap.getService(), swap.getDay(), swap.getAgent2());
 
 	}
 	

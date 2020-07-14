@@ -46,10 +46,8 @@ public:
 	float getWorkingHoursMonth();
 
 	int checkWorkingHoursWeek(bool log);
-	//void checkWorkingHoursWeekFast(Valuation* val, int idService, int day, int idA);
 	std::vector<std::pair<int, int>> checkWorkingHoursWeekValuation();
 	int checkImpossiblePosts(bool log);
-	//void checkImpossiblePostsFast(Valuation* val, int idService, int day, int idA);
 	std::vector<int> checkImpossiblePostsValuation();
 
 protected:

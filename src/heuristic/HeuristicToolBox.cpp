@@ -219,6 +219,40 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 	}
 }
 
+void HeuristicToolBox::checkWorkingHoursWeekFast(Model* m, Agent* agent, int idService, int day, int idA)
+{
+	auto v = std::vector<std::pair<int, int>>();
+	float cptHours = 0;
+	int nbFail = 0;
+	for (int i = day - 6; i < day + 7; i++) {
+		cptHours = 0;
+
+		for (int j = 0; j < 7; j++) {
+			if (i + j >= 0 && i + j < 31 && agent->getCalendar()[i + j] != NULL) {
+				cptHours += agent->getCalendar()[i + j]->getTime();
+			}
+		}
+		if (cptHours > agent->getNbHoursWeek()) {
+			nbFail++;
+			v.push_back(std::pair<int, int>(i, i + 6));
+		}
+	}
+
+	m->getValuation()->mergeHoursWeekSlide(v, day, idService, idA);
+}
+
+void HeuristicToolBox::checkImpossiblePostsFast(Model* m, Agent* agent, int idService, int day, int idA)
+{
+	bool fail = false;
+	for (auto ip : agent->getImpossiblePosts()) {
+		if (agent->getCalendar()[day] == ip) {
+			fail = true;
+		}
+	}
+
+	m->getValuation()->mergeImpossiblePosts(fail, day, idService, idA);
+}
+
 int HeuristicToolBox::getNextDay(int day)
 {
 	if (day < 0)

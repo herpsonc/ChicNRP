@@ -139,6 +139,7 @@ void Valuation::mergeDaySeq(const std::vector<std::pair<int, int>> cons, const i
 			//Si on le trouve pas, c'est qu'on a résolu la contrainte
 			if (!found) {
 				daySeq[service][agent][iCons].erase(daySeq[service][agent][iCons].begin() + i);
+				i--;
 				score += constraint->getPriority();
 			}
 		}
@@ -179,6 +180,7 @@ void Valuation::mergeInvolved(const std::vector<std::pair<std::pair<int, int>, s
 			//Si on ne la trouve pas, c'est qu'on a résolu la contrainte
 			if (!found) {
 				involved[service][agent][iCons].erase(involved[service][agent][iCons].begin() + i);
+				i--;
 				score += constraint->getPriority();
 			}
 		}
@@ -218,6 +220,7 @@ void Valuation::mergeSeqMinMax(const std::vector<std::pair<int, int>> cons, cons
 			}
 			if (!found) {
 				seqMinMax[service][agent][iCons].erase(seqMinMax[service][agent][iCons].begin() + i);
+				i--;
 			}
 		}
 		i++;
@@ -257,6 +260,68 @@ void Valuation::mergeSeqMinMax(const std::vector<std::pair<int, int>> cons, cons
 			scoreB -= (seqMinMax[service][agent][iCons].size() - constraint->getNumber()) * constraint->getPriority();
 		score -= (scoreA - scoreB);
 	}
+}
+
+void Valuation::mergeHoursWeekSlide(const std::vector<std::pair<int, int>> cons, const int day, const int service, const int agent)
+{
+	//Update la valuation
+	bool found = false;
+	int i = 0;
+	for (auto value : hoursWeekSlide[service][agent]) {
+		//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
+		if (value.first >= day - 6 && value.second <= day + 7) {
+			found = false;
+			for (auto e : cons) {
+				if (value.first == e.first && value.second == e.second) {
+					found = true;
+				}
+			}
+			//Si on ne la trouve pas, c'est qu'on a résolu la contrainte
+			if (!found) {
+				hoursWeekSlide[service][agent].erase(hoursWeekSlide[service][agent].begin() + i);
+				i--;
+				score += 1;
+			}
+		}
+		i++;
+	}
+	//Ajout des nouveaux éléments
+	for (auto e : cons) {
+		bool isIn = false;
+		for (auto value : hoursWeekSlide[service][agent]) {
+			if (value.first == e.first && value.second == e.second) {
+				isIn = true;
+			}
+		}
+
+		if (!isIn) {
+			hoursWeekSlide[service][agent].push_back(e);
+			score -= 1;
+		}
+	}
+}
+
+void Valuation::mergeImpossiblePosts(const bool fail, const int day, const int service, const int agent)
+{
+	bool found = false;
+	int i = 0;
+	for (auto e : impossiblePosts[service][agent]) {
+		if (e == day) {
+			found = true;
+			if (!fail) {
+				impossiblePosts[service][agent].erase(impossiblePosts[service][agent].begin() + i);
+				i--;
+				score += 10;
+				break;
+			}
+		}
+		i++;
+	}
+	if (!found && fail) {
+		impossiblePosts[service][agent].push_back(day);
+		score -= 10;
+	}
+
 }
 
 //! Print all the informations about each constraints in the Valuation

@@ -43,6 +43,9 @@ public:
 		const int service, const int agent, const ConstraintInvolved * constraint, const int iCons);
 	void mergeSeqMinMax(const std::vector<std::pair<int, int>> cons, const int day,
 		const int service, const int agent, const ConstraintSeqMinMax* constraint, const int iCons);
+	void mergeHoursWeekSlide(const std::vector<std::pair<int, int>> cons, const int day,
+		const int service, const int agent);
+	void mergeImpossiblePosts(const bool fail, const int day, const int service, const int agent);
 
 	void print();
 private:
