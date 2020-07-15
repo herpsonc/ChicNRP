@@ -104,7 +104,7 @@ void Model::addService(Service* service ) {
 void Model::printPlanning() {
 
 	auto day = firstDay;
-	cout << "Jours:\t";
+	cout << "Jours:";
 
 	for(int i=0;i<nbDays;i++){
 		cout << "\t" << i+1 << " ";
@@ -157,7 +157,7 @@ void Model::printPlanning() {
 				}
 				else
 					cout << "null";
-				cout << "  ";
+				cout << "\t";
 			}
 			cout << endl;
 		}

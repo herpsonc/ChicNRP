@@ -915,23 +915,26 @@ int main() {
 	m.printPlanning();
 
 
-	//auto m2 = heuristicSolver::iterative2Fast(m, 10000, 3);
+	auto m2 = heuristicSolver::iterative2Fast(m, 50000, 3);
+	m2.printPlanning();
+	m2.getValuation()->print();
+	//auto m3 = heuristicSolver::iterative2(m, 10000, 3, 3000);
 
-	auto m3 = heuristicSolver::greedy(m);
+	/*auto m3 = heuristicSolver::greedy(m);
 	m3.setValuation(heuristicSolver::checkValuation(&m3));
 	m3 = heuristicSolver::getNeighborSwap(&m3,3);
 
 	auto chronoStart = chrono::system_clock::now();
-	for (int i = 0; i < 1000; i++) {
+	for (int i = 0; i < 10000; i++) {
 		heuristicSolver::check(&m3, false);
 	}
 	cout << (chrono::system_clock::now() - chronoStart).count() << endl;
 
 	chronoStart = chrono::system_clock::now();
-	for (int i = 0; i < 1000; i++) {
+	for (int i = 0; i < 10000; i++) {
 		heuristicSolver::checkFast(&m3);
 	}
-	cout << (chrono::system_clock::now() - chronoStart).count() << endl;
+	cout << (chrono::system_clock::now() - chronoStart).count() << endl;*/
 
 	/*Model m2 = Model::generateModelInstance(2, 30, 25, 6, 15, 70, 60.0, 155);
 	m2.printPlanning();

@@ -174,34 +174,9 @@ void heuristicSolver::checkFast(Model* m){
 		
 		//Check heure au mois
 		float dif = agent1->getCalendar()[swap.getDay()]->getTime() - agent2->getCalendar()[swap.getDay()]->getTime();
-		auto hoursMonth = value->getHoursMonth();
 
-		/*if (hoursMonth[swap.getService()][swap.getAgent1()] > agent1->getNbHoursMonth() &&
-			hoursMonth[swap.getService()][swap.getAgent1()] + dif <= agent1->getNbHoursMonth()) {
-
-			value->setScore(value->getScore() + 100);
-		}
-		else if (hoursMonth[swap.getService()][swap.getAgent1()] <= agent1->getNbHoursMonth() &&
-			hoursMonth[swap.getService()][swap.getAgent1()] + dif > agent1->getNbHoursMonth()){
-
-			value->setScore(value->getScore() - 100);
-		}
-
-		if (hoursMonth[swap.getService()][swap.getAgent2()] > agent2->getNbHoursMonth() &&
-			hoursMonth[swap.getService()][swap.getAgent2()] - dif <= agent2->getNbHoursMonth()) {
-
-			value->setScore(value->getScore() + 100);
-		}
-		else if (hoursMonth[swap.getService()][swap.getAgent2()] <= agent2->getNbHoursMonth() &&
-			hoursMonth[swap.getService()][swap.getAgent2()] - dif > agent2->getNbHoursMonth()) {
-
-			value->setScore(value->getScore() - 100);
-		}*/
-
-		hoursMonth[swap.getService()][swap.getAgent1()] += dif;
-		hoursMonth[swap.getService()][swap.getAgent2()] -= dif;
-
-		value->setHoursMonth(hoursMonth);
+		value->mergeHoursMonth(dif, swap.getService(), swap.getAgent1(), agent1->getNbHoursMonth());
+		value->mergeHoursMonth(-dif, swap.getService(), swap.getAgent2(), agent2->getNbHoursMonth());
 
 		//Check heure semaine
 		HeuristicToolBox::checkWorkingHoursWeekFast(m, agent1, swap.getService(),swap.getDay(),swap.getAgent1());
@@ -524,6 +499,7 @@ Model heuristicSolver::iterative2Fast(const Model m, int nbIte, int range)
 		if (j % 100 == 0) {
 			cout << "Iteration " << j << endl;
 		}
+		currentModel.resetSwapLog();
 		//On choisit un voisinage à appliquer
 		int randN = rand() % 100;
 

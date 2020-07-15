@@ -46,6 +46,7 @@ public:
 	void mergeHoursWeekSlide(const std::vector<std::pair<int, int>> cons, const int day,
 		const int service, const int agent);
 	void mergeImpossiblePosts(const bool fail, const int day, const int service, const int agent);
+	void mergeHoursMonth(const float dif, const int service, const int agent, const float nbHoursMonth);
 
 	void print();
 private:

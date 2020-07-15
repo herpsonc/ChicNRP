@@ -324,6 +324,22 @@ void Valuation::mergeImpossiblePosts(const bool fail, const int day, const int s
 
 }
 
+void Valuation::mergeHoursMonth(const float dif, const int service, const int agent, const float nbHoursMonth)
+{
+	if (hoursMonth[service][agent] > nbHoursMonth &&
+		hoursMonth[service][agent] + dif <= nbHoursMonth) {
+
+		score += 100;
+	}
+	else if (hoursMonth[service][agent] <=nbHoursMonth &&
+		hoursMonth[service][agent] + dif > nbHoursMonth) {
+
+		score -= 100;
+	}
+
+	hoursMonth[service][agent] += dif;
+}
+
 //! Print all the informations about each constraints in the Valuation
 void Valuation::print()
 {
