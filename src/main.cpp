@@ -908,17 +908,17 @@ int main() {
 	//modèle avec les (pré)données de Mars 2020 du CHIC
 	Model m = generateGhr();
 	
-	//m = addServiceSDC(m);
-	//m = addServiceSDN(m);
-	//m = addServicePool(m);
-	//m = addServiceCS(m);
+	m = addServiceSDC(m);
+	m = addServiceSDN(m);
+	m = addServicePool(m);
+	m = addServiceCS(m);
 	m.printPlanning();
 
 
-	auto m2 = heuristicSolver::iterative2Fast(m, 50000, 3);
-	m2.printPlanning();
-	m2.getValuation()->print();
-	//auto m3 = heuristicSolver::iterative2(m, 10000, 3, 3000);
+	auto m2 = heuristicSolver::iterative2Fast(m, 1000, 3);
+	//m2.printPlanning();
+	//m2.getValuation()->print();
+	auto m3 = heuristicSolver::iterative2(m, 1000, 3, 3000);
 
 	/*auto m3 = heuristicSolver::greedy(m);
 	m3.setValuation(heuristicSolver::checkValuation(&m3));

@@ -194,17 +194,20 @@ void heuristicSolver::checkFast(Model* m){
 	int k = 0;
 
 	for (unsigned int l = 0; l < m->getServices().size();l++) {
+		i = 0;
+		j = 0;
+		k = 0;
 		for (auto c : m->getServices()[l]->getConstraints()) {
 			if (typeid(*c) == typeid(ConstraintDaysSeq)) {
-				HeuristicToolBox::checkFastDaySeq(m, (ConstraintDaysSeq*)c, i);
+				HeuristicToolBox::checkFastDaySeq(m, (ConstraintDaysSeq*)c, l, i);
 				i++;
 			}
 			else if (typeid(*c) == typeid(ConstraintInvolved)) {
-				HeuristicToolBox::checkFastInvolved(m, (ConstraintInvolved*)c, j);
+				HeuristicToolBox::checkFastInvolved(m, (ConstraintInvolved*)c, l, j);
 				j++;
 			}
 			else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
-				HeuristicToolBox::checkFastSeqMinMax(m, (ConstraintSeqMinMax*)c, k);
+				HeuristicToolBox::checkFastSeqMinMax(m, (ConstraintSeqMinMax*)c, l, k);
 				k++;
 			}
 		}
@@ -232,7 +235,7 @@ Valuation heuristicSolver::checkValuation(Model* m) {
 	auto seqMinMax = vector<vector<vector<vector<pair<int, int>>>>>();
 
 	for (auto s : m->getServices()) {
-
+		iA = 0;
 		hoursMonth.push_back(vector<float>());
 		hoursWeeks.push_back(vector<array<int, 6>>());
 		hoursWeeksSlide.push_back(vector<vector<pair<int, int>>>());
