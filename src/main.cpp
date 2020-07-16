@@ -913,12 +913,14 @@ int main() {
 	m = addServicePool(m);
 	m = addServiceCS(m);
 	m.printPlanning();
-
+	//auto m3 = heuristicSolver::greedy(m);
+	//m3.printPlanning();
 
 	auto m2 = heuristicSolver::iterative2Fast(m, 1000, 3);
-	//m2.printPlanning();
-	//m2.getValuation()->print();
-	auto m3 = heuristicSolver::iterative2(m, 1000, 3, 3000);
+
+	m2.printPlanning();
+	m2.getValuation()->print();
+	//auto m3 = heuristicSolver::iterative2(m, 1000, 3, 3000);
 
 	/*auto m3 = heuristicSolver::greedy(m);
 	m3.setValuation(heuristicSolver::checkValuation(&m3));

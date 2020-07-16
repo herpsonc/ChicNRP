@@ -2,7 +2,6 @@
 
 void HeuristicToolBox::checkFastDaySeq(Model* m, ConstraintDaysSeq* constraint, int service, int iCons)
 {
-	auto valuation = m->getValuation()->getDaySeq();
 
 	for (auto swap : m->getSwapLog()) {
 		auto a = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent1()];

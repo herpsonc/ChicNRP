@@ -67,6 +67,7 @@ public:
 	void addSwapLog(const SwapLog swapLog);
 	std::vector<SwapLog> getSwapLog();
 	void resetSwapLog();
+	void rollBack();
 
 	std::vector<Constraint*> createConstraints();
 	void addBasicConstraintsTo(Service* s);

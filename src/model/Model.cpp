@@ -104,7 +104,7 @@ void Model::addService(Service* service ) {
 void Model::printPlanning() {
 
 	auto day = firstDay;
-	cout << "Jours:";
+	cout << "Jours:\t";
 
 	for(int i=0;i<nbDays;i++){
 		cout << "\t" << i+1 << " ";
@@ -147,7 +147,7 @@ void Model::printPlanning() {
 		cout << "---------------------------" << endl;
 		for (auto agent : s.second)
 		{
-			cout << "Agent " << agent->getId() << ":   ";
+			cout << "Agent " << agent->getId() << ":\t";
 
 			for (unsigned int j = 0; j < agent->getCalendar().size(); j++)
 			{
@@ -245,6 +245,16 @@ vector<SwapLog> Model::getSwapLog(){
 //! clear the swapLog vector
 void Model::resetSwapLog(){
 	swapLog.clear();
+}
+
+void Model::rollBack()
+{
+	for (int i = swapLog.size() - 1; i >= 0; i--) {
+		auto p1 = agents[services[swapLog[i].getService()]][swapLog[i].getAgent1()]->getCalendar()[swapLog[i].getDay()];
+		agents[services[swapLog[i].getService()]][swapLog[i].getAgent1()]->setCalendarDay(agents[services[swapLog[i].getService()]]
+			[swapLog[i].getAgent2()]->getCalendar()[swapLog[i].getDay()], swapLog[i].getDay());
+		agents[services[swapLog[i].getService()]][swapLog[i].getAgent2()]->setCalendarDay(p1, swapLog[i].getDay());
+	}
 }
 
 vector<Constraint*> Model::createConstraints() {
