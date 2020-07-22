@@ -127,6 +127,7 @@ void Valuation::mergeDaySeq(const std::vector<std::pair<int, int>> cons, const i
 	bool found = false;
 	int i = 0;
 	//Update la valuation
+	mutexDaySeq.lock();
 	for (auto value : daySeq[service][agent][iCons]) {
 		//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
 		if (value.first >= day - (int)constraint->getSequenceAtt().size() && value.second <= day + (int)constraint->getSequenceAtt().size()) {
@@ -140,7 +141,9 @@ void Valuation::mergeDaySeq(const std::vector<std::pair<int, int>> cons, const i
 			if (!found) {
 				daySeq[service][agent][iCons].erase(daySeq[service][agent][iCons].begin() + i);
 				i--;
+				mutexScore.lock();
 				score += constraint->getPriority();
+				mutexScore.unlock();
 			}
 		}
 
@@ -157,9 +160,12 @@ void Valuation::mergeDaySeq(const std::vector<std::pair<int, int>> cons, const i
 
 		if (!isIn) {
 			daySeq[service][agent][iCons].push_back(e);
+			mutexScore.lock();
 			score -= constraint->getPriority();
+			mutexScore.unlock();
 		}
 	}
+	mutexDaySeq.unlock();
 }
 
 void Valuation::mergeInvolved(const std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> cons, const int day, const int service, const int agent, const ConstraintInvolved* constraint, const int iCons)
@@ -167,6 +173,7 @@ void Valuation::mergeInvolved(const std::vector<std::pair<std::pair<int, int>, s
 	bool found;
 	//Update la valuation
 	int i = 0;
+	mutexInvolved.lock();
 	for (auto value : involved[service][agent][iCons]) {
 		//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
 		if (value.first.first >= day - (int)constraint->getFirstSeqAtt().size() - (int)constraint->getLastSeqAtt().size() + 1 && value.second.second <= day + (int)constraint->getFirstSeqAtt().size() + (int)constraint->getLastSeqAtt().size() - 1) {
@@ -181,7 +188,9 @@ void Valuation::mergeInvolved(const std::vector<std::pair<std::pair<int, int>, s
 			if (!found) {
 				involved[service][agent][iCons].erase(involved[service][agent][iCons].begin() + i);
 				i--;
+				mutexScore.lock();
 				score += constraint->getPriority();
+				mutexScore.unlock();
 			}
 		}
 		i++;
@@ -198,14 +207,18 @@ void Valuation::mergeInvolved(const std::vector<std::pair<std::pair<int, int>, s
 
 		if (!isIn) {
 			involved[service][agent][iCons].push_back(e);
+			mutexScore.lock();
 			score -= constraint->getPriority();
+			mutexScore.unlock();
 		}
 	}
+	mutexInvolved.unlock();
 }
 
 void Valuation::mergeSeqMinMax(const std::vector<std::pair<int, int>> cons, const int day, const int service, const int agent, const ConstraintSeqMinMax* constraint, const int iCons)
 {
 	bool found;
+	mutexseqMinMax.lock();
 	int nbSeq = seqMinMax[service][agent][iCons].size();
 	//Update la valuation
 	int i = 0;
@@ -248,8 +261,11 @@ void Valuation::mergeSeqMinMax(const std::vector<std::pair<int, int>> cons, cons
 			scoreA -= (constraint->getNumber() - nbSeq) * constraint->getPriority();
 		if ((int)seqMinMax[service][agent][iCons].size() < constraint->getNumber())
 			scoreB -= (constraint->getNumber() - seqMinMax[service][agent][iCons].size()) * constraint->getPriority();
-		if (scoreA - scoreB != 0)
+		if (scoreA - scoreB != 0) {
+			mutexScore.lock();
 			score -= (scoreA - scoreB);
+			mutexScore.unlock();
+		}
 	}
 	else {
 		int scoreA = 0;
@@ -258,8 +274,11 @@ void Valuation::mergeSeqMinMax(const std::vector<std::pair<int, int>> cons, cons
 			scoreA -= (nbSeq - constraint->getNumber()) * constraint->getPriority();
 		if ((int)seqMinMax[service][agent][iCons].size() > constraint->getNumber())
 			scoreB -= (seqMinMax[service][agent][iCons].size() - constraint->getNumber()) * constraint->getPriority();
+		mutexScore.lock();
 		score -= (scoreA - scoreB);
+		mutexScore.unlock();
 	}
+	mutexseqMinMax.unlock();
 }
 
 void Valuation::mergeHoursWeekSlide(const std::vector<std::pair<int, int>> cons, const int day, const int service, const int agent)
@@ -267,6 +286,7 @@ void Valuation::mergeHoursWeekSlide(const std::vector<std::pair<int, int>> cons,
 	//Update la valuation
 	bool found = false;
 	int i = 0;
+	mutexHoursWeekSlide.lock();
 	for (auto value : hoursWeekSlide[service][agent]) {
 		//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
 		if (value.first >= day - 6 && value.second <= day + 7) {
@@ -280,7 +300,9 @@ void Valuation::mergeHoursWeekSlide(const std::vector<std::pair<int, int>> cons,
 			if (!found) {
 				hoursWeekSlide[service][agent].erase(hoursWeekSlide[service][agent].begin() + i);
 				i--;
+				mutexScore.lock();
 				score += 1;
+				mutexScore.unlock();
 			}
 		}
 		i++;
@@ -296,22 +318,28 @@ void Valuation::mergeHoursWeekSlide(const std::vector<std::pair<int, int>> cons,
 
 		if (!isIn) {
 			hoursWeekSlide[service][agent].push_back(e);
+			mutexScore.lock();
 			score -= 1;
+			mutexScore.unlock();
 		}
 	}
+	mutexHoursWeekSlide.unlock();
 }
 
 void Valuation::mergeImpossiblePosts(const bool fail, const int day, const int service, const int agent)
 {
 	bool found = false;
 	int i = 0;
+	mutexImpossiblePosts.lock();
 	for (auto e : impossiblePosts[service][agent]) {
 		if (e == day) {
 			found = true;
 			if (!fail) {
 				impossiblePosts[service][agent].erase(impossiblePosts[service][agent].begin() + i);
 				i--;
+				mutexScore.lock();
 				score += 10;
+				mutexScore.unlock();
 				break;
 			}
 		}
@@ -321,23 +349,29 @@ void Valuation::mergeImpossiblePosts(const bool fail, const int day, const int s
 		impossiblePosts[service][agent].push_back(day);
 		score -= 10;
 	}
-
+	mutexImpossiblePosts.unlock();
 }
 
 void Valuation::mergeHoursMonth(const float dif, const int service, const int agent, const float nbHoursMonth)
 {
+	mutexHoursMonth.lock();
 	if (hoursMonth[service][agent] > nbHoursMonth &&
 		hoursMonth[service][agent] + dif <= nbHoursMonth) {
 
+		mutexScore.lock();
 		score += 100;
+		mutexScore.unlock();
 	}
 	else if (hoursMonth[service][agent] <=nbHoursMonth &&
 		hoursMonth[service][agent] + dif > nbHoursMonth) {
 
+		mutexScore.lock();
 		score -= 100;
+		mutexScore.unlock();
 	}
 
 	hoursMonth[service][agent] += dif;
+	mutexHoursMonth.unlock();
 }
 
 //! Print all the informations about each constraints in the Valuation

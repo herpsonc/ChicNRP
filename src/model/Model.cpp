@@ -197,7 +197,7 @@ void Model::setOvertime(float overtime) {
 //! get Agents from a specific service
 //! \param service the Agents returned are from this Service 
 //! \return agents from the specified service
-std::vector<Agent*> Model::getAgentFrom(Service* service) {
+std::vector<Agent*> Model::getAgentFrom(Service* service){
 	return agents[service];
 }
 
@@ -229,6 +229,70 @@ Valuation* Model::getValuation(){
 void Model::setValuation(Valuation v){
 	delete valuation;
 	valuation = new Valuation(v);
+}
+
+void Model::generateEmptyValuation()
+{
+	//Pour Valuation
+	int iS = 0;
+	int iA = 0;
+	// int iP = 0;
+	auto hoursMonth = vector<vector<float>>();
+	auto hoursWeeks = vector<vector<array<int, 6>>>();
+	auto hoursWeeksSlide = vector<vector<vector<pair<int, int>>>>();
+	auto impossiblePosts = vector<vector<vector<int>>>();
+	auto daySeq = vector < vector<vector<vector<pair<int, int>>>>>();
+	auto involved = vector<vector<vector<vector<pair<pair<int, int>, pair<int, int>>>>>>();
+	auto seqMinMax = vector<vector<vector<vector<pair<int, int>>>>>();
+
+	for (auto s : getServices()) {
+		iA = 0;
+		hoursMonth.push_back(vector<float>());
+		hoursWeeks.push_back(vector<array<int, 6>>());
+		hoursWeeksSlide.push_back(vector<vector<pair<int, int>>>());
+		impossiblePosts.push_back(vector<vector<int>>());
+		daySeq.push_back(vector<vector<vector<pair<int, int>>>>());
+		involved.push_back(vector<vector<vector<pair<pair<int, int>, pair<int, int>>>>>());
+		seqMinMax.push_back(vector<vector<vector<pair<int, int>>>>());
+
+		for (auto a : getAgentFrom(s)) {
+
+			hoursMonth[iS].push_back(a->getWorkingHoursMonth());
+			hoursWeeks[iS].push_back(std::array<int, 6>());
+			hoursWeeksSlide[iS].push_back(std::vector<pair<int, int>>());
+			impossiblePosts[iS].push_back(std::vector<int>());
+			daySeq[iS].push_back(vector<vector<pair<int, int>>>());
+			involved[iS].push_back(vector<vector<pair<pair<int, int>, pair<int, int>>>>());
+			seqMinMax[iS].push_back(vector<vector<pair<int, int>>>());
+
+			for (auto c : s->getConstraints()) {
+				if (typeid(*c) == typeid(ConstraintDaysSeq)) {
+					daySeq[iS][iA].push_back(vector<pair<int, int>>());
+				}
+				else if (typeid(*c) == typeid(ConstraintInvolved)) {
+					involved[iS][iA].push_back(vector<pair<pair<int, int>, pair<int, int>>>());
+				}
+				else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
+					seqMinMax[iS][iA].push_back(vector<pair<int, int>>());
+				}
+			}
+			iA++;
+		}
+		iS++;
+	}
+
+
+	Valuation* v = new Valuation();
+
+	v->setScore(0);
+	v->setHoursMonth(hoursMonth);
+	v->sethoursWeekSlide(hoursWeeksSlide);
+	v->setImpossiblePosts(impossiblePosts);
+	v->setDaySeq(daySeq);
+	v->setInvolved(involved);
+	v->setSeqMinMax(seqMinMax);
+
+	valuation = v;
 }
 
 //! Add a SwapLog to the list

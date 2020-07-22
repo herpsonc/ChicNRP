@@ -185,29 +185,6 @@ int Agent::checkWorkingHoursWeek(bool log){
 	return nbFail;
 }
 
-//! Used to build the valuation of the Model from 0
-//! return v vector of intervals where this constraint is broken
-std::vector<std::pair<int, int>> Agent::checkWorkingHoursWeekValuation(){
-	auto v = std::vector<std::pair<int, int>>();
-	float cptHours = 0;
-	int nbFail = 0;
-	for (int i = 0; i < 31; i++) {
-		cptHours = 0;
-
-		for (int j = 0; j < 7; j++) {
-			if (i + j < 31 && calendar[i + j] != NULL) {
-				cptHours += calendar[i + j]->getTime();
-			}
-		}
-		if (cptHours > nbHoursWeek) {
-			nbFail++;
-			v.push_back(std::pair<int, int>(i, i + 6));
-		}
-	}
-
-	return v;
-}
-
 //! \param true to print log on the console
 //! \return nbFail +1 everytime an impossible Post is detected in the calendar
 int Agent::checkImpossiblePosts(bool log){
@@ -229,22 +206,4 @@ int Agent::checkImpossiblePosts(bool log){
 	return nbFail;
 }
 
-//! Used to build the valuation of the Model from 0
-//! \return vec vector of each day where this constraint is broken
-std::vector<int> Agent::checkImpossiblePostsValuation(){
-	auto vec = vector<int>();
-	// int nbFail = 0;
-	int i = 0;
-	for (auto p : calendar) {
-		for (auto ip : impossiblePosts) {
-			if (p == ip) {
-				vec.push_back(i);
-			}
-
-		}
-		i++;
-	}
-
-	return vec;
-}
 

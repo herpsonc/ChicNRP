@@ -19,8 +19,8 @@ void HeuristicToolBox::checkFastDaySeq(Model* m, ConstraintDaysSeq* constraint, 
 					if (i >= 0 && i < m->getNbDays()) {
 						Post* p = a->getCalendar()[i];
 						if (p != NULL) {
-							for (auto att : p->getAttributs()) {
-								if (!found && att == constraint->getSequenceAtt()[indice]) {
+							for(int k = 0; k<p->getAttributs().size();k++) {
+								if (!found && p->getAttributs()[k] == constraint->getSequenceAtt()[indice]) {
 									found = true;
 									indice++;
 									//Si on arrive au bout de la séquence, alors elle est présente dans le calendrier
@@ -30,7 +30,7 @@ void HeuristicToolBox::checkFastDaySeq(Model* m, ConstraintDaysSeq* constraint, 
 										indice = 0;
 									}
 								}
-								if (att == constraint->getSequenceAtt()[0]) {
+								if (p->getAttributs()[k] == constraint->getSequenceAtt()[0]) {
 									first = true;
 								}
 							}
@@ -86,10 +86,10 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 						Post* p = a->getCalendar()[i];
 						if (indice != 0 || constraint->getFirstDay() == -1 || constraint->getFirstDay() == day || seqDetected) {
 							if (p != NULL) {
-								for (auto att : p->getAttributs()) {
+								for (int k = 0; k < p->getAttributs().size(); k++) {
 									//Le cas où la séquence est déjà détectée
 									if (!found && seqDetected) {
-										if (att == constraint->getLastSeqAtt()[indice]) {
+										if (p->getAttributs()[k] == constraint->getLastSeqAtt()[indice]) {
 											indice++;
 											found = true;
 
@@ -101,7 +101,7 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 									}
 									//Le cas où la firstSeq n'est pas trouvée
 									else {
-										if (!found && att == constraint->getFirstSeqAtt()[indice]) {
+										if (!found && p->getAttributs()[k] == constraint->getFirstSeqAtt()[indice]) {
 											indice++;
 											found = true;
 											//Toute la séquence a été trouvée
@@ -112,7 +112,7 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 											}
 										}
 									}
-									if (att == constraint->getFirstSeqAtt()[0]) {
+									if (p->getAttributs()[k] == constraint->getFirstSeqAtt()[0]) {
 										first = true;
 									}
 								}
@@ -188,8 +188,8 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 						}
 
 						if (start || indice != 0) {
-							for (auto att : p->getAttributs()) {
-								if (att == constraint->getSequenceAtt()[indice]) {
+							for (int k = 0; k < p->getAttributs().size(); k++) {
+								if (p->getAttributs()[k] == constraint->getSequenceAtt()[indice]) {
 									indice++;
 									found = true;
 									if (indice >= constraint->getSequenceAtt().size()) {
@@ -255,9 +255,98 @@ void HeuristicToolBox::checkImpossiblePostsFast(Model* m, Agent* agent, int idSe
 	m->getValuation()->mergeImpossiblePosts(fail, day, idService, idA);
 }
 
+void HeuristicToolBox::checkAllFast(Model* m)
+{
+	//On génére un swapLog qui couvre tout les agents/service/jour
+	vector<SwapLog> swapLog = vector<SwapLog>();
+	int idService = 0;
+	int idAgent = 0;
+	for (auto service : m->getServices()) {
+		idAgent = 0;
+		for (auto agent : m->getAgentFrom(service)) {
+
+			for (int day = 0; day < m->getNbDays(); day++) {
+				m->addSwapLog(SwapLog(idAgent, idAgent, day, idService));
+
+				checkWorkingHoursWeekFast(m, agent, idService, day, idAgent);
+				checkImpossiblePostsFast(m, agent, idService, day, idAgent);
+			}
+			idAgent++;
+		}
+
+		int i = 0;
+		int j = 0;
+		int k = 0;
+		for (auto c : service->getConstraints()) {
+			if (typeid(*c) == typeid(ConstraintDaysSeq)) {
+				HeuristicToolBox::checkFastDaySeq(m, (ConstraintDaysSeq*)c, idService, i);
+				i++;
+			}
+			else if (typeid(*c) == typeid(ConstraintInvolved)) {
+				HeuristicToolBox::checkFastInvolved(m, (ConstraintInvolved*)c, idService, j);
+				j++;
+			}
+			else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
+				HeuristicToolBox::checkFastSeqMinMax(m, (ConstraintSeqMinMax*)c, idService, k);
+				k++;
+			}
+		}
+
+		m->resetSwapLog();
+		idService++;
+	}
+
+	m->resetSwapLog();
+}
+
 int HeuristicToolBox::getNextDay(int day)
 {
 	if (day < 0)
 		return day;
 	return (day + 1) % 7;
 }
+
+void HeuristicToolBox::checkAllDaySeq(Model* m)
+{
+	int i = 0;
+	for (unsigned int l = 0; l < m->getServices().size(); l++) {
+		i = 0;
+		for (auto c : m->getServices()[l]->getConstraints()) {
+			if (typeid(*c) == typeid(ConstraintDaysSeq)) {
+				HeuristicToolBox::checkFastDaySeq(m, (ConstraintDaysSeq*)c, l, i);
+				i++;
+			}
+		}
+	}
+}
+
+void HeuristicToolBox::checkAllInvolved(Model* m)
+{
+	int j = 0;
+
+	for (unsigned int l = 0; l < m->getServices().size(); l++) {
+		j = 0;
+		for (auto c : m->getServices()[l]->getConstraints()) {
+			if (typeid(*c) == typeid(ConstraintInvolved)) {
+				HeuristicToolBox::checkFastInvolved(m, (ConstraintInvolved*)c, l, j);
+				j++;
+			}
+		}
+	}
+}
+
+void HeuristicToolBox::checkAllSeqMinMax(Model* m)
+{
+	int k = 0;
+
+	for (unsigned int l = 0; l < m->getServices().size(); l++) {
+		k = 0;
+		for (auto c : m->getServices()[l]->getConstraints()) {
+			if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
+				HeuristicToolBox::checkFastSeqMinMax(m, (ConstraintSeqMinMax*)c, l, k);
+				k++;
+			}
+		}
+	}
+}
+

@@ -10,7 +10,11 @@ public:
 	static void checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constraint, int service, int iCons);
 	static void checkWorkingHoursWeekFast(Model* m, Agent* agent, int idService, int day, int idA);
 	static void checkImpossiblePostsFast(Model* m, Agent* agent, int idService, int day, int idA);
+	static void checkAllFast(Model* m);
 	static int getNextDay(int day);
 
+	static void checkAllDaySeq(Model* m);
+	static void checkAllInvolved(Model* m);
+	static void checkAllSeqMinMax(Model* m);
 };
 

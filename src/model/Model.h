@@ -41,7 +41,7 @@ public:
 
 	std::vector<Service*>& getServices();
 
-	std::vector<Agent*> getAgentFrom(Service* service);
+	std::vector<Agent*> getAgentFrom(Service* service) ;
 
 	void addAgent(Agent* agent, Service* service);
 	void addService(Service* service);
@@ -63,6 +63,7 @@ public:
 	void setDefaultPost(Post* defaultPost);
 	Valuation* getValuation();
 	void setValuation(Valuation v);
+	void generateEmptyValuation();
 
 	void addSwapLog(const SwapLog swapLog);
 	std::vector<SwapLog> getSwapLog();
