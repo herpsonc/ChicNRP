@@ -197,8 +197,13 @@ void Model::setOvertime(float overtime) {
 //! get Agents from a specific service
 //! \param service the Agents returned are from this Service 
 //! \return agents from the specified service
-std::vector<Agent*> Model::getAgentFrom(Service* service){
+const std::vector<Agent*> Model::getAgentFrom(Service* service){
 	return agents[service];
+}
+
+const std::vector<Agent*>* Model::getAgentFromPtr(Service* service)
+{
+	return &agents[service];
 }
 
 //! \return defaultPost post affected by default
@@ -257,7 +262,7 @@ void Model::generateEmptyValuation()
 
 		for (auto a : getAgentFrom(s)) {
 
-			hoursMonth[iS].push_back(a->getWorkingHoursMonth());
+			hoursMonth[iS].push_back(0);
 			hoursWeeks[iS].push_back(std::array<int, 6>());
 			hoursWeeksSlide[iS].push_back(std::vector<pair<int, int>>());
 			impossiblePosts[iS].push_back(std::vector<int>());
@@ -302,8 +307,8 @@ void Model::addSwapLog(const SwapLog swapLog){
 }
 
 //! \return swaplog vector of swaplog
-vector<SwapLog> Model::getSwapLog(){
-	return swapLog;
+const vector<SwapLog>* Model::getSwapLog() const {
+	return &swapLog;
 }
 
 //! clear the swapLog vector
@@ -615,7 +620,7 @@ void Model::generateXML(string fileName){
 			if (typeid(*c) == typeid(ConstraintDaysSeq)) {
 				xml_node<>* constraint = doc.allocate_node(node_element, "ConstraintDaySeq");
 				constraint->append_attribute(doc.allocate_attribute("priority", doc.allocate_string(to_string(((ConstraintDaysSeq*)c)->getPriority()).c_str())));
-				for (auto sA : ((ConstraintDaysSeq*)c)->getSequenceAtt()) {
+				for (auto sA : *((ConstraintDaysSeq*)c)->getSequenceAtt()) {
 					xml_node<>* att = doc.allocate_node(node_element, "Attribut");
 					att->append_attribute(doc.allocate_attribute("Att", doc.allocate_string(sA.c_str())));
 					constraint->append_node(att);
@@ -626,12 +631,12 @@ void Model::generateXML(string fileName){
 				xml_node<>* constraint = doc.allocate_node(node_element, "ConstraintInvolved");
 				constraint->append_attribute(doc.allocate_attribute("priority", doc.allocate_string(to_string(((ConstraintInvolved*)c)->getPriority()).c_str())));
 				constraint->append_attribute(doc.allocate_attribute("day", doc.allocate_string(to_string(((ConstraintInvolved*)c)->getFirstDay()).c_str())));
-				for (auto fs : ((ConstraintInvolved*)c)->getFirstSeqAtt()) {
+				for (auto fs : *((ConstraintInvolved*)c)->getFirstSeqAtt()) {
 					xml_node<>* att = doc.allocate_node(node_element, "FirstAttribut");
 					att->append_attribute(doc.allocate_attribute("Att", doc.allocate_string(fs.c_str())));
 					constraint->append_node(att);
 				}
-				for (auto fs : ((ConstraintInvolved*)c)->getLastSeqAtt()) {
+				for (auto fs : *((ConstraintInvolved*)c)->getLastSeqAtt()) {
 					xml_node<>* att = doc.allocate_node(node_element, "LastAttribut");
 					att->append_attribute(doc.allocate_attribute("Att", doc.allocate_string(fs.c_str())));
 					constraint->append_node(att);
@@ -645,7 +650,7 @@ void Model::generateXML(string fileName){
 				constraint->append_attribute(doc.allocate_attribute("day", doc.allocate_string(to_string(((ConstraintSeqMinMax*)c)->getFirstDay()).c_str())));
 				constraint->append_attribute(doc.allocate_attribute("number", doc.allocate_string(to_string(((ConstraintSeqMinMax*)c)->getNumber()).c_str())));
 				constraint->append_attribute(doc.allocate_attribute("type", doc.allocate_string(to_string(((ConstraintSeqMinMax*)c)->getType()).c_str())));
-				for (auto fs : ((ConstraintSeqMinMax*)c)->getSequenceAtt()) {
+				for (auto fs : *((ConstraintSeqMinMax*)c)->getSequenceAtt()) {
 					xml_node<>* att = doc.allocate_node(node_element, "Attribut");
 					att->append_attribute(doc.allocate_attribute("Att", doc.allocate_string(fs.c_str())));
 					constraint->append_node(att);

@@ -24,7 +24,7 @@ public:
 	static void nullTo(Model* m, Post* post);
 	static int check(Model* m, bool log);
 	static void checkFast(Model* m);
-	static void checkFastMultiThread(Model* m);
+	static void checkFastMultiThread(Model* m); 
 	static Model getNeighborSwap(Model* m, int range);
 	static void neighborSwap(Model* m, int range);
 	static Model getneighborRandom(Model* m, int range);

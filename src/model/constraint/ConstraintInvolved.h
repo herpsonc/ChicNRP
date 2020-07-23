@@ -19,9 +19,9 @@ public:
 	ConstraintInvolved(std::vector<string> first, std::vector<string> last, int firstDay, int priority);
 	virtual ~ConstraintInvolved();
 
-	const std::vector<string>& getFirstSeqAtt() const;
+	const std::vector<string>* getFirstSeqAtt() const;
 	void setFirstSeqAtt(const std::vector<string>& firstSeq);
-	const std::vector<string>& getLastSeqAtt() const;
+	const std::vector<string>* getLastSeqAtt() const;
 	void setLastSeqAtt(const std::vector<string>& lastSeq);
 
 	string getSeqToPrint();
@@ -30,7 +30,6 @@ public:
 	int getFirstDay();
 
 	int check(const Agent* agent, int day, bool log);
-	std::vector < std::pair<std::pair<int, int>, std::pair<int, int>>> checkValuation(const Agent* agent, int day);
 
 protected:
 	int priority;

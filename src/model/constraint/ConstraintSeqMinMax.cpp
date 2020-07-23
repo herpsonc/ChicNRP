@@ -21,8 +21,8 @@ ConstraintSeqMinMax::~ConstraintSeqMinMax() {
 	// TODO Auto-generated destructor stub
 }
 
-const std::vector<string>& ConstraintSeqMinMax::getSequenceAtt() const {
-	return sequenceAtt;
+const std::vector<string>* ConstraintSeqMinMax::getSequenceAtt() const {
+	return &sequenceAtt;
 }
 
 void ConstraintSeqMinMax::setSequenceAtt(
@@ -147,58 +147,6 @@ int ConstraintSeqMinMax::check(const Agent* agent, int firstDayMonth, bool log) 
 				return 0;
 			return (cptCheck - number)*priority;
 		}
-
 		
-}
-
-std::vector<std::pair<int, int>> ConstraintSeqMinMax::checkValuation(const Agent* agent, int firstDayMonth) {
-	//TODO
-	unsigned int cptCheck = 0;
-	unsigned int indice = 0;
-	int day = firstDayMonth;
-
-	bool start = false;
-	bool found = false;
-
-	auto v = vector<pair<int, int>>();
-
-	/*
-	for (auto post : agent->getLastMonthCalendar()) {
-
-	}*/
-
-	int i = 0;
-	for (auto post : agent->getCalendar()) {
-		if (indice == 0 && firstDay == day) {
-			start = true;
-		}
-
-		if (start || indice != 0) {
-			for (auto att : post->getAttributs()) {
-				if (att == sequenceAtt[indice]) {
-					indice++;
-					found = true;
-					if (indice >= sequenceAtt.size()) {
-						v.push_back(pair<int, int>(i - sequenceAtt.size() + 1, i));
-						cptCheck++;
-						indice = 0;
-					}
-					break;
-				}
-			}
-			if (found == false)
-			{
-				indice = 0;
-			}
-			start = false;
-		}
-		found = false;
-		day = (day+1)%7;
-		i++;
-	}
-
-	return v;
-
-
 }
 

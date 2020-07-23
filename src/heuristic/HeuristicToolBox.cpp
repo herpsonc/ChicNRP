@@ -3,8 +3,8 @@
 void HeuristicToolBox::checkFastDaySeq(Model* m, ConstraintDaysSeq* constraint, int service, int iCons)
 {
 
-	for (auto swap : m->getSwapLog()) {
-		auto a = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent1()];
+	for (auto swap : *m->getSwapLog()) {
+		auto a = (*m->getAgentFromPtr(m->getServices()[swap.getService()]))[swap.getAgent1()];
 		auto aIndice = swap.getAgent1();
 
 		if (swap.getService() == service) {
@@ -15,22 +15,22 @@ void HeuristicToolBox::checkFastDaySeq(Model* m, ConstraintDaysSeq* constraint, 
 				auto v = vector<pair<int, int>>();
 				//On regarde que les jours nécessaires
 
-				for (int i = swap.getDay() - (int)constraint->getSequenceAtt().size(); i <= swap.getDay() + (int)constraint->getSequenceAtt().size(); i++) {
+				for (int i = swap.getDay() - (int)(*constraint->getSequenceAtt()).size(); i <= swap.getDay() + (int)(*constraint->getSequenceAtt()).size(); i++) {
 					if (i >= 0 && i < m->getNbDays()) {
 						Post* p = a->getCalendar()[i];
 						if (p != NULL) {
 							for(int k = 0; k<p->getAttributs().size();k++) {
-								if (!found && p->getAttributs()[k] == constraint->getSequenceAtt()[indice]) {
+								if (!found && p->getAttributs()[k] == (*constraint->getSequenceAtt())[indice]) {
 									found = true;
 									indice++;
 									//Si on arrive au bout de la séquence, alors elle est présente dans le calendrier
-									if (indice >= (int)constraint->getSequenceAtt().size()) {
+									if (indice >= (int)(*constraint->getSequenceAtt()).size()) {
 										found = false;
 										v.push_back(pair<int, int>(i - indice + 1, i));
 										indice = 0;
 									}
 								}
-								if (p->getAttributs()[k] == constraint->getSequenceAtt()[0]) {
+								if (p->getAttributs()[k] == (*constraint->getSequenceAtt())[0]) {
 									first = true;
 								}
 							}
@@ -50,7 +50,7 @@ void HeuristicToolBox::checkFastDaySeq(Model* m, ConstraintDaysSeq* constraint, 
 
 				m->getValuation()->mergeDaySeq(v, swap.getDay(), swap.getService(), aIndice, constraint, iCons);
 
-				a = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent2()];
+				a = (*m->getAgentFromPtr(m->getServices()[swap.getService()]))[swap.getAgent2()];
 				aIndice = swap.getAgent2();
 			}
 		}
@@ -64,8 +64,8 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 	bool found = false;
 	int indiceFirst = 0;
 
-	for (auto swap : m->getSwapLog()) {
-		auto a = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent1()];
+	for (auto swap : *m->getSwapLog()) {
+		auto a = (*m->getAgentFromPtr(m->getServices()[swap.getService()]))[swap.getAgent1()];
 		auto aIndice = swap.getAgent1();
 		if (swap.getService() == service) {
 			for (int j = 0; j < 2; j++) {
@@ -76,12 +76,13 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 				auto v = vector<pair<pair<int, int>, pair<int, int>>>();
 				int day = m->getFirstDay();
 
-				for (int i = 0; i < swap.getDay() - (int)constraint->getFirstSeqAtt().size() - (int)constraint->getLastSeqAtt().size() + 1; i++) {
+				for (int i = 0; i < swap.getDay() - (int)(*constraint->getFirstSeqAtt()).size() - (int)(*constraint->getLastSeqAtt()).size() + 1; i++) {
 					day = getNextDay(day);
 				}
 
 				//On regarde que les jours nécessaires
-				for (int i = swap.getDay() - (int)constraint->getFirstSeqAtt().size() - (int)constraint->getLastSeqAtt().size() + 1; i <= swap.getDay() + (int)constraint->getFirstSeqAtt().size() + (int)constraint->getLastSeqAtt().size(); i++) {
+				for (int i = swap.getDay() - (int)(*constraint->getFirstSeqAtt()).size() - (int)(*constraint->getLastSeqAtt()).size() + 1;
+					i <= swap.getDay() + (int)(*constraint->getFirstSeqAtt()).size() + (int)(*constraint->getLastSeqAtt()).size(); i++) {
 					if (i >= 0 && i < m->getNbDays()) {
 						Post* p = a->getCalendar()[i];
 						if (indice != 0 || constraint->getFirstDay() == -1 || constraint->getFirstDay() == day || seqDetected) {
@@ -89,11 +90,11 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 								for (int k = 0; k < p->getAttributs().size(); k++) {
 									//Le cas où la séquence est déjà détectée
 									if (!found && seqDetected) {
-										if (p->getAttributs()[k] == constraint->getLastSeqAtt()[indice]) {
+										if (p->getAttributs()[k] == (*constraint->getLastSeqAtt())[indice]) {
 											indice++;
 											found = true;
 
-											if (indice == (int)constraint->getLastSeqAtt().size()) {
+											if (indice == (int)(*constraint->getLastSeqAtt()).size()) {
 												seqDetected = false;
 												indice = 0;
 											}
@@ -101,18 +102,18 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 									}
 									//Le cas où la firstSeq n'est pas trouvée
 									else {
-										if (!found && p->getAttributs()[k] == constraint->getFirstSeqAtt()[indice]) {
+										if (!found && p->getAttributs()[k] == (*constraint->getFirstSeqAtt())[indice]) {
 											indice++;
 											found = true;
 											//Toute la séquence a été trouvée
-											if (indice == (int)constraint->getFirstSeqAtt().size()) {
+											if (indice == (int)(*constraint->getFirstSeqAtt()).size()) {
 												indiceFirst = i;
 												indice = 0;
 												seqDetected = true;
 											}
 										}
 									}
-									if (p->getAttributs()[k] == constraint->getFirstSeqAtt()[0]) {
+									if (p->getAttributs()[k] == (*constraint->getFirstSeqAtt())[0]) {
 										first = true;
 									}
 								}
@@ -120,12 +121,13 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 						}
 						//Si la 2e séquence n'est pas détectée
 						if (seqDetected && !found) {
-							v.push_back(pair<pair<int, int>, pair<int, int>>(pair<int, int>(indiceFirst - constraint->getFirstSeqAtt().size() + 1, indiceFirst), pair<int, int>(indiceFirst + 1, indiceFirst + constraint->getLastSeqAtt().size())));
+							v.push_back(pair<pair<int, int>, pair<int, int>>(pair<int, int>(indiceFirst - (*constraint->getFirstSeqAtt()).size() + 1, indiceFirst),
+								pair<int, int>(indiceFirst + 1, indiceFirst + (*constraint->getLastSeqAtt()).size())));
 							// isValide = false;
 							seqDetected = false;
 							indice = 0;
 							if (first) {
-								if (constraint->getFirstSeqAtt().size() == 1) {
+								if ((*constraint->getFirstSeqAtt()).size() == 1) {
 									seqDetected = true;
 								}
 								else {
@@ -147,7 +149,7 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 
 				m->getValuation()->mergeInvolved(v, swap.getDay(), swap.getService(), aIndice, constraint, iCons);
 
-				a = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent2()];
+				a = (*m->getAgentFromPtr(m->getServices()[swap.getService()]))[swap.getAgent2()];
 				aIndice = swap.getAgent2();
 			}
 		}
@@ -158,10 +160,10 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 {
 
 
-	for (auto swap : m->getSwapLog()) {
+	for (auto swap : *m->getSwapLog()) {
 
 
-		auto a = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent1()];
+		auto a = (*m->getAgentFromPtr(m->getServices()[swap.getService()]))[swap.getAgent1()];
 		auto aIndice = swap.getAgent1();
 
 
@@ -172,7 +174,7 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 				unsigned int indice = 0;
 				int day = m->getFirstDay();
 
-				for (int i = 0; i < swap.getDay() - (int)constraint->getSequenceAtt().size(); i++) {
+				for (int i = 0; i < swap.getDay() - (int)(*constraint->getSequenceAtt()).size(); i++) {
 					day = getNextDay(day);
 				}
 
@@ -180,7 +182,7 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 				bool start = false;
 				bool found = false;
 
-				for (int i = swap.getDay() - (int)constraint->getSequenceAtt().size(); i <= swap.getDay() + (int)constraint->getSequenceAtt().size(); i++) {
+				for (int i = swap.getDay() - (int)(*constraint->getSequenceAtt()).size(); i <= swap.getDay() + (int)(*constraint->getSequenceAtt()).size(); i++) {
 					if (i >= 0 && i < m->getNbDays()) {
 						Post* p = a->getCalendar()[i];
 						if (indice == 0 && constraint->getFirstDay() == day) {
@@ -189,11 +191,11 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 
 						if (start || indice != 0) {
 							for (int k = 0; k < p->getAttributs().size(); k++) {
-								if (p->getAttributs()[k] == constraint->getSequenceAtt()[indice]) {
+								if (p->getAttributs()[k] == (*constraint->getSequenceAtt())[indice]) {
 									indice++;
 									found = true;
-									if (indice >= constraint->getSequenceAtt().size()) {
-										v.push_back(pair<int, int>(i - constraint->getSequenceAtt().size() + 1, i));
+									if (indice >= (*constraint->getSequenceAtt()).size()) {
+										v.push_back(pair<int, int>(i - (*constraint->getSequenceAtt()).size() + 1, i));
 										cptCheck++;
 										indice = 0;
 									}
@@ -213,7 +215,7 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 
 				m->getValuation()->mergeSeqMinMax(v, swap.getDay(), swap.getService(), aIndice, constraint, iCons);
 
-				a = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent2()];
+				a = (*m->getAgentFromPtr(m->getServices()[swap.getService()]))[swap.getAgent2()];
 				aIndice = swap.getAgent2();
 
 			}
@@ -271,6 +273,7 @@ void HeuristicToolBox::checkAllFast(Model* m)
 				checkWorkingHoursWeekFast(m, agent, idService, day, idAgent);
 				checkImpossiblePostsFast(m, agent, idService, day, idAgent);
 			}
+			m->getValuation()->mergeHoursMonth(agent->getWorkingHoursMonth(), idService, idAgent, agent->getNbHoursMonth());
 			idAgent++;
 		}
 

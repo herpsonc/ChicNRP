@@ -130,7 +130,7 @@ void Valuation::mergeDaySeq(const std::vector<std::pair<int, int>> cons, const i
 	mutexDaySeq.lock();
 	for (auto value : daySeq[service][agent][iCons]) {
 		//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
-		if (value.first >= day - (int)constraint->getSequenceAtt().size() && value.second <= day + (int)constraint->getSequenceAtt().size()) {
+		if (value.first >= day - (int)(*constraint->getSequenceAtt()).size() && value.second <= day + (int)(*constraint->getSequenceAtt()).size()) {
 			found = false;
 			for (auto e : cons) {
 				if (value.first == e.first && value.second == e.second) {
@@ -176,7 +176,7 @@ void Valuation::mergeInvolved(const std::vector<std::pair<std::pair<int, int>, s
 	mutexInvolved.lock();
 	for (auto value : involved[service][agent][iCons]) {
 		//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
-		if (value.first.first >= day - (int)constraint->getFirstSeqAtt().size() - (int)constraint->getLastSeqAtt().size() + 1 && value.second.second <= day + (int)constraint->getFirstSeqAtt().size() + (int)constraint->getLastSeqAtt().size() - 1) {
+		if (value.first.first >= day - (int)(*constraint->getFirstSeqAtt()).size() - (int)(*constraint->getLastSeqAtt()).size() + 1 && value.second.second <= day + (int)(*constraint->getFirstSeqAtt()).size() + (int)(*constraint->getLastSeqAtt()).size() - 1) {
 			found = false;
 			for (auto e : cons) {
 				if (value.first.first == e.first.first && value.second.second == e.second.second &&
@@ -224,7 +224,7 @@ void Valuation::mergeSeqMinMax(const std::vector<std::pair<int, int>> cons, cons
 	int i = 0;
 	for (auto value : seqMinMax[service][agent][iCons]) {
 		//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
-		if (value.first >= day - (int)constraint->getSequenceAtt().size() && value.second <= day + (int)constraint->getSequenceAtt().size()) {
+		if (value.first >= day - (int)(*constraint->getSequenceAtt()).size() && value.second <= day + (int)(*constraint->getSequenceAtt()).size()) {
 			found = false;
 			for (auto e : cons) {
 				if (value.first == e.first && value.second == e.second) {

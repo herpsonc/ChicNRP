@@ -22,7 +22,7 @@ public:
 	ConstraintSeqMinMax(int day, MinMax type, int number, std::vector<string> sequence, int priority);
 	virtual ~ConstraintSeqMinMax();
 
-	const std::vector<string>& getSequenceAtt() const;
+	const std::vector<string>* getSequenceAtt() const;
 	void setSequenceAtt(const std::vector<string> &sequenceAtt);
 
 	int getFirstDay() const;
@@ -40,7 +40,6 @@ public:
 	string seqToPrint();
 
 	int check(const Agent* agent, int firstDayMonth, bool log);
-	std::vector<std::pair<int, int>> checkValuation(const Agent* agent, int firstDayMonth);
 
 protected:
 	int firstDay;
