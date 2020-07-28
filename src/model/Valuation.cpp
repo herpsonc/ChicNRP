@@ -281,7 +281,7 @@ void Valuation::mergeSeqMinMax(const std::vector<std::pair<int, int>> cons, cons
 	mutexseqMinMax.unlock();
 }
 
-void Valuation::mergeHoursWeekSlide(const std::vector<std::pair<int, int>> cons, const int day, const int service, const int agent)
+void Valuation::mergeHoursWeekSlide(const std::vector<std::pair<int, int>> cons, const int day, const int service, const int agent, const int priority)
 {
 	//Update la valuation
 	bool found = false;
@@ -301,7 +301,7 @@ void Valuation::mergeHoursWeekSlide(const std::vector<std::pair<int, int>> cons,
 				hoursWeekSlide[service][agent].erase(hoursWeekSlide[service][agent].begin() + i);
 				i--;
 				mutexScore.lock();
-				score += 1;
+				score += priority;
 				mutexScore.unlock();
 			}
 		}
@@ -319,14 +319,14 @@ void Valuation::mergeHoursWeekSlide(const std::vector<std::pair<int, int>> cons,
 		if (!isIn) {
 			hoursWeekSlide[service][agent].push_back(e);
 			mutexScore.lock();
-			score -= 1;
+			score -= priority;
 			mutexScore.unlock();
 		}
 	}
 	mutexHoursWeekSlide.unlock();
 }
 
-void Valuation::mergeImpossiblePosts(const bool fail, const int day, const int service, const int agent)
+void Valuation::mergeImpossiblePosts(const bool fail, const int day, const int service, const int agent, const int priority)
 {
 	bool found = false;
 	int i = 0;
@@ -338,7 +338,7 @@ void Valuation::mergeImpossiblePosts(const bool fail, const int day, const int s
 				impossiblePosts[service][agent].erase(impossiblePosts[service][agent].begin() + i);
 				i--;
 				mutexScore.lock();
-				score += 10;
+				score += priority;
 				mutexScore.unlock();
 				break;
 			}
@@ -347,26 +347,26 @@ void Valuation::mergeImpossiblePosts(const bool fail, const int day, const int s
 	}
 	if (!found && fail) {
 		impossiblePosts[service][agent].push_back(day);
-		score -= 10;
+		score -= priority;
 	}
 	mutexImpossiblePosts.unlock();
 }
 
-void Valuation::mergeHoursMonth(const float dif, const int service, const int agent, const float nbHoursMonth)
+void Valuation::mergeHoursMonth(const float dif, const int service, const int agent, const float nbHoursMonth, const int priority)
 {
 	mutexHoursMonth.lock();
 	if (hoursMonth[service][agent] > nbHoursMonth &&
 		hoursMonth[service][agent] + dif <= nbHoursMonth) {
 
 		mutexScore.lock();
-		score += 100;
+		score += priority;
 		mutexScore.unlock();
 	}
 	else if (hoursMonth[service][agent] <=nbHoursMonth &&
 		hoursMonth[service][agent] + dif > nbHoursMonth) {
 
 		mutexScore.lock();
-		score -= 100;
+		score -= priority;
 		mutexScore.unlock();
 	}
 

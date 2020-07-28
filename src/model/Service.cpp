@@ -13,11 +13,12 @@ Service::Service() {
 	id = "";
 	posts = vector<Post*>();
 	referents = vector<Agent*>();
-
+	postRequirementPriority = 100;
 }
 
 Service::Service(string id) {
 	this->id = id;
+	postRequirementPriority = 100;
 }
 
 Service::~Service() {
@@ -118,4 +119,14 @@ void Service::setAgents(const vector<Agent*> &agents) {
 //! \param agent Agent to add
 void Service::addAgent(Agent *agent) {
 	agents.push_back(agent);
+}
+
+void Service::setPostRequirementPriority(int priority)
+{
+	postRequirementPriority = priority;
+}
+
+const int Service::getPostRequirementPriority() const
+{
+	return postRequirementPriority;
 }

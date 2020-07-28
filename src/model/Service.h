@@ -47,6 +47,9 @@ public:
 	void setAgents(const vector<Agent*> &agents);
 	void addAgent(Agent* agent);
 
+	void setPostRequirementPriority(int priority);
+	const int getPostRequirementPriority() const;
+
 protected:
 	string id;
 	vector<Post*> posts;
@@ -54,6 +57,7 @@ protected:
 	vector<Agent*> agents; //Agents affectés au service
 	array<map<Post*,int>, 7> postRequired; //tableau de 7 map, chaque map correspond a des couples Poste/nbRequis (C5)
 	vector<Constraint*> constraints;
+	int postRequirementPriority;
 };
 
 #endif /* MODEL_SERVICE_H_ */

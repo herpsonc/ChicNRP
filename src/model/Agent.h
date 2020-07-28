@@ -16,7 +16,6 @@ enum Status {Beginner, Rooki, Confirmed};
 
 class Agent {
 public:
-	Agent();
 	Agent(string id, float nbHourMonth, float nbHoursWeek, Status status);
 	Agent(const Agent &obj);
 	virtual ~Agent();
@@ -48,6 +47,15 @@ public:
 	int checkWorkingHoursWeek(bool log);
 	int checkImpossiblePosts(bool log);
 
+	void setNbHoursMonthPriority(int priority);
+	const int getNbHoursMonthPriority() const;
+
+	void setNbHoursWeekPriority(int priority);
+	const int getNbHoursWeekPriority() const;
+
+	void setImpossiblePostsPriority(int priority);
+	const int getImpossiblePostsPriority() const;
+
 protected:
 	string id;
 	Status status;
@@ -59,6 +67,10 @@ protected:
 	array<bool, 31> calendarLock;
 	array<Post*, 7> lastMonthCalendar; //Liste des 7 derniers postes du mois précédent
 	std::vector<Post*> impossiblePosts; // Liste des postes qui ne sont pas attribuables à l'agent (C4)
+
+	int nbHoursMonthPriority;
+	int nbHoursWeekPriority;
+	int impossiblePostsPriority;
 
 };
 

@@ -10,18 +10,10 @@
 
 using namespace std;
 
-Agent::Agent() {
-	id ="";
-	// service = NULL;
-	nbHoursMonth = 0;
-	nbHoursWeek = 0;
-	status = Status::Confirmed;
-}
 
 Agent::Agent(string id, float nbHourMonth, float nbHoursWeek, Status status)
 {
 	this->id = id;
-	// service = NULL;
 	this->nbHoursMonth = nbHourMonth;
 	this->nbHoursWeek = nbHoursWeek;
 	this->status = status;
@@ -34,19 +26,25 @@ Agent::Agent(string id, float nbHourMonth, float nbHoursWeek, Status status)
 
 	for (int i = 0;i < (int)lastMonthCalendar.size();i++)
 		lastMonthCalendar[i] = NULL;
+
+	nbHoursMonthPriority = 10;
+	nbHoursWeekPriority = 10;
+	impossiblePostsPriority = 10;
 }
 
 Agent::Agent(const Agent &obj){
 	this->id=obj.id;
-	// this->service=obj.service;
 	this->nbHoursMonth=obj.nbHoursMonth;
 	this->nbHoursWeek=obj.nbHoursWeek;
 	this->status=obj.status;
 	this->calendar=obj.calendar;
 	this->lastMonthCalendar = obj.lastMonthCalendar;
 	this->impossiblePosts=obj.impossiblePosts;
-	// this->constraints=obj.constraints;
 	this->calendarLock = obj.calendarLock;
+
+	this->nbHoursMonthPriority = obj.nbHoursMonthPriority;
+	this->nbHoursWeekPriority = obj.nbHoursWeekPriority;
+	this->impossiblePostsPriority = obj.impossiblePostsPriority;
 }
 
 Agent::~Agent() {
@@ -204,6 +202,36 @@ int Agent::checkImpossiblePosts(bool log){
 	}
 
 	return nbFail;
+}
+
+void Agent::setNbHoursMonthPriority(int priority)
+{
+	nbHoursMonthPriority = priority;
+}
+
+const int Agent::getNbHoursMonthPriority() const
+{
+	return nbHoursMonthPriority;
+}
+
+void Agent::setNbHoursWeekPriority(int priority)
+{
+	nbHoursWeekPriority = priority;
+}
+
+const int Agent::getNbHoursWeekPriority() const
+{
+	return nbHoursWeekPriority;
+}
+
+void Agent::setImpossiblePostsPriority(int priority)
+{
+	impossiblePostsPriority = priority;
+}
+
+const int Agent::getImpossiblePostsPriority() const
+{
+	return impossiblePostsPriority;
 }
 
 

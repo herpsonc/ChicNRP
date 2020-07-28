@@ -242,7 +242,7 @@ void HeuristicToolBox::checkWorkingHoursWeekFast(Model* m, Agent* agent, int idS
 		}
 	}
 
-	m->getValuation()->mergeHoursWeekSlide(v, day, idService, idA);
+	m->getValuation()->mergeHoursWeekSlide(v, day, idService, idA, agent->getNbHoursWeekPriority());
 }
 
 void HeuristicToolBox::checkImpossiblePostsFast(Model* m, Agent* agent, int idService, int day, int idA)
@@ -254,7 +254,7 @@ void HeuristicToolBox::checkImpossiblePostsFast(Model* m, Agent* agent, int idSe
 		}
 	}
 
-	m->getValuation()->mergeImpossiblePosts(fail, day, idService, idA);
+	m->getValuation()->mergeImpossiblePosts(fail, day, idService, idA, agent->getImpossiblePostsPriority());
 }
 
 void HeuristicToolBox::checkAllFast(Model* m)
@@ -273,7 +273,7 @@ void HeuristicToolBox::checkAllFast(Model* m)
 				checkWorkingHoursWeekFast(m, agent, idService, day, idAgent);
 				checkImpossiblePostsFast(m, agent, idService, day, idAgent);
 			}
-			m->getValuation()->mergeHoursMonth(agent->getWorkingHoursMonth(), idService, idAgent, agent->getNbHoursMonth());
+			m->getValuation()->mergeHoursMonth(agent->getWorkingHoursMonth(), idService, idAgent, agent->getNbHoursMonth(), agent->getNbHoursMonthPriority());
 			idAgent++;
 		}
 

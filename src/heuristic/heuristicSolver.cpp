@@ -176,8 +176,8 @@ void heuristicSolver::checkFast(Model* m) {
 		//Check heure au mois
 		float dif = agent1->getCalendar()[swap.getDay()]->getTime() - agent2->getCalendar()[swap.getDay()]->getTime();
 
-		value->mergeHoursMonth(dif, swap.getService(), swap.getAgent1(), agent1->getNbHoursMonth());
-		value->mergeHoursMonth(-dif, swap.getService(), swap.getAgent2(), agent2->getNbHoursMonth());
+		value->mergeHoursMonth(dif, swap.getService(), swap.getAgent1(), agent1->getNbHoursMonth(), agent1->getNbHoursMonthPriority());
+		value->mergeHoursMonth(-dif, swap.getService(), swap.getAgent2(), agent2->getNbHoursMonth(), agent2->getNbHoursMonthPriority());
 
 		//Check heure semaine
 		HeuristicToolBox::checkWorkingHoursWeekFast(m, agent1, swap.getService(), swap.getDay(), swap.getAgent1());
@@ -233,8 +233,8 @@ void heuristicSolver::checkFastMultiThread(Model* m)
 		//Check heure au mois
 		float dif = agent1->getCalendar()[swap.getDay()]->getTime() - agent2->getCalendar()[swap.getDay()]->getTime();
 
-		value->mergeHoursMonth(dif, swap.getService(), swap.getAgent1(), agent1->getNbHoursMonth());
-		value->mergeHoursMonth(-dif, swap.getService(), swap.getAgent2(), agent2->getNbHoursMonth());
+		value->mergeHoursMonth(dif, swap.getService(), swap.getAgent1(), agent1->getNbHoursMonth(), agent1->getNbHoursMonthPriority());
+		value->mergeHoursMonth(-dif, swap.getService(), swap.getAgent2(), agent2->getNbHoursMonth(), agent2->getNbHoursMonthPriority());
 
 		//Check heure semaine
 		HeuristicToolBox::checkWorkingHoursWeekFast(m, agent1, swap.getService(), swap.getDay(), swap.getAgent1());
