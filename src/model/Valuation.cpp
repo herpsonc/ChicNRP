@@ -15,6 +15,7 @@ Valuation::Valuation(const Valuation& obj)
 	this->daySeq = obj.daySeq;
 	this->involved = obj.involved;
 	this->seqMinMax = obj.seqMinMax;
+	this->postsRequirement = obj.postsRequirement;
 }
 
 Valuation::~Valuation()
@@ -33,6 +34,7 @@ Valuation& Valuation::operator=(const Valuation& obj)
 		daySeq = obj.daySeq;
 		involved = obj.involved;
 		seqMinMax = obj.seqMinMax;
+		postsRequirement = obj.postsRequirement;
 	}
 	return *this;
 
@@ -120,6 +122,16 @@ const std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>>& V
 void Valuation::setSeqMinMax(const std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>> seqMinMax)
 {
 	this->seqMinMax = seqMinMax;
+}
+
+const std::vector<std::array<int, 31>> Valuation::getPostsRequirement()
+{
+	return postsRequirement;
+}
+
+void Valuation::setPostsRequirement(std::vector<std::array<int, 31>> postsRequirement)
+{
+	this->postsRequirement = postsRequirement;
 }
 
 void Valuation::mergeDaySeq(const std::vector<std::pair<int, int>> cons, const int day, const int service, const int agent, const ConstraintDaysSeq* constraint,const int iCons)
@@ -374,6 +386,17 @@ void Valuation::mergeHoursMonth(const float dif, const int service, const int ag
 	mutexHoursMonth.unlock();
 }
 
+void Valuation::mergePostRequirement(const int service, const int day, const int nbFail, const int priority)
+{
+	mutexPostRequirement.lock();
+	int diff = postsRequirement[service][day] - nbFail;
+	mutexScore.lock();
+	score += diff * priority;
+	mutexScore.unlock();
+	postsRequirement[service][day] = nbFail;
+	mutexPostRequirement.unlock();
+}
+
 //! Print all the informations about each constraints in the Valuation
 void Valuation::print()
 {
@@ -409,6 +432,12 @@ void Valuation::print()
 						<< seqMinMax[i][j][k][l].first << " " << seqMinMax[i][j][k][l].second << std::endl;
 				}
 			}
+		}
+	}
+
+	for (int i = 0; i < (int)postsRequirement.size(); i++) {
+		for (int j = 0; j < 31; j++) {
+			std::cout << "PostRequirements: Service " << i << " Day " << j << " nbFail " << postsRequirement[i][j] << endl;
 		}
 	}
 }

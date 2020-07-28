@@ -54,14 +54,18 @@ public:
 
 	int getNbDays() const;
 	void setNbDays(int nbDays);
+
+	int idDayToDay(int idDay);
+
 	float getOvertime() const;
 	void setOvertime(float overtime);
+
 	Post* getDefaultPost();
-	
+	void setDefaultPost(Post* defaultPost);
+
 	std::vector<Post*>& getPosts();
 	void addPost(Post*);
 
-	void setDefaultPost(Post* defaultPost);
 	Valuation* getValuation();
 	void setValuation(Valuation v);
 	void generateEmptyValuation();

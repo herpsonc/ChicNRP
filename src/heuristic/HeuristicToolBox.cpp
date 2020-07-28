@@ -257,6 +257,25 @@ void HeuristicToolBox::checkImpossiblePostsFast(Model* m, Agent* agent, int idSe
 	m->getValuation()->mergeImpossiblePosts(fail, day, idService, idA, agent->getImpossiblePostsPriority());
 }
 
+void HeuristicToolBox::checkPostsRequirementFast(Model* m, int idService, int day)
+{
+	int nbFail = 0;
+	auto required = m->getServices()[idService]->getPostRequired()[m->idDayToDay(day)];
+	
+	for (auto a : *m->getAgentFromPtr(m->getServices()[idService])) {
+		auto p = a->getCalendar()[day];
+		if (p != NULL && required.find(p) != required.end()) {
+			required[p] -= 1;
+		}
+	}
+
+	for (auto r : required) {
+		nbFail += r.second;
+	}
+
+	m->getValuation()->mergePostRequirement(idService, day, nbFail, m->getServices()[idService]->getPostRequirementPriority());
+}
+
 void HeuristicToolBox::checkAllFast(Model* m)
 {
 	//On génére un swapLog qui couvre tout les agents/service/jour
@@ -275,6 +294,10 @@ void HeuristicToolBox::checkAllFast(Model* m)
 			}
 			m->getValuation()->mergeHoursMonth(agent->getWorkingHoursMonth(), idService, idAgent, agent->getNbHoursMonth(), agent->getNbHoursMonthPriority());
 			idAgent++;
+		}
+
+		for (int day = 0; day < m->getNbDays(); day++) {
+			checkPostsRequirementFast(m, idService, day);
 		}
 
 		int i = 0;

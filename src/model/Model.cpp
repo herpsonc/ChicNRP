@@ -184,6 +184,11 @@ void Model::setNbDays(int nbDays) {
 	this->nbDays = nbDays;
 }
 
+int Model::idDayToDay(int idDay)
+{
+	return (idDay -1 + firstDay) % 7;
+}
+
 //! \return overtime overtime allowed for every Agents 
 float Model::getOvertime() const {
 	return overtime;
@@ -249,6 +254,7 @@ void Model::generateEmptyValuation()
 	auto daySeq = vector < vector<vector<vector<pair<int, int>>>>>();
 	auto involved = vector<vector<vector<vector<pair<pair<int, int>, pair<int, int>>>>>>();
 	auto seqMinMax = vector<vector<vector<vector<pair<int, int>>>>>();
+	auto postRequirements = vector<array<int, 31>>();
 
 	for (auto s : getServices()) {
 		iA = 0;
@@ -259,6 +265,7 @@ void Model::generateEmptyValuation()
 		daySeq.push_back(vector<vector<vector<pair<int, int>>>>());
 		involved.push_back(vector<vector<vector<pair<pair<int, int>, pair<int, int>>>>>());
 		seqMinMax.push_back(vector<vector<vector<pair<int, int>>>>());
+		postRequirements.push_back(array<int, 31>({ 0 }));
 
 		for (auto a : getAgentFrom(s)) {
 
@@ -296,6 +303,7 @@ void Model::generateEmptyValuation()
 	v->setDaySeq(daySeq);
 	v->setInvolved(involved);
 	v->setSeqMinMax(seqMinMax);
+	v->setPostsRequirement(postRequirements);
 
 	valuation = v;
 }

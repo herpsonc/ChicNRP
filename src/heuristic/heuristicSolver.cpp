@@ -187,6 +187,8 @@ void heuristicSolver::checkFast(Model* m) {
 		HeuristicToolBox::checkImpossiblePostsFast(m, agent1, swap.getService(), swap.getDay(), swap.getAgent1());
 		HeuristicToolBox::checkImpossiblePostsFast(m, agent2, swap.getService(), swap.getDay(), swap.getAgent2());
 
+		//Check Posts requirements
+		HeuristicToolBox::checkPostsRequirementFast(m, swap.getService(), swap.getDay());
 	}
 
 	//Contraintes

@@ -38,6 +38,9 @@ public:
 	const std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>>& getseqMinMax();
 	void setSeqMinMax(const std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>> seqMinMax);
 
+	const std::vector<std::array<int, 31>> getPostsRequirement();
+	void setPostsRequirement(std::vector<std::array<int, 31>> postsRequirement);
+
 	void mergeDaySeq(const std::vector<std::pair<int, int>> cons, const int day,
 		const int service, const int agent, const ConstraintDaysSeq* constraint, const int iCons);
 	void mergeInvolved(const std::vector <std::pair<std::pair<int, int>, std::pair<int, int>>> cons, const int day,
@@ -48,6 +51,7 @@ public:
 		const int service, const int agent, const int priority);
 	void mergeImpossiblePosts(const bool fail, const int day, const int service, const int agent, const int priority);
 	void mergeHoursMonth(const float dif, const int service, const int agent, const float nbHoursMonth, const int priority);
+	void mergePostRequirement(const int service, const int day, const int nbFail, const int priority);
 
 	void print();
 private:
@@ -57,12 +61,10 @@ private:
 	std::vector<std::vector<std::array<int, 6>>> hoursWeeks;
 	std::vector<std::vector<std::vector<std::pair<int, int>>>> hoursWeekSlide;
 	std::vector<std::vector<std::vector<int>>> impossiblePosts;
-
 	std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>> daySeq;
-
 	std::vector<std::vector<std::vector<std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>>>>> involved;
-
 	std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>> seqMinMax;
+	std::vector<std::array<int, 31>> postsRequirement;
 
 	//Mutex
 	std::mutex mutexScore;
@@ -72,5 +74,6 @@ private:
 	std::mutex mutexDaySeq;
 	std::mutex mutexInvolved;
 	std::mutex mutexseqMinMax;
+	std::mutex mutexPostRequirement;
 };
 
