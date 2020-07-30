@@ -9,6 +9,7 @@
 #include <array>
 #include "Agent.h"
 #include "constraint/Constraint.h"
+#include "PredefinedPlanning.h"
 
 
 using namespace std;
@@ -50,6 +51,9 @@ public:
 	void setPostRequirementPriority(int priority);
 	const int getPostRequirementPriority() const;
 
+	void setPredefinedPlanning(PredefinedPlanning planning);
+	PredefinedPlanning* getPredefinedPlanning();
+
 protected:
 	string id;
 	vector<Post*> posts;
@@ -58,6 +62,7 @@ protected:
 	array<map<Post*,int>, 7> postRequired; //tableau de 7 map, chaque map correspond a des couples Poste/nbRequis (C5)
 	vector<Constraint*> constraints;
 	int postRequirementPriority;
+	PredefinedPlanning predefinedPlanning;
 };
 
 #endif /* MODEL_SERVICE_H_ */

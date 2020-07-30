@@ -1,12 +1,5 @@
-/*
- * Model.h
- *
- *  Created on: 1 mars 2020
- *      Author: Valars
- */
 #pragma once
 
-// enum Day { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, None };
 
 #ifndef SRC_MODEL_MODEL_H_
 #define SRC_MODEL_MODEL_H_
@@ -37,7 +30,6 @@ public:
 	virtual ~Model();
 
 	Model& operator = (const Model& obj);
-
 
 	std::vector<Service*>& getServices();
 
@@ -94,7 +86,6 @@ protected:
 	std::vector<Post*> posts;
 	Valuation* valuation;
 	std::vector<SwapLog> swapLog;
-
 };
 
 #endif /* SRC_MODEL_MODEL_H_ */

@@ -1,12 +1,4 @@
-/*
- * Model.cpp
- *
- *  Created on: 1 mars 2020
- *      Author: Valars
- */
-
 #include "Model.h"
-// #include "../rapidXml/rapidxml_print.hpp"
 
 using namespace std;
 using namespace rapidxml;

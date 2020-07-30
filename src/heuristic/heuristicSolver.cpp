@@ -89,6 +89,70 @@ void heuristicSolver::nullTo(Model* m, Post* post) {
 	}
 }
 
+Model heuristicSolver::predefinedGreedy(const Model m)
+{
+	Model mr = Model(m);
+	int nbFail, nbLock;
+
+	for (auto service : mr.getServices()) {
+		auto planning = service->getPredefinedPlanning();
+
+		//Pour chaque ligne du planning, on cherche l'agent le plus contraint
+		//(posts impossibles/nombres de posts lock) que l'on peut placer
+
+		for (auto line : *planning->getPlanning()) {
+			int bestFail = 1000;
+			int bestLock = 0;
+			int bestId = 0;
+			int i = 0;
+			for (auto agent : service->getAgents()) {
+				nbFail = 0;
+				nbLock = 0;
+				for (int i = 0; i < mr.getNbDays(); i++) {
+					if (line[i] != NULL) {
+						if (agent->getCalendar()[i] != NULL) {
+							nbFail++;
+							nbLock++;
+						}
+						else{
+							for (auto ip : agent->getImpossiblePosts()) {
+								if (line[i] == ip) {
+									nbFail++;
+									break;
+								}
+							}
+						}
+					}
+					else {
+						if (agent->getCalendar()[i] != NULL) {
+							nbLock++;
+						}
+					}
+				}
+
+				//best candidate
+				if (nbFail < bestFail) {
+					bestId = i;
+					bestFail = nbFail;
+					bestLock = nbLock;
+				}
+				else if (nbFail == bestFail && nbLock < bestLock) {
+					bestId = i;
+					bestFail = nbFail;
+					bestLock = nbLock;
+				}
+
+				i++;
+			}
+
+			service->getAgents()[bestId]->setCalendar(line);
+
+		}
+	}
+
+	return mr;
+}
+
 int heuristicSolver::check(Model* m, bool log) {
 
 	int score = 0;

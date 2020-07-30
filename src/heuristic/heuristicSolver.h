@@ -22,6 +22,7 @@ public:
 
 	static Model greedy(const Model m);
 	static void nullTo(Model* m, Post* post);
+	static Model predefinedGreedy(const Model m);
 	static int check(Model* m, bool log);
 	static void checkFast(Model* m);
 	static void checkFastMultiThread(Model* m); 

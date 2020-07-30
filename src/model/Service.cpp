@@ -130,3 +130,13 @@ const int Service::getPostRequirementPriority() const
 {
 	return postRequirementPriority;
 }
+
+void Service::setPredefinedPlanning(PredefinedPlanning planning)
+{
+	predefinedPlanning = planning;
+}
+
+PredefinedPlanning* Service::getPredefinedPlanning()
+{
+	return &predefinedPlanning;
+}
