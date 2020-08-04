@@ -287,7 +287,7 @@ void HeuristicToolBox::checkAllFast(Model* m)
 		for (auto agent : m->getAgentFrom(service)) {
 
 			for (int day = 0; day < m->getNbDays(); day++) {
-				m->addSwapLog(SwapLog(idAgent, idAgent, day, idService));
+				m->addSwapLog(SwapLog(idAgent, idAgent, day, idService, NULL, NULL));
 
 				checkWorkingHoursWeekFast(m, agent, idService, day, idAgent);
 				checkImpossiblePostsFast(m, agent, idService, day, idAgent);

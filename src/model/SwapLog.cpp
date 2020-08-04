@@ -10,12 +10,14 @@ SwapLog::SwapLog()
 SwapLog::~SwapLog() {
 
 }
-SwapLog::SwapLog(int agent1, int agent2, int day, int service)
+SwapLog::SwapLog(int agent1, int agent2, int day, int service, Post* post1, Post* post2)
 {
 	this->agent1 = agent1;
 	this->agent2 = agent2;
 	this->day = day;
 	this->service = service;
+	this->post1 = post1;
+	this->post2 = post2;
 }
 
 //! \return agent1 first agent concerned by the swap
@@ -40,4 +42,21 @@ int SwapLog::getDay()
 int SwapLog::getService()
 {
 	return service;
+}
+
+Post* SwapLog::getPost1()
+{
+	return post1;
+}
+
+Post* SwapLog::getPost2()
+{
+	return post2;
+}
+
+void SwapLog::reverse()
+{
+	Post* p = post1;
+	post1 = post2;
+	post2 = p;
 }

@@ -324,6 +324,10 @@ void Model::rollBack()
 			[swapLog[i].getAgent2()]->getCalendar()[swapLog[i].getDay()], swapLog[i].getDay());
 		agents[services[swapLog[i].getService()]][swapLog[i].getAgent2()]->setCalendarDay(p1, swapLog[i].getDay());
 	}
+
+	for (int i = 0; i < swapLog.size();i++) {
+		swapLog[i].reverse();
+	}
 }
 
 vector<Constraint*> Model::createConstraints() {

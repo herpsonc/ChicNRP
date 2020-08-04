@@ -437,7 +437,33 @@ void Valuation::print()
 
 	for (int i = 0; i < (int)postsRequirement.size(); i++) {
 		for (int j = 0; j < 31; j++) {
-			std::cout << "PostRequirements: Service " << i << " Day " << j << " nbFail " << postsRequirement[i][j] << endl;
+			if(postsRequirement[i][j] > 0)
+				std::cout << "PostRequirements: Service " << i << " Day " << j << " nbFail " << postsRequirement[i][j] << endl;
+		}
+	}
+
+	//Heures
+	for (int i = 0; i < (int)hoursMonth.size(); i++) {
+		for (int j = 0; j < (int)hoursMonth[i].size(); j++) {
+			cout << "HoursMonth: Service " << i << " Agent " << j << " -> " << hoursMonth[i][j] << endl;
+		}
+	}
+
+	//Depassement semaine
+	for (int i = 0; i < (int)hoursWeekSlide.size(); i++) {
+		for (int j = 0; j < (int)hoursWeekSlide[i].size(); j++) {
+			for (int k = 0; k < hoursWeekSlide[i][j].size(); k++) {
+				cout << "hoursWeekSlide: Service " << i << " Agent " << j << " Day " << hoursWeekSlide[i][j][k].first << " to " << hoursWeekSlide[i][j][k].second << endl;
+			}
+		}
+	}
+
+	//Postes impossibles
+	for (int i = 0; i < (int)impossiblePosts.size(); i++) {
+		for (int j = 0; j < (int)impossiblePosts[i].size(); j++) {
+			for (int k = 0; k < impossiblePosts[i][j].size(); k++) {
+				cout << "impossiblePosts: Service " << i << " Agent " << j << " Day " << impossiblePosts[i][j][k] << endl;
+			}
 		}
 	}
 }

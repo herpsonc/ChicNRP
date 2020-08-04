@@ -916,7 +916,7 @@ int main() {
 	//auto m3 = heuristicSolver::greedy(m);
 	//m3.printPlanning();
 	
-	auto m2 = heuristicSolver::iterative2Fast(m, 10000, 3);
+	auto m2 = heuristicSolver::iterative2Fast(m, 100000, 3);
 
 	m2.printPlanning();
 	m2.getValuation()->print();
