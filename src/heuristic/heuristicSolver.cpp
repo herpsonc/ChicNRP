@@ -622,7 +622,7 @@ Model heuristicSolver::iterative2Fast(const Model m, int nbIte, int range)
 	cout << "scoreInit" << bestScore << endl;
 
 	for (int j = 0; j < nbIte; j++) {
-		if (j % 100 == 0) {
+		if (j % 1000 == 0) {
 			cout << "Iteration " << j << endl;
 		}
 		currentModel.resetSwapLog();

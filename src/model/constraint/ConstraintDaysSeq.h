@@ -16,14 +16,14 @@
 class ConstraintDaysSeq: public Constraint {
 
 public:
-	ConstraintDaysSeq(std::vector<string> seq, int priority);
+	ConstraintDaysSeq(std::vector<int> seq, int priority);
 	virtual ~ConstraintDaysSeq();
 
 	const int getPriority() const;
 	void setPriority(int priority);
 
-	const std::vector<string>* getSequenceAtt() const;
-	void setSequenceAtt(const std::vector<string> &sequenceAtt);
+	const std::vector<int>* getSequenceAtt() const;
+	void setSequenceAtt(const std::vector<int> &sequenceAtt);
 
 	string getSeqToPrint();
 	int check(const Agent* agent, bool log);
@@ -31,7 +31,7 @@ public:
 
 protected:
 	int priority;
-	std::vector<string> sequenceAtt;
+	std::vector<int> sequenceAtt;
 
 };
 

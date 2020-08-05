@@ -334,52 +334,52 @@ vector<Constraint*> Model::createConstraints() {
 	std::vector<Constraint*> constraints;
 
 	//Pas de Nuit/Jour
-	auto v = vector<string>();
-	v.push_back("night");
-	v.push_back("day");
+	auto v = vector<int>();
+	v.push_back(4);
+	v.push_back(2);
 	constraints.push_back(new ConstraintDaysSeq(v, 30)); // cJN
 
 	//Pas 3 jours/nuit de travail d'affilée
-	v = vector<string>();
-	v.push_back("workL");
-	v.push_back("workL");
-	v.push_back("workL");
+	v = vector<int>();
+	v.push_back(1);
+	v.push_back(1);
+	v.push_back(1);
 	constraints.push_back(new ConstraintDaysSeq(v, 50)); // c3N
 
 	//Pas de nuit avant un congé posé
-	v = vector<string>();
-	v.push_back("night");
-	v.push_back("ca");
+	v = vector<int>();
+	v.push_back(4);
+	v.push_back(6);
 	constraints.push_back(new ConstraintDaysSeq(v, 30)); // crn
 
 	//Après 2 jours/nuits au moins 2 repos
-	v = vector<string>();
-	v.push_back("workL");
-	v.push_back("workL");
-	auto v2 = vector<string>();
-	v2.push_back("rest");
-	v2.push_back("rest");
+	v = vector<int>();
+	v.push_back(1);
+	v.push_back(1);
+	auto v2 = vector<int>();
+	v2.push_back(5);
+	v2.push_back(5);
 	constraints.push_back(new ConstraintInvolved(v, v2, -1, 30)); // cnr
 
 	//Après 1 journée longue + 1 repos  -> +1 repos min
-	v = vector<string>();
-	v.push_back("workL");
-	v.push_back("rest");
-	v2 = vector<string>();
-	v2.push_back("rest");
+	v = vector<int>();
+	v.push_back(1);
+	v.push_back(5);
+	v2 = vector<int>();
+	v2.push_back(5);
 	constraints.push_back(new ConstraintInvolved(v, v2, -1, 20)); //cwl2r
 
 	//Evite les journées isolées
-	v = vector<string>();
-	v.push_back("rest");
-	v.push_back("work");
-	v.push_back("rest");
+	v = vector<int>();
+	v.push_back(5);
+	v.push_back(0);
+	v.push_back(5);
 	constraints.push_back(new ConstraintDaysSeq(v, 10)); //cji
 
 	//1 week-end par mois
-	v = vector<string>();
-	v.push_back("work");
-	v.push_back("work");
+	v = vector<int>();
+	v.push_back(0);
+	v.push_back(0);
 	constraints.push_back(new ConstraintSeqMinMax(5, MinMax::Min, 1, v, 1));
 
 	return constraints;
@@ -579,7 +579,7 @@ void Model::generateXML(string fileName){
 	//Attributs du post
 	for (auto attri : defaultPost->getAttributs()) {
 		xml_node<>* att = doc.allocate_node(node_element, "Attribut");
-		att->append_attribute(doc.allocate_attribute("Attribut", doc.allocate_string(attri.c_str())));
+		att->append_attribute(doc.allocate_attribute("Attribut", doc.allocate_string(attributs[attri].c_str())));
 		defaultP->append_node(att);
 	}
 
@@ -599,7 +599,7 @@ void Model::generateXML(string fileName){
 			//Attributs du post
 			for (auto a : p->getAttributs()) {
 				xml_node<>* att = doc.allocate_node(node_element, "Attribut");
-				att->append_attribute(doc.allocate_attribute("Attribut", doc.allocate_string(a.c_str())));
+				att->append_attribute(doc.allocate_attribute("Attribut", doc.allocate_string(attributs[a].c_str())));
 				post->append_node(att);
 			}
 			service->append_node(post);
@@ -626,7 +626,7 @@ void Model::generateXML(string fileName){
 				constraint->append_attribute(doc.allocate_attribute("priority", doc.allocate_string(to_string(((ConstraintDaysSeq*)c)->getPriority()).c_str())));
 				for (auto sA : *((ConstraintDaysSeq*)c)->getSequenceAtt()) {
 					xml_node<>* att = doc.allocate_node(node_element, "Attribut");
-					att->append_attribute(doc.allocate_attribute("Att", doc.allocate_string(sA.c_str())));
+					att->append_attribute(doc.allocate_attribute("Att", doc.allocate_string(attributs[sA].c_str())));
 					constraint->append_node(att);
 				}
 				service->append_node(constraint);
@@ -637,12 +637,12 @@ void Model::generateXML(string fileName){
 				constraint->append_attribute(doc.allocate_attribute("day", doc.allocate_string(to_string(((ConstraintInvolved*)c)->getFirstDay()).c_str())));
 				for (auto fs : *((ConstraintInvolved*)c)->getFirstSeqAtt()) {
 					xml_node<>* att = doc.allocate_node(node_element, "FirstAttribut");
-					att->append_attribute(doc.allocate_attribute("Att", doc.allocate_string(fs.c_str())));
+					att->append_attribute(doc.allocate_attribute("Att", doc.allocate_string(attributs[fs].c_str())));
 					constraint->append_node(att);
 				}
 				for (auto fs : *((ConstraintInvolved*)c)->getLastSeqAtt()) {
 					xml_node<>* att = doc.allocate_node(node_element, "LastAttribut");
-					att->append_attribute(doc.allocate_attribute("Att", doc.allocate_string(fs.c_str())));
+					att->append_attribute(doc.allocate_attribute("Att", doc.allocate_string(attributs[fs].c_str())));
 					constraint->append_node(att);
 				}
 				service->append_node(constraint);
@@ -656,7 +656,7 @@ void Model::generateXML(string fileName){
 				constraint->append_attribute(doc.allocate_attribute("type", doc.allocate_string(to_string(((ConstraintSeqMinMax*)c)->getType()).c_str())));
 				for (auto fs : *((ConstraintSeqMinMax*)c)->getSequenceAtt()) {
 					xml_node<>* att = doc.allocate_node(node_element, "Attribut");
-					att->append_attribute(doc.allocate_attribute("Att", doc.allocate_string(fs.c_str())));
+					att->append_attribute(doc.allocate_attribute("Att", doc.allocate_string(attributs[fs].c_str())));
 					constraint->append_node(att);
 				}
 
@@ -681,7 +681,7 @@ void Model::generateXML(string fileName){
 				//Attributs du post
 				for (auto attri : ip->getAttributs()) {
 					xml_node<>* att = doc.allocate_node(node_element, "Attribut");
-					att->append_attribute(doc.allocate_attribute("Attribut", doc.allocate_string(attri.c_str())));
+					att->append_attribute(doc.allocate_attribute("Attribut", doc.allocate_string(attributs[attri].c_str())));
 					post->append_node(att);
 				}
 				agent->append_node(post);
@@ -699,7 +699,7 @@ void Model::generateXML(string fileName){
 					//Attributs du post
 					for (auto attri : p->getAttributs()) {
 						xml_node<>* att = doc.allocate_node(node_element, "Attribut");
-						att->append_attribute(doc.allocate_attribute("Attribut", doc.allocate_string(attri.c_str())));
+						att->append_attribute(doc.allocate_attribute("Attribut", doc.allocate_string(attributs[attri].c_str())));
 						day->append_node(att);
 					}
 				}
@@ -760,7 +760,9 @@ void Model::loadXML(string fileName){
 	Post* post = new Post(defaultPost->first_attribute("id")->value(), atof(defaultPost->first_attribute("nbh")->value()));
 	//attributs
 	for (auto attNode = defaultPost->first_node("Attribut"); attNode; attNode = attNode->next_sibling("Attribut")) {
-		post->addAttribut(attNode->first_attribute("Attribut")->value());
+		if (find(attributs.begin(), attributs.end(), attNode->first_attribute("Attribut")->value()) == attributs.end())
+			addAttribut(attNode->first_attribute("Attribut")->value());
+		post->addAttribut(attributToInt(attNode->first_attribute("Attribut")->value()));
 	}
 
 	this->defaultPost = post;
@@ -782,7 +784,9 @@ void Model::loadXML(string fileName){
 				Post* post = new Post(postNode->first_attribute("id")->value(), atof(postNode->first_attribute("time")->value()));
 				//attributs
 				for (auto attNode = postNode->first_node("Attribut"); attNode; attNode = attNode->next_sibling("Attribut")) {
-					post->addAttribut(attNode->first_attribute("Attribut")->value());
+					if (find(attributs.begin(), attributs.end(), attNode->first_attribute("Attribut")->value()) == attributs.end())
+						addAttribut(attNode->first_attribute("Attribut")->value());
+					post->addAttribut(attributToInt(attNode->first_attribute("Attribut")->value()));
 				}
 				service->addPost(post);
 				mapPosts.insert(pair<string, Post*>(post->getId(), post));
@@ -806,29 +810,37 @@ void Model::loadXML(string fileName){
 
 		//Contraintes du service
 		for (auto constraintDaySeqNode = serviceNode->first_node("ConstraintDaySeq"); constraintDaySeqNode; constraintDaySeqNode = constraintDaySeqNode->next_sibling("ConstraintDaySeq")) {
-			auto v = vector<string>();
+			auto v = vector<int>();
 			for (auto att = constraintDaySeqNode->first_node("Attribut"); att; att = att->next_sibling("Attribut")) {
-				v.push_back(att->first_attribute("Att")->value());
+				if (find(attributs.begin(), attributs.end(), att->first_attribute("Att")->value()) == attributs.end())
+					addAttribut(att->first_attribute("Att")->value());
+				v.push_back(attributToInt(att->first_attribute("Att")->value()));
 			}
 			service->addConstraint(new ConstraintDaysSeq(v, atoi(constraintDaySeqNode->first_attribute("priority")->value())));
 		}
 
 		for (auto constraintInvolved = serviceNode->first_node("ConstraintInvolved"); constraintInvolved; constraintInvolved = constraintInvolved->next_sibling("ConstraintInvolved")) {
-			auto v = vector<string>();
-			auto v2 = vector<string>();
+			auto v = vector<int>();
+			auto v2 = vector<int>();
 			for (auto att = constraintInvolved->first_node("FirstAttribut"); att; att = att->next_sibling("FirstAttribut")) {
-				v.push_back(att->first_attribute("Att")->value());
+				if (find(attributs.begin(), attributs.end(), att->first_attribute("Att")->value()) == attributs.end())
+					addAttribut(att->first_attribute("Att")->value());
+				v.push_back(attributToInt(att->first_attribute("Att")->value()));
 			}
 			for (auto att = constraintInvolved->first_node("LastAttribut"); att; att = att->next_sibling("LastAttribut")) {
-				v2.push_back(att->first_attribute("Att")->value());
+				if (find(attributs.begin(), attributs.end(), att->first_attribute("Att")->value()) == attributs.end())
+					addAttribut(att->first_attribute("Att")->value());
+				v2.push_back(attributToInt(att->first_attribute("Att")->value()));
 			}
 			service->addConstraint(new ConstraintInvolved(v, v2, atoi(constraintInvolved->first_attribute("day")->value()), atoi(constraintInvolved->first_attribute("priority")->value())));
 		}
 
 		for (auto constraintSeqMinMax = serviceNode->first_node("ConstraintSeqMinMax"); constraintSeqMinMax; constraintSeqMinMax = constraintSeqMinMax->next_sibling("ConstraintSeqMinMax")) {
-			auto v = vector<string>();
+			auto v = vector<int>();
 			for (auto att = constraintSeqMinMax->first_node("Attribut"); att; att = att->next_sibling("Attribut")) {
-				v.push_back(att->first_attribute("Att")->value());
+				if (find(attributs.begin(), attributs.end(), att->first_attribute("Att")->value()) == attributs.end())
+					addAttribut(att->first_attribute("Att")->value());
+				v.push_back(attributToInt(att->first_attribute("Att")->value()));
 			}
 			service->addConstraint(new ConstraintSeqMinMax(atoi(constraintSeqMinMax->first_attribute("day")->value()), (MinMax)atoi(constraintSeqMinMax->first_attribute("type")->value()),
 				atoi(constraintSeqMinMax->first_attribute("number")->value()), v, atoi(constraintSeqMinMax->first_attribute("priority")->value())));
@@ -850,7 +862,9 @@ void Model::loadXML(string fileName){
 						Post* post = new Post(dayNode->first_attribute("id")->value(), atof(dayNode->first_attribute("nbh")->value()));
 						//attributs
 						for (auto attNode = dayNode->first_node("Attribut"); attNode; attNode = attNode->next_sibling("Attribut")) {
-							post->addAttribut(attNode->first_attribute("Attribut")->value());
+							if (find(attributs.begin(), attributs.end(), attNode->first_attribute("Attribut")->value()) == attributs.end())
+								addAttribut(attNode->first_attribute("Attribut")->value());
+							post->addAttribut(attributToInt(attNode->first_attribute("Attribut")->value()));
 						}
 						mapPosts.insert(pair<string, Post*>(post->getId(), post));
 					}
@@ -871,7 +885,9 @@ void Model::loadXML(string fileName){
 					Post* post = new Post(impossiblePost->first_attribute("id")->value(), atof(impossiblePost->first_attribute("nbh")->value()));
 					//attributs
 					for (auto attNode = impossiblePost->first_node("Attribut"); attNode; attNode = attNode->next_sibling("Attribut")) {
-						post->addAttribut(attNode->first_attribute("Attribut")->value());
+						if (find(attributs.begin(), attributs.end(), attNode->first_attribute("Attribut")->value()) == attributs.end())
+							addAttribut(attNode->first_attribute("Attribut")->value());
+						post->addAttribut(attributToInt(attNode->first_attribute("Attribut")->value()));
 					}
 					mapPosts.insert(pair<string, Post*>(post->getId(), post));
 				}
@@ -991,4 +1007,18 @@ void Model::generateXlsx(string fileName)
 	res << "</Workbook>";
 
 	res.close();
+}
+
+void Model::addAttribut(string att)
+{
+	attributs.push_back(att);
+}
+
+int Model::attributToInt(string att)
+{
+	for (int i = 0; i < attributs.size(); i++) {
+		if (attributs[i] == att)
+			return i;
+	}
+	return -1;
 }

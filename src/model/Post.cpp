@@ -45,16 +45,16 @@ void Post::setTime(float time) {
 }
 
 //! \return attributs vector of attributs of the Post
-const vector<string>& Post::getAttributs() const {
+const vector<int>& Post::getAttributs() const {
 	return attributs;
 }
 
 //! \param attributs attributs to set
-void Post::setAttributs(const vector<string> &attributs) {
+void Post::setAttributs(const vector<int> &attributs) {
 	this->attributs = attributs;
 }
 
 //! \param attribut attribut to add
-void Post::addAttribut(string attribut) {
+void Post::addAttribut(int attribut) {
 	attributs.push_back(attribut);
 }

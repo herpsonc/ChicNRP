@@ -19,11 +19,11 @@ enum MinMax {Min, Max};
 
 class ConstraintSeqMinMax: public Constraint {
 public:
-	ConstraintSeqMinMax(int day, MinMax type, int number, std::vector<string> sequence, int priority);
+	ConstraintSeqMinMax(int day, MinMax type, int number, std::vector<int> sequence, int priority);
 	virtual ~ConstraintSeqMinMax();
 
-	const std::vector<string>* getSequenceAtt() const;
-	void setSequenceAtt(const std::vector<string> &sequenceAtt);
+	const std::vector<int>* getSequenceAtt() const;
+	void setSequenceAtt(const std::vector<int> &sequenceAtt);
 
 	int getFirstDay() const;
 	void setFirstDay(int firstDay);
@@ -47,7 +47,7 @@ protected:
 	int number;
 	int priority;
 
-	std::vector<string> sequenceAtt;
+	std::vector<int> sequenceAtt;
 
 
 };

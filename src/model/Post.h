@@ -26,15 +26,15 @@ public:
 	float getTime() const;
 	void setTime(float time);
 
-	const vector<string>& getAttributs() const;
-	void setAttributs(const vector<string> &attributs);
-	void addAttribut(string attribut);
+	const vector<int>& getAttributs() const;
+	void setAttributs(const vector<int> &attributs);
+	void addAttribut(int attribut);
 
 protected:
 	string id;
 	float time;
 
-	vector<string> attributs;
+	vector<int> attributs;
 };
 
 #endif /* MODEL_POST_H_ */

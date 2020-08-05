@@ -8,7 +8,7 @@
 #include "ConstraintSeqMinMax.h"
 
 
-ConstraintSeqMinMax::ConstraintSeqMinMax(int day, MinMax type, int number, std::vector<string> sequence, int priority) {
+ConstraintSeqMinMax::ConstraintSeqMinMax(int day, MinMax type, int number, std::vector<int> sequence, int priority) {
 	this->firstDay=day;
 	this->type=type;
 	this->number=number;
@@ -21,12 +21,12 @@ ConstraintSeqMinMax::~ConstraintSeqMinMax() {
 	// TODO Auto-generated destructor stub
 }
 
-const std::vector<string>* ConstraintSeqMinMax::getSequenceAtt() const {
+const std::vector<int>* ConstraintSeqMinMax::getSequenceAtt() const {
 	return &sequenceAtt;
 }
 
 void ConstraintSeqMinMax::setSequenceAtt(
-		const std::vector<string> &sequenceAtt) {
+		const std::vector<int> &sequenceAtt) {
 	this->sequenceAtt = sequenceAtt;
 }
 

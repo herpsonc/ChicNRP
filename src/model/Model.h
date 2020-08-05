@@ -75,6 +75,8 @@ public:
 	void loadXML(string fileName);
 	void generateXlsx(string fileName);
 
+	void addAttribut(string att);
+	int attributToInt(string att);
 
 protected:
 	int firstDay;
@@ -86,6 +88,7 @@ protected:
 	std::vector<Post*> posts;
 	Valuation* valuation;
 	std::vector<SwapLog> swapLog;
+	std::vector<string> attributs;
 };
 
 #endif /* SRC_MODEL_MODEL_H_ */

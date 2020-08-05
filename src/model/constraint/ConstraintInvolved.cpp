@@ -9,7 +9,7 @@
 
 using namespace std;
 
-ConstraintInvolved::ConstraintInvolved(vector<string> first,  vector<string> last, int firstDay, int priority) {
+ConstraintInvolved::ConstraintInvolved(vector<int> first,  vector<int> last, int firstDay, int priority) {
 	this->firstSeqAtt = first;
 	this->lastSeqAtt = last;
 	this->priority = priority;
@@ -21,22 +21,22 @@ ConstraintInvolved::~ConstraintInvolved() {
 	// TODO Auto-generated destructor stub
 }
 
-const std::vector<string>* ConstraintInvolved::getFirstSeqAtt() const
+const std::vector<int>* ConstraintInvolved::getFirstSeqAtt() const
 {
 	return &firstSeqAtt;
 }
 
-void ConstraintInvolved::setFirstSeqAtt(const std::vector<string>& firstSeq)
+void ConstraintInvolved::setFirstSeqAtt(const std::vector<int>& firstSeq)
 {
 	this->firstSeqAtt = firstSeq;
 }
 
-const std::vector<string>* ConstraintInvolved::getLastSeqAtt() const
+const std::vector<int>* ConstraintInvolved::getLastSeqAtt() const
 {
 	return &lastSeqAtt;
 }
 
-void ConstraintInvolved::setLastSeqAtt(const std::vector<string>& lastSeq)
+void ConstraintInvolved::setLastSeqAtt(const std::vector<int>& lastSeq)
 {
 	this->lastSeqAtt = lastSeq;
 }

@@ -16,13 +16,13 @@
 
 class ConstraintInvolved: public Constraint {
 public:
-	ConstraintInvolved(std::vector<string> first, std::vector<string> last, int firstDay, int priority);
+	ConstraintInvolved(std::vector<int> first, std::vector<int> last, int firstDay, int priority);
 	virtual ~ConstraintInvolved();
 
-	const std::vector<string>* getFirstSeqAtt() const;
-	void setFirstSeqAtt(const std::vector<string>& firstSeq);
-	const std::vector<string>* getLastSeqAtt() const;
-	void setLastSeqAtt(const std::vector<string>& lastSeq);
+	const std::vector<int>* getFirstSeqAtt() const;
+	void setFirstSeqAtt(const std::vector<int>& firstSeq);
+	const std::vector<int>* getLastSeqAtt() const;
+	void setLastSeqAtt(const std::vector<int>& lastSeq);
 
 	string getSeqToPrint();
 
@@ -34,8 +34,8 @@ public:
 protected:
 	int priority;
 	int firstDay;
-	std::vector<string> firstSeqAtt;
-	std::vector<string> lastSeqAtt;
+	std::vector<int> firstSeqAtt;
+	std::vector<int> lastSeqAtt;
 };
 
 #endif /* SRC_MODEL_CONSTRAINT_CONSTRAINTINVOLVED_H_ */

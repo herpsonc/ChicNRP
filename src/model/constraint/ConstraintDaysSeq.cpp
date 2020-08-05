@@ -9,7 +9,7 @@
 
 using namespace std;
 
-ConstraintDaysSeq::ConstraintDaysSeq(vector<string> seq, int priority) {
+ConstraintDaysSeq::ConstraintDaysSeq(vector<int> seq, int priority) {
 	sequenceAtt = seq;
 	this->priority = priority;
 
@@ -29,11 +29,11 @@ void ConstraintDaysSeq::setPriority(int priority) {
 	this->priority = priority;
 }
 
-const std::vector<string>* ConstraintDaysSeq::getSequenceAtt() const {
+const std::vector<int>* ConstraintDaysSeq::getSequenceAtt() const {
 	return &sequenceAtt;
 }
 
-void ConstraintDaysSeq::setSequenceAtt(const std::vector<string> &sequenceAtt) {
+void ConstraintDaysSeq::setSequenceAtt(const std::vector<int> &sequenceAtt) {
 	this->sequenceAtt = sequenceAtt;
 }
 

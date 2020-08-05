@@ -38,48 +38,56 @@ Model generateGhr() {
 
 		Service* ghr = new Service("GHR");
 
+		m.addAttribut("work");//0
+		m.addAttribut("workL");//1
+		m.addAttribut("day");//2
+		m.addAttribut("dayL");//3
+		m.addAttribut("night");//4
+		m.addAttribut("rest");//5
+		m.addAttribut("ca");//6
+
 		m.addService(ghr);
 
 		//Posts
 		Post* jg = new Post("Jg", 12.25);
-		jg->addAttribut("workL");
-		jg->addAttribut("work");
-		jg->addAttribut("day");
+		jg->addAttribut(1);
+		jg->addAttribut(0);
+		jg->addAttribut(2);
 		m.addPost(jg);
-		jg->addAttribut("dayL");
+		jg->addAttribut(3);
 
 		Post* ng = new Post("Ng", 12.25);
-		ng->addAttribut("workL");
-		ng->addAttribut("work");
-		ng->addAttribut("night");
+		ng->addAttribut(1);
+		ng->addAttribut(0);
+		ng->addAttribut(4);
 
 		Post* mat = new Post("Mat", 12.25);
-		mat->addAttribut("workL");
-		mat->addAttribut("day");
-		mat->addAttribut("work");
+		mat->addAttribut(1);
+		mat->addAttribut(2);
+		mat->addAttribut(0);
 
 		Post* repos = new Post("Repos", 0.0);
-		repos->addAttribut("rest");
+		repos->addAttribut(5);
 		m.addPost(repos);
 
 		Post* ca = new Post("Ca", 0.0);
-		ca->addAttribut("rest");
-		ca->addAttribut("ca");
+		ca->addAttribut(5);
+		ca->addAttribut(6);
 		//m.addPost(ca);
 
 		Post* oe = new Post("O/E", 7.5);
-		oe->addAttribut("work");
-		oe->addAttribut("day");
+		oe->addAttribut(0);
+		oe->addAttribut(2);
 		//m.addPost(oe);
 
 		Post* fp = new Post("FP", 7.5);
-		fp->addAttribut("work");
-		fp->addAttribut("day");
+		fp->addAttribut(0);
+		fp->addAttribut(2);
 		//m.addPost(fp);
 
 		Post* cs = new Post("CS", 7.5);
-		cs->addAttribut("work");
-		cs->addAttribut("day");
+		cs->addAttribut(0);
+		cs->addAttribut(2);
 		//m.addPost(cs);
 
 		m.setDefaultPost(repos);
@@ -99,11 +107,11 @@ Model generateGhr() {
 		m.addBasicConstraintsTo(ghr);
 
 		//Si samedi Jg alors Jg dimanche + lundi
-		auto v = vector<string>();
-		v.push_back("dayL");
-		auto v2 = vector<string>();
-		v2.push_back("dayL");
-		v2.push_back("dayL");
+		auto v = vector<int>();
+		v.push_back(3);
+		auto v2 = vector<int>();
+		v2.push_back(3);
+		v2.push_back(3);
 		ConstraintInvolved* cwjjj = new ConstraintInvolved(v, v2, 5, 1000);
 		ghr->addConstraint(cwjjj);
 		
@@ -186,33 +194,33 @@ Model addServiceSDC(Model m) {
 
 	//Posts
 	Post* js = new Post("Js", 12.25);
-	js->addAttribut("workL");
-	js->addAttribut("work");
-	js->addAttribut("day");
+	js->addAttribut(1);
+	js->addAttribut(0);
+	js->addAttribut(2);
 	Post* ns = new Post("Ns", 12.25);
-	ns->addAttribut("workL");
-	ns->addAttribut("work");
-	ns->addAttribut("night");
+	ns->addAttribut(1);
+	ns->addAttribut(0);
+	ns->addAttribut(4);
 
 	Post* uk = new Post("UK", 12.25);
-	uk->addAttribut("workL");
-	uk->addAttribut("work");
-	uk->addAttribut("day");
+	uk->addAttribut(1);
+	uk->addAttribut(0);
+	uk->addAttribut(2);
 
 
 	Post* repos = new Post("Repos", 0.0);
-	repos->addAttribut("rest");
+	repos->addAttribut(5);
 	Post* ca = new Post("Ca", 0.0);
-	ca->addAttribut("rest");
-	ca->addAttribut("ca");
+	ca->addAttribut(5);
+	ca->addAttribut(6);
 
 	Post* fp = new Post("FP", 7.5);
-	fp->addAttribut("work");
-	fp->addAttribut("day");
+	fp->addAttribut(0);
+	fp->addAttribut(2);
 
 	Post* cs = new Post("CS", 7.5);
-	cs->addAttribut("work");
-	cs->addAttribut("day");
+	cs->addAttribut(0);
+	cs->addAttribut(2);
 
 	m.setDefaultPost(repos);
 
@@ -332,45 +340,45 @@ Model addServiceSDN(Model m) {
 
 	//Posts
 	Post* jb = new Post("Jb", 12.25);
-	jb->addAttribut("workL");
-	jb->addAttribut("work");
-	jb->addAttribut("day");
+	jb->addAttribut(1);
+	jb->addAttribut(0);
+	jb->addAttribut(2);
 	Post* nb = new Post("Nb", 12.25);
-	nb->addAttribut("workL");
-	nb->addAttribut("work");
-	nb->addAttribut("night");
+	nb->addAttribut(1);
+	nb->addAttribut(0);
+	nb->addAttribut(4);
 
 	Post* u = new Post("U", 7.5);
-	u->addAttribut("work");
-	u->addAttribut("day");
+	u->addAttribut(0);
+	u->addAttribut(2);
 
 
 	Post* repos = new Post("Repos", 0.0);
-	repos->addAttribut("rest");
+	repos->addAttribut(5);
 	Post* ca = new Post("Ca", 0.0);
-	ca->addAttribut("rest");
-	ca->addAttribut("ca");
+	ca->addAttribut(5);
+	ca->addAttribut(6);
 
 	Post* fp = new Post("FP", 7.5);
-	fp->addAttribut("work");
-	fp->addAttribut("day");
+	fp->addAttribut(0);
+	fp->addAttribut(2);
 
 	Post* eo = new Post("E/O", 7.5);
-	eo->addAttribut("work");
-	eo->addAttribut("day");
+	eo->addAttribut(0);
+	eo->addAttribut(2);
 
 	//consultations
 	Post* cs = new Post("CS", 7.5);
-	cs->addAttribut("work");
-	cs->addAttribut("day");
+	cs->addAttribut(0);
+	cs->addAttribut(2);
 
 	Post* cgh = new Post("CGH", 7.5);
-	cgh->addAttribut("work");
-	cgh->addAttribut("day");
+	cgh->addAttribut(0);
+	cgh->addAttribut(2);
 
 	Post* ort = new Post("ORT", 7.5);
-	ort->addAttribut("work");
-	ort->addAttribut("day");
+	ort->addAttribut(0);
+	ort->addAttribut(2);
 
 	m.setDefaultPost(repos);
 
@@ -645,52 +653,52 @@ Model addServiceCS(Model m) {
 
 	//Posts
 	Post* cs = new Post("CS", 7.5);
-	cs->addAttribut("work");
-	cs->addAttribut("day");
+	cs->addAttribut(0);
+	cs->addAttribut(2);
 
 	Post* cgh = new Post("CGH", 7.5);
-	cgh->addAttribut("work");
-	cgh->addAttribut("day");
+	cgh->addAttribut(0);
+	cgh->addAttribut(2);
 
 	Post* ban = new Post("Ban", 7.5);
-	ban->addAttribut("work");
-	ban->addAttribut("day");
+	ban->addAttribut(0);
+	ban->addAttribut(2);
 
 	Post* acu = new Post("Acu", 7.5);
-	acu->addAttribut("work");
-	acu->addAttribut("day");
+	acu->addAttribut(0);
+	acu->addAttribut(2);
 
 	Post* explo_fonctionnelle = new Post("+", 7.5);
-	explo_fonctionnelle->addAttribut("work");
-	explo_fonctionnelle->addAttribut("day");
+	explo_fonctionnelle->addAttribut(0);
+	explo_fonctionnelle->addAttribut(2);
 
 	Post* orientation = new Post("O", 7.5);
-	orientation->addAttribut("work");
-	orientation->addAttribut("day");
+	orientation->addAttribut(0);
+	orientation->addAttribut(2);
 
 	Post* diag = new Post("D", 7.5);
-	diag->addAttribut("work");
-	diag->addAttribut("day");
+	diag->addAttribut(0);
+	diag->addAttribut(2);
 
 	Post* ort = new Post("Ort", 7.5);
-	ort->addAttribut("work");
-	ort->addAttribut("day");
+	ort->addAttribut(0);
+	ort->addAttribut(2);
 
 
 
 	Post* repos = new Post("Repos", 0.0);
-	repos->addAttribut("rest");
+	repos->addAttribut(5);
 	Post* ca = new Post("Ca", 0.0);
-	ca->addAttribut("rest");
-	ca->addAttribut("ca");
+	ca->addAttribut(5);
+	ca->addAttribut(6);
 
 	Post* fp = new Post("FP", 7.5);
-	fp->addAttribut("work");
-	fp->addAttribut("day");
+	fp->addAttribut(0);
+	fp->addAttribut(2);
 
 	Post* eo = new Post("E/O", 7.5);
-	eo->addAttribut("work");
-	eo->addAttribut("day");
+	eo->addAttribut(0);
+	eo->addAttribut(2);
 
 	m.setDefaultPost(repos);
 
@@ -820,18 +828,18 @@ Model addServicePool(Model m) {
 
 	//Posts
 	Post* repos = new Post("Repos", 0.0);
-	repos->addAttribut("rest");
+	repos->addAttribut(5);
 	Post* ca = new Post("Ca", 0.0);
-	ca->addAttribut("rest");
-	ca->addAttribut("ca");
+	ca->addAttribut(5);
+	ca->addAttribut(6);
 
 	Post* cs = new Post("CS", 7.5);
-	cs->addAttribut("work");
-	cs->addAttribut("day");
+	cs->addAttribut(0);
+	cs->addAttribut(2);
 
 	Post* fp = new Post("FP", 7.5);
-	fp->addAttribut("work");
-	fp->addAttribut("day");
+	fp->addAttribut(0);
+	fp->addAttribut(2);
 
 	m.setDefaultPost(repos);
 

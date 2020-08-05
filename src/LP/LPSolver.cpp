@@ -307,8 +307,8 @@ Model LPSolver::linearProgram(const Model mo) {
 
 					auto work1 = a->getCalendar()[d1];
 					if (work1 != NULL) {
-						vector<string> att = work1->getAttributs();
-						if (count(att.begin(), att.end(), "day")) {
+						vector<int> att = work1->getAttributs();
+						if (count(att.begin(), att.end(), 2)) {
 							workByDayAfter = true;
 						}
 					}
@@ -316,9 +316,9 @@ Model LPSolver::linearProgram(const Model mo) {
 					if (a->getCalendar()[day] == NULL || workByDayAfter) {
 						for (auto nightJob : s->getPosts()) {
 
-							vector<string> attNight = nightJob->getAttributs();
+							vector<int> attNight = nightJob->getAttributs();
 
-							if (count(attNight.begin(), attNight.end(), "night")) {
+							if (count(attNight.begin(), attNight.end(), 4)) {
 
 								int v = 0;
 								SCIP_VAR* varCons[10];
@@ -334,9 +334,9 @@ Model LPSolver::linearProgram(const Model mo) {
 
 								// Jour suivant
 								for (auto dayJob : s->getPosts()) {
-									vector<string> attDay = dayJob->getAttributs();
+									vector<int> attDay = dayJob->getAttributs();
 
-									if (count(attDay.begin(), attDay.end(), "day")) {
+									if (count(attDay.begin(), attDay.end(), 2)) {
 
 										SCIP_VAR* varDay;
 										bool noVar = true;
@@ -395,9 +395,9 @@ Model LPSolver::linearProgram(const Model mo) {
 						SCIP_VAR* varCons[10];
 						for (auto nightOne : s->getPosts()) {
 
-							vector<string> attNightOne = nightOne->getAttributs();
+							vector<int> attNightOne = nightOne->getAttributs();
 
-							if (count(attNightOne.begin(), attNightOne.end(), "night")) {
+							if (count(attNightOne.begin(), attNightOne.end(), 4)) {
 
 								SCIP_VAR* varNightOne;
 
@@ -414,9 +414,9 @@ Model LPSolver::linearProgram(const Model mo) {
 								if (a->getCalendar()[d1] == NULL) {
 									for (auto nightTwo : s->getPosts()) {
 
-										vector<string> attNightTwo = nightTwo->getAttributs();
+										vector<int> attNightTwo = nightTwo->getAttributs();
 
-										if (count(attNightTwo.begin(), attNightTwo.end(), "night")) {
+										if (count(attNightTwo.begin(), attNightTwo.end(), 4)) {
 											SCIP_VAR* varNightTwo;
 
 											for (int i = 0; i < (int)varsDataTmp.size(); i++) {
@@ -433,9 +433,9 @@ Model LPSolver::linearProgram(const Model mo) {
 											if (a->getCalendar()[d2] == NULL) {
 												for (auto nightThree : s->getPosts()) {
 
-													vector<string> attNightThree = nightThree->getAttributs();
+													vector<int> attNightThree = nightThree->getAttributs();
 
-													if (count(attNightThree.begin(), attNightThree.end(), "night")) {
+													if (count(attNightThree.begin(), attNightThree.end(), 4)) {
 														SCIP_VAR* varNightThree;
 
 														for (int i = 0; i < (int)varsDataTmp.size(); i++) {
@@ -491,9 +491,9 @@ Model LPSolver::linearProgram(const Model mo) {
 								nbVar = 0;
 								// SCIP_VAR* varCons[10];
 							}
-							vector<string> attDayOne = dayOne->getAttributs();
+							vector<int> attDayOne = dayOne->getAttributs();
 
-							if (count(attDayOne.begin(), attDayOne.end(), "day")) {
+							if (count(attDayOne.begin(), attDayOne.end(), 2)) {
 								SCIP_VAR* varDayOne;
 								for (int i = 0; i < (int)varsDataTmp.size(); i++) {
 									if (varsDataTmp[i]->getAgent() == a && varsDataTmp[i]->getDay() == day && varsDataTmp[i]->getPost() == dayOne) {
@@ -509,9 +509,9 @@ Model LPSolver::linearProgram(const Model mo) {
 								if (a->getCalendar()[d1] == NULL) {
 									for (auto dayTwo : s->getPosts()) {
 
-										vector<string> attDayTwo = dayTwo->getAttributs();
+										vector<int> attDayTwo = dayTwo->getAttributs();
 
-										if (count(attDayTwo.begin(), attDayTwo.end(), "day")) {
+										if (count(attDayTwo.begin(), attDayTwo.end(), 2)) {
 											SCIP_VAR* varDayTwo;
 
 											if (nbVar >= 4) {
@@ -532,9 +532,9 @@ Model LPSolver::linearProgram(const Model mo) {
 											if (a->getCalendar()[d2] == NULL) {
 												for (auto dayThree : s->getPosts()) {
 
-													vector<string> attDayThree = dayThree->getAttributs();
+													vector<int> attDayThree = dayThree->getAttributs();
 
-													if (count(attDayThree.begin(), attDayThree.end(), "day")) {
+													if (count(attDayThree.begin(), attDayThree.end(), 2)) {
 														SCIP_VAR* varDayThree;
 
 														if (nbVar >= 4) {
@@ -556,9 +556,9 @@ Model LPSolver::linearProgram(const Model mo) {
 														if (a->getCalendar()[d3] == NULL) {
 															for (auto dayFour : s->getPosts()) {
 
-																vector<string> attDayFour = dayFour->getAttributs();
+																vector<int> attDayFour = dayFour->getAttributs();
 
-																if (count(attDayFour.begin(), attDayFour.end(), "day")) {
+																if (count(attDayFour.begin(), attDayFour.end(), 2)) {
 																	SCIP_VAR* varDayFour;
 
 																	if (nbVar >= 4) {
