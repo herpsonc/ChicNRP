@@ -39,8 +39,6 @@ public:
 
 	string seqToPrint();
 
-	int check(const Agent* agent, int firstDayMonth, bool log);
-
 protected:
 	int firstDay;
 	MinMax type;

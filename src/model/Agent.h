@@ -44,9 +44,6 @@ public:
 
 	float getWorkingHoursMonth();
 
-	int checkWorkingHoursWeek(bool log);
-	int checkImpossiblePosts(bool log);
-
 	void setNbHoursMonthPriority(int priority);
 	const int getNbHoursMonthPriority() const;
 

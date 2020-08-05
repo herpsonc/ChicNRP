@@ -26,8 +26,6 @@ public:
 	void setSequenceAtt(const std::vector<int> &sequenceAtt);
 
 	string getSeqToPrint();
-	int check(const Agent* agent, bool log);
-
 
 protected:
 	int priority;

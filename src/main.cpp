@@ -898,21 +898,6 @@ int main() {
 	//Important pour initialiser l'aléatoire
 	srand(time(0));
 
-	/*Model m =  generateGhr();
-	auto m2 = addServiceSDC(m);
-	//m.generateXML("test.xml");
-	//Model m2 = Model(Tuesday,31,60);
-	//m2.loadXML("servicesGrands.xml");
-	//auto m2 = heuristicSolver::greedy(m);
-	//m2.printPlanning();
-	//auto m3 = heuristicSolver::greedy(m2);
-
-	auto m3 = heuristicSolver::iterative2(m2, 1000, 5, 900);
-	m3.printPlanning();
-	heuristicSolver::check(&m3, false, true);
-	m3.generateXlsx("solution.xlsx");*/
-
-
 	//modèle avec les (pré)données de Mars 2020 du CHIC
 	Model m = generateGhr();
 	
@@ -921,109 +906,17 @@ int main() {
 	//m = addServicePool(m);
 	//m = addServiceCS(m);
 	m.printPlanning();
-	//auto m3 = heuristicSolver::greedy(m);
-	//m3.printPlanning();
 	
-	auto m2 = heuristicSolver::iterative2Fast(m, 100000, 3);
+	auto m2 = heuristicSolver::iterativeFast(m, 100000, 3);
 
 	m2.printPlanning();
 	m2.getValuation()->print();
-	//auto m3 = heuristicSolver::iterative2(m, 1000, 3, 3000);
-
-	/*auto m3 = heuristicSolver::greedy(m);
-	m3.setValuation(heuristicSolver::checkValuation(&m3));
-	m3 = heuristicSolver::getNeighborSwap(&m3,3);
-
-	auto chronoStart = chrono::system_clock::now();
-	for (int i = 0; i < 10000; i++) {
-		heuristicSolver::check(&m3, false);
-	}
-	cout << (chrono::system_clock::now() - chronoStart).count() << endl;
-
-	chronoStart = chrono::system_clock::now();
-	for (int i = 0; i < 10000; i++) {
-		heuristicSolver::checkFast(&m3);
-	}
-	cout << (chrono::system_clock::now() - chronoStart).count() << endl;*/
+	
 
 	/*Model m2 = Model::generateModelInstance(2, 30, 25, 6, 15, 70, 60.0, 155);
 	m2.printPlanning();
 	m2.generateXlsx("service_g6_PL.xlsx");
 	m2 = LPSolver::linearProgram(m2);*/
-
-	//auto m3 = heuristicSolver::iterative2(m, 5000000, 5, 14400);
-	//m3.printPlanning();
-	//heuristicSolver::check(&m3, false, true);
-	//m2.generateXlsx("service_g6_PL_res.xlsx");
-
-	//m.generateXML("test.xml");
-	//Model m2 = Model(Tuesday,31,60);
-	//m2.loadXML("servicesGrands.xml");
-	//m2.printPlanning();
-
-	//auto m3 = heuristicSolver::greedy(m2);
-
-	/*auto m3 = heuristicSolver::iterative2(m2, 100000, 5, 900);
-	m3.printPlanning();
-	heuristicSolver::check(&m3, false, true);*/
-
-
-
-	//auto m3 = heuristicSolver::greedy(m2);
-	//auto m3 = heuristicSolver::iterative2(m2, 10000, 5);
-	//m3.printPlanning();
-
-	/*m = addServiceSDC(m); //ajoute le service SDC au modèle
-	auto m2 = heuristicSolver::iterative2(m, 60000, 5);
-	m2.printPlanning();
-	m2.getValuation()->print();
-	heuristicSolver::check(&m2, false, true);*/
-
-
-	
-	//auto m2 = heuristicSolver::iterative(m,100,300,3);
-	
-	//generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService, int nbPostsPerService)
-
-	/*auto m_1servicePetit = Model::generateModelInstance(0, 31, 25, 1, 4, 7, 60.0, 155); //1 petit service, pas trop contraints
-	m_1servicePetit.printPlanning();
-	m_1servicePetit.generateXML("servicePtit.xml");
-
-	auto m_1serviceTresGrand = Model::generateModelInstance(3, 30, 25, 1, 10, 30, 60.0, 155); //1 grand service, pas trop contraints
-	m_1serviceTresGrand.printPlanning();
-	m_1serviceTresGrand.generateXML("serviceTresGrand.xml");
-
-	auto m_2servicesPetits = Model::generateModelInstance(6, 31, 25, 2, 5, 10, 60.0, 155); //2 petits services, pas trop contraints
-	m_2servicesPetits.printPlanning();
-	m_2servicesPetits.generateXML("servicesPetits.xml");
-
-	auto m_2servicesFevrierBissextile = Model::generateModelInstance(5, 29, 0, 2, 5, 10, 60.0, 140); //2 petits services, fevrier, 0 heures supps possibles
-	m_2servicesFevrierBissextile.printPlanning();
-	m_2servicesFevrierBissextile.generateXML("servicesFevrierBissextile.xml");
-
-	auto m_3servicesEte = Model::generateModelInstance(6, 31, 10, 3, 6, 15, 60.0, 155, -1, -1, 5, 100); //3 petits services avec beacoup de congés (simulation vacances d'été potentielle), 10h supps max
-	m_3servicesEte.printPlanning();
-	m_3servicesEte.generateXML("servicesEte.xml");
-
-	auto m_6servicesPetits = Model::generateModelInstance(6, 31, 25, 6, 7, 20, 60.0, 155); //6 petits services (7 postes, 20 agents)
-	m_6servicesPetits.printPlanning();
-	m_6servicesPetits.generateXML("servicesPetits2.xml");
-
-	auto m_6servicesGrands = Model::generateModelInstance(2, 30, 25, 6, 20, 70, 60.0, 155); //6 grands services (20 postes, 70 agents)
-	m_6servicesGrands.printPlanning();
-	m_6servicesGrands.generateXML("servicesGrands.xml");*/
-
-	/*
-	//auto m3 = heuristicSolver::greedy(m2);
-	//auto m4 = heuristicSolver::iterative2(m2, 20000, 3);
-
-	//cout << "bestScore " << heuristicSolver::check(&m4, false, true) << endl;
-
-	m_3servicesEte.printPlanning();
-	cout << "---------------------------------" << endl;
-	//m3.printPlanning();
-	//cout << "---------------------------------" << endl;
-	m4.printPlanning();*/
 
 	string t;
 	cin >> t;

@@ -29,8 +29,6 @@ public:
 	const int getPriority() const;
 	int getFirstDay();
 
-	int check(const Agent* agent, int day, bool log);
-
 protected:
 	int priority;
 	int firstDay;

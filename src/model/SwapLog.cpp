@@ -1,15 +1,5 @@
 #include "SwapLog.h"
 
-SwapLog::SwapLog() 
-{
-	this->agent1 = -1;
-	this->agent2 = -1;
-	this->day = -1;
-}
-
-SwapLog::~SwapLog() {
-
-}
 SwapLog::SwapLog(int agent1, int agent2, int day, int service, Post* post1, Post* post2)
 {
 	this->agent1 = agent1;
@@ -18,6 +8,10 @@ SwapLog::SwapLog(int agent1, int agent2, int day, int service, Post* post1, Post
 	this->service = service;
 	this->post1 = post1;
 	this->post2 = post2;
+}
+
+SwapLog::~SwapLog() {
+
 }
 
 //! \return agent1 first agent concerned by the swap

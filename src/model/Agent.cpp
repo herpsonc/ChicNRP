@@ -159,50 +159,6 @@ float Agent::getWorkingHoursMonth() {
 	return r;
 }
 
-//! \param log true to print log on console
-//! \return nbFail number of fail (+1 everytime there is more than nbHoursWeek in 7 consecutive days)
-int Agent::checkWorkingHoursWeek(bool log){
-
-	float cptHours = 0;
-	int nbFail = 0;
-	for (int i = 0; i < 31; i++) {
-		cptHours = 0;
-
-		for (int j = 0; j < 7; j++) {
-			if (i+j < 31 && calendar[i + j] != NULL) {
-				cptHours += calendar[i + j]->getTime();
-			}
-		}
-		if (cptHours > nbHoursWeek) {
-			if(log)
-				cout << "Agent " << id << " heure semaine: jours " << i << " a " << i + 6 << " heures: " << cptHours << endl;
-			nbFail++;
-		}
-	}
-
-	return nbFail;
-}
-
-//! \param true to print log on the console
-//! \return nbFail +1 everytime an impossible Post is detected in the calendar
-int Agent::checkImpossiblePosts(bool log){
-	int nbFail = 0;
-	int i = 0;
-	for (auto p : calendar) {
-		for (auto ip : impossiblePosts) {
-			if (p == ip) {
-				nbFail++;
-				if (log) {
-					cout << "Agent " << id << " impossible post " << ip->getId() << " jour " << i << endl;
-				}
-			}
-
-		}
-		i++;
-	}
-
-	return nbFail;
-}
 
 void Agent::setNbHoursMonthPriority(int priority)
 {

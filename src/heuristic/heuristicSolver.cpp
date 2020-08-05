@@ -153,80 +153,6 @@ Model heuristicSolver::predefinedGreedy(const Model m)
 	return mr;
 }
 
-int heuristicSolver::check(Model* m, bool log) {
-
-	int score = 0;
-
-	// bool isValide = true;
-
-	for(auto s : m->getServices()){
-
-		//Check des post requis
-		auto day = m->getFirstDay();
-		for (int i = 0; i < m->getNbDays(); i++) {
-			auto requis = s->getPostRequired()[day];
-
-			for (auto a : m->getAgentFrom(s)) {
-				if(requis.find(a->getCalendar()[i]) != requis.end())
-					requis[a->getCalendar()[i]]--;
-			}
-
-			for (auto r : requis) {
-				if (r.second != 0) {
-					score--;
-					if (log) {
-						cout << "Jour " << day << " Post " << r.first->getId() << " insufisant" << endl;
-					}
-				}
-			}
-		}
-
-		for(auto a : m->getAgentFrom(s)){
-			//Check des heures au mois pour les agents
-			if(a->getWorkingHoursMonth() > a->getNbHoursMonth()+m->getOvertime()){
-				if(log)
-					cout << "Checker: Dépassement d'heure au mois pour l'agent " << a->getId() << endl;
-
-				score -= 100;
-			}
-			//Check des heures à la semaine pour les agents
-
-			score -= a->checkWorkingHoursWeek(log);
-			/*for(int i=0;i<6;i++){
-				if(a->getWorkingHoursWeek(m->getFirstDay(),i) > a->getNbHoursWeek()){
-					if (log)
-						cout << "Checker: Dépassement d'heure à la semaine " << i << " pour l'agent " << a->getId() << endl;
-					isValide = false;
-					if(checkALL)
-						return false;
-
-					score -= 1;
-				}
-			}*/
-
-			score -= a->checkImpossiblePosts(log) * 10;
-
-
-			for(auto c : s->getConstraints()){
-				if(typeid(*c) == typeid(ConstraintDaysSeq)){
-					score -= ((ConstraintDaysSeq*)c)->check(a, log);
-				}
-				else if (typeid(*c) == typeid(ConstraintInvolved)) {
-					score -= ((ConstraintInvolved*)c)->check(a, m->getFirstDay(), log);
-				}
-				else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
-					// score -= ((ConstraintSeqMinMax*)c)->check(a, true, m->getFirstDay(), log);
-					score -= ((ConstraintSeqMinMax*)c)->check(a, m->getFirstDay(), log);
-				}
-			}
-		}
-	}
-
-
-	if(log)
-		cout << "Score: " << score << endl;
-	return score;
-}
 
 void heuristicSolver::checkFast(Model* m) {
 	auto value = m->getValuation();
@@ -573,43 +499,7 @@ Model heuristicSolver::getneighborRandom(Model* m, int range)
 }
 
 
-
-Model heuristicSolver::iterative(const Model m, int nbPop, int nbGen, int range)
-{
-	auto chronoStart = chrono::system_clock::now();
-
-	Model model = greedy(m);
-	int bestScore = check(&model, false);
-	cout << "scoreInit" << bestScore << endl;
-	auto pop = vector<Model>();
-
-	for (int j = 0; j < nbGen;j++) {
-		cout << "Generation: " << j << endl;
-		for (int i = 0;i < nbPop;i++) {
-			if(rand()%2 == 0){
-				pop.push_back(getNeighborSwap(&model, range));
-			} else{
-				pop.push_back(getneighborRandom(&model, range));
-			}
-		}
-
-		for (auto e : pop) {
-			int res = check(&e, false);
-			if (res > bestScore) {
-				bestScore = res;
-				model = e;
-			}
-		}
-		pop.clear();
-	}
-
-	auto chronoEnd = chrono::system_clock::now();
-
-	cout << bestScore << " en " << (chronoEnd - chronoStart).count()/10000000 << " secondes" << endl;
-	return model;
-}
-
-Model heuristicSolver::iterative2Fast(const Model m, int nbIte, int range)
+Model heuristicSolver::iterativeFast(const Model m, int nbIte, int range)
 {
 	auto chronoStart = chrono::system_clock::now();
 	srand(time(0));
@@ -684,80 +574,5 @@ Model heuristicSolver::iterative2Fast(const Model m, int nbIte, int range)
 	return bestModel;
 }
 
-Model heuristicSolver::iterative2(const Model m, int nbIte, int range, int limitTime)
-{
-	auto chronoStart = chrono::system_clock::now();
-	auto chronoBest = chrono::system_clock::now();
-	int iteBest = 0;
-	srand(time(0));
-	Model currentModel = greedy(m);
-	Model bestModel = currentModel;
-	Model nextModel = currentModel;
-	int bestScore = check(&currentModel, false);
-	int currentScore = bestScore;
-	cout << "scoreInit" << bestScore << endl;
-
-	for (int j = 0; j < nbIte; j++) {
-		if (j % 100 == 0) {
-			cout << "Iteration " << j << endl;
-		}
-		//On choisit un voisinage à appliquer
-		int randN = rand() % 100;
-
-		if (randN < 101) {
-			nextModel = getNeighborSwap(&currentModel, range);
-		}
-		else {
-			nextModel = getneighborRandom(&currentModel, range);
-		}
-
-		//On regarde si la solution est meilleure
-		int nextScore = check(&nextModel, false);
-		if (nextScore > bestScore) {
-			bestModel = nextModel;
-			bestScore = nextScore;
-			chronoBest = chrono::system_clock::now();
-			iteBest = j;
-		}
-		//cout << nextScore << " " << bestScore << " " <<currentScore <<endl;
-		if (nextScore > currentScore) {
-			//90% de chance de choisir le nouveau model
-			int randI = rand() % 1000;
-			if (randI < 900) {
-				currentModel = nextModel;
-				currentScore = nextScore;
-			}
-		}
-		else {
-			//10% de chance de choisir le nouveau candidat même s'il est moins bon
-			int randI = rand() % 1000;
-			if (randI > 998) {
-				currentModel = nextModel;
-				currentScore = nextScore;
-			}
-			else {
-				int randI = rand() % 1000;
-				if (randI > 998) {
-					currentModel = greedy(m);
-					currentScore = check(&currentModel, false);
-				}
-			}
-		}
-
-		auto chrono = chrono::system_clock::now();
-		if ((chrono - chronoStart).count() / 10000000 > limitTime) {
-			cout << "Temps depasse." << " Iteration " << j << endl;
-			break;
-		}
-
-	}
-
-	auto chronoEnd = chrono::system_clock::now();
-
-	cout << bestScore << " en " << (chronoEnd - chronoStart).count() / 10000000 << " secondes" << endl;
-	cout << "Meilleur trouve a " << iteBest << " iterations en " << (chronoBest - chronoStart).count() / 10000000 << "secondes" << endl;
-
-	return bestModel;
-}
 
 

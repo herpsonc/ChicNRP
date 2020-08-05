@@ -4,9 +4,8 @@
 class SwapLog
 {
 public:
-	SwapLog();
-	virtual ~SwapLog();
 	SwapLog(int agent1, int agent2, int day, int service, Post* post1, Post* post2);
+	virtual ~SwapLog();
 
 	int getAgent1();
 	int getAgent2();
