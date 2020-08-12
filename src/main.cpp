@@ -13,14 +13,6 @@
 
 #include "heuristic/heuristicSolver.h"
 #include "LP/LPSolver.h"
-// #include "model/Agent.h"
-// #include "model/constraint/Constraint.h"
-// #include "model/constraint/ConstraintDaysSeq.h"
-// #include "model/Model.h"
-// #include "model/constraint/ConstraintInvolved.h"
-// #include "model/constraint/ConstraintSeqMinMax.h"
-
-
 
 using namespace std;
 
@@ -901,17 +893,22 @@ int main() {
 	//modèle avec les (pré)données de Mars 2020 du CHIC
 	Model m = generateGhr();
 	
+	m.getServices()[0]->loadPredefinedPlanning("GHRTrame.csv", m.getNbDays(), m.getFirstDay());
+	m.getServices()[0]->getPredefinedPlanning()->printPlanning();
+
 	//m = addServiceSDC(m);
 	//m = addServiceSDN(m);
 	//m = addServicePool(m);
 	//m = addServiceCS(m);
 	m.printPlanning();
 	
-	auto m2 = heuristicSolver::iterativeFast(m, 100000, 3);
 
+	auto m2 = heuristicSolver::predefinedGreedy(m);
 	m2.printPlanning();
-	m2.getValuation()->print();
-	
+	//auto m2 = heuristicSolver::iterativeFast(m, 1000000, 3);
+
+	//m2.printPlanning();
+	//m2.getValuation()->print();
 
 	/*Model m2 = Model::generateModelInstance(2, 30, 25, 6, 15, 70, 60.0, 155);
 	m2.printPlanning();

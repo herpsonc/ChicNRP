@@ -59,6 +59,25 @@ void Service::addPost(Post* post) {
 	posts.push_back(post);
 }
 
+Post* Service::getPost(string id)
+{
+	for (unsigned i = 0; i < id.size(); i++) {
+		id[i] = toupper(id[i]);
+	}
+
+	for (auto p : posts) {
+		string idp = p->getId();
+		for (unsigned i = 0; i < idp.size(); i++) {
+			idp[i] = toupper(idp[i]);
+		}
+
+		if (id == idp)
+			return p;
+	}
+
+	return NULL;
+}
+
 //! \param referent referent to add
 void Service::addReferent(Agent* referent) {
 	referents.push_back(referent);
@@ -139,4 +158,36 @@ void Service::setPredefinedPlanning(PredefinedPlanning planning)
 PredefinedPlanning* Service::getPredefinedPlanning()
 {
 	return &predefinedPlanning;
+}
+
+void Service::loadPredefinedPlanning(string fileName,int nbDays, int firstDay)
+{
+	fstream fin;
+
+	fin.open(fileName, ios::in);
+
+	string line, word;
+
+	//Première ligne
+	getline(fin, line);
+	int j = 0;
+	//pour chaque agent
+	while (getline(fin, line)) {
+		int i = -firstDay - 1;
+		predefinedPlanning.addAgent();
+		stringstream s(line);
+		//chaque jours
+		while (getline(s, word, ',') && i < nbDays) {
+			if (i >= 0) {
+				if (word != "") {
+					//On cherche le post qui correspond
+					auto post = getPost(word);
+					if (post != NULL)
+						predefinedPlanning.setPlanningDay(post, j, i);
+				}
+			}
+			i++;
+		}
+		j++;
+	}
 }

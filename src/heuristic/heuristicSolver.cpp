@@ -6,6 +6,7 @@
  */
 
 #include "heuristicSolver.h"
+#include <future>
 
 
 using namespace std;
@@ -100,56 +101,60 @@ Model heuristicSolver::predefinedGreedy(const Model m)
 		//Pour chaque ligne du planning, on cherche l'agent le plus contraint
 		//(posts impossibles/nombres de posts lock) que l'on peut placer
 
+		vector<bool> locked((*mr.getAgentFromPtr(service)).size(), false );
 		for (auto line : *planning->getPlanning()) {
 			int bestFail = 1000;
 			int bestLock = 0;
 			int bestId = 0;
 			int i = 0;
-			for (auto agent : service->getAgents()) {
+			cout << "line" << endl;
+			for (auto agent : *mr.getAgentFromPtr(service)) {
 				nbFail = 0;
 				nbLock = 0;
-				for (int i = 0; i < mr.getNbDays(); i++) {
-					if (line[i] != NULL) {
-						if (agent->getCalendar()[i] != NULL) {
-							nbFail++;
-							nbLock++;
-						}
-						else{
-							for (auto ip : agent->getImpossiblePosts()) {
-								if (line[i] == ip) {
-									nbFail++;
-									break;
+				if (!locked[i]) {
+					for (int i = 0; i < mr.getNbDays(); i++) {
+						if (line[i] != NULL) {
+							if (agent->getCalendar()[i] != NULL) {
+								nbFail++;
+								nbLock++;
+							}
+							else {
+								for (auto ip : agent->getImpossiblePosts()) {
+									if (line[i] == ip) {
+										nbFail++;
+										break;
+									}
 								}
 							}
 						}
-					}
-					else {
-						if (agent->getCalendar()[i] != NULL) {
-							nbLock++;
+						else {
+							if (agent->getCalendar()[i] != NULL) {
+								nbLock++;
+							}
 						}
 					}
-				}
 
-				//best candidate
-				if (nbFail < bestFail) {
-					bestId = i;
-					bestFail = nbFail;
-					bestLock = nbLock;
+					//best candidate
+					if (nbFail < bestFail) {
+						bestId = i;
+						bestFail = nbFail;
+						bestLock = nbLock;
+					}
+					else if (nbFail == bestFail && nbLock < bestLock) {
+						bestId = i;
+						bestFail = nbFail;
+						bestLock = nbLock;
+					}
 				}
-				else if (nbFail == bestFail && nbLock < bestLock) {
-					bestId = i;
-					bestFail = nbFail;
-					bestLock = nbLock;
-				}
-
 				i++;
 			}
 
-			service->getAgents()[bestId]->setCalendar(line);
-
+			(*mr.getAgentFromPtr(service))[bestId]->setCalendarUnlockOnly(line);
+			locked[bestId] = true;
 		}
 	}
 
+	cout << "success" << endl;
 	return mr;
 }
 
@@ -509,6 +514,8 @@ Model heuristicSolver::iterativeFast(const Model m, int nbIte, int range)
 	Model bestModel = currentModel;
 	int bestScore = currentModel.getValuation()->getScore();
 	int currentScore = bestScore;
+	int bestIte = 0;
+	int bestTime = 0;
 	cout << "scoreInit" << bestScore << endl;
 
 	for (int j = 0; j < nbIte; j++) {
@@ -530,6 +537,8 @@ Model heuristicSolver::iterativeFast(const Model m, int nbIte, int range)
 		if (nextScore > bestScore) {
 			bestModel = currentModel;
 			bestScore = nextScore;
+			bestIte = j;
+			bestTime = (chrono::system_clock::now() - chronoStart).count();
 		}
 		//cout << nextScore << " " << bestScore << " " <<currentScore <<endl;
 		if (nextScore > currentScore) {
@@ -570,9 +579,11 @@ Model heuristicSolver::iterativeFast(const Model m, int nbIte, int range)
 	auto chronoEnd = chrono::system_clock::now();
 
 	cout << bestScore << " en " << (chronoEnd - chronoStart).count() / 10000000 << " secondes" << endl;
+	cout << "best trouve en " << bestIte << " iterations en " << bestTime / 10000000 << " secondes" << endl;
 
 	return bestModel;
 }
+
 
 
 

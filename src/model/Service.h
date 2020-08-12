@@ -7,6 +7,8 @@
 
 #include <map>
 #include <array>
+#include <fstream>
+#include <sstream>
 #include "Agent.h"
 #include "constraint/Constraint.h"
 #include "PredefinedPlanning.h"
@@ -30,6 +32,7 @@ public:
 	const vector<Post*>& getPosts() const;
 	void setPosts(const vector<Post*> &posts);
 	void addPost(Post* post);
+	Post* getPost(string id);
 
 	const vector<Agent*>& getReferents() const;
 	void setReferents(const vector<Agent*> &referents);
@@ -53,6 +56,7 @@ public:
 
 	void setPredefinedPlanning(PredefinedPlanning planning);
 	PredefinedPlanning* getPredefinedPlanning();
+	void loadPredefinedPlanning(string fileName, int nbDays, int firstDay);
 
 protected:
 	string id;

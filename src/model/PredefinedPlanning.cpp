@@ -1,5 +1,7 @@
 #include "PredefinedPlanning.h"
 
+
+using namespace std;
 PredefinedPlanning::PredefinedPlanning()
 {
 	
@@ -18,4 +20,26 @@ void PredefinedPlanning::setPlanningDay(Post* post,const int idAgent, const int 
 const std::vector<std::array<Post*, 31>>* PredefinedPlanning::getPlanning()
 {
 	return &planning;
+}
+
+void PredefinedPlanning::printPlanning()
+{
+	int i = 0;
+	for (auto agent : planning)
+	{
+		cout << "Agent " << i << ":\t";
+
+		for (unsigned int j = 0; j < agent.size(); j++)
+		{
+			if (agent[j] != NULL)
+			{
+				cout << agent[j]->getId();
+			}
+			else
+				cout << "null";
+			cout << "\t";
+		}
+		cout << endl;
+		i++;
+	}
 }

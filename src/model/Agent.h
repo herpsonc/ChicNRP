@@ -29,6 +29,7 @@ public:
 	const array<Post*, 31>& getCalendar() const;
 	const array<bool, 31>& getCalendarLock() const;
 	void setCalendar(const array<Post*, 31> &calendar);
+	void setCalendarUnlockOnly(const array<Post*, 31>& calendar);
 	void setCalendarDay(Post* post, int day);
 	void setCalendarDay(Post* post, int day, bool lock);
 

@@ -17,6 +17,7 @@ Agent::Agent(string id, float nbHourMonth, float nbHoursWeek, Status status)
 	this->nbHoursMonth = nbHourMonth;
 	this->nbHoursWeek = nbHoursWeek;
 	this->status = status;
+	this->impossiblePosts = vector<Post*>();
 
 	for (int i = 0;i < (int)calendar.size();i++)
 		calendar[i] = NULL;
@@ -27,9 +28,9 @@ Agent::Agent(string id, float nbHourMonth, float nbHoursWeek, Status status)
 	for (int i = 0;i < (int)lastMonthCalendar.size();i++)
 		lastMonthCalendar[i] = NULL;
 
-	nbHoursMonthPriority = 10;
-	nbHoursWeekPriority = 10;
-	impossiblePostsPriority = 10;
+	nbHoursMonthPriority = 100;
+	nbHoursWeekPriority = 50;
+	impossiblePostsPriority = 50;
 }
 
 Agent::Agent(const Agent &obj){
@@ -83,6 +84,14 @@ const array<bool, 31>& Agent::getCalendarLock() const {
 //! \param calendar calendar to set
 void Agent::setCalendar(const array<Post*, 31> &calendar) {
 	this->calendar = calendar;
+}
+
+void Agent::setCalendarUnlockOnly(const array<Post*, 31>& calendar)
+{
+	for (int i = 0; i < calendar.size(); i++) {
+		if (!calendarLock[i])
+			this->calendar[i] = calendar[i];
+	}
 }
 
 //! \return impossiblePosts vector of Post not supposed to be affected to the Agent
