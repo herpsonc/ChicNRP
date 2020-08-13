@@ -107,7 +107,6 @@ Model heuristicSolver::predefinedGreedy(const Model m)
 			int bestLock = 0;
 			int bestId = 0;
 			int i = 0;
-			cout << "line" << endl;
 			for (auto agent : *mr.getAgentFromPtr(service)) {
 				nbFail = 0;
 				nbLock = 0;
@@ -154,8 +153,8 @@ Model heuristicSolver::predefinedGreedy(const Model m)
 		}
 	}
 
-	cout << "success" << endl;
-	return mr;
+	auto mr2 = greedy(mr);
+	return mr2;
 }
 
 
@@ -508,7 +507,8 @@ Model heuristicSolver::iterativeFast(const Model m, int nbIte, int range)
 {
 	auto chronoStart = chrono::system_clock::now();
 	srand(time(0));
-	Model currentModel = greedy(m);
+	//Model currentModel = greedy(m);
+	Model currentModel = predefinedGreedy(m);
 	currentModel.generateEmptyValuation();
 	HeuristicToolBox::checkAllFast(&currentModel);
 	Model bestModel = currentModel;
@@ -562,7 +562,8 @@ Model heuristicSolver::iterativeFast(const Model m, int nbIte, int range)
 				randI = rand() % 10000;
 				if (randI > 9998) {
 					cout << "reset" << endl;
-					currentModel = greedy(m);
+					//currentModel = greedy(m);
+					currentModel = predefinedGreedy(m);
 					currentModel.generateEmptyValuation();
 					HeuristicToolBox::checkAllFast(&currentModel);
 					currentScore = currentModel.getValuation()->getScore();

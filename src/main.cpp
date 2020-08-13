@@ -903,12 +903,12 @@ int main() {
 	m.printPlanning();
 	
 
-	auto m2 = heuristicSolver::predefinedGreedy(m);
-	m2.printPlanning();
-	//auto m2 = heuristicSolver::iterativeFast(m, 1000000, 3);
-
+	//auto m2 = heuristicSolver::predefinedGreedy(m);
 	//m2.printPlanning();
-	//m2.getValuation()->print();
+	auto m2 = heuristicSolver::iterativeFast(m, 100000, 3);
+
+	m2.printPlanning();
+	m2.getValuation()->print();
 
 	/*Model m2 = Model::generateModelInstance(2, 30, 25, 6, 15, 70, 60.0, 155);
 	m2.printPlanning();
