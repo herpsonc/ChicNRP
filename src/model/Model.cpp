@@ -1022,3 +1022,66 @@ int Model::attributToInt(string att)
 	}
 	return -1;
 }
+
+string Model::getConstraintInformations()
+{
+	string s;
+
+	for (int i = 0; i < services.size(); i++) {
+		s += "Service " + services[i]->getId() + "\n";
+
+			for (int j = 0; j < (int)valuation->getDaySeq()[i].size(); j++) {
+				for (int k = 0; k < (int)valuation->getDaySeq()[i][j].size(); k++) {
+					for (int l = 0; l < (int)valuation->getDaySeq()[i][j][k].size(); l++) {
+						s += "ConstraintDaySeq: Service " + to_string(i) + " Agent " + to_string(j) + " constraint " + to_string(k) + " Jours "
+							+ to_string(valuation->getDaySeq()[i][j][k][l].first) + " " + to_string(valuation->getDaySeq()[i][j][k][l].second) + "\n";
+					}
+				}
+			}
+
+			for (int j = 0; j < (int)valuation->getInvolved()[i].size(); j++) {
+				for (int k = 0; k < (int)valuation->getInvolved()[i][j].size(); k++) {
+					for (int l = 0; l < (int)valuation->getInvolved()[i][j][k].size(); l++) {
+						s += "ConstraintInvolved: Service " + to_string(i) + " Agent " + to_string(j) + " constraint " + to_string(k) + " Jours "
+							+ to_string(valuation->getInvolved()[i][j][k][l].first.first) + "-" + to_string(valuation->getInvolved()[i][j][k][l].first.second)
+							+ " " + to_string(valuation->getInvolved()[i][j][k][l].second.first) + "-" + to_string(valuation->getInvolved()[i][j][k][l].second.second) + "\n" ;
+					}
+				}
+			}
+
+			for (int j = 0; j < (int)valuation->getseqMinMax()[i].size(); j++) {
+				for (int k = 0; k < (int)valuation->getseqMinMax()[i][j].size(); k++) {
+					for (int l = 0; l < (int)valuation->getseqMinMax()[i][j][k].size(); l++) {
+						s += "ConstraintseqMinMax: Service " + to_string(i) + " Agent " + to_string(j) + " constraint " + to_string(k) + " Jours "
+							+ to_string(valuation->getseqMinMax()[i][j][k][l].first) + " " + to_string(valuation->getseqMinMax()[i][j][k][l].second) + "\n";
+					}
+				}
+			}
+
+			for (int j = 0; j < 31; j++) {
+				if (valuation->getPostsRequirement()[i][j] > 0)
+					s += "PostRequirements: Service " + to_string(i) + " Day " + to_string(j) + " nbFail " + to_string(valuation->getPostsRequirement()[i][j]) + "\n";
+			}
+
+			for (int j = 0; j < (int)valuation->getHoursMonth()[i].size(); j++) {
+				s += "HoursMonth: Service " + to_string(i) + " Agent " + to_string(j) + " -> " + to_string(valuation->getHoursMonth()[i][j]) + "\n";
+			}
+
+			for (int j = 0; j < (int)valuation->gethoursWeekSlide()[i].size(); j++) {
+				for (int k = 0; k < valuation->gethoursWeekSlide()[i][j].size(); k++) {
+					s += "hoursWeekSlide: Service " + to_string(i) + " Agent " + to_string(j) + " Day " + to_string(valuation->gethoursWeekSlide()[i][j][k].first) + " to " + to_string(valuation->gethoursWeekSlide()[i][j][k].second) + "\n";
+				}
+			}
+
+			for (int j = 0; j < (int)valuation->getImpossiblePosts()[i].size(); j++) {
+				for (int k = 0; k < valuation->getImpossiblePosts()[i][j].size(); k++) {
+					s += "impossiblePosts: Service " + to_string(i) + " Agent " + to_string(j) + " Day " + to_string(valuation->getImpossiblePosts()[i][j][k]) + "\n";
+				}
+			}
+
+			s += "\n\n";
+		}
+
+	return s;
+
+}

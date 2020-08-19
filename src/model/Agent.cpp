@@ -28,9 +28,9 @@ Agent::Agent(string id, float nbHourMonth, float nbHoursWeek, Status status)
 	for (int i = 0;i < (int)lastMonthCalendar.size();i++)
 		lastMonthCalendar[i] = NULL;
 
-	nbHoursMonthPriority = 100;
-	nbHoursWeekPriority = 50;
-	impossiblePostsPriority = 50;
+	nbHoursMonthPriority = 300;
+	nbHoursWeekPriority = 150;
+	impossiblePostsPriority = 100;
 }
 
 Agent::Agent(const Agent &obj){

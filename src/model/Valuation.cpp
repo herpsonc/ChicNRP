@@ -301,7 +301,7 @@ void Valuation::mergeHoursWeekSlide(const std::vector<std::pair<int, int>> cons,
 	mutexHoursWeekSlide.lock();
 	for (auto value : hoursWeekSlide[service][agent]) {
 		//Si la contrainte est dans l'intervalle, on vérifie qu'elle est toujours active
-		if (value.first >= day - 6 && value.second <= day + 7) {
+		if (value.first >= day - 7 && value.second <= day + 6) {
 			found = false;
 			for (auto e : cons) {
 				if (value.first == e.first && value.second == e.second) {

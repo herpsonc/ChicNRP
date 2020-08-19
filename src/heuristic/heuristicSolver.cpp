@@ -90,6 +90,49 @@ void heuristicSolver::nullTo(Model* m, Post* post) {
 	}
 }
 
+Model heuristicSolver::removeExtraPosts(const Model* m)
+{
+	Model mr = Model(*m);
+
+	for (auto service : mr.getServices()) {
+		auto day = mr.getFirstDay();
+
+		for (int i = 0; i < m->getNbDays(); i++) {
+			//On récupère les postes nécessaires pour le jour day (la variable)
+			auto required = service->getPostRequired()[day];
+
+
+			//On check si certains postes ne sont pas déjà attribués
+			for (auto a : mr.getAgentFrom(service)) {
+				if (a->getCalendar()[i] != NULL && required.find(a->getCalendar()[i]) != required.end()) {
+					required[a->getCalendar()[i]] -= 1;
+				}
+			}
+
+			for (auto r : required) {
+				//Si < 0 alors il y en a trop
+				if (r.second < 0) {
+					//Pour chaque post en trop
+					for (int j = r.second; j < 0; j++) {
+						int bestA = 0;
+						int bestTime = 0;
+
+						for (int k = 0; k < mr.getAgentFrom(service).size(); k++) {
+							if (mr.getAgentFrom(service)[k]->getCalendar()[i] == r.first && mr.getAgentFrom(service)[k]->getWorkingHoursMonth() > bestTime) {
+								bestTime = mr.getAgentFrom(service)[k]->getWorkingHoursMonth();
+								bestA = k;
+							}
+						}
+						mr.getAgentFrom(service)[bestA]->setCalendarDay(mr.getDefaultPost(), i);
+					}
+				}
+			}
+			day = HeuristicToolBox::getNextDay(day);
+		}
+	}
+	return mr;
+}
+
 Model heuristicSolver::predefinedGreedy(const Model m)
 {
 	Model mr = Model(m);
@@ -153,7 +196,7 @@ Model heuristicSolver::predefinedGreedy(const Model m)
 		}
 	}
 
-	auto mr2 = greedy(mr);
+	auto mr2 = greedy(removeExtraPosts(&mr));
 	return mr2;
 }
 
@@ -429,7 +472,7 @@ void heuristicSolver::neighborSwapBlock(Model* m, int range)
 	//--
 	while (blockSize < randRange && !fail) {
 		dayI--;
-		if (dayI >= m->getNbDays() || ((*m->getAgentFromPtr(service))[agent1]->getCalendarLock()[dayI] ||
+		if ((dayI >= m->getNbDays() || dayI < 0) || ((*m->getAgentFromPtr(service))[agent1]->getCalendarLock()[dayI] ||
 			(*m->getAgentFromPtr(service))[agent2]->getCalendarLock()[dayI])) {
 			fail = true;
 			dayI++;

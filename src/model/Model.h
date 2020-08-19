@@ -78,6 +78,8 @@ public:
 	void addAttribut(string att);
 	int attributToInt(string att);
 
+	string getConstraintInformations();
+
 protected:
 	int firstDay;
 	int nbDays;

@@ -228,11 +228,11 @@ void HeuristicToolBox::checkWorkingHoursWeekFast(Model* m, Agent* agent, int idS
 	auto v = std::vector<std::pair<int, int>>();
 	float cptHours = 0;
 	int nbFail = 0;
-	for (int i = day - 6; i < day + 7; i++) {
+	for (int i = day - 7; i <= day; i++) {
 		cptHours = 0;
 
 		for (int j = 0; j < 7; j++) {
-			if (i + j >= 0 && i + j < 31 && agent->getCalendar()[i + j] != NULL) {
+			if (i + j >= 0 && i + j < m->getNbDays() && agent->getCalendar()[i + j] != NULL) {
 				cptHours += agent->getCalendar()[i + j]->getTime();
 			}
 		}
@@ -270,7 +270,7 @@ void HeuristicToolBox::checkPostsRequirementFast(Model* m, int idService, int da
 	}
 
 	for (auto r : required) {
-		nbFail += r.second;
+		nbFail += abs(r.second);
 	}
 
 	m->getValuation()->mergePostRequirement(idService, day, nbFail, m->getServices()[idService]->getPostRequirementPriority());

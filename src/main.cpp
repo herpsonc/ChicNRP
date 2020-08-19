@@ -107,7 +107,7 @@ Model generateGhr() {
 		ConstraintInvolved* cwjjj = new ConstraintInvolved(v, v2, 5, 1000);
 		ghr->addConstraint(cwjjj);
 		
-		float nbHoursWeek = 48., nbHoursMonth = 155;
+		float nbHoursWeek = 60, nbHoursMonth = 155;
 
 		//Agents
 		Agent* a1 = new Agent("1", nbHoursMonth, nbHoursWeek,  Status::Confirmed);
@@ -380,8 +380,8 @@ Model addServiceSDN(Model m) {
 	sdn->addPost(repos);
 	//ghr->addPost(ca);
 
-	sdn->addPostRequired(jb, 3);
-	sdn->addPostRequired(nb, 1);
+	sdn->addPostRequired(jb, 4);
+	sdn->addPostRequired(nb, 4);
 	sdn->addPostRequired(u, 1);
 
 
@@ -707,7 +707,7 @@ Model addServiceCS(Model m) {
 
 	cs_service->addPostRequired(explo_fonctionnelle, 2);
 	cs_service->addPostRequired(orientation, 2);
-	cs_service->addPostRequired(diag, 1);
+	//cs_service->addPostRequired(diag, 1);
 
 
 	//Contraintes
@@ -723,7 +723,7 @@ Model addServiceCS(Model m) {
 
 	Agent* a31 = new Agent("31", nbHoursMonth, nbHoursWeek, Status::Confirmed);
 	// a31->setService(cs_service);
-	addConsecutiveSamePost(a31, diag, 0, 5);
+	addConsecutiveSamePost(a31, diag, 1, 5);
 	addConsecutiveSamePost(a31, diag, 8, 12);
 	addConsecutiveSamePost(a31, diag, 15, 19);
 	addConsecutiveSamePost(a31, diag, 22, 26);
@@ -893,23 +893,32 @@ int main() {
 	//modèle avec les (pré)données de Mars 2020 du CHIC
 	Model m = generateGhr();
 	
-	m.getServices()[0]->loadPredefinedPlanning("GHRTrame.csv", m.getNbDays(), m.getFirstDay());
+	//m.getServices()[0]->loadPredefinedPlanning("GHRTrame.csv", m.getNbDays(), m.getFirstDay());
+	m.getServices()[0]->loadPredefinedPlanning("data/prePlannings/GHR.csv", m.getNbDays(), m.getFirstDay());
 	m.getServices()[0]->getPredefinedPlanning()->printPlanning();
-
-	//m = addServiceSDC(m);
-	//m = addServiceSDN(m);
-	//m = addServicePool(m);
-	//m = addServiceCS(m);
-	m.printPlanning();
+	cout << "----------------------------------" << endl;
 	
 
+	m = addServiceSDC(m);
+	m.getServices()[1]->loadPredefinedPlanning("data/prePlannings/SDC.csv", m.getNbDays(), m.getFirstDay());
+	m.getServices()[1]->getPredefinedPlanning()->printPlanning();
+	cout << "----------------------------------" << endl;
+	m = addServiceSDN(m);
+	m.getServices()[2]->loadPredefinedPlanning("data/prePlannings/SDN.csv", m.getNbDays(), m.getFirstDay());
+	m.getServices()[2]->getPredefinedPlanning()->printPlanning();
+	cout << "----------------------------------" << endl;
+	m = addServicePool(m);
+	m = addServiceCS(m);
+	m.printPlanning();
+	
 	//auto m2 = heuristicSolver::predefinedGreedy(m);
 	//m2.printPlanning();
-	auto m2 = heuristicSolver::iterativeFast(m, 100000, 3);
+	auto m2 = heuristicSolver::iterativeFast(m, 1000000, 5);
 
 	m2.printPlanning();
-	m2.getValuation()->print();
-
+	//m2.getValuation()->print();
+	cout << m2.getConstraintInformations()<< endl;
+	m2.generateXlsx("AllService2.xml");
 	/*Model m2 = Model::generateModelInstance(2, 30, 25, 6, 15, 70, 60.0, 155);
 	m2.printPlanning();
 	m2.generateXlsx("service_g6_PL.xlsx");
