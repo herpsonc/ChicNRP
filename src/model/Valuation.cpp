@@ -41,13 +41,13 @@ Valuation& Valuation::operator=(const Valuation& obj)
 }
 
 //! \return score score of the Valuation
-const int& Valuation::getScore()
+const float& Valuation::getScore()
 {
 	return score;
 }
 
 //! \param score score to set
-void Valuation::setScore(const int score)
+void Valuation::setScore(const float score)
 {
 	this->score = score;
 }
@@ -366,6 +366,21 @@ void Valuation::mergeImpossiblePosts(const bool fail, const int day, const int s
 
 void Valuation::mergeHoursMonth(const float dif, const int service, const int agent, const float nbHoursMonth, const int priority)
 {
+	float mult = 0;
+
+	if (hoursMonth[service][agent] > nbHoursMonth && hoursMonth[service][agent] + dif <= nbHoursMonth) {
+		mult = hoursMonth[service][agent] - nbHoursMonth;
+	}
+	else if (hoursMonth[service][agent] <= nbHoursMonth && hoursMonth[service][agent] + dif > nbHoursMonth) {
+		mult = -(hoursMonth[service][agent] + dif - nbHoursMonth);
+	}
+	else if (hoursMonth[service][agent] > nbHoursMonth){
+		mult = -dif;
+	}
+
+	score += (priority * mult);
+
+	/*
 	mutexHoursMonth.lock();
 	if (hoursMonth[service][agent] > nbHoursMonth &&
 		hoursMonth[service][agent] + dif <= nbHoursMonth) {
@@ -381,9 +396,9 @@ void Valuation::mergeHoursMonth(const float dif, const int service, const int ag
 		score -= priority;
 		mutexScore.unlock();
 	}
-
+	*/
 	hoursMonth[service][agent] += dif;
-	mutexHoursMonth.unlock();
+	//mutexHoursMonth.unlock();
 }
 
 void Valuation::mergePostRequirement(const int service, const int day, const int nbFail, const int priority)

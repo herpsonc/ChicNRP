@@ -17,8 +17,8 @@ public:
 
 	Valuation& operator = (const Valuation& obj);
 
-	const int& getScore();
-	void setScore(const int score);
+	const float& getScore();
+	void setScore(const float score);
 
 	const std::vector<std::vector<float>>& getHoursMonth();
 	void setHoursMonth(const std::vector<std::vector<float>> h);
@@ -55,7 +55,7 @@ public:
 
 	void print();
 private:
-	int score;
+	float score;
 
 	std::vector<std::vector<float>> hoursMonth;
 	std::vector<std::vector<std::array<int, 6>>> hoursWeeks;

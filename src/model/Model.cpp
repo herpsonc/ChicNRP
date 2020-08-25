@@ -337,7 +337,7 @@ vector<Constraint*> Model::createConstraints() {
 	auto v = vector<int>();
 	v.push_back(4);
 	v.push_back(2);
-	constraints.push_back(new ConstraintDaysSeq(v, 30)); // cJN
+	constraints.push_back(new ConstraintDaysSeq(v, 100)); // cJN
 
 	//Pas 3 jours/nuit de travail d'affilée
 	v = vector<int>();
@@ -361,13 +361,13 @@ vector<Constraint*> Model::createConstraints() {
 	v2.push_back(5);
 	constraints.push_back(new ConstraintInvolved(v, v2, -1, 30)); // cnr
 
-	//Après 1 journée longue + 1 repos  -> +1 repos min
+	//Après 1 nuit longue + 1 repos  -> +1 repos min
 	v = vector<int>();
-	v.push_back(1);
+	v.push_back(4);
 	v.push_back(5);
 	v2 = vector<int>();
 	v2.push_back(5);
-	constraints.push_back(new ConstraintInvolved(v, v2, -1, 20)); //cwl2r
+	constraints.push_back(new ConstraintInvolved(v, v2, -1, 100)); //cwl2r
 
 	//Evite les journées isolées
 	v = vector<int>();
@@ -380,7 +380,7 @@ vector<Constraint*> Model::createConstraints() {
 	v = vector<int>();
 	v.push_back(0);
 	v.push_back(0);
-	constraints.push_back(new ConstraintSeqMinMax(5, MinMax::Min, 1, v, 1));
+	constraints.push_back(new ConstraintSeqMinMax(30, MinMax::Min, 1, v, 1));
 
 	return constraints;
 }
