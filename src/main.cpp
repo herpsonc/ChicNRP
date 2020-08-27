@@ -723,6 +723,11 @@ Model addServiceCS(Model m) {
 	cs_service->addPostRequired(orientation, 2, 3);
 	cs_service->addPostRequired(orientation, 2, 4);
 	//cs_service->addPostRequired(diag, 1);
+	cs_service->addPostRequired(ban, 1, 0);
+	cs_service->addPostRequired(ban, 1, 1);
+
+	cs_service->addPostRequired(ban, 1, 3);
+	cs_service->addPostRequired(ban, 1, 4);
 
 
 	//Contraintes
@@ -805,6 +810,9 @@ Model addServiceCS(Model m) {
 
 	Agent* a44 = new Agent("44", nbHoursMonth, nbHoursWeek, Status::Confirmed);
 	// a44->setService(cs_service);
+	ip = vector<Post*>();
+	ip.push_back(orientation);
+	a44->setImpossiblePosts(ip);
 	addConsecutiveSamePost(a44, ca, 0, 3);
 	addConsecutiveSamePost(a44, ca, 20, 21);
 	a44->setImpossiblePosts(ip);
@@ -957,16 +965,24 @@ int main() {
 	m = addServiceCS(m);
 	m = addServiceExplo(m);
 	m = addServiceUK(m);
+	m.getServices()[6]->loadPredefinedPlanning("data/prePlannings/UK.csv", m.getNbDays(), m.getFirstDay());
 	m.printPlanning();
 	
 	//auto m2 = heuristicSolver::predefinedGreedy(m);
 	//m2.printPlanning();
-	auto m2 = heuristicSolver::iterativeFast(m, 100000, 5);
+	auto m2 = heuristicSolver::iterativeFast(m, 1000000, 5);
+	auto m3 = heuristicSolver::iterativePool(m2, 1000000, 2,m2.getServices()[3]);
 
-	m2.printPlanning();
+	m3.printPlanning();
 	//m2.getValuation()->print();
 	cout << m2.getConstraintInformations()<< endl;
-	m2.generateXlsx("AllService2.xml");
+	m3.generateXlsx("AllService2.xml");
+
+	m3.generateEmptyValuation();
+	HeuristicToolBox::checkAllFast(&m3);
+	cout << "scooore " << m3.getValuation()->getScore();
+	cout << m3.getConstraintInformations() << endl;
+
 	/*Model m2 = Model::generateModelInstance(2, 30, 25, 6, 15, 70, 60.0, 155);
 	m2.printPlanning();
 	m2.generateXlsx("service_g6_PL.xlsx");

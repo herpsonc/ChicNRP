@@ -4,14 +4,15 @@ void HeuristicToolBox::checkFastDaySeq(Model* m, ConstraintDaysSeq* constraint, 
 {
 
 	for (auto swap : *m->getSwapLog()) {
-		auto a = (*m->getAgentFromPtr(m->getServices()[swap.getService()]))[swap.getAgent1()];
+		auto a = (*m->getAgentFromPtr(m->getServices()[swap.getService1()]))[swap.getAgent1()];
 		auto aIndice = swap.getAgent1();
+		auto idService = swap.getService1();
 
-		if (swap.getService() == service) {
-			for (int j = 0; j < 2; j++) {
+		for (int j = 0; j < 2; j++) {
+			if (idService == service) {
 				int indice = 0;
+				int iFirst = 0;
 				bool found = false;
-				bool first = false;
 				auto v = vector<pair<int, int>>();
 				//On regarde que les jours nécessaires
 
@@ -19,7 +20,7 @@ void HeuristicToolBox::checkFastDaySeq(Model* m, ConstraintDaysSeq* constraint, 
 					if (i >= 0 && i < m->getNbDays()) {
 						Post* p = a->getCalendar()[i];
 						if (p != NULL) {
-							for(int k = 0; k<p->getAttributs().size();k++) {
+							for (int k = 0; k < p->getAttributs().size(); k++) {
 								if (!found && p->getAttributs()[k] == (*constraint->getSequenceAtt())[indice]) {
 									found = true;
 									indice++;
@@ -28,19 +29,21 @@ void HeuristicToolBox::checkFastDaySeq(Model* m, ConstraintDaysSeq* constraint, 
 										found = false;
 										v.push_back(pair<int, int>(i - indice + 1, i));
 										indice = 0;
+										i = iFirst;
 									}
-								}
-								if (p->getAttributs()[k] == (*constraint->getSequenceAtt())[0]) {
-									first = true;
+									break;
 								}
 							}
-							if (!found) {
+
+							if (!found && indice > 0) {
+								i = iFirst;
 								indice = 0;
-								if (first)
-									indice = 1;
 							}
+
+							if (indice == 1)
+								iFirst = i;
+
 							found = false;
-							first = false;
 						}
 						else {
 							indice = 0;
@@ -48,13 +51,14 @@ void HeuristicToolBox::checkFastDaySeq(Model* m, ConstraintDaysSeq* constraint, 
 					}
 				}
 
-				m->getValuation()->mergeDaySeq(v, swap.getDay(), swap.getService(), aIndice, constraint, iCons);
+				m->getValuation()->mergeDaySeq(v, swap.getDay(), idService, aIndice, constraint, iCons);
 
-				a = (*m->getAgentFromPtr(m->getServices()[swap.getService()]))[swap.getAgent2()];
-				aIndice = swap.getAgent2();
+				
 			}
+			a = (*m->getAgentFromPtr(m->getServices()[swap.getService2()]))[swap.getAgent2()];
+			idService = swap.getService2();
+			aIndice = swap.getAgent2();
 		}
-
 	}
 }
 
@@ -65,10 +69,12 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 	int indiceFirst = 0;
 
 	for (auto swap : *m->getSwapLog()) {
-		auto a = (*m->getAgentFromPtr(m->getServices()[swap.getService()]))[swap.getAgent1()];
+		auto a = (*m->getAgentFromPtr(m->getServices()[swap.getService1()]))[swap.getAgent1()];
 		auto aIndice = swap.getAgent1();
-		if (swap.getService() == service) {
-			for (int j = 0; j < 2; j++) {
+		auto idService = swap.getService1();
+		
+		for (int j = 0; j < 2; j++) {
+			if (idService == service) {
 				int indice = 0;
 				found = false;
 				bool first = false;
@@ -147,11 +153,13 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 					}
 				}
 
-				m->getValuation()->mergeInvolved(v, swap.getDay(), swap.getService(), aIndice, constraint, iCons);
+				m->getValuation()->mergeInvolved(v, swap.getDay(), idService, aIndice, constraint, iCons);
 
-				a = (*m->getAgentFromPtr(m->getServices()[swap.getService()]))[swap.getAgent2()];
-				aIndice = swap.getAgent2();
+				
 			}
+			a = (*m->getAgentFromPtr(m->getServices()[swap.getService2()]))[swap.getAgent2()];
+			idService = swap.getService2();
+			aIndice = swap.getAgent2();
 		}
 	}
 }
@@ -163,12 +171,12 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 	for (auto swap : *m->getSwapLog()) {
 
 
-		auto a = (*m->getAgentFromPtr(m->getServices()[swap.getService()]))[swap.getAgent1()];
+		auto a = (*m->getAgentFromPtr(m->getServices()[swap.getService1()]))[swap.getAgent1()];
 		auto aIndice = swap.getAgent1();
+		auto idService = swap.getService1();
 
-
-		if (swap.getService() == service) {
-			for (int j = 0; j < 2; j++) {
+		for (int j = 0; j < 2; j++) {
+			if (idService == service) {
 
 				unsigned int cptCheck = 0;
 				unsigned int indice = 0;
@@ -213,12 +221,13 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 					}
 				}
 
-				m->getValuation()->mergeSeqMinMax(v, swap.getDay(), swap.getService(), aIndice, constraint, iCons);
-
-				a = (*m->getAgentFromPtr(m->getServices()[swap.getService()]))[swap.getAgent2()];
-				aIndice = swap.getAgent2();
+				m->getValuation()->mergeSeqMinMax(v, swap.getDay(), idService, aIndice, constraint, iCons);
 
 			}
+
+			a = (*m->getAgentFromPtr(m->getServices()[swap.getService2()]))[swap.getAgent2()];
+			aIndice = swap.getAgent2();
+			idService = swap.getService2();
 		}
 	}
 }
@@ -287,7 +296,7 @@ void HeuristicToolBox::checkAllFast(Model* m)
 		for (auto agent : m->getAgentFrom(service)) {
 
 			for (int day = 0; day < m->getNbDays(); day++) {
-				m->addSwapLog(SwapLog(idAgent, idAgent, day, idService, NULL, NULL));
+				m->addSwapLog(SwapLog(idAgent, idAgent, day, idService, idService, NULL, NULL));
 
 				checkWorkingHoursWeekFast(m, agent, idService, day, idAgent);
 				checkImpossiblePostsFast(m, agent, idService, day, idAgent);

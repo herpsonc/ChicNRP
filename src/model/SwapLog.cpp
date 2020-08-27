@@ -1,11 +1,12 @@
 #include "SwapLog.h"
 
-SwapLog::SwapLog(int agent1, int agent2, int day, int service, Post* post1, Post* post2)
+SwapLog::SwapLog(int agent1, int agent2, int day, int service1, int service2, Post* post1, Post* post2)
 {
 	this->agent1 = agent1;
 	this->agent2 = agent2;
 	this->day = day;
-	this->service = service;
+	this->service1 = service1;
+	this->service2 = service2;
 	this->post1 = post1;
 	this->post2 = post2;
 }
@@ -33,9 +34,15 @@ int SwapLog::getDay()
 }
 
 //! \return service service where the swap happened
-int SwapLog::getService()
+int SwapLog::getService1()
 {
-	return service;
+	return service1;
+}
+
+//! \return service service where the swap happened
+int SwapLog::getService2()
+{
+	return service2;
 }
 
 Post* SwapLog::getPost1()

@@ -29,8 +29,10 @@ public:
 	static Model getNeighborSwap(Model* m, int range);
 	static void neighborSwap(Model* m, int range);
 	static void neighborSwapBlock(Model* m, int range);
+	static void neighborSwapPool(Model* m, int range, Service* pool);
 	static Model getneighborRandom(Model* m, int range);
 	static Model iterativeFast(const Model m, int nbIte, int range);
+	static Model iterativePool(const Model m, int nbIte, int range, Service* pool);
 };
 
 #endif /* SRC_HEURISTIC_HEURISTICSOLVER_H_ */

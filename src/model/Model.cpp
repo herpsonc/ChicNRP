@@ -319,10 +319,10 @@ void Model::resetSwapLog(){
 void Model::rollBack()
 {
 	for (int i = swapLog.size() - 1; i >= 0; i--) {
-		auto p1 = agents[services[swapLog[i].getService()]][swapLog[i].getAgent1()]->getCalendar()[swapLog[i].getDay()];
-		agents[services[swapLog[i].getService()]][swapLog[i].getAgent1()]->setCalendarDay(agents[services[swapLog[i].getService()]]
+		auto p1 = agents[services[swapLog[i].getService1()]][swapLog[i].getAgent1()]->getCalendar()[swapLog[i].getDay()];
+		agents[services[swapLog[i].getService1()]][swapLog[i].getAgent1()]->setCalendarDay(agents[services[swapLog[i].getService2()]]
 			[swapLog[i].getAgent2()]->getCalendar()[swapLog[i].getDay()], swapLog[i].getDay());
-		agents[services[swapLog[i].getService()]][swapLog[i].getAgent2()]->setCalendarDay(p1, swapLog[i].getDay());
+		agents[services[swapLog[i].getService2()]][swapLog[i].getAgent2()]->setCalendarDay(p1, swapLog[i].getDay());
 	}
 
 	for (int i = 0; i < swapLog.size();i++) {
@@ -344,13 +344,13 @@ vector<Constraint*> Model::createConstraints() {
 	v.push_back(1);
 	v.push_back(1);
 	v.push_back(1);
-	constraints.push_back(new ConstraintDaysSeq(v, 50)); // c3N
+	constraints.push_back(new ConstraintDaysSeq(v, 150)); // c3N
 
 	//Pas de nuit avant un congé posé
 	v = vector<int>();
 	v.push_back(4);
 	v.push_back(6);
-	constraints.push_back(new ConstraintDaysSeq(v, 30)); // crn
+	constraints.push_back(new ConstraintDaysSeq(v, 50)); // crn
 
 	//Après 2 jours/nuits au moins 2 repos
 	v = vector<int>();
@@ -359,7 +359,7 @@ vector<Constraint*> Model::createConstraints() {
 	auto v2 = vector<int>();
 	v2.push_back(5);
 	v2.push_back(5);
-	constraints.push_back(new ConstraintInvolved(v, v2, -1, 30)); // cnr
+	constraints.push_back(new ConstraintInvolved(v, v2, -1, 50)); // cnr
 
 	//Après 1 nuit longue + 1 repos  -> +1 repos min
 	v = vector<int>();

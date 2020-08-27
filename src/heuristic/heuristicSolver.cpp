@@ -206,26 +206,28 @@ void heuristicSolver::checkFast(Model* m) {
 
 
 	for (auto swap : *m->getSwapLog()) {
-		auto agent1 = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent1()];
-		auto agent2 = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent2()];
+		auto agent1 = m->getAgentFrom(m->getServices()[swap.getService1()])[swap.getAgent1()];
+		auto agent2 = m->getAgentFrom(m->getServices()[swap.getService2()])[swap.getAgent2()];
 
 
 		//Check heure au mois
 		float dif = swap.getPost1()->getTime() - swap.getPost2()->getTime();
 		//cout << dif << " " << swap.getAgent1() << " " << swap.getAgent2() << " " << swap.getDay()<<endl;
-		value->mergeHoursMonth(-dif, swap.getService(), swap.getAgent1(), agent1->getNbHoursMonth(), agent1->getNbHoursMonthPriority());
-		value->mergeHoursMonth(dif, swap.getService(), swap.getAgent2(), agent2->getNbHoursMonth(), agent2->getNbHoursMonthPriority());
+		value->mergeHoursMonth(-dif, swap.getService1(), swap.getAgent1(), agent1->getNbHoursMonth(), agent1->getNbHoursMonthPriority());
+		value->mergeHoursMonth(dif, swap.getService2(), swap.getAgent2(), agent2->getNbHoursMonth(), agent2->getNbHoursMonthPriority());
 
 		//Check heure semaine
-		HeuristicToolBox::checkWorkingHoursWeekFast(m, agent1, swap.getService(), swap.getDay(), swap.getAgent1());
-		HeuristicToolBox::checkWorkingHoursWeekFast(m, agent2, swap.getService(), swap.getDay(), swap.getAgent2());
+		HeuristicToolBox::checkWorkingHoursWeekFast(m, agent1, swap.getService1(), swap.getDay(), swap.getAgent1());
+		HeuristicToolBox::checkWorkingHoursWeekFast(m, agent2, swap.getService2(), swap.getDay(), swap.getAgent2());
 
 		//Check Posts impossibles
-		HeuristicToolBox::checkImpossiblePostsFast(m, agent1, swap.getService(), swap.getDay(), swap.getAgent1());
-		HeuristicToolBox::checkImpossiblePostsFast(m, agent2, swap.getService(), swap.getDay(), swap.getAgent2());
+		HeuristicToolBox::checkImpossiblePostsFast(m, agent1, swap.getService1(), swap.getDay(), swap.getAgent1());
+		HeuristicToolBox::checkImpossiblePostsFast(m, agent2, swap.getService2(), swap.getDay(), swap.getAgent2());
 
 		//Check Posts requirements
-		HeuristicToolBox::checkPostsRequirementFast(m, swap.getService(), swap.getDay());
+		HeuristicToolBox::checkPostsRequirementFast(m, swap.getService1(), swap.getDay());
+		if(swap.getService1() != swap.getService2())
+			HeuristicToolBox::checkPostsRequirementFast(m, swap.getService2(), swap.getDay());
 	}
 
 	//Contraintes
@@ -265,23 +267,23 @@ void heuristicSolver::checkFastMultiThread(Model* m)
 	thread t3 = thread(HeuristicToolBox::checkAllSeqMinMax, m);
 
 	for (auto swap : *m->getSwapLog()) {
-		auto agent1 = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent1()];
-		auto agent2 = m->getAgentFrom(m->getServices()[swap.getService()])[swap.getAgent2()];
+		auto agent1 = m->getAgentFrom(m->getServices()[swap.getService1()])[swap.getAgent1()];
+		auto agent2 = m->getAgentFrom(m->getServices()[swap.getService2()])[swap.getAgent2()];
 
 
 		//Check heure au mois
 		float dif = agent1->getCalendar()[swap.getDay()]->getTime() - agent2->getCalendar()[swap.getDay()]->getTime();
 
-		value->mergeHoursMonth(dif, swap.getService(), swap.getAgent1(), agent1->getNbHoursMonth(), agent1->getNbHoursMonthPriority());
-		value->mergeHoursMonth(-dif, swap.getService(), swap.getAgent2(), agent2->getNbHoursMonth(), agent2->getNbHoursMonthPriority());
+		value->mergeHoursMonth(dif, swap.getService1(), swap.getAgent1(), agent1->getNbHoursMonth(), agent1->getNbHoursMonthPriority());
+		value->mergeHoursMonth(-dif, swap.getService2(), swap.getAgent2(), agent2->getNbHoursMonth(), agent2->getNbHoursMonthPriority());
 
 		//Check heure semaine
-		HeuristicToolBox::checkWorkingHoursWeekFast(m, agent1, swap.getService(), swap.getDay(), swap.getAgent1());
-		HeuristicToolBox::checkWorkingHoursWeekFast(m, agent2, swap.getService(), swap.getDay(), swap.getAgent2());
+		HeuristicToolBox::checkWorkingHoursWeekFast(m, agent1, swap.getService1(), swap.getDay(), swap.getAgent1());
+		HeuristicToolBox::checkWorkingHoursWeekFast(m, agent2, swap.getService2(), swap.getDay(), swap.getAgent2());
 
 		//Check Posts impossibles
-		HeuristicToolBox::checkImpossiblePostsFast(m, agent1, swap.getService(), swap.getDay(), swap.getAgent1());
-		HeuristicToolBox::checkImpossiblePostsFast(m, agent2, swap.getService(), swap.getDay(), swap.getAgent2());
+		HeuristicToolBox::checkImpossiblePostsFast(m, agent1, swap.getService1(), swap.getDay(), swap.getAgent1());
+		HeuristicToolBox::checkImpossiblePostsFast(m, agent2, swap.getService2(), swap.getDay(), swap.getAgent2());
 
 	}
 
@@ -344,7 +346,7 @@ Model heuristicSolver::getNeighborSwap(Model* m, int range)
 			Post* tmp = (*mr.getAgentFromPtr(service))[agent1]->getCalendar()[day];
 			(*mr.getAgentFromPtr(service))[agent1]->setCalendarDay((*mr.getAgentFromPtr(service))[agent2]->getCalendar()[day], day);
 			(*mr.getAgentFromPtr(service))[agent2]->setCalendarDay(tmp, day);
-			mr.addSwapLog(SwapLog(agent1, agent2, day, serviceI, (*mr.getAgentFromPtr(service))[agent2]->getCalendar()[day], (*mr.getAgentFromPtr(service))[agent1]->getCalendar()[day]));
+			mr.addSwapLog(SwapLog(agent1, agent2, day, serviceI, serviceI, (*mr.getAgentFromPtr(service))[agent2]->getCalendar()[day], (*mr.getAgentFromPtr(service))[agent1]->getCalendar()[day]));
 		}
 	}
 
@@ -403,7 +405,7 @@ void heuristicSolver::neighborSwap(Model* m, int range)
 			Post* tmp = (*m->getAgentFromPtr(service))[agent1]->getCalendar()[day];
 			(*m->getAgentFromPtr(service))[agent1]->setCalendarDay((*m->getAgentFromPtr(service))[agent2]->getCalendar()[day], day);
 			(*m->getAgentFromPtr(service))[agent2]->setCalendarDay(tmp, day);
-			m->addSwapLog(SwapLog(agent1, agent2, day, serviceI, (*m->getAgentFromPtr(service))[agent2]->getCalendar()[day], (*m->getAgentFromPtr(service))[agent1]->getCalendar()[day]));
+			m->addSwapLog(SwapLog(agent1, agent2, day, serviceI, serviceI, (*m->getAgentFromPtr(service))[agent2]->getCalendar()[day], (*m->getAgentFromPtr(service))[agent1]->getCalendar()[day]));
 		}
 	}
 }
@@ -487,7 +489,68 @@ void heuristicSolver::neighborSwapBlock(Model* m, int range)
 			Post* tmp = (*m->getAgentFromPtr(service))[agent1]->getCalendar()[dayI];
 			(*m->getAgentFromPtr(service))[agent1]->setCalendarDay((*m->getAgentFromPtr(service))[agent2]->getCalendar()[dayI], dayI);
 			(*m->getAgentFromPtr(service))[agent2]->setCalendarDay(tmp, dayI);
-			m->addSwapLog(SwapLog(agent1, agent2, dayI, serviceI, (*m->getAgentFromPtr(service))[agent2]->getCalendar()[dayI], (*m->getAgentFromPtr(service))[agent1]->getCalendar()[dayI]));
+			m->addSwapLog(SwapLog(agent1, agent2, dayI, serviceI, serviceI, (*m->getAgentFromPtr(service))[agent2]->getCalendar()[dayI], (*m->getAgentFromPtr(service))[agent1]->getCalendar()[dayI]));
+		}
+	}
+}
+
+void heuristicSolver::neighborSwapPool(Model* m, int range, Service* pool)
+{
+	int nbIte = 100;
+
+	int randRange = (rand() % range) + 1;
+
+	for (int j = 0; j < randRange; j++) {
+		//Choix du jour
+		int day = rand() % 31;
+		int i = 0;
+		int serviceI = 0;
+		int servicePool = -1;
+		//On choisit un service aléatoirement
+		Service* service = NULL;
+		while (service == NULL || service == pool) {
+			serviceI = rand() % m->getServices().size();
+
+			i = 0;
+			for (auto s : m->getServices()) {
+				if (serviceI == i) {
+					service = s;
+				}
+				if (s == pool)
+					servicePool = i;
+				i++;
+			}
+		}
+
+		bool swap = true;
+		i = 0;
+		//Choix des deux agents à swap
+		int agent1 = rand() % (*m->getAgentFromPtr(service)).size();
+		while (((*m->getAgentFromPtr(service))[agent1]->getCalendarLock()[day] == true) && i < nbIte) {
+			agent1 = rand() % m->getAgentFrom(service).size();
+			i++;
+			if (i >= nbIte)
+				swap = false;
+		}
+
+		i = 0;
+		int agent2 = rand() % (*m->getAgentFromPtr(pool)).size();
+		while (((*m->getAgentFromPtr(pool))[agent2]->getCalendarLock()[day] == true || (*m->getAgentFromPtr(pool))[agent2]->getCalendar()[day] != m->getDefaultPost() ||
+			(*m->getAgentFromPtr(service))[agent1]->getCalendar()[day] == (*m->getAgentFromPtr(pool))[agent2]->getCalendar()[day]) && i < nbIte) {
+			agent2 = rand() % (*m->getAgentFromPtr(pool)).size();
+			i++;
+			if (i >= nbIte)
+				swap = false;
+		}
+
+		//cout << swap << " Swap agent " << mr.getAgentFrom(service)[agent1]->getId() << " et agent " << mr.getAgentFrom(service)[agent2]->getId() << " jour " << day+1 << endl;
+
+		//On swap les postes des deux agents choisis
+		if (swap) {
+			Post* tmp = (*m->getAgentFromPtr(service))[agent1]->getCalendar()[day];
+			(*m->getAgentFromPtr(service))[agent1]->setCalendarDay((*m->getAgentFromPtr(pool))[agent2]->getCalendar()[day], day);
+			(*m->getAgentFromPtr(pool))[agent2]->setCalendarDay(tmp, day);
+			m->addSwapLog(SwapLog(agent1, agent2, day, serviceI, servicePool, (*m->getAgentFromPtr(pool))[agent2]->getCalendar()[day], (*m->getAgentFromPtr(service))[agent1]->getCalendar()[day]));
 		}
 	}
 }
@@ -607,6 +670,82 @@ Model heuristicSolver::iterativeFast(const Model m, int nbIte, int range)
 					cout << "reset" << endl;
 					//currentModel = greedy(m);
 					currentModel = predefinedGreedy(m);
+					currentModel.generateEmptyValuation();
+					HeuristicToolBox::checkAllFast(&currentModel);
+					currentScore = currentModel.getValuation()->getScore();
+				}
+				else {
+					currentModel.rollBack();
+					checkFast(&currentModel);
+				}
+			}
+		}
+
+	}
+
+	auto chronoEnd = chrono::system_clock::now();
+
+	cout << bestScore << " en " << (chronoEnd - chronoStart).count() / 10000000 << " secondes" << endl;
+	cout << "best trouve en " << bestIte << " iterations en " << bestTime / 10000000 << " secondes" << endl;
+
+	return bestModel;
+}
+
+Model heuristicSolver::iterativePool(const Model m, int nbIte, int range, Service* pool)
+{
+	auto chronoStart = chrono::system_clock::now();
+	srand(time(0));
+	Model currentModel = m;
+	currentModel.generateEmptyValuation();
+	HeuristicToolBox::checkAllFast(&currentModel);
+	Model bestModel = currentModel;
+	int bestScore = currentModel.getValuation()->getScore();
+	int currentScore = bestScore;
+	int bestIte = 0;
+	int bestTime = 0;
+	cout << "scoreInit" << bestScore << endl;
+
+	for (int j = 0; j < nbIte; j++) {
+		if (j % 1000 == 0) {
+			cout << "Iteration " << j << endl;
+		}
+		currentModel.resetSwapLog();
+
+		neighborSwapPool(&currentModel, range, pool);
+
+		//On regarde si la solution est meilleure
+		checkFast(&currentModel);
+		int nextScore = currentModel.getValuation()->getScore();
+		if (nextScore > bestScore) {
+			bestModel = currentModel;
+			bestScore = nextScore;
+			bestIte = j;
+			bestTime = (chrono::system_clock::now() - chronoStart).count();
+		}
+		//cout << nextScore << " " << bestScore << " " <<currentScore <<endl;
+		if (nextScore > currentScore) {
+			//90% de chance de choisir le nouveau model
+			int randI = rand() % 1000;
+			if (randI < 900) {
+				currentScore = nextScore;
+			}
+			else {
+				currentModel.rollBack();
+				checkFast(&currentModel);
+			}
+		}
+		else {
+			//10% de chance de choisir le nouveau candidat même s'il est moins bon
+			int randI = rand() % 1000;
+			if (randI > 998) {
+				currentScore = nextScore;
+			}
+			else {
+				randI = rand() % 10000;
+				if (randI > 9998) {
+					cout << "reset" << endl;
+					//currentModel = greedy(m);
+					currentModel = m;
 					currentModel.generateEmptyValuation();
 					HeuristicToolBox::checkAllFast(&currentModel);
 					currentScore = currentModel.getValuation()->getScore();
