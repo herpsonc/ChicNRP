@@ -158,11 +158,14 @@ void Agent::setNbHoursWeek(float nbHoursWeek) {
 }
 
 //! \return r number of hours worked in the month
-float Agent::getWorkingHoursMonth() {
+float Agent::getWorkingHoursMonth(int firstDay, bool accounted)
+{
 	float r = 0;
-	for(auto day : calendar){
-		if(day != NULL)
+	for (auto day : calendar) {
+		if (day != NULL && (day->getTimeAccounted() || (!accounted && firstDay < 5)))
 			r += day->getTime();
+
+		firstDay = (firstDay + 1) % 7;
 	}
 
 	return r;

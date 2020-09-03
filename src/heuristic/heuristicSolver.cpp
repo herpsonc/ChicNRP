@@ -118,8 +118,8 @@ Model heuristicSolver::removeExtraPosts(const Model* m)
 						int bestTime = 0;
 
 						for (int k = 0; k < mr.getAgentFrom(service).size(); k++) {
-							if (mr.getAgentFrom(service)[k]->getCalendar()[i] == r.first && mr.getAgentFrom(service)[k]->getWorkingHoursMonth() > bestTime) {
-								bestTime = mr.getAgentFrom(service)[k]->getWorkingHoursMonth();
+							if (mr.getAgentFrom(service)[k]->getCalendar()[i] == r.first && mr.getAgentFrom(service)[k]->getWorkingHoursMonth(m->getFirstDay()) > bestTime) {
+								bestTime = mr.getAgentFrom(service)[k]->getWorkingHoursMonth(m->getFirstDay());
 								bestA = k;
 							}
 						}
@@ -609,7 +609,7 @@ Model heuristicSolver::getneighborRandom(Model* m, int range)
 }
 
 
-Model heuristicSolver::iterativeFast(const Model m, int nbIte, int range)
+Model heuristicSolver::iterativeFast(const Model m, int nbIte, int range, int pool)
 {
 	auto chronoStart = chrono::system_clock::now();
 	srand(time(0));
@@ -634,8 +634,11 @@ Model heuristicSolver::iterativeFast(const Model m, int nbIte, int range)
 		int randI = rand() % 1000;
 		if (randI < 800)
 			neighborSwap(&currentModel, range);
+		else if (randI > 950 && pool >= 0)
+			neighborSwapPool(&currentModel, range, currentModel.getServices()[pool]);
 		else
 			neighborSwapBlock(&currentModel, range);
+			
 
 		//On regarde si la solution est meilleure
 		checkFast(&currentModel);
@@ -691,81 +694,6 @@ Model heuristicSolver::iterativeFast(const Model m, int nbIte, int range)
 	return bestModel;
 }
 
-Model heuristicSolver::iterativePool(const Model m, int nbIte, int range, Service* pool)
-{
-	auto chronoStart = chrono::system_clock::now();
-	srand(time(0));
-	Model currentModel = m;
-	currentModel.generateEmptyValuation();
-	HeuristicToolBox::checkAllFast(&currentModel);
-	Model bestModel = currentModel;
-	int bestScore = currentModel.getValuation()->getScore();
-	int currentScore = bestScore;
-	int bestIte = 0;
-	int bestTime = 0;
-	cout << "scoreInit" << bestScore << endl;
-
-	for (int j = 0; j < nbIte; j++) {
-		if (j % 1000 == 0) {
-			cout << "Iteration " << j << endl;
-		}
-		currentModel.resetSwapLog();
-
-		neighborSwapPool(&currentModel, range, pool);
-
-		//On regarde si la solution est meilleure
-		checkFast(&currentModel);
-		int nextScore = currentModel.getValuation()->getScore();
-		if (nextScore > bestScore) {
-			bestModel = currentModel;
-			bestScore = nextScore;
-			bestIte = j;
-			bestTime = (chrono::system_clock::now() - chronoStart).count();
-		}
-		//cout << nextScore << " " << bestScore << " " <<currentScore <<endl;
-		if (nextScore > currentScore) {
-			//90% de chance de choisir le nouveau model
-			int randI = rand() % 1000;
-			if (randI < 900) {
-				currentScore = nextScore;
-			}
-			else {
-				currentModel.rollBack();
-				checkFast(&currentModel);
-			}
-		}
-		else {
-			//10% de chance de choisir le nouveau candidat même s'il est moins bon
-			int randI = rand() % 1000;
-			if (randI > 998) {
-				currentScore = nextScore;
-			}
-			else {
-				randI = rand() % 10000;
-				if (randI > 9998) {
-					cout << "reset" << endl;
-					//currentModel = greedy(m);
-					currentModel = m;
-					currentModel.generateEmptyValuation();
-					HeuristicToolBox::checkAllFast(&currentModel);
-					currentScore = currentModel.getValuation()->getScore();
-				}
-				else {
-					currentModel.rollBack();
-					checkFast(&currentModel);
-				}
-			}
-		}
-
-	}
-
-	auto chronoEnd = chrono::system_clock::now();
-
-	cout << bestScore << " en " << (chronoEnd - chronoStart).count() / 10000000 << " secondes" << endl;
-	cout << "best trouve en " << bestIte << " iterations en " << bestTime / 10000000 << " secondes" << endl;
-
-	return bestModel;
-}
 
 
 

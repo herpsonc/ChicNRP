@@ -301,7 +301,7 @@ void HeuristicToolBox::checkAllFast(Model* m)
 				checkWorkingHoursWeekFast(m, agent, idService, day, idAgent);
 				checkImpossiblePostsFast(m, agent, idService, day, idAgent);
 			}
-			m->getValuation()->mergeHoursMonth(agent->getWorkingHoursMonth(), idService, idAgent, agent->getNbHoursMonth(), agent->getNbHoursMonthPriority());
+			m->getValuation()->mergeHoursMonth(agent->getWorkingHoursMonth(m->getFirstDay()), idService, idAgent, agent->getNbHoursMonth(), agent->getNbHoursMonthPriority());
 			idAgent++;
 		}
 

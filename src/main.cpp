@@ -1,15 +1,7 @@
-//============================================================================
-// Name        : PANDROIDE.cpp
-// Author      : 
-// Version     :
-// Copyright   : 
-// Description :
-//============================================================================
 
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
 
 #include "heuristic/heuristicSolver.h"
 #include "LP/LPSolver.h"
@@ -62,7 +54,7 @@ Model generateGhr() {
 		repos->addAttribut(5);
 		m.addPost(repos);
 
-		Post* ca = new Post("Ca", 0.0);
+		Post* ca = new Post("Ca", 7.5, false);
 		ca->addAttribut(5);
 		ca->addAttribut(6);
 		//m.addPost(ca);
@@ -106,6 +98,14 @@ Model generateGhr() {
 		v2.push_back(3);
 		ConstraintInvolved* cwjjj = new ConstraintInvolved(v, v2, 5, 1000);
 		ghr->addConstraint(cwjjj);
+
+		//Si dimanche Jg alors Jg lundi
+		v = vector<int>();
+		v.push_back(3);
+		v2 = vector<int>();
+		v2.push_back(3);
+		ConstraintInvolved* cwjj = new ConstraintInvolved(v, v2, 6, 1000);
+		ghr->addConstraint(cwjj);
 		
 		float nbHoursWeek = 60, nbHoursMonth = 155;
 
@@ -196,7 +196,7 @@ Model addServiceSDC(Model m) {
 
 	Post* repos = new Post("Repos", 0.0);
 	repos->addAttribut(5);
-	Post* ca = new Post("Ca", 0.0);
+	Post* ca = new Post("Ca", 7.5, false);
 	ca->addAttribut(5);
 	ca->addAttribut(6);
 
@@ -244,14 +244,14 @@ Model addServiceSDC(Model m) {
 
 	Agent* a17 = new Agent("17", 78, nbHoursWeek, Status::Beginner);
 	// a17->setService(sdc);
-	a17->setCalendarDay(ca, 3, true);
-	a17->setCalendarDay(ca, 5, true);
-	a17->setCalendarDay(ca, 10, true);
-	a17->setCalendarDay(ca, 12, true);
-	a17->setCalendarDay(ca, 17, true);
-	a17->setCalendarDay(ca, 19, true);
-	a17->setCalendarDay(ca, 24, true);
-	a17->setCalendarDay(ca, 26, true);
+	a17->setCalendarDay(repos, 3, true);
+	a17->setCalendarDay(repos, 5, true);
+	a17->setCalendarDay(repos, 10, true);
+	a17->setCalendarDay(repos, 12, true);
+	a17->setCalendarDay(repos, 17, true);
+	a17->setCalendarDay(repos, 19, true);
+	a17->setCalendarDay(repos, 24, true);
+	a17->setCalendarDay(repos, 26, true);
 	a17->setImpossiblePosts(ip);
 	m.addAgent(a17, sdc);
 
@@ -316,7 +316,7 @@ Model addServiceUK(Model m) {
 
 	Post* repos = new Post("Repos", 0.0);
 	repos->addAttribut(5);
-	Post* ca = new Post("Ca", 0.0);
+	Post* ca = new Post("Ca", 7.5, false);
 	ca->addAttribut(5);
 	ca->addAttribut(6);
 
@@ -367,7 +367,7 @@ Model addServiceSDN(Model m) {
 
 	Post* repos = new Post("Repos", 0.0);
 	repos->addAttribut(5);
-	Post* ca = new Post("Ca", 0.0);
+	Post* ca = new Post("Ca", 7.5, false);
 	ca->addAttribut(5);
 	ca->addAttribut(6);
 
@@ -422,19 +422,21 @@ Model addServiceSDN(Model m) {
 
 	Agent* a3 = new Agent("3", 125, nbHoursWeek, Status::Confirmed);
 	// a3->setService(sdn);
-	a3->setCalendarDay(ca, 3, true);
-	a3->setCalendarDay(ca, 10, true);
-	a3->setCalendarDay(ca, 17, true);
-	a3->setCalendarDay(ca, 24, true);
+	a3->setCalendarDay(repos, 3, true);
+	a3->setCalendarDay(repos, 10, true);
+	a3->setCalendarDay(repos, 17, true);
+	a3->setCalendarDay(repos, 24, true);
 	a3->setImpossiblePosts(ip);
 	m.addAgent(a3, sdn);
 
 	Agent* a4 = new Agent("4", 78, nbHoursWeek, Status::Confirmed);
 	// a4->setService(sdn);
-	addConsecutiveSamePost(a4, ca, 0, 7);
-	a4->setCalendarDay(ca, 12, true);
-	a4->setCalendarDay(ca, 19, true);
-	a4->setCalendarDay(ca, 26, true);
+	addConsecutiveSamePost(a4, ca, 0, 4);
+	a4->setCalendarDay(repos, 5, true);
+	addConsecutiveSamePost(a4, ca, 6, 7);
+	a4->setCalendarDay(repos, 12, true);
+	a4->setCalendarDay(repos, 19, true);
+	a4->setCalendarDay(repos, 26, true);
 	a4->setImpossiblePosts(ip);
 	m.addAgent(a4, sdn);
 
@@ -693,7 +695,7 @@ Model addServiceCS(Model m) {
 
 	Post* repos = new Post("Repos", 0.0);
 	repos->addAttribut(5);
-	Post* ca = new Post("Ca", 0.0);
+	Post* ca = new Post("Ca", 7.5, false);
 	ca->addAttribut(5);
 	ca->addAttribut(6);
 
@@ -753,19 +755,19 @@ Model addServiceCS(Model m) {
 
 	Agent* a11 = new Agent("11", 78, nbHoursWeek, Status::Confirmed);
 	// a11->setService(cs_service);
-	a11->setCalendarDay(ca, 1, true);
+	a11->setCalendarDay(repos, 1, true);
 	a11->setCalendarDay(cs, 2, true);
-	a11->setCalendarDay(ca, 3, true);
-	a11->setCalendarDay(ca, 8, true);
+	a11->setCalendarDay(repos, 3, true);
+	a11->setCalendarDay(repos, 8, true);
 	a11->setCalendarDay(cs, 9, true);
-	a11->setCalendarDay(ca, 10, true);
-	a11->setCalendarDay(ca, 15, true);
+	a11->setCalendarDay(repos, 10, true);
+	a11->setCalendarDay(repos, 15, true);
 	a11->setCalendarDay(cs, 16, true);
-	a11->setCalendarDay(ca, 17, true);
-	a11->setCalendarDay(ca, 22, true);
+	a11->setCalendarDay(repos, 17, true);
+	a11->setCalendarDay(repos, 22, true);
 	a11->setCalendarDay(cs, 23, true);
-	a11->setCalendarDay(ca, 24, true);
-	a11->setCalendarDay(ca, 29, true);
+	a11->setCalendarDay(repos, 24, true);
+	a11->setCalendarDay(repos, 29, true);
 	a11->setCalendarDay(cs, 30, true);
 	a11->setImpossiblePosts(ip);
 	m.addAgent(a11, cs_service);
@@ -815,6 +817,7 @@ Model addServiceCS(Model m) {
 	a44->setImpossiblePosts(ip);
 	addConsecutiveSamePost(a44, ca, 0, 3);
 	addConsecutiveSamePost(a44, ca, 20, 21);
+	a44->setCalendarDay(fp, 23, true);
 	a44->setImpossiblePosts(ip);
 	m.addAgent(a44, cs_service);
 
@@ -834,7 +837,7 @@ Model addServiceExplo(Model m) {
 	Post* repos = new Post("Repos", 0.0);
 	repos->addAttribut(5);
 
-	Post* ca = new Post("Ca", 0.0);
+	Post* ca = new Post("Ca", 7.5, false);
 	ca->addAttribut(5);
 	ca->addAttribut(6);
 
@@ -875,7 +878,7 @@ Model addServicePool(Model m) {
 	//Posts
 	Post* repos = new Post("Repos", 0.0);
 	repos->addAttribut(5);
-	Post* ca = new Post("Ca", 0.0);
+	Post* ca = new Post("Ca", 7.5, false);
 	ca->addAttribut(5);
 	ca->addAttribut(6);
 
@@ -896,6 +899,23 @@ Model addServicePool(Model m) {
 
 	//Contraintes
 	m.addBasicConstraintsTo(pool);
+
+	//Si samedi Jg alors Jg dimanche + lundi
+	auto v = vector<int>();
+	v.push_back(3);
+	auto v2 = vector<int>();
+	v2.push_back(3);
+	v2.push_back(3);
+	ConstraintInvolved* cwjjj = new ConstraintInvolved(v, v2, 5, 1000);
+	pool->addConstraint(cwjjj);
+
+	//Si dimanche Jg alors Jg lundi
+	v = vector<int>();
+	v.push_back(3);
+	v2 = vector<int>();
+	v2.push_back(3);
+	ConstraintInvolved* cwjj = new ConstraintInvolved(v, v2, 6, 1000);
+	pool->addConstraint(cwjj);
 
 	float nbHoursWeek = 60.0, nbHoursMonth = 155;
 
@@ -947,20 +967,11 @@ int main() {
 	//modèle avec les (pré)données de Mars 2020 du CHIC
 	Model m = generateGhr();
 	
-	//m.getServices()[0]->loadPredefinedPlanning("GHRTrame.csv", m.getNbDays(), m.getFirstDay());
 	m.getServices()[0]->loadPredefinedPlanning("data/prePlannings/GHR.csv", m.getNbDays(), m.getFirstDay());
-	m.getServices()[0]->getPredefinedPlanning()->printPlanning();
-	cout << "----------------------------------" << endl;
-	
-
 	m = addServiceSDC(m);
 	m.getServices()[1]->loadPredefinedPlanning("data/prePlannings/SDC.csv", m.getNbDays(), m.getFirstDay());
-	m.getServices()[1]->getPredefinedPlanning()->printPlanning();
-	cout << "----------------------------------" << endl;
 	m = addServiceSDN(m);
 	m.getServices()[2]->loadPredefinedPlanning("data/prePlannings/SDN.csv", m.getNbDays(), m.getFirstDay());
-	m.getServices()[2]->getPredefinedPlanning()->printPlanning();
-	cout << "----------------------------------" << endl;
 	m = addServicePool(m);
 	m = addServiceCS(m);
 	m = addServiceExplo(m);
@@ -970,17 +981,17 @@ int main() {
 	
 	//auto m2 = heuristicSolver::predefinedGreedy(m);
 	//m2.printPlanning();
-	auto m2 = heuristicSolver::iterativeFast(m, 1000000, 5);
-	auto m3 = heuristicSolver::iterativePool(m2, 1000000, 2,m2.getServices()[3]);
+	auto m3 = heuristicSolver::iterativeFast(m, 10000, 4, 3);
+	//auto m3 = heuristicSolver::iterativePool(m2, 100000, 2,m2.getServices()[3]);
 
 	m3.printPlanning();
 	//m2.getValuation()->print();
-	cout << m2.getConstraintInformations()<< endl;
+	//cout << m2.getConstraintInformations()<< endl;
 	m3.generateXlsx("AllService2.xml");
 
 	m3.generateEmptyValuation();
 	HeuristicToolBox::checkAllFast(&m3);
-	cout << "scooore " << m3.getValuation()->getScore();
+	cout << "score " << m3.getValuation()->getScore() << endl;
 	cout << m3.getConstraintInformations() << endl;
 
 	/*Model m2 = Model::generateModelInstance(2, 30, 25, 6, 15, 70, 60.0, 155);

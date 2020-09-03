@@ -235,6 +235,7 @@ void Model::setValuation(Valuation v){
 
 void Model::generateEmptyValuation()
 {
+	float score = 0;
 	//Pour Valuation
 	int iS = 0;
 	int iA = 0;
@@ -278,6 +279,8 @@ void Model::generateEmptyValuation()
 				}
 				else if (typeid(*c) == typeid(ConstraintSeqMinMax)) {
 					seqMinMax[iS][iA].push_back(vector<pair<int, int>>());
+					if (((ConstraintSeqMinMax*)c)->getType() == MinMax::Min)
+						score -= ((ConstraintSeqMinMax*)c)->getPriority();
 				}
 			}
 			iA++;
@@ -288,7 +291,7 @@ void Model::generateEmptyValuation()
 
 	Valuation* v = new Valuation();
 
-	v->setScore(0);
+	v->setScore(score);
 	v->setHoursMonth(hoursMonth);
 	v->sethoursWeekSlide(hoursWeeksSlide);
 	v->setImpossiblePosts(impossiblePosts);
@@ -376,11 +379,13 @@ vector<Constraint*> Model::createConstraints() {
 	v.push_back(5);
 	constraints.push_back(new ConstraintDaysSeq(v, 10)); //cji
 
+
+
 	//1 week-end par mois
 	v = vector<int>();
 	v.push_back(0);
 	v.push_back(0);
-	constraints.push_back(new ConstraintSeqMinMax(30, MinMax::Min, 1, v, 1));
+	constraints.push_back(new ConstraintSeqMinMax(5, MinMax::Min, 1, v, 1000));
 
 	return constraints;
 }
@@ -393,7 +398,7 @@ void Model::addBasicConstraintsTo(Service* s) {
 	}
 }
 
-/* Model Model::generateModelInstance(Day firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService, int nbPostsPerService, int proba_1er_conge, int proba_suite_conge) {
+Model Model::generateModelInstance(int firstDay, int nbDays, float overtime, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService, int nbPostsPerService, int proba_1er_conge, int proba_suite_conge) {
 
 	//Si nbPostsPerService est indiqué, le nombre nbPosts ne sera pas respecté si nbPosts < nbPostsPerService*nbServices
 	//de même pour nbAgentsPerService
@@ -408,11 +413,11 @@ void Model::addBasicConstraintsTo(Service* s) {
 
 	//poste congé/repos dispos dans chaque service
 	Post* repos = new Post("Repos", 0.0);
-	repos->addAttribut("rest");
+	repos->addAttribut(5);
 
 	Post* ca = new Post("Ca", 0.0);
-	ca->addAttribut("rest");
-	ca->addAttribut("ca");
+	ca->addAttribut(5);
+	ca->addAttribut(6);
 
 	m.setDefaultPost(repos);
 
@@ -454,22 +459,22 @@ void Model::addBasicConstraintsTo(Service* s) {
 			if (testLengthPost >= 5) { //50% de chance de créer un poste à 12.25h, sinon 7.5h
 
 				posti_j = new Post("S" + std::to_string(i) + "P" + std::to_string(j) + "L", 12.25);
-				posti_j->addAttribut("work");
-				posti_j->addAttribut("workL"); //poste à durée longue
+				posti_j->addAttribut(0);
+				posti_j->addAttribut(1); //poste à durée longue
 			}
 			else {
 				posti_j = new Post("S" + std::to_string(i) + "P" + std::to_string(j), 7.5);
-				posti_j->addAttribut("work");
+				posti_j->addAttribut(0);
 			}
 
 			dayOrNight = rand() % 3 + 1; // 2 chances /3 d'être un poste en journée
 			if (dayOrNight <= 2) {
 				posti_j->setId(posti_j->getId() + "D");
-				posti_j->addAttribut("day");
+				posti_j->addAttribut(2);
 			}
 			else {
 				posti_j->setId(posti_j->getId() + "N");
-				posti_j->addAttribut("night");
+				posti_j->addAttribut(4);
 			}
 			service_i->addPost(posti_j);
 			service_i->addPostRequired(posti_j, 1);
@@ -506,9 +511,9 @@ void Model::addBasicConstraintsTo(Service* s) {
 		}
 
 		//si aucun nombre précis d'agents par service n'est donné, random pour attribuer un service
+		service_rand = rand() % nbServices;
 		if (nbAgentsPerService == -1) {
-			service_rand = rand() % nbServices;
-			a_i->setService(m.getServices()[service_rand]);
+			m.addAgent(a_i, m.getServices()[service_rand]);
 		}
 		// sinon, ajout de l'agent au premier service libre
 		else {
@@ -516,10 +521,10 @@ void Model::addBasicConstraintsTo(Service* s) {
 			while (m.getServices()[j]->getAgents().size() >= nbAgentsPerService) {
 				j++;
 			}
-			a_i->setService(m.getServices()[j]);
+			m.addAgent(a_i, m.getServices()[j]);
 		}
 
-		vector<Post*> posts_possibles = a_i->getService()->getPosts();
+		vector<Post*> posts_possibles = m.getServices()[service_rand]->getPosts();
 
 		//pour chaque jour
 		for (int jour = 0; jour < nbDays; jour++) {
@@ -551,11 +556,11 @@ void Model::addBasicConstraintsTo(Service* s) {
 			}
 		}
 
-		m.addAgent(a_i, m.getServices()[service_rand]);
+		
 	}
 
 	return m;
-} */
+} 
 
 //! 
 //a XML file from the Model
@@ -574,7 +579,7 @@ void Model::generateXML(string fileName){
 	xml_node<>* defaultP = doc.allocate_node(node_element, "DefaultPost");
 	defaultP->append_attribute(doc.allocate_attribute("id", doc.allocate_string(defaultPost->getId().c_str())));
 	defaultP->append_attribute(doc.allocate_attribute("nbh", doc.allocate_string(to_string(defaultPost->getTime()).c_str())));
-
+	defaultP->append_attribute(doc.allocate_attribute("timeAcc", doc.allocate_string((to_string(defaultPost->getTimeAccounted()).c_str()))));
 
 	//Attributs du post
 	for (auto attri : defaultPost->getAttributs()) {
@@ -595,6 +600,7 @@ void Model::generateXML(string fileName){
 			xml_node<>* post = doc.allocate_node(node_element, "Post");
 			post->append_attribute(doc.allocate_attribute("id", doc.allocate_string(p->getId().c_str())));
 			post->append_attribute(doc.allocate_attribute("time", doc.allocate_string(to_string(p->getTime()).c_str())));
+			post->append_attribute(doc.allocate_attribute("timeAcc", doc.allocate_string((to_string(p->getTimeAccounted()).c_str()))));
 
 			//Attributs du post
 			for (auto a : p->getAttributs()) {
@@ -671,12 +677,17 @@ void Model::generateXML(string fileName){
 			agent->append_attribute(doc.allocate_attribute("status", doc.allocate_string(to_string(a->getStatus()).c_str())));
 			agent->append_attribute(doc.allocate_attribute("nbHoursMonth", doc.allocate_string(to_string(a->getNbHoursMonth()).c_str())));
 			agent->append_attribute(doc.allocate_attribute("nbHoursWeek", doc.allocate_string(to_string(a->getNbHoursWeek()).c_str())));
+			agent->append_attribute(doc.allocate_attribute("nbHoursMonthPriority", doc.allocate_string(to_string(a->getNbHoursMonthPriority()).c_str())));
+			agent->append_attribute(doc.allocate_attribute("nbHoursWeekPriority", doc.allocate_string(to_string(a->getNbHoursWeekPriority()).c_str())));
+			agent->append_attribute(doc.allocate_attribute("impossiblePostPriority", doc.allocate_string(to_string(a->getImpossiblePostsPriority()).c_str())));
+
 
 			//ImpossiblePosts
 			for (auto ip : a->getImpossiblePosts()) {
 				xml_node<>* post = doc.allocate_node(node_element, "ImpossiblePost");
 				post->append_attribute(doc.allocate_attribute("id", doc.allocate_string(ip->getId().c_str())));
 				post->append_attribute(doc.allocate_attribute("nbh", doc.allocate_string(to_string(ip->getTime()).c_str())));
+				post->append_attribute(doc.allocate_attribute("timeAcc", doc.allocate_string((to_string(ip->getTimeAccounted()).c_str()))));
 
 				//Attributs du post
 				for (auto attri : ip->getAttributs()) {
@@ -757,7 +768,7 @@ void Model::loadXML(string fileName){
 
 	//DefaultPost
 	xml_node<>* defaultPost = root->first_node("DefaultPost");
-	Post* post = new Post(defaultPost->first_attribute("id")->value(), atof(defaultPost->first_attribute("nbh")->value()));
+	Post* post = new Post(defaultPost->first_attribute("id")->value(), atof(defaultPost->first_attribute("nbh")->value()), atoi(defaultPost->first_attribute("timeAcc")->value()));
 	//attributs
 	for (auto attNode = defaultPost->first_node("Attribut"); attNode; attNode = attNode->next_sibling("Attribut")) {
 		if (find(attributs.begin(), attributs.end(), attNode->first_attribute("Attribut")->value()) == attributs.end())
@@ -781,7 +792,7 @@ void Model::loadXML(string fileName){
 
 			//S'il n'y est pas, on le crée
 			if (search == mapPosts.end()) {
-				Post* post = new Post(postNode->first_attribute("id")->value(), atof(postNode->first_attribute("time")->value()));
+				Post* post = new Post(postNode->first_attribute("id")->value(), atof(postNode->first_attribute("time")->value()), atoi(postNode->first_attribute("timeAcc")->value()));
 				//attributs
 				for (auto attNode = postNode->first_node("Attribut"); attNode; attNode = attNode->next_sibling("Attribut")) {
 					if (find(attributs.begin(), attributs.end(), attNode->first_attribute("Attribut")->value()) == attributs.end())
@@ -850,7 +861,9 @@ void Model::loadXML(string fileName){
 		for (auto agentNode = serviceNode->first_node("Agent"); agentNode; agentNode = agentNode->next_sibling("Agent")) {
 			auto agent = new Agent(agentNode->first_attribute("id")->value(), atoi(agentNode->first_attribute("nbHoursMonth")->value()),
 				atoi(agentNode->first_attribute("nbHoursWeek")->value()), (Status)atoi(agentNode->first_attribute("status")->value()));
-
+			agent->setNbHoursMonthPriority(atoi(agentNode->first_attribute("nbHoursMonthPriority")->value()));
+			agent->setNbHoursWeekPriority(atoi(agentNode->first_attribute("nbHoursWeekPriority")->value()));
+			agent->setImpossiblePostsPriority(atoi(agentNode->first_attribute("impossiblePostPriority")->value()));
 			//Calendrier
 			int i = 0;
 			for (auto dayNode = agentNode->first_node("Day"); dayNode; dayNode = dayNode->next_sibling("Day")) {
@@ -859,7 +872,7 @@ void Model::loadXML(string fileName){
 
 					//S'il n'y est pas, on le crée
 					if (search == mapPosts.end()) {
-						Post* post = new Post(dayNode->first_attribute("id")->value(), atof(dayNode->first_attribute("nbh")->value()));
+						Post* post = new Post(dayNode->first_attribute("id")->value(), atof(dayNode->first_attribute("nbh")->value()), atoi(dayNode->first_attribute("timeAcc")->value()));
 						//attributs
 						for (auto attNode = dayNode->first_node("Attribut"); attNode; attNode = attNode->next_sibling("Attribut")) {
 							if (find(attributs.begin(), attributs.end(), attNode->first_attribute("Attribut")->value()) == attributs.end())
@@ -882,7 +895,7 @@ void Model::loadXML(string fileName){
 
 				//S'il n'y est pas, on le crée
 				if (search == mapPosts.end()) {
-					Post* post = new Post(impossiblePost->first_attribute("id")->value(), atof(impossiblePost->first_attribute("nbh")->value()));
+					Post* post = new Post(impossiblePost->first_attribute("id")->value(), atof(impossiblePost->first_attribute("nbh")->value()), atoi(impossiblePost->first_attribute("timeAcc")->value()));
 					//attributs
 					for (auto attNode = impossiblePost->first_node("Attribut"); attNode; attNode = attNode->next_sibling("Attribut")) {
 						if (find(attributs.begin(), attributs.end(), attNode->first_attribute("Attribut")->value()) == attributs.end())
@@ -995,7 +1008,7 @@ void Model::generateXlsx(string fileName)
 
 				res << "</Data></Cell>\n";
 			}
-			res << "<Cell ss:StyleID = \"Default\"><Data ss:Type=\"Number\">" << agent->getWorkingHoursMonth() << "</Data></Cell>\n";
+			res << "<Cell ss:StyleID = \"Default\"><Data ss:Type=\"Number\">" << agent->getWorkingHoursMonth(getFirstDay(), true) << "</Data></Cell>\n";
 			res << "</Row>\n";
 		}
 		res << "<Row>\n</Row>\n";

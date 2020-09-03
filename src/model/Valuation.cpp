@@ -367,7 +367,7 @@ void Valuation::mergeImpossiblePosts(const bool fail, const int day, const int s
 void Valuation::mergeHoursMonth(const float dif, const int service, const int agent, const float nbHoursMonth, const int priority)
 {
 	float mult = 0;
-
+	mutexHoursMonth.lock();
 	if (hoursMonth[service][agent] > nbHoursMonth && hoursMonth[service][agent] + dif <= nbHoursMonth) {
 		mult = hoursMonth[service][agent] - nbHoursMonth;
 	}
@@ -378,27 +378,12 @@ void Valuation::mergeHoursMonth(const float dif, const int service, const int ag
 		mult = -dif;
 	}
 
+	mutexScore.lock();
 	score += (priority * mult);
+	mutexScore.unlock();
 
-	/*
-	mutexHoursMonth.lock();
-	if (hoursMonth[service][agent] > nbHoursMonth &&
-		hoursMonth[service][agent] + dif <= nbHoursMonth) {
-
-		mutexScore.lock();
-		score += priority;
-		mutexScore.unlock();
-	}
-	else if (hoursMonth[service][agent] <=nbHoursMonth &&
-		hoursMonth[service][agent] + dif > nbHoursMonth) {
-
-		mutexScore.lock();
-		score -= priority;
-		mutexScore.unlock();
-	}
-	*/
 	hoursMonth[service][agent] += dif;
-	//mutexHoursMonth.unlock();
+	mutexHoursMonth.unlock();
 }
 
 void Valuation::mergePostRequirement(const int service, const int day, const int nbFail, const int priority)

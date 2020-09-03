@@ -21,8 +21,6 @@
 #include "../rapidXml/rapidxml_print.hpp"
 #include "Valuation.h"
 
-
-
 class Model {
 public:
 	Model(int firstDay, int nbDays, float overtime);

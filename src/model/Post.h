@@ -8,6 +8,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
@@ -18,6 +19,7 @@ class Post {
 public:
 	Post();
 	Post(string id, float time);
+	Post(string id, float time, bool accounted);
 	virtual ~Post();
 
 	const string& getId() const;
@@ -26,6 +28,9 @@ public:
 	float getTime() const;
 	void setTime(float time);
 
+	bool getTimeAccounted() const;
+	void setTimeAccounted(const bool timeAccounted);
+
 	const vector<int>& getAttributs() const;
 	void setAttributs(const vector<int> &attributs);
 	void addAttribut(int attribut);
@@ -33,6 +38,7 @@ public:
 protected:
 	string id;
 	float time;
+	bool timeAccounted;
 
 	vector<int> attributs;
 };

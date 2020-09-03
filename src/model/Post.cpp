@@ -6,19 +6,27 @@
  */
 
 #include "Post.h"
-#include <iostream>
 
 using namespace std;
 
 Post::Post() {
 	id ="";
 	time = 0;
+	timeAccounted = true;
 }
 
 Post::Post(string id, float time)
 {
 	this->id = id;
 	this->time = time;
+	timeAccounted = true;
+}
+
+Post::Post(string id, float time, bool accounted)
+{
+	this->id = id;
+	this->time = time;
+	timeAccounted = accounted;
 }
 
 Post::~Post() {
@@ -42,6 +50,16 @@ float Post::getTime() const {
 //! \param time set time of the Post
 void Post::setTime(float time) {
 	this->time = time;
+}
+
+bool Post::getTimeAccounted() const
+{
+	return timeAccounted;
+}
+
+void Post::setTimeAccounted(const bool timeAccounted)
+{
+	this->timeAccounted = timeAccounted;
 }
 
 //! \return attributs vector of attributs of the Post

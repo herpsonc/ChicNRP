@@ -43,7 +43,7 @@ public:
 	float getNbHoursWeek() const;
 	void setNbHoursWeek(float nbHoursWeek);
 
-	float getWorkingHoursMonth();
+	float getWorkingHoursMonth(int firstDay, bool accounted = false);
 
 	void setNbHoursMonthPriority(int priority);
 	const int getNbHoursMonthPriority() const;
