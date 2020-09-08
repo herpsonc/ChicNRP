@@ -141,7 +141,7 @@ void Model::printPlanning() {
 		{
 			cout << "Agent " << agent->getId() << ":\t";
 
-			for (unsigned int j = 0; j < agent->getCalendar().size(); j++)
+			for (unsigned int j = 0; j < nbDays; j++)
 			{
 				if (agent->getCalendar()[j] != NULL)
 				{
@@ -555,8 +555,6 @@ Model Model::generateModelInstance(int firstDay, int nbDays, float overtime, int
 				}
 			}
 		}
-
-		
 	}
 
 	return m;
@@ -579,7 +577,7 @@ void Model::generateXML(string fileName){
 	xml_node<>* defaultP = doc.allocate_node(node_element, "DefaultPost");
 	defaultP->append_attribute(doc.allocate_attribute("id", doc.allocate_string(defaultPost->getId().c_str())));
 	defaultP->append_attribute(doc.allocate_attribute("nbh", doc.allocate_string(to_string(defaultPost->getTime()).c_str())));
-	defaultP->append_attribute(doc.allocate_attribute("timeAcc", doc.allocate_string((to_string(defaultPost->getTimeAccounted()).c_str()))));
+	defaultP->append_attribute(doc.allocate_attribute("timeAcc", doc.allocate_string(to_string(defaultPost->getTimeAccounted()).c_str())));
 
 	//Attributs du post
 	for (auto attri : defaultPost->getAttributs()) {
@@ -600,7 +598,7 @@ void Model::generateXML(string fileName){
 			xml_node<>* post = doc.allocate_node(node_element, "Post");
 			post->append_attribute(doc.allocate_attribute("id", doc.allocate_string(p->getId().c_str())));
 			post->append_attribute(doc.allocate_attribute("time", doc.allocate_string(to_string(p->getTime()).c_str())));
-			post->append_attribute(doc.allocate_attribute("timeAcc", doc.allocate_string((to_string(p->getTimeAccounted()).c_str()))));
+			post->append_attribute(doc.allocate_attribute("timeAcc", doc.allocate_string(to_string(p->getTimeAccounted()).c_str())));
 
 			//Attributs du post
 			for (auto a : p->getAttributs()) {
@@ -687,7 +685,7 @@ void Model::generateXML(string fileName){
 				xml_node<>* post = doc.allocate_node(node_element, "ImpossiblePost");
 				post->append_attribute(doc.allocate_attribute("id", doc.allocate_string(ip->getId().c_str())));
 				post->append_attribute(doc.allocate_attribute("nbh", doc.allocate_string(to_string(ip->getTime()).c_str())));
-				post->append_attribute(doc.allocate_attribute("timeAcc", doc.allocate_string((to_string(ip->getTimeAccounted()).c_str()))));
+				post->append_attribute(doc.allocate_attribute("timeAcc", doc.allocate_string(to_string(ip->getTimeAccounted()).c_str())));
 
 				//Attributs du post
 				for (auto attri : ip->getAttributs()) {
