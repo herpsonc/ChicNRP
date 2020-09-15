@@ -1,0 +1,9 @@
+SDC 8SF,L,M,Mer,J,V,S,D,L,M,Mer,J,V,S,D,L,M,Mer,J,V,S,D,L,M,Mer,J,V,S,D,L,M,Mer,J,V,S,D
+Agent 1 ,Js,Js,,,Ns,Ns,,,Js,Js,,,Js,Js,,,Js,Js,,,Ns,Ns,,,Js,Js,,,Js,Js,,,Js,Js,
+Agent 2,,Js,Js,,,Js,Js,,,Js,Js,,,Ns,Ns,,,Js,Js,,,Js,Js,,,Ns,Ns,,,Ns,Ns,,,Js,Js
+Agent 3,,,Js,Js,,,Ns,Ns,,,Js,Js,,,Js,Js,,,Js,Js,,,Ns,Ns,,,Js,Js,,,Js,Ns,,,Js
+Agent 4,Ns,,,Js,Js,,,Js,Js,,,Js,Js,,,Ns,Ns,,,Js,Js,,,Js,Ns,,,Js,Js,,,Js,Js,,
+Agent 5,Js,Js,,,Js,Js,,,Ns,Ns,,,Js,Js,,,Js,Ns,,,Js,Js,,,Js,Js,,,Js,Js,,,Ns,Ns,
+Agent 6,,Ns,Ns,,,Js,Js,,,Js,Ns,,,Js,Js,,,Js,Js,,,Js,Js,,,Js,Js,,,Js,Js,,,Js,Js
+Agent 7,,,Js,Ns,,,Js,Js,,,Js,Js,,,Js,Js,,,Ns,Ns,,,Js,Js,,,Js,Js,,,Js,Js,,,Ns
+Agent 8,Js,,,Js,Js,,,Js,Js,,,Ns,Ns,,,Js,Js,,,Js,Js,,,Js,Js,,,Ns,Ns,,,Js,Js,,
