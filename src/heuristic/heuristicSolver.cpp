@@ -1,10 +1,3 @@
-/*
- * heuristicSolver.cpp
- *
- *  Created on: 9 mars 2020
- *      Author: Valars
- */
-
 #include "heuristicSolver.h"
 #include <future>
 
@@ -12,15 +5,13 @@
 using namespace std;
 
 heuristicSolver::heuristicSolver() {
-	// TODO Auto-generated constructor stub
 
 }
 
 heuristicSolver::~heuristicSolver() {
-	// TODO Auto-generated destructor stub
 }
 
-//Algorithme glouton prenant en compte uniquement les contraintes de postes par jour et d'amplitude horaire sur les agents.
+//! Greedy algorithm only using requiredPosts to affect posts to agents
 Model heuristicSolver::greedy(const Model m) {
 	Model mr = Model(m);
 
@@ -78,6 +69,7 @@ Model heuristicSolver::greedy(const Model m) {
 	return mr;
 }
 
+//! affect post to every null posts in the calendar of each agents
 void heuristicSolver::nullTo(Model* m, Post* post) {
 	for(auto s : m->getServices()){
 		for(auto a : m->getAgentFrom(s)){
@@ -90,6 +82,7 @@ void heuristicSolver::nullTo(Model* m, Post* post) {
 	}
 }
 
+//! remove extra posts in the calendar (depend of postRequired). if a post has to be removed, remove the post affected to the agent with the most hours in the month
 Model heuristicSolver::removeExtraPosts(const Model* m)
 {
 	Model mr = Model(*m);
@@ -117,7 +110,7 @@ Model heuristicSolver::removeExtraPosts(const Model* m)
 						int bestA = 0;
 						int bestTime = 0;
 
-						for (int k = 0; k < mr.getAgentFrom(service).size(); k++) {
+						for (unsigned int k = 0; k < mr.getAgentFrom(service).size(); k++) {
 							if (mr.getAgentFrom(service)[k]->getCalendar()[i] == r.first && mr.getAgentFrom(service)[k]->getWorkingHoursMonth(m->getFirstDay()) > bestTime) {
 								bestTime = mr.getAgentFrom(service)[k]->getWorkingHoursMonth(m->getFirstDay());
 								bestA = k;
@@ -133,6 +126,7 @@ Model heuristicSolver::removeExtraPosts(const Model* m)
 	return mr;
 }
 
+//! Affect predefinedPlannings to agents, then complete with removeExtraPost() and greedy()
 Model heuristicSolver::predefinedGreedy(const Model m)
 {
 	Model mr = Model(m);
@@ -200,7 +194,7 @@ Model heuristicSolver::predefinedGreedy(const Model m)
 	return mr2;
 }
 
-
+//! Check every constraint and update valuation of the model
 void heuristicSolver::checkFast(Model* m) {
 	auto value = m->getValuation();
 
@@ -258,101 +252,8 @@ void heuristicSolver::checkFast(Model* m) {
 
 }
 
-void heuristicSolver::checkFastMultiThread(Model* m)
-{
-	auto value = m->getValuation();
 
-	thread t1 = thread(HeuristicToolBox::checkAllDaySeq, m);
-	thread t2 = thread(HeuristicToolBox::checkAllInvolved, m);
-	thread t3 = thread(HeuristicToolBox::checkAllSeqMinMax, m);
-
-	for (auto swap : *m->getSwapLog()) {
-		auto agent1 = m->getAgentFrom(m->getServices()[swap.getService1()])[swap.getAgent1()];
-		auto agent2 = m->getAgentFrom(m->getServices()[swap.getService2()])[swap.getAgent2()];
-
-
-		//Check heure au mois
-		float dif = agent1->getCalendar()[swap.getDay()]->getTime() - agent2->getCalendar()[swap.getDay()]->getTime();
-
-		value->mergeHoursMonth(dif, swap.getService1(), swap.getAgent1(), agent1->getNbHoursMonth(), agent1->getNbHoursMonthPriority());
-		value->mergeHoursMonth(-dif, swap.getService2(), swap.getAgent2(), agent2->getNbHoursMonth(), agent2->getNbHoursMonthPriority());
-
-		//Check heure semaine
-		HeuristicToolBox::checkWorkingHoursWeekFast(m, agent1, swap.getService1(), swap.getDay(), swap.getAgent1());
-		HeuristicToolBox::checkWorkingHoursWeekFast(m, agent2, swap.getService2(), swap.getDay(), swap.getAgent2());
-
-		//Check Posts impossibles
-		HeuristicToolBox::checkImpossiblePostsFast(m, agent1, swap.getService1(), swap.getDay(), swap.getAgent1());
-		HeuristicToolBox::checkImpossiblePostsFast(m, agent2, swap.getService2(), swap.getDay(), swap.getAgent2());
-
-	}
-
-	t1.join();
-	t2.join();
-	t3.join();
-}
-
-
-Model heuristicSolver::getNeighborSwap(Model* m, int range)
-{
-	Model mr = Model(*m);
-
-	int nbIte = 100;
-
-	int randRange = (rand() % range) + 1;
-
-	for (int j = 0;j < randRange;j++) {
-		//Choix du jour
-		int day = rand() % 31;
-
-		//On choisit un service aléatoirement
-		int serviceI = rand() % mr.getServices().size();
-
-		Service* service = NULL;
-		int i = 0;
-		for (auto s : mr.getServices()) {
-			if (serviceI == i) {
-				service = s;
-				break;
-			}
-			i++;
-		}
-
-		bool swap = true;
-		i = 0;
-		//Choix des deux agents à swap
-		int agent1 = rand() % (*mr.getAgentFromPtr(service)).size();
-		while (((*mr.getAgentFromPtr(service))[agent1]->getCalendarLock()[day] == true) && i < nbIte) {
-			agent1 = rand() % (*mr.getAgentFromPtr(service)).size();
-			i++;
-			if (i >= nbIte)
-				swap = false;
-		}
-
-		i = 0;
-		int agent2 = rand() % (*mr.getAgentFromPtr(service)).size();
-		while (((*mr.getAgentFromPtr(service))[agent2]->getCalendarLock()[day] == true || agent1 == agent2 ||
-			(*mr.getAgentFromPtr(service))[agent1]->getCalendar()[day] == (*mr.getAgentFromPtr(service))[agent2]->getCalendar()[day]) && i < nbIte) {
-			agent2 = rand() % (*mr.getAgentFromPtr(service)).size();
-			i++;
-			if (i >= nbIte)
-				swap = false;
-		}
-
-		//cout << swap << " Swap agent " << mr.getAgentFrom(service)[agent1]->getId() << " et agent " << mr.getAgentFrom(service)[agent2]->getId() << " jour " << day+1 << endl;
-
-		//On swap les postes des deux agents choisis
-		if (swap) {
-			Post* tmp = (*mr.getAgentFromPtr(service))[agent1]->getCalendar()[day];
-			(*mr.getAgentFromPtr(service))[agent1]->setCalendarDay((*mr.getAgentFromPtr(service))[agent2]->getCalendar()[day], day);
-			(*mr.getAgentFromPtr(service))[agent2]->setCalendarDay(tmp, day);
-			mr.addSwapLog(SwapLog(agent1, agent2, day, serviceI, serviceI, (*mr.getAgentFromPtr(service))[agent2]->getCalendar()[day], (*mr.getAgentFromPtr(service))[agent1]->getCalendar()[day]));
-		}
-	}
-
-	return mr;
-}
-
+//! swap posts between agents, range param define the max number of swap
 void heuristicSolver::neighborSwap(Model* m, int range)
 {
 
@@ -410,6 +311,7 @@ void heuristicSolver::neighborSwap(Model* m, int range)
 	}
 }
 
+//! swap a block (3 consecutive posts for example) of posts between agents, param range define the max number of posts in the block
 void heuristicSolver::neighborSwapBlock(Model* m, int range)
 {
 	int nbIte = 100;
@@ -494,6 +396,7 @@ void heuristicSolver::neighborSwapBlock(Model* m, int range)
 	}
 }
 
+//! swap posts between agents from a random Service and the Service pool.
 void heuristicSolver::neighborSwapPool(Model* m, int range, Service* pool)
 {
 	int nbIte = 100;
@@ -555,6 +458,7 @@ void heuristicSolver::neighborSwapPool(Model* m, int range, Service* pool)
 	}
 }
 
+//! randomly change a post of range agents. !!! Depreciated because not using swapLogs !!!
 Model heuristicSolver::getneighborRandom(Model* m, int range)
 {
 	Model mr = Model(*m);
@@ -608,12 +512,11 @@ Model heuristicSolver::getneighborRandom(Model* m, int range)
 	return mr;
 }
 
-
+//! iterative algorithm to find a best planning
 Model heuristicSolver::iterativeFast(const Model m, int nbIte, int range, int pool)
 {
 	auto chronoStart = chrono::system_clock::now();
 	srand(time(0));
-	//Model currentModel = greedy(m);
 	Model currentModel = predefinedGreedy(m);
 	currentModel.generateEmptyValuation();
 	HeuristicToolBox::checkAllFast(&currentModel);
@@ -662,7 +565,7 @@ Model heuristicSolver::iterativeFast(const Model m, int nbIte, int range, int po
 			}
 		}
 		else {
-			//10% de chance de choisir le nouveau candidat même s'il est moins bon
+			//0.2% de chance de choisir le nouveau candidat même s'il est moins bon
 			int randI = rand() % 1000;
 			if (randI > 998) {
 				currentScore = nextScore;
@@ -670,8 +573,6 @@ Model heuristicSolver::iterativeFast(const Model m, int nbIte, int range, int po
 			else {
 				randI = rand() % 10000;
 				if (randI > 9998) {
-					cout << "reset" << endl;
-					//currentModel = greedy(m);
 					currentModel = predefinedGreedy(m);
 					currentModel.generateEmptyValuation();
 					HeuristicToolBox::checkAllFast(&currentModel);

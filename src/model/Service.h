@@ -1,10 +1,3 @@
-/*
- * Service.h
- *
- *  Created on: 8 f�vr. 2020
- *      Author: Valars
- */
-
 #include <map>
 #include <array>
 #include <fstream>
@@ -18,8 +11,6 @@ using namespace std;
 
 #ifndef MODEL_SERVICE_H_
 #define MODEL_SERVICE_H_
-
-// class Agent;
 
 class Service {
 public:
@@ -44,7 +35,7 @@ public:
 
 	const array<map<Post*, int>, 7>& getPostRequired() const;
 	void setPostRequired(const array<map<Post*, int>, 7> &postRequired);
-	void addPostRequired(Post* post, int nb); //Ajoute pour tous les jours
+	void addPostRequired(Post* post, int nb);
 	void addPostRequired(Post* post, int nb, int day);
 
 	const vector<Agent*>& getAgents() const;

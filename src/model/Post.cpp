@@ -1,10 +1,3 @@
-/*
- * Post.cpp
- *
- *  Created on: 8 févr. 2020
- *      Author: Valars
- */
-
 #include "Post.h"
 
 using namespace std;
@@ -12,13 +5,6 @@ using namespace std;
 Post::Post() {
 	id ="";
 	time = 0;
-	timeAccounted = true;
-}
-
-Post::Post(string id, float time)
-{
-	this->id = id;
-	this->time = time;
 	timeAccounted = true;
 }
 

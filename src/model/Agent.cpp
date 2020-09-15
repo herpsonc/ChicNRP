@@ -1,11 +1,4 @@
-﻿/*
- * Agent.cpp
- *
- *  Created on: 8 févr. 2020
- *      Author: Valars
- */
-
-#include "Agent.h"
+﻿#include "Agent.h"
 #include <iostream>
 
 using namespace std;
@@ -88,7 +81,7 @@ void Agent::setCalendar(const array<Post*, 31> &calendar) {
 
 void Agent::setCalendarUnlockOnly(const array<Post*, 31>& calendar)
 {
-	for (int i = 0; i < calendar.size(); i++) {
+	for (unsigned int i = 0; i < calendar.size(); i++) {
 		if (!calendarLock[i])
 			this->calendar[i] = calendar[i];
 	}
@@ -122,17 +115,6 @@ const array<Post*, 7>& Agent::getLastMonthCalendar() const {
 //! \param lastMonthCalendar last month calendar to set
 void Agent::setLastMonthCalendar(const array<Post*, 7> &lastMonthCalendar) {
 	this->lastMonthCalendar = lastMonthCalendar;
-}
-
-//! Set a day of the calendar, the day of the calendarLock is set to false by default
-//! \param post Post to set
-//! \param day day at which the post is setted
-void Agent::setCalendarDay(Post *post, int day) {
-	if(day>=0 && day<31)
-	{
-		calendar[day] = post;
-		calendarLock[day] = false;
-	}
 }
 
 //! Set a day of the calendar

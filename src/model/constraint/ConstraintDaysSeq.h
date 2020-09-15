@@ -1,17 +1,9 @@
-/*
- * ConstraintDaysSeq.h
- *
- *  Created on: 10 f�vr. 2020
- *      Author: Valars
- */
-
 #ifndef SRC_MODEL_CONSTRAINT_CONSTRAINTDAYSSEQ_H_
 #define SRC_MODEL_CONSTRAINT_CONSTRAINTDAYSSEQ_H_
 
 #include "Constraint.h"
 #include "../Agent.h"
 #include <iostream>
-//Correspondant à la contrainte C2
 
 class ConstraintDaysSeq: public Constraint {
 

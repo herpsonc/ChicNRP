@@ -1,18 +1,9 @@
-/*
- * ConstraintInvolved.h
- *
- *  Created on: 21 f�vr. 2020
- *      Author: Valars
- */
-
 #ifndef SRC_MODEL_CONSTRAINT_CONSTRAINTINVOLVED_H_
 #define SRC_MODEL_CONSTRAINT_CONSTRAINTINVOLVED_H_
 
 #include "Constraint.h"
 #include "../Agent.h"
 #include <iostream>
-//Correspondant à la contrainte C6
-
 
 class ConstraintInvolved: public Constraint {
 public:

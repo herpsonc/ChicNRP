@@ -43,7 +43,6 @@ Model::~Model() {
 
 Model& Model::operator=(const Model& obj)
 {
-	// if (this != NULL) {
 	if(this) {
 		firstDay = obj.firstDay;
 		nbDays = obj.nbDays;
@@ -141,7 +140,7 @@ void Model::printPlanning() {
 		{
 			cout << "Agent " << agent->getId() << ":\t";
 
-			for (unsigned int j = 0; j < nbDays; j++)
+			for (int j = 0; j < nbDays; j++)
 			{
 				if (agent->getCalendar()[j] != NULL)
 				{
@@ -176,6 +175,7 @@ void Model::setNbDays(int nbDays) {
 	this->nbDays = nbDays;
 }
 
+//! return the day (Monday, Thursday...) of the idDay (0 to nbDays)
 int Model::idDayToDay(int idDay)
 {
 	return (idDay -1 + firstDay) % 7;
@@ -198,6 +198,9 @@ const std::vector<Agent*> Model::getAgentFrom(Service* service){
 	return agents[service];
 }
 
+//! get Agents from a specific service, give a pointer to avoid copy
+//! \param service the Agents returned are from this Service 
+//! \return agents from the specified service
 const std::vector<Agent*>* Model::getAgentFromPtr(Service* service)
 {
 	return &agents[service];
@@ -213,10 +216,12 @@ void Model::setDefaultPost(Post* defaultPost) {
 	this->defaultPost = defaultPost;
 }
 
+//! \return posts posts of the model
 std::vector<Post*>& Model::getPosts() {
 	return posts;
 }
 
+//! Add a post to the model, avoid duplication
 void Model::addPost(Post* p) {
 	if(std::find(posts.begin(), posts.end(), p) == posts.end()) //p not already in posts
 		posts.push_back(p);
@@ -233,13 +238,13 @@ void Model::setValuation(Valuation v){
 	valuation = new Valuation(v);
 }
 
+//! Generate / initialize an empty valuation for the model
 void Model::generateEmptyValuation()
 {
 	float score = 0;
 	//Pour Valuation
 	int iS = 0;
 	int iA = 0;
-	// int iP = 0;
 	auto hoursMonth = vector<vector<float>>();
 	auto hoursWeeks = vector<vector<array<int, 6>>>();
 	auto hoursWeeksSlide = vector<vector<vector<pair<int, int>>>>();
@@ -319,6 +324,7 @@ void Model::resetSwapLog(){
 	swapLog.clear();
 }
 
+//! Undo lasts changes (swaps)
 void Model::rollBack()
 {
 	for (int i = swapLog.size() - 1; i >= 0; i--) {
@@ -328,11 +334,12 @@ void Model::rollBack()
 		agents[services[swapLog[i].getService2()]][swapLog[i].getAgent2()]->setCalendarDay(p1, swapLog[i].getDay());
 	}
 
-	for (int i = 0; i < swapLog.size();i++) {
+	for (unsigned int i = 0; i < swapLog.size();i++) {
 		swapLog[i].reverse();
 	}
 }
 
+//! return predefinned constraints (used for CHIC)
 vector<Constraint*> Model::createConstraints() {
 	std::vector<Constraint*> constraints;
 
@@ -379,18 +386,16 @@ vector<Constraint*> Model::createConstraints() {
 	v.push_back(5);
 	constraints.push_back(new ConstraintDaysSeq(v, 10)); //cji
 
-
-
 	//1 week-end par mois
 	v = vector<int>();
 	v.push_back(0);
 	v.push_back(0);
-	constraints.push_back(new ConstraintSeqMinMax(5, MinMax::Min, 1, v, 1000));
+	constraints.push_back(new ConstraintSeqMinMax(5, MinMax::Min, 2, v, 1000));
 
 	return constraints;
 }
 
-//raccourci pour attribuer les contraintes à un service via createConstraints
+//! Add constraint returned by createConstraints() in the given Service
 void Model::addBasicConstraintsTo(Service* s) {
 	vector<Constraint*> cs = this->createConstraints();
 	for (auto cons : cs){
@@ -482,7 +487,7 @@ Model Model::generateModelInstance(int firstDay, int nbDays, float overtime, int
 
 		service_i->addPost(repos); //chaque service a un poste Repos
 		//et on ajoute à chaque service la liste des contraintes
-		for (int id_cstr = 0; id_cstr < constraints.size(); id_cstr++) {
+		for (unsigned int id_cstr = 0; id_cstr < constraints.size(); id_cstr++) {
 			service_i->addConstraint(constraints[id_cstr]);
 		}
 
@@ -560,8 +565,7 @@ Model Model::generateModelInstance(int firstDay, int nbDays, float overtime, int
 	return m;
 } 
 
-//! 
-//a XML file from the Model
+//! create a XML file from the Model
 //! \param fileName name of the xml file saved
 void Model::generateXML(string fileName){
 
@@ -911,7 +915,9 @@ void Model::loadXML(string fileName){
 	}
 }
 
-void Model::generateXlsx(string fileName)
+//! Generate a XML file with the planning
+//! \param fileName name of the file to create
+void Model::generateXMLPlanning(string fileName)
 {
 	ofstream res;
 	// A RECUPERER DE L'INSTANCE
@@ -1034,6 +1040,7 @@ int Model::attributToInt(string att)
 	return -1;
 }
 
+//! \return constraintsInformation informations about what constraints are broken, work only if valuation is filled
 string Model::getConstraintInformations()
 {
 	string s;
@@ -1041,18 +1048,18 @@ string Model::getConstraintInformations()
 	for (int i = 0; i < services.size(); i++) {
 		s += "Service " + services[i]->getId() + "\n";
 
-			for (int j = 0; j < (int)valuation->getDaySeq()[i].size(); j++) {
-				for (int k = 0; k < (int)valuation->getDaySeq()[i][j].size(); k++) {
-					for (int l = 0; l < (int)valuation->getDaySeq()[i][j][k].size(); l++) {
+			for (unsigned int j = 0; j < valuation->getDaySeq()[i].size(); j++) {
+				for (unsigned int k = 0; k < valuation->getDaySeq()[i][j].size(); k++) {
+					for (unsigned int l = 0; l < valuation->getDaySeq()[i][j][k].size(); l++) {
 						s += "ConstraintDaySeq: Service " + to_string(i) + " Agent " + to_string(j) + " constraint " + to_string(k) + " Jours "
 							+ to_string(valuation->getDaySeq()[i][j][k][l].first) + " " + to_string(valuation->getDaySeq()[i][j][k][l].second) + "\n";
 					}
 				}
 			}
 
-			for (int j = 0; j < (int)valuation->getInvolved()[i].size(); j++) {
-				for (int k = 0; k < (int)valuation->getInvolved()[i][j].size(); k++) {
-					for (int l = 0; l < (int)valuation->getInvolved()[i][j][k].size(); l++) {
+			for (unsigned int j = 0; j < valuation->getInvolved()[i].size(); j++) {
+				for (unsigned int k = 0; k < valuation->getInvolved()[i][j].size(); k++) {
+					for (unsigned int l = 0; l < valuation->getInvolved()[i][j][k].size(); l++) {
 						s += "ConstraintInvolved: Service " + to_string(i) + " Agent " + to_string(j) + " constraint " + to_string(k) + " Jours "
 							+ to_string(valuation->getInvolved()[i][j][k][l].first.first) + "-" + to_string(valuation->getInvolved()[i][j][k][l].first.second)
 							+ " " + to_string(valuation->getInvolved()[i][j][k][l].second.first) + "-" + to_string(valuation->getInvolved()[i][j][k][l].second.second) + "\n" ;
@@ -1060,32 +1067,32 @@ string Model::getConstraintInformations()
 				}
 			}
 
-			for (int j = 0; j < (int)valuation->getseqMinMax()[i].size(); j++) {
-				for (int k = 0; k < (int)valuation->getseqMinMax()[i][j].size(); k++) {
-					for (int l = 0; l < (int)valuation->getseqMinMax()[i][j][k].size(); l++) {
+			for (unsigned int j = 0; j < valuation->getseqMinMax()[i].size(); j++) {
+				for (unsigned int k = 0; k < valuation->getseqMinMax()[i][j].size(); k++) {
+					for (unsigned int l = 0; l < valuation->getseqMinMax()[i][j][k].size(); l++) {
 						s += "ConstraintseqMinMax: Service " + to_string(i) + " Agent " + to_string(j) + " constraint " + to_string(k) + " Jours "
 							+ to_string(valuation->getseqMinMax()[i][j][k][l].first) + " " + to_string(valuation->getseqMinMax()[i][j][k][l].second) + "\n";
 					}
 				}
 			}
 
-			for (int j = 0; j < 31; j++) {
+			for (unsigned int j = 0; j < 31; j++) {
 				if (valuation->getPostsRequirement()[i][j] > 0)
 					s += "PostRequirements: Service " + to_string(i) + " Day " + to_string(j) + " nbFail " + to_string(valuation->getPostsRequirement()[i][j]) + "\n";
 			}
 
-			for (int j = 0; j < (int)valuation->getHoursMonth()[i].size(); j++) {
+			for (unsigned int j = 0; j < valuation->getHoursMonth()[i].size(); j++) {
 				s += "HoursMonth: Service " + to_string(i) + " Agent " + to_string(j) + " -> " + to_string(valuation->getHoursMonth()[i][j]) + "\n";
 			}
 
-			for (int j = 0; j < (int)valuation->gethoursWeekSlide()[i].size(); j++) {
-				for (int k = 0; k < valuation->gethoursWeekSlide()[i][j].size(); k++) {
+			for (unsigned int j = 0; j < valuation->gethoursWeekSlide()[i].size(); j++) {
+				for (unsigned int k = 0; k < valuation->gethoursWeekSlide()[i][j].size(); k++) {
 					s += "hoursWeekSlide: Service " + to_string(i) + " Agent " + to_string(j) + " Day " + to_string(valuation->gethoursWeekSlide()[i][j][k].first) + " to " + to_string(valuation->gethoursWeekSlide()[i][j][k].second) + "\n";
 				}
 			}
 
-			for (int j = 0; j < (int)valuation->getImpossiblePosts()[i].size(); j++) {
-				for (int k = 0; k < valuation->getImpossiblePosts()[i][j].size(); k++) {
+			for (unsigned int j = 0; j < valuation->getImpossiblePosts()[i].size(); j++) {
+				for (unsigned int k = 0; k < valuation->getImpossiblePosts()[i][j].size(); k++) {
 					s += "impossiblePosts: Service " + to_string(i) + " Agent " + to_string(j) + " Day " + to_string(valuation->getImpossiblePosts()[i][j][k]) + "\n";
 				}
 			}

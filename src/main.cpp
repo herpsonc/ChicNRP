@@ -17,9 +17,9 @@ int main() {
 	//auto m = HandWrittedModels::generateApril20();
 	//m.printPlanning();
 
-	auto m3 = heuristicSolver::iterativeFast(HandWrittedModels::generateApril20(), 10000, 4, 3);
+	auto m3 = heuristicSolver::iterativeFast(HandWrittedModels::generateApril20(), 1000000, 4, 3);
 	m3.printPlanning();
-	m3.generateXlsx("AllService2.xml");
+	m3.generateXMLPlanning("AllService2.xml");
 	m3.generateEmptyValuation();
 	HeuristicToolBox::checkAllFast(&m3);
 	cout << "score " << m3.getValuation()->getScore() << endl;
@@ -27,7 +27,7 @@ int main() {
 
 	/*Model m2 = Model::generateModelInstance(2, 30, 25, 6, 15, 70, 60.0, 155);
 	m2.printPlanning();
-	m2.generateXlsx("service_g6_PL.xlsx");
+	m2.generateXMLPlanning("service_g6_PL.xml");
 	m2 = LPSolver::linearProgram(m2);*/
 
 	string t;

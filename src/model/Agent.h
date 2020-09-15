@@ -1,10 +1,3 @@
-/*
- * Agent.h
- *
- *  Created on: 8 f�vr. 2020
- *      Author: Valars
- */
-
 #include <string>
 #include <array>
 #include "Post.h"
@@ -30,8 +23,7 @@ public:
 	const array<bool, 31>& getCalendarLock() const;
 	void setCalendar(const array<Post*, 31> &calendar);
 	void setCalendarUnlockOnly(const array<Post*, 31>& calendar);
-	void setCalendarDay(Post* post, int day);
-	void setCalendarDay(Post* post, int day, bool lock);
+	void setCalendarDay(Post* post, int day, bool lock=false);
 
 	const std::vector<Post*>& getImpossiblePosts() const;
 	void setImpossiblePosts(const std::vector<Post*> &impossiblePosts);

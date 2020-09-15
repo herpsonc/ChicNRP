@@ -1,10 +1,3 @@
-/*
- * ConstraintInvolved.cpp
- *
- *  Created on: 21 f�vr. 2020
- *      Author: Valars
- */
-
 #include "ConstraintInvolved.h"
 
 using namespace std;
@@ -18,7 +11,7 @@ ConstraintInvolved::ConstraintInvolved(vector<int> first,  vector<int> last, int
 }
 
 ConstraintInvolved::~ConstraintInvolved() {
-	// TODO Auto-generated destructor stub
+
 }
 
 const std::vector<int>* ConstraintInvolved::getFirstSeqAtt() const

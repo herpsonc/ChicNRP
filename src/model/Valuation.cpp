@@ -401,10 +401,10 @@ void Valuation::mergePostRequirement(const int service, const int day, const int
 void Valuation::print()
 {
 
-	for (int i = 0; i < (int)daySeq.size(); i++) {
-		for (int j = 0; j < (int)daySeq[i].size(); j++) {
-			for (int k = 0; k < (int)daySeq[i][j].size(); k++) {
-				for (int l = 0; l < (int)daySeq[i][j][k].size(); l++) {
+	for (unsigned int i = 0; i < daySeq.size(); i++) {
+		for (unsigned int j = 0; j < daySeq[i].size(); j++) {
+			for (unsigned int k = 0; k < daySeq[i][j].size(); k++) {
+				for (unsigned int l = 0; l < daySeq[i][j][k].size(); l++) {
 					std::cout << "ConstraintDaySeq: Service " << i << " Agent " << j << " constraint " << k << " Jours "
 						<< daySeq[i][j][k][l].first << " " << daySeq[i][j][k][l].second << std::endl;
 				}
@@ -412,10 +412,10 @@ void Valuation::print()
 		}
 	}
 
-	for (int i = 0; i < (int)involved.size(); i++) {
-		for (int j = 0; j < (int)involved[i].size(); j++) {
-			for (int k = 0; k < (int)involved[i][j].size(); k++) {
-				for (int l = 0; l < (int)involved[i][j][k].size(); l++) {
+	for (unsigned int i = 0; i < involved.size(); i++) {
+		for (unsigned int j = 0; j < involved[i].size(); j++) {
+			for (unsigned int k = 0; k < involved[i][j].size(); k++) {
+				for (unsigned int l = 0; l < involved[i][j][k].size(); l++) {
 					std::cout << "ConstraintInvolved: Service " << i << " Agent " << j << " constraint " << k << " Jours "
 						<< involved[i][j][k][l].first.first << "-" << involved[i][j][k][l].first.second
 						<< " "<< involved[i][j][k][l].second.first << "-" << involved[i][j][k][l].second.second << std::endl;
@@ -424,10 +424,10 @@ void Valuation::print()
 		}
 	}
 
-	for (int i = 0; i < (int)seqMinMax.size(); i++) {
-		for (int j = 0; j < (int)seqMinMax[i].size(); j++) {
-			for (int k = 0; k < (int)seqMinMax[i][j].size(); k++) {
-				for (int l = 0; l < (int)seqMinMax[i][j][k].size(); l++) {
+	for (unsigned int i = 0; i < seqMinMax.size(); i++) {
+		for (unsigned int j = 0; j < seqMinMax[i].size(); j++) {
+			for (unsigned int k = 0; k < seqMinMax[i][j].size(); k++) {
+				for (unsigned int l = 0; l < seqMinMax[i][j][k].size(); l++) {
 					std::cout << "ConstraintseqMinMax: Service " << i << " Agent " << j << " constraint " << k << " Jours "
 						<< seqMinMax[i][j][k][l].first << " " << seqMinMax[i][j][k][l].second << std::endl;
 				}
@@ -435,33 +435,33 @@ void Valuation::print()
 		}
 	}
 
-	for (int i = 0; i < (int)postsRequirement.size(); i++) {
-		for (int j = 0; j < 31; j++) {
+	for (unsigned int i = 0; i < postsRequirement.size(); i++) {
+		for (unsigned int j = 0; j < 31; j++) {
 			if(postsRequirement[i][j] > 0)
 				std::cout << "PostRequirements: Service " << i << " Day " << j << " nbFail " << postsRequirement[i][j] << endl;
 		}
 	}
 
 	//Heures
-	for (int i = 0; i < (int)hoursMonth.size(); i++) {
-		for (int j = 0; j < (int)hoursMonth[i].size(); j++) {
+	for (unsigned int i = 0; i < hoursMonth.size(); i++) {
+		for (unsigned int j = 0; j < hoursMonth[i].size(); j++) {
 			cout << "HoursMonth: Service " << i << " Agent " << j << " -> " << hoursMonth[i][j] << endl;
 		}
 	}
 
 	//Depassement semaine
-	for (int i = 0; i < (int)hoursWeekSlide.size(); i++) {
-		for (int j = 0; j < (int)hoursWeekSlide[i].size(); j++) {
-			for (int k = 0; k < hoursWeekSlide[i][j].size(); k++) {
+	for (unsigned int i = 0; i < hoursWeekSlide.size(); i++) {
+		for (unsigned int j = 0; j < hoursWeekSlide[i].size(); j++) {
+			for (unsigned int k = 0; k < hoursWeekSlide[i][j].size(); k++) {
 				cout << "hoursWeekSlide: Service " << i << " Agent " << j << " Day " << hoursWeekSlide[i][j][k].first << " to " << hoursWeekSlide[i][j][k].second << endl;
 			}
 		}
 	}
 
 	//Postes impossibles
-	for (int i = 0; i < (int)impossiblePosts.size(); i++) {
-		for (int j = 0; j < (int)impossiblePosts[i].size(); j++) {
-			for (int k = 0; k < impossiblePosts[i][j].size(); k++) {
+	for (unsigned int i = 0; i < impossiblePosts.size(); i++) {
+		for (unsigned int j = 0; j < impossiblePosts[i].size(); j++) {
+			for (unsigned int k = 0; k < impossiblePosts[i][j].size(); k++) {
 				cout << "impossiblePosts: Service " << i << " Agent " << j << " Day " << impossiblePosts[i][j][k] << endl;
 			}
 		}

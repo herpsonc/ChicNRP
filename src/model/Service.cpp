@@ -1,10 +1,3 @@
-/*
- * Service.cpp
- *
- *  Created on: 8 f�vr. 2020
- *      Author: Valars
- */
-
 #include "Service.h"
 
 using namespace std;
@@ -59,6 +52,7 @@ void Service::addPost(Post* post) {
 	posts.push_back(post);
 }
 
+//! \return post a pointer of the post given the id of it, null if not existing 
 Post* Service::getPost(string id)
 {
 	for (unsigned i = 0; i < id.size(); i++) {
@@ -160,6 +154,10 @@ PredefinedPlanning* Service::getPredefinedPlanning()
 	return &predefinedPlanning;
 }
 
+//! load a predefined planning from a csv file
+//! \param fileName path of the csv file to load
+//! \param nbDays nb of days in the month
+//! /param firstDay first day of the month
 void Service::loadPredefinedPlanning(string fileName,int nbDays, int firstDay)
 {
 	fstream fin;

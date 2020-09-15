@@ -71,7 +71,7 @@ public:
 
 	void generateXML(string fileName);
 	void loadXML(string fileName);
-	void generateXlsx(string fileName);
+	void generateXMLPlanning(string fileName);
 
 	void addAttribut(string att);
 	int attributToInt(string att);

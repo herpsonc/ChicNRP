@@ -1,10 +1,3 @@
-/*
- * ConstraintSeqMinMax.h
- *
- *  Created on: 8 mars 2020
- *      Author: Valars
- */
-
 #ifndef SRC_MODEL_CONSTRAINT_CONSTRAINTSEQMINMAX_H_
 #define SRC_MODEL_CONSTRAINT_CONSTRAINTSEQMINMAX_H_
 
@@ -13,9 +6,6 @@
 #include <iostream>
 
 enum MinMax {Min, Max};
-
-//Contrainte qui permet d'assurer la présence de la séquence (à partir d'un jour donné) un minimum ou maximum de fois
-
 
 class ConstraintSeqMinMax: public Constraint {
 public:

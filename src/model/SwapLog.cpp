@@ -55,6 +55,7 @@ Post* SwapLog::getPost2()
 	return post2;
 }
 
+//! exchange post1 and post2
 void SwapLog::reverse()
 {
 	Post* p = post1;

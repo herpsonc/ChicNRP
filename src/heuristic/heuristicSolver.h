@@ -1,10 +1,3 @@
-/*
- * heuristicSolver.h
- *
- *  Created on: 9 mars 2020
- *      Author: Valars
- */
-
 #ifndef SRC_HEURISTIC_HEURISTICSOLVER_H_
 #define SRC_HEURISTIC_HEURISTICSOLVER_H_
 
@@ -25,8 +18,6 @@ public:
 	static Model removeExtraPosts(const Model* m);
 	static Model predefinedGreedy(const Model m);
 	static void checkFast(Model* m);
-	static void checkFastMultiThread(Model* m); 
-	static Model getNeighborSwap(Model* m, int range);
 	static void neighborSwap(Model* m, int range);
 	static void neighborSwapBlock(Model* m, int range);
 	static void neighborSwapPool(Model* m, int range, Service* pool);

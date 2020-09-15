@@ -22,6 +22,7 @@ const std::vector<std::array<Post*, 31>>* PredefinedPlanning::getPlanning()
 	return &planning;
 }
 
+//! print planning in the output stream
 void PredefinedPlanning::printPlanning()
 {
 	int i = 0;

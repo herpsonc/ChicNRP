@@ -1,11 +1,3 @@
-/*
- * Post.h
- *
- *  Created on: 8 févr. 2020
- *      Author: Valars
- */
-
-
 #include <string>
 #include <vector>
 #include <iostream>
@@ -18,8 +10,7 @@ using namespace std;
 class Post {
 public:
 	Post();
-	Post(string id, float time);
-	Post(string id, float time, bool accounted);
+	Post(string id, float time, bool accounted=true);
 	virtual ~Post();
 
 	const string& getId() const;

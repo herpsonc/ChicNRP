@@ -1,10 +1,3 @@
-/*
- * ConstraintDaysSeq.cpp
- *
- *  Created on: 10 f�vr. 2020
- *      Author: Valars
- */
-
 #include "ConstraintDaysSeq.h"
 
 using namespace std;
@@ -19,7 +12,6 @@ ConstraintDaysSeq::~ConstraintDaysSeq() {
 }
 
 //! \return priority priority of the constraint
-
 const int ConstraintDaysSeq::getPriority() const
 {
 	return priority;

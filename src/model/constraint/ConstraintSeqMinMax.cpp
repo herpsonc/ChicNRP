@@ -1,10 +1,3 @@
-/*
- * ConstraintSeqMinMax.cpp
- *
- *  Created on: 8 mars 2020
- *      Author: Valars
- */
-
 #include "ConstraintSeqMinMax.h"
 
 
@@ -18,7 +11,6 @@ ConstraintSeqMinMax::ConstraintSeqMinMax(int day, MinMax type, int number, std::
 }
 
 ConstraintSeqMinMax::~ConstraintSeqMinMax() {
-	// TODO Auto-generated destructor stub
 }
 
 const std::vector<int>* ConstraintSeqMinMax::getSequenceAtt() const {
