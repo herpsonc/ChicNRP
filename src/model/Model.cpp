@@ -43,7 +43,7 @@ Model::~Model() {
 
 Model& Model::operator=(const Model& obj)
 {
-	if(this) {
+	if(this != &obj) {
 		firstDay = obj.firstDay;
 		nbDays = obj.nbDays;
 		overtime = obj.overtime;
@@ -267,6 +267,7 @@ void Model::generateEmptyValuation()
 
 		for (auto a : getAgentFrom(s)) {
 
+			(void)a;
 			hoursMonth[iS].push_back(0);
 			hoursWeeks[iS].push_back(std::array<int, 6>());
 			hoursWeeksSlide[iS].push_back(std::vector<pair<int, int>>());
@@ -497,7 +498,7 @@ Model Model::generateModelInstance(int firstDay, int nbDays, float overtime, int
 	//Agents
 
 	//variables pour les tirages aléatoires
-	int service_rand = 0, post_rand = 0, conges_rand = 0, job_rand = 0, incr_jour = 0, post_ind_rand = 0;
+	int service_rand = 0, conges_rand = 0, job_rand = 0, incr_jour = 0, post_ind_rand = 0;
 	if (proba_1er_conge < 0 || proba_1er_conge > 100)
 		proba_1er_conge = 3; //3% de chance d'avoir un congé si proba perso non déclarée (ou incorrecte)
 	if (proba_suite_conge < 0 || proba_suite_conge > 100)
@@ -523,7 +524,7 @@ Model Model::generateModelInstance(int firstDay, int nbDays, float overtime, int
 		// sinon, ajout de l'agent au premier service libre
 		else {
 			int j = 0;
-			while (m.getServices()[j]->getAgents().size() >= nbAgentsPerService) {
+			while ((int)m.getServices()[j]->getAgents().size() >= nbAgentsPerService) {
 				j++;
 			}
 			m.addAgent(a_i, m.getServices()[j]);
@@ -1033,7 +1034,7 @@ void Model::addAttribut(string att)
 
 int Model::attributToInt(string att)
 {
-	for (int i = 0; i < attributs.size(); i++) {
+	for (unsigned int i = 0; i < attributs.size(); i++) {
 		if (attributs[i] == att)
 			return i;
 	}
@@ -1045,7 +1046,7 @@ string Model::getConstraintInformations()
 {
 	string s;
 
-	for (int i = 0; i < services.size(); i++) {
+	for (unsigned int i = 0; i < services.size(); i++) {
 		s += "Service " + services[i]->getId() + "\n";
 
 			for (unsigned int j = 0; j < valuation->getDaySeq()[i].size(); j++) {

@@ -4,7 +4,7 @@
 #include <algorithm>
 
 #include "heuristic/heuristicSolver.h"
-#include "LP/LPSolver.h"
+//#include "LP/LPSolver.h"
 #include "HandWrittedModels.h"
 
 using namespace std;
