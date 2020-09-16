@@ -17,7 +17,7 @@ public:
 
 	string getSeqToPrint();
 
-	const int getPriority() const;
+	int getPriority() const;
 	int getFirstDay();
 
 protected:

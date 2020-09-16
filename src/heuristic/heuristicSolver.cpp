@@ -589,7 +589,7 @@ Model heuristicSolver::iterativeFast(const Model m, int nbIte, int range, int po
 
 	auto chronoEnd = chrono::system_clock::now();
 
-	cout << bestScore << " en " << (chronoEnd - chronoStart).count() / 10000000 << " secondes" << endl;
+	cout << bestScore << " en " << chrono::duration_cast<chrono::seconds>(chronoEnd - chronoStart).count()<< " secondes" << endl;
 	cout << "best trouve en " << bestIte << " iterations en " << bestTime / 10000000 << " secondes" << endl;
 
 	return bestModel;

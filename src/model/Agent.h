@@ -38,13 +38,13 @@ public:
 	float getWorkingHoursMonth(int firstDay, bool accounted = false);
 
 	void setNbHoursMonthPriority(int priority);
-	const int getNbHoursMonthPriority() const;
+	int getNbHoursMonthPriority() const;
 
 	void setNbHoursWeekPriority(int priority);
-	const int getNbHoursWeekPriority() const;
+	int getNbHoursWeekPriority() const;
 
 	void setImpossiblePostsPriority(int priority);
-	const int getImpossiblePostsPriority() const;
+	int getImpossiblePostsPriority() const;
 
 protected:
 	string id;

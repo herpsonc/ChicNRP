@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <fstream>
 #include <algorithm>
+#include <typeinfo>
 #include "Service.h"
 #include "SwapLog.h"
 

@@ -5,7 +5,6 @@
 #include "constraint/ConstraintDaysSeq.h"
 #include "constraint/ConstraintInvolved.h"
 #include "constraint/ConstraintSeqMinMax.h"
-#include <mutex>
 
 class Valuation
 {
@@ -65,15 +64,5 @@ private:
 	std::vector<std::vector<std::vector<std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>>>>> involved;
 	std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>> seqMinMax;
 	std::vector<std::array<int, 31>> postsRequirement;
-
-	//Mutex
-	std::mutex mutexScore;
-	std::mutex mutexHoursWeekSlide;
-	std::mutex mutexHoursMonth;
-	std::mutex mutexImpossiblePosts;
-	std::mutex mutexDaySeq;
-	std::mutex mutexInvolved;
-	std::mutex mutexseqMinMax;
-	std::mutex mutexPostRequirement;
 };
 

@@ -47,7 +47,7 @@ string ConstraintInvolved::getSeqToPrint()
 	return s;
 }
 
-const int ConstraintInvolved::getPriority() const
+int ConstraintInvolved::getPriority() const
 {
 	return priority;
 }

@@ -24,7 +24,7 @@ public:
 	MinMax getType() const;
 	void setType(MinMax type);
 
-	const int getPriority() const;
+	int getPriority() const;
 	void setPriority(int priority);
 
 	string seqToPrint();

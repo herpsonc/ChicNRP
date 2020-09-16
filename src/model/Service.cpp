@@ -139,7 +139,7 @@ void Service::setPostRequirementPriority(int priority)
 	postRequirementPriority = priority;
 }
 
-const int Service::getPostRequirementPriority() const
+int Service::getPostRequirementPriority()
 {
 	return postRequirementPriority;
 }

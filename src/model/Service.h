@@ -43,7 +43,7 @@ public:
 	void addAgent(Agent* agent);
 
 	void setPostRequirementPriority(int priority);
-	const int getPostRequirementPriority() const;
+	int getPostRequirementPriority();
 
 	void setPredefinedPlanning(PredefinedPlanning planning);
 	PredefinedPlanning* getPredefinedPlanning();

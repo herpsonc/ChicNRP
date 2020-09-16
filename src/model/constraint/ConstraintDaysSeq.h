@@ -11,7 +11,7 @@ public:
 	ConstraintDaysSeq(std::vector<int> seq, int priority);
 	virtual ~ConstraintDaysSeq();
 
-	const int getPriority() const;
+	int getPriority() const;
 	void setPriority(int priority);
 
 	const std::vector<int>* getSequenceAtt() const;

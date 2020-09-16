@@ -159,7 +159,7 @@ void Agent::setNbHoursMonthPriority(int priority)
 	nbHoursMonthPriority = priority;
 }
 
-const int Agent::getNbHoursMonthPriority() const
+int Agent::getNbHoursMonthPriority() const
 {
 	return nbHoursMonthPriority;
 }
@@ -169,7 +169,7 @@ void Agent::setNbHoursWeekPriority(int priority)
 	nbHoursWeekPriority = priority;
 }
 
-const int Agent::getNbHoursWeekPriority() const
+int Agent::getNbHoursWeekPriority() const
 {
 	return nbHoursWeekPriority;
 }
@@ -179,7 +179,7 @@ void Agent::setImpossiblePostsPriority(int priority)
 	impossiblePostsPriority = priority;
 }
 
-const int Agent::getImpossiblePostsPriority() const
+int Agent::getImpossiblePostsPriority() const
 {
 	return impossiblePostsPriority;
 }
