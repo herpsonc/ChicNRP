@@ -2,6 +2,10 @@
 
 #include "../model/Model.h"
 
+/*! \class HeuristicToolBox
+ * 	This class contain algorithms to check constraints
+ */
+
 class HeuristicToolBox
 {
 public:

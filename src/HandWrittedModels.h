@@ -2,6 +2,11 @@
 
 #include "model/Model.h"
 
+/*! \class HandWrittedModels
+ *  Used to generate Models writted by hand like March20 and April20
+ *
+ */
+
 class HandWrittedModels
 {
 public:

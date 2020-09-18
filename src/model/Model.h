@@ -22,6 +22,10 @@
 #include "../rapidXml/rapidxml_print.hpp"
 #include "Valuation.h"
 
+/*! \class Model
+ *  This class is the root of a planning model to resolve
+ */
+
 class Model {
 public:
 	Model(int firstDay, int nbDays, float overtime);

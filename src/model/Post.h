@@ -7,6 +7,10 @@ using namespace std;
 #ifndef MODEL_POST_H_
 #define MODEL_POST_H_
 
+/*! \class Post
+ * 	This class represent a post with all his characteristics
+ */
+
 class Post {
 public:
 	Post();

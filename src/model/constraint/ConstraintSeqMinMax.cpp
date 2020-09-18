@@ -46,6 +46,7 @@ void ConstraintSeqMinMax::setType(MinMax type) {
 	this->type = type;
 }
 
+//! \return priority of the constraint
 int ConstraintSeqMinMax::getPriority() const{
 	return priority;
 }

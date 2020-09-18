@@ -6,6 +6,10 @@
 #include "constraint/ConstraintInvolved.h"
 #include "constraint/ConstraintSeqMinMax.h"
 
+/*! \class Valuation
+ *  This class is used to register data about violated constraints at every check in order to optimize the checker
+ */
+
 class Valuation
 {
 public:

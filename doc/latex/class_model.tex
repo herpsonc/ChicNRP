@@ -7,7 +7,7 @@
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_model_a1bcb7e5a6fd4dd750629fbe2ebb0d829}{Model}} (\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}{Day}} \mbox{\hyperlink{class_model_ab9ac161cc0ebb7687768723164f0d9a1}{first\+Day}}, int \mbox{\hyperlink{class_model_ac8c559e5beaab006ceb57fc324fa0a97}{nb\+Days}}, float \mbox{\hyperlink{class_model_a549f630f9359a08812705bca01af34d1}{overtime}})
+\mbox{\hyperlink{class_model_a117d419dd5e799e1272497619c3dedb7}{Model}} (int \mbox{\hyperlink{class_model_a3995709abae4f01e7cd5223083dbe849}{first\+Day}}, int \mbox{\hyperlink{class_model_ac8c559e5beaab006ceb57fc324fa0a97}{nb\+Days}}, float \mbox{\hyperlink{class_model_a549f630f9359a08812705bca01af34d1}{overtime}})
 \item 
 \mbox{\hyperlink{class_model_ac00568179c3d466977eb67c0993cbbcf}{Model}} (const \mbox{\hyperlink{class_model}{Model}} \&obj)
 \item 
@@ -17,22 +17,26 @@ virtual \mbox{\hyperlink{class_model_ad6ebd2062a0b823db841a0b88baac4c0}{$\sim$\+
 \item 
 std\+::vector$<$ \mbox{\hyperlink{class_service}{Service}} $\ast$ $>$ \& \mbox{\hyperlink{class_model_a35c3ee24b5cd448c1c81576ae6bab5e2}{get\+Services}} ()
 \item 
-std\+::vector$<$ Agent $\ast$ $>$ \mbox{\hyperlink{class_model_a90d375694ec8d3bab911ed04e89961aa}{get\+Agent\+From}} (\mbox{\hyperlink{class_service}{Service}} $\ast$service)
+const std\+::vector$<$ \mbox{\hyperlink{class_agent}{Agent}} $\ast$ $>$ \mbox{\hyperlink{class_model_ad2ba4132bb910f4d46b3b6fb215943ee}{get\+Agent\+From}} (\mbox{\hyperlink{class_service}{Service}} $\ast$service)
 \item 
-void \mbox{\hyperlink{class_model_a9379fb93868577ca0f214092daacc504}{add\+Agent}} (Agent $\ast$agent, \mbox{\hyperlink{class_service}{Service}} $\ast$service)
+const std\+::vector$<$ \mbox{\hyperlink{class_agent}{Agent}} $\ast$ $>$ $\ast$ \mbox{\hyperlink{class_model_af576ab251890d43a7ec27c91b52b1d1d}{get\+Agent\+From\+Ptr}} (\mbox{\hyperlink{class_service}{Service}} $\ast$service)
+\item 
+void \mbox{\hyperlink{class_model_a9379fb93868577ca0f214092daacc504}{add\+Agent}} (\mbox{\hyperlink{class_agent}{Agent}} $\ast$agent, \mbox{\hyperlink{class_service}{Service}} $\ast$service)
 \item 
 void \mbox{\hyperlink{class_model_a8106e9028cb901e335403e35775e8660}{add\+Service}} (\mbox{\hyperlink{class_service}{Service}} $\ast$service)
 \item 
 void \mbox{\hyperlink{class_model_a8787d6ee942285e8014a582783f1f097}{print\+Planning}} ()
 \begin{DoxyCompactList}\small\item\em Print the planning to the console. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}{Day}} \mbox{\hyperlink{class_model_a3252bdf535af9a9bb8777d24f729204b}{get\+First\+Day}} () const
+int \mbox{\hyperlink{class_model_adc0c50e04f4439afaed0f46a86af97b9}{get\+First\+Day}} () const
 \item 
-void \mbox{\hyperlink{class_model_ab1c51d6f5dd6a38bcb31b6f67e438acd}{set\+First\+Day}} (\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}{Day}} \mbox{\hyperlink{class_model_ab9ac161cc0ebb7687768723164f0d9a1}{first\+Day}})
+void \mbox{\hyperlink{class_model_a788ec6813ae32754419dcca8849bd09f}{set\+First\+Day}} (int \mbox{\hyperlink{class_model_a3995709abae4f01e7cd5223083dbe849}{first\+Day}})
 \item 
 int \mbox{\hyperlink{class_model_a73c028b93b5742a0f66707247c34e3e8}{get\+Nb\+Days}} () const
 \item 
 void \mbox{\hyperlink{class_model_ad87373ac07c24cdaec195a3ac19c80f8}{set\+Nb\+Days}} (int \mbox{\hyperlink{class_model_ac8c559e5beaab006ceb57fc324fa0a97}{nb\+Days}})
 \item 
+int \mbox{\hyperlink{class_model_aa047a414883b55095bed7c3e5269695a}{id\+Day\+To\+Day}} (int id\+Day)
+\begin{DoxyCompactList}\small\item\em return the day (Monday, Thursday...) of the id\+Day (0 to nb\+Days) \end{DoxyCompactList}\item 
 float \mbox{\hyperlink{class_model_a2907690eb430a304763330fec7ea0208}{get\+Overtime}} () const
 \item 
 void \mbox{\hyperlink{class_model_a64d79efd05d587cefabb47e7bdd845d6}{set\+Overtime}} (float \mbox{\hyperlink{class_model_a549f630f9359a08812705bca01af34d1}{overtime}})
@@ -41,33 +45,49 @@ void \mbox{\hyperlink{class_model_a64d79efd05d587cefabb47e7bdd845d6}{set\+Overti
 \item 
 void \mbox{\hyperlink{class_model_a275bccef45d1eb03699ab98a62156082}{set\+Default\+Post}} (\mbox{\hyperlink{class_post}{Post}} $\ast$\mbox{\hyperlink{class_model_a8fe42db7b700ea42d02a5a6330e2a282}{default\+Post}})
 \item 
+std\+::vector$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$ $>$ \& \mbox{\hyperlink{class_model_a5e88c0c3b225114ad88669b138906dba}{get\+Posts}} ()
+\item 
+void \mbox{\hyperlink{class_model_a786cf46066656735878b3777059db604}{add\+Post}} (\mbox{\hyperlink{class_post}{Post}} $\ast$)
+\begin{DoxyCompactList}\small\item\em Add a post to the model, avoid duplication. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{class_valuation}{Valuation}} $\ast$ \mbox{\hyperlink{class_model_a059caffc12e7f667b6ebcd521a605199}{get\+Valuation}} ()
 \item 
 void \mbox{\hyperlink{class_model_af82c93cb022b1d0eefd7a8d76e3ef3aa}{set\+Valuation}} (\mbox{\hyperlink{class_valuation}{Valuation}} v)
 \item 
+void \mbox{\hyperlink{class_model_a6ce5dd705b3107b31f8946fe113cf21b}{generate\+Empty\+Valuation}} ()
+\begin{DoxyCompactList}\small\item\em Generate / initialize an empty valuation for the model. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_model_aa0c80850f840771bb1fbaba00ba9fd4c}{add\+Swap\+Log}} (const \mbox{\hyperlink{class_swap_log}{Swap\+Log}} \mbox{\hyperlink{class_model_afd110632794a09675d62914a9d514322}{swap\+Log}})
 \item 
-std\+::vector$<$ \mbox{\hyperlink{class_swap_log}{Swap\+Log}} $>$ \mbox{\hyperlink{class_model_a48242570139be7238939020e44340ede}{get\+Swap\+Log}} ()
+const std\+::vector$<$ \mbox{\hyperlink{class_swap_log}{Swap\+Log}} $>$ $\ast$ \mbox{\hyperlink{class_model_a0f3cd3db78840c35809b28a74828f856}{get\+Swap\+Log}} () const
 \item 
 void \mbox{\hyperlink{class_model_a05cb74c45802c16fa1b7163572a520e5}{reset\+Swap\+Log}} ()
 \begin{DoxyCompactList}\small\item\em clear the swap\+Log vector \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_model_ad7b99ed7960ede65a069d67c1c803614}{roll\+Back}} ()
+\begin{DoxyCompactList}\small\item\em Undo lasts changes (swaps) \end{DoxyCompactList}\item 
 std\+::vector$<$ \mbox{\hyperlink{class_constraint}{Constraint}} $\ast$ $>$ \mbox{\hyperlink{class_model_a895afd6e4c60c224802d5a1a2c814b99}{create\+Constraints}} ()
-\item 
+\begin{DoxyCompactList}\small\item\em return predefined constraints (used for C\+H\+IC) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_model_a0e3afff542e3d46f9d423971b1a0cb44}{add\+Basic\+Constraints\+To}} (\mbox{\hyperlink{class_service}{Service}} $\ast$s)
+\begin{DoxyCompactList}\small\item\em Add constraint returned by \mbox{\hyperlink{class_model_a895afd6e4c60c224802d5a1a2c814b99}{create\+Constraints()}} in the given \mbox{\hyperlink{class_service}{Service}}. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_model_a2a61c209a4993ad6fb7050baa093b25f}{generate\+X\+ML}} (string file\+Name)
 \item 
 void \mbox{\hyperlink{class_model_abe9d80fc4f9fac0a16c87abb5cb17b7c}{load\+X\+ML}} (string file\+Name)
+\item 
+void \mbox{\hyperlink{class_model_ad70822a37cad9fd7940cf4f330b7ee2a}{generate\+X\+M\+L\+Planning}} (string file\+Name)
+\item 
+void \mbox{\hyperlink{class_model_a94204e4444c379d0b13c3d82f6900857}{add\+Attribut}} (string att)
+\item 
+int \mbox{\hyperlink{class_model_a8fbb87b25c9c78e0ee505febd4632df6}{attribut\+To\+Int}} (string att)
+\item 
+string \mbox{\hyperlink{class_model_a9ea253e61267ff7bcb4b7a7493e25e04}{get\+Constraint\+Informations}} ()
 \end{DoxyCompactItemize}
 \doxysubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-static \mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}{Day}} \mbox{\hyperlink{class_model_a0a54406a51473a1ce85728965a064abf}{get\+Next\+Day}} (\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}{Day}} day)
-\item 
-static \mbox{\hyperlink{class_model}{Model}} \mbox{\hyperlink{class_model_a46fa457d6a061998ff06853da7ae1c60}{generate\+Model\+Instance}} (\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}{Day}} \mbox{\hyperlink{class_model_ab9ac161cc0ebb7687768723164f0d9a1}{first\+Day}}, int \mbox{\hyperlink{class_model_ac8c559e5beaab006ceb57fc324fa0a97}{nb\+Days}}, float \mbox{\hyperlink{class_model_a549f630f9359a08812705bca01af34d1}{overtime}}, int nb\+Services, int nb\+Posts, int nb\+Agents, float nb\+Hours\+Week, float nb\+Hours\+Month, int nb\+Agents\+Per\+Service=-\/1, int nb\+Posts\+Per\+Service=-\/1, int proba\+\_\+1er\+\_\+conge=-\/1, int proba\+\_\+suite\+\_\+conge=-\/1)
+static \mbox{\hyperlink{class_model}{Model}} \mbox{\hyperlink{class_model_a97a1257b4549f5c7f08729db69fa1431}{generate\+Model\+Instance}} (int \mbox{\hyperlink{class_model_a3995709abae4f01e7cd5223083dbe849}{first\+Day}}, int \mbox{\hyperlink{class_model_ac8c559e5beaab006ceb57fc324fa0a97}{nb\+Days}}, float \mbox{\hyperlink{class_model_a549f630f9359a08812705bca01af34d1}{overtime}}, int nb\+Services, int nb\+Posts, int nb\+Agents, float nb\+Hours\+Week, float nb\+Hours\+Month, int nb\+Agents\+Per\+Service=-\/1, int nb\+Posts\+Per\+Service=-\/1, int proba\+\_\+1er\+\_\+conge=-\/1, int proba\+\_\+suite\+\_\+conge=-\/1)
 \end{DoxyCompactItemize}
 \doxysubsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}{Day}} \mbox{\hyperlink{class_model_ab9ac161cc0ebb7687768723164f0d9a1}{first\+Day}}
+int \mbox{\hyperlink{class_model_a3995709abae4f01e7cd5223083dbe849}{first\+Day}}
 \item 
 int \mbox{\hyperlink{class_model_ac8c559e5beaab006ceb57fc324fa0a97}{nb\+Days}}
 \item 
@@ -75,7 +95,7 @@ float \mbox{\hyperlink{class_model_a549f630f9359a08812705bca01af34d1}{overtime}}
 \item 
 \mbox{\hyperlink{class_post}{Post}} $\ast$ \mbox{\hyperlink{class_model_a8fe42db7b700ea42d02a5a6330e2a282}{default\+Post}}
 \item 
-std\+::map$<$ \mbox{\hyperlink{class_service}{Service}} $\ast$, std\+::vector$<$ Agent $\ast$ $>$ $>$ \mbox{\hyperlink{class_model_a204a4e5fccb4e65bb05250eaf6dd0a37}{agents}}
+std\+::map$<$ \mbox{\hyperlink{class_service}{Service}} $\ast$, std\+::vector$<$ \mbox{\hyperlink{class_agent}{Agent}} $\ast$ $>$ $>$ \mbox{\hyperlink{class_model_a204a4e5fccb4e65bb05250eaf6dd0a37}{agents}}
 \item 
 std\+::vector$<$ \mbox{\hyperlink{class_service}{Service}} $\ast$ $>$ \mbox{\hyperlink{class_model_ae19ff162a4cdc3b7ac1e058379c01eed}{services}}
 \item 
@@ -84,15 +104,20 @@ std\+::vector$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$ $>$ \mbox{\hyperlink
 \mbox{\hyperlink{class_valuation}{Valuation}} $\ast$ \mbox{\hyperlink{class_model_a54affb6f26da3fd841d4d014e4d9483e}{valuation}}
 \item 
 std\+::vector$<$ \mbox{\hyperlink{class_swap_log}{Swap\+Log}} $>$ \mbox{\hyperlink{class_model_afd110632794a09675d62914a9d514322}{swap\+Log}}
+\item 
+std\+::vector$<$ string $>$ \mbox{\hyperlink{class_model_a5eff165cb53ca32ad685db4b5f9df539}{attributs}}
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+This class is the root of a planning model to resolve 
+
 \doxysubsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{class_model_a1bcb7e5a6fd4dd750629fbe2ebb0d829}\label{class_model_a1bcb7e5a6fd4dd750629fbe2ebb0d829}} 
+\mbox{\Hypertarget{class_model_a117d419dd5e799e1272497619c3dedb7}\label{class_model_a117d419dd5e799e1272497619c3dedb7}} 
 \index{Model@{Model}!Model@{Model}}
 \index{Model@{Model}!Model@{Model}}
 \doxysubsubsection{\texorpdfstring{Model()}{Model()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily Model\+::\+Model (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}{Day}}}]{first\+Day,  }\item[{int}]{nb\+Days,  }\item[{float}]{overtime }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily Model\+::\+Model (\begin{DoxyParamCaption}\item[{int}]{first\+Day,  }\item[{int}]{nb\+Days,  }\item[{float}]{overtime }\end{DoxyParamCaption})}
 
 \mbox{\Hypertarget{class_model_ac00568179c3d466977eb67c0993cbbcf}\label{class_model_ac00568179c3d466977eb67c0993cbbcf}} 
 \index{Model@{Model}!Model@{Model}}
@@ -113,15 +138,41 @@ std\+::vector$<$ \mbox{\hyperlink{class_swap_log}{Swap\+Log}} $>$ \mbox{\hyperli
 \index{Model@{Model}!addAgent@{addAgent}}
 \index{addAgent@{addAgent}!Model@{Model}}
 \doxysubsubsection{\texorpdfstring{addAgent()}{addAgent()}}
-{\footnotesize\ttfamily void Model\+::add\+Agent (\begin{DoxyParamCaption}\item[{Agent $\ast$}]{agent,  }\item[{\mbox{\hyperlink{class_service}{Service}} $\ast$}]{service }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void Model\+::add\+Agent (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_agent}{Agent}} $\ast$}]{agent,  }\item[{\mbox{\hyperlink{class_service}{Service}} $\ast$}]{service }\end{DoxyParamCaption})}
 
 Add an agent to the service 
 \begin{DoxyParams}{Parameters}
-{\em agent} & Agent to add \\
+{\em agent} & \mbox{\hyperlink{class_agent}{Agent}} to add \\
 \hline
 {\em service} & \mbox{\hyperlink{class_service}{Service}} where the agent is added \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{class_model_a94204e4444c379d0b13c3d82f6900857}\label{class_model_a94204e4444c379d0b13c3d82f6900857}} 
+\index{Model@{Model}!addAttribut@{addAttribut}}
+\index{addAttribut@{addAttribut}!Model@{Model}}
+\doxysubsubsection{\texorpdfstring{addAttribut()}{addAttribut()}}
+{\footnotesize\ttfamily void Model\+::add\+Attribut (\begin{DoxyParamCaption}\item[{string}]{att }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_model_a0e3afff542e3d46f9d423971b1a0cb44}\label{class_model_a0e3afff542e3d46f9d423971b1a0cb44}} 
+\index{Model@{Model}!addBasicConstraintsTo@{addBasicConstraintsTo}}
+\index{addBasicConstraintsTo@{addBasicConstraintsTo}!Model@{Model}}
+\doxysubsubsection{\texorpdfstring{addBasicConstraintsTo()}{addBasicConstraintsTo()}}
+{\footnotesize\ttfamily void Model\+::add\+Basic\+Constraints\+To (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_service}{Service}} $\ast$}]{s }\end{DoxyParamCaption})}
+
+
+
+Add constraint returned by \mbox{\hyperlink{class_model_a895afd6e4c60c224802d5a1a2c814b99}{create\+Constraints()}} in the given \mbox{\hyperlink{class_service}{Service}}. 
+
+\mbox{\Hypertarget{class_model_a786cf46066656735878b3777059db604}\label{class_model_a786cf46066656735878b3777059db604}} 
+\index{Model@{Model}!addPost@{addPost}}
+\index{addPost@{addPost}!Model@{Model}}
+\doxysubsubsection{\texorpdfstring{addPost()}{addPost()}}
+{\footnotesize\ttfamily void Model\+::add\+Post (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_post}{Post}} $\ast$}]{p }\end{DoxyParamCaption})}
+
+
+
+Add a post to the model, avoid duplication. 
+
 \mbox{\Hypertarget{class_model_a8106e9028cb901e335403e35775e8660}\label{class_model_a8106e9028cb901e335403e35775e8660}} 
 \index{Model@{Model}!addService@{addService}}
 \index{addService@{addService}!Model@{Model}}
@@ -144,17 +195,37 @@ Add a \mbox{\hyperlink{class_swap_log}{Swap\+Log}} to the list
 {\em swap\+Log} & \mbox{\hyperlink{class_swap_log}{Swap\+Log}} to add to the list \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{class_model_a8fbb87b25c9c78e0ee505febd4632df6}\label{class_model_a8fbb87b25c9c78e0ee505febd4632df6}} 
+\index{Model@{Model}!attributToInt@{attributToInt}}
+\index{attributToInt@{attributToInt}!Model@{Model}}
+\doxysubsubsection{\texorpdfstring{attributToInt()}{attributToInt()}}
+{\footnotesize\ttfamily int Model\+::attribut\+To\+Int (\begin{DoxyParamCaption}\item[{string}]{att }\end{DoxyParamCaption})}
+
 \mbox{\Hypertarget{class_model_a895afd6e4c60c224802d5a1a2c814b99}\label{class_model_a895afd6e4c60c224802d5a1a2c814b99}} 
 \index{Model@{Model}!createConstraints@{createConstraints}}
 \index{createConstraints@{createConstraints}!Model@{Model}}
 \doxysubsubsection{\texorpdfstring{createConstraints()}{createConstraints()}}
 {\footnotesize\ttfamily vector$<$ \mbox{\hyperlink{class_constraint}{Constraint}} $\ast$ $>$ Model\+::create\+Constraints (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{class_model_a46fa457d6a061998ff06853da7ae1c60}\label{class_model_a46fa457d6a061998ff06853da7ae1c60}} 
+
+
+return predefined constraints (used for C\+H\+IC) 
+
+\mbox{\Hypertarget{class_model_a6ce5dd705b3107b31f8946fe113cf21b}\label{class_model_a6ce5dd705b3107b31f8946fe113cf21b}} 
+\index{Model@{Model}!generateEmptyValuation@{generateEmptyValuation}}
+\index{generateEmptyValuation@{generateEmptyValuation}!Model@{Model}}
+\doxysubsubsection{\texorpdfstring{generateEmptyValuation()}{generateEmptyValuation()}}
+{\footnotesize\ttfamily void Model\+::generate\+Empty\+Valuation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Generate / initialize an empty valuation for the model. 
+
+\mbox{\Hypertarget{class_model_a97a1257b4549f5c7f08729db69fa1431}\label{class_model_a97a1257b4549f5c7f08729db69fa1431}} 
 \index{Model@{Model}!generateModelInstance@{generateModelInstance}}
 \index{generateModelInstance@{generateModelInstance}!Model@{Model}}
 \doxysubsubsection{\texorpdfstring{generateModelInstance()}{generateModelInstance()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{class_model}{Model}} Model\+::generate\+Model\+Instance (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}{Day}}}]{first\+Day,  }\item[{int}]{nb\+Days,  }\item[{float}]{overtime,  }\item[{int}]{nb\+Services,  }\item[{int}]{nb\+Posts,  }\item[{int}]{nb\+Agents,  }\item[{float}]{nb\+Hours\+Week,  }\item[{float}]{nb\+Hours\+Month,  }\item[{int}]{nb\+Agents\+Per\+Service = {\ttfamily -\/1},  }\item[{int}]{nb\+Posts\+Per\+Service = {\ttfamily -\/1},  }\item[{int}]{proba\+\_\+1er\+\_\+conge = {\ttfamily -\/1},  }\item[{int}]{proba\+\_\+suite\+\_\+conge = {\ttfamily -\/1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_model}{Model}} Model\+::generate\+Model\+Instance (\begin{DoxyParamCaption}\item[{int}]{first\+Day,  }\item[{int}]{nb\+Days,  }\item[{float}]{overtime,  }\item[{int}]{nb\+Services,  }\item[{int}]{nb\+Posts,  }\item[{int}]{nb\+Agents,  }\item[{float}]{nb\+Hours\+Week,  }\item[{float}]{nb\+Hours\+Month,  }\item[{int}]{nb\+Agents\+Per\+Service = {\ttfamily -\/1},  }\item[{int}]{nb\+Posts\+Per\+Service = {\ttfamily -\/1},  }\item[{int}]{proba\+\_\+1er\+\_\+conge = {\ttfamily -\/1},  }\item[{int}]{proba\+\_\+suite\+\_\+conge = {\ttfamily -\/1} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 \mbox{\Hypertarget{class_model_a2a61c209a4993ad6fb7050baa093b25f}\label{class_model_a2a61c209a4993ad6fb7050baa093b25f}} 
 \index{Model@{Model}!generateXML@{generateXML}}
@@ -162,16 +233,27 @@ Add a \mbox{\hyperlink{class_swap_log}{Swap\+Log}} to the list
 \doxysubsubsection{\texorpdfstring{generateXML()}{generateXML()}}
 {\footnotesize\ttfamily void Model\+::generate\+X\+ML (\begin{DoxyParamCaption}\item[{string}]{file\+Name }\end{DoxyParamCaption})}
 
-Generate a X\+ML file from the \mbox{\hyperlink{class_model}{Model}} 
+create a X\+ML file from the \mbox{\hyperlink{class_model}{Model}} 
 \begin{DoxyParams}{Parameters}
 {\em file\+Name} & name of the xml file saved \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{class_model_a90d375694ec8d3bab911ed04e89961aa}\label{class_model_a90d375694ec8d3bab911ed04e89961aa}} 
+\mbox{\Hypertarget{class_model_ad70822a37cad9fd7940cf4f330b7ee2a}\label{class_model_ad70822a37cad9fd7940cf4f330b7ee2a}} 
+\index{Model@{Model}!generateXMLPlanning@{generateXMLPlanning}}
+\index{generateXMLPlanning@{generateXMLPlanning}!Model@{Model}}
+\doxysubsubsection{\texorpdfstring{generateXMLPlanning()}{generateXMLPlanning()}}
+{\footnotesize\ttfamily void Model\+::generate\+X\+M\+L\+Planning (\begin{DoxyParamCaption}\item[{string}]{file\+Name }\end{DoxyParamCaption})}
+
+Generate a X\+ML file with the planning 
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & name of the file to create \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_model_ad2ba4132bb910f4d46b3b6fb215943ee}\label{class_model_ad2ba4132bb910f4d46b3b6fb215943ee}} 
 \index{Model@{Model}!getAgentFrom@{getAgentFrom}}
 \index{getAgentFrom@{getAgentFrom}!Model@{Model}}
 \doxysubsubsection{\texorpdfstring{getAgentFrom()}{getAgentFrom()}}
-{\footnotesize\ttfamily std\+::vector$<$ Agent $\ast$ $>$ Model\+::get\+Agent\+From (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_service}{Service}} $\ast$}]{service }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily const std\+::vector$<$ \mbox{\hyperlink{class_agent}{Agent}} $\ast$ $>$ Model\+::get\+Agent\+From (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_service}{Service}} $\ast$}]{service }\end{DoxyParamCaption})}
 
 get Agents from a specific service 
 \begin{DoxyParams}{Parameters}
@@ -181,6 +263,29 @@ get Agents from a specific service
 \begin{DoxyReturn}{Returns}
 agents from the specified service 
 \end{DoxyReturn}
+\mbox{\Hypertarget{class_model_af576ab251890d43a7ec27c91b52b1d1d}\label{class_model_af576ab251890d43a7ec27c91b52b1d1d}} 
+\index{Model@{Model}!getAgentFromPtr@{getAgentFromPtr}}
+\index{getAgentFromPtr@{getAgentFromPtr}!Model@{Model}}
+\doxysubsubsection{\texorpdfstring{getAgentFromPtr()}{getAgentFromPtr()}}
+{\footnotesize\ttfamily const std\+::vector$<$ \mbox{\hyperlink{class_agent}{Agent}} $\ast$ $>$ $\ast$ Model\+::get\+Agent\+From\+Ptr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_service}{Service}} $\ast$}]{service }\end{DoxyParamCaption})}
+
+get Agents from a specific service, give a pointer to avoid copy 
+\begin{DoxyParams}{Parameters}
+{\em service} & the Agents returned are from this \mbox{\hyperlink{class_service}{Service}} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+agents from the specified service 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_model_a9ea253e61267ff7bcb4b7a7493e25e04}\label{class_model_a9ea253e61267ff7bcb4b7a7493e25e04}} 
+\index{Model@{Model}!getConstraintInformations@{getConstraintInformations}}
+\index{getConstraintInformations@{getConstraintInformations}!Model@{Model}}
+\doxysubsubsection{\texorpdfstring{getConstraintInformations()}{getConstraintInformations()}}
+{\footnotesize\ttfamily string Model\+::get\+Constraint\+Informations (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+informations about what constraints are broken, work only if valuation is filled 
+\end{DoxyReturn}
 \mbox{\Hypertarget{class_model_a58a64a6e8d6ee1774b20bcf482f72a05}\label{class_model_a58a64a6e8d6ee1774b20bcf482f72a05}} 
 \index{Model@{Model}!getDefaultPost@{getDefaultPost}}
 \index{getDefaultPost@{getDefaultPost}!Model@{Model}}
@@ -188,16 +293,16 @@ agents from the specified service
 {\footnotesize\ttfamily \mbox{\hyperlink{class_post}{Post}} $\ast$ Model\+::get\+Default\+Post (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 \begin{DoxyReturn}{Returns}
-default\+Post post affected by default 
+post affected by default 
 \end{DoxyReturn}
-\mbox{\Hypertarget{class_model_a3252bdf535af9a9bb8777d24f729204b}\label{class_model_a3252bdf535af9a9bb8777d24f729204b}} 
+\mbox{\Hypertarget{class_model_adc0c50e04f4439afaed0f46a86af97b9}\label{class_model_adc0c50e04f4439afaed0f46a86af97b9}} 
 \index{Model@{Model}!getFirstDay@{getFirstDay}}
 \index{getFirstDay@{getFirstDay}!Model@{Model}}
 \doxysubsubsection{\texorpdfstring{getFirstDay()}{getFirstDay()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}{Day}} Model\+::get\+First\+Day (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+{\footnotesize\ttfamily int Model\+::get\+First\+Day (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 \begin{DoxyReturn}{Returns}
-first\+Day first day of the month 
+first day of the month 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_model_a73c028b93b5742a0f66707247c34e3e8}\label{class_model_a73c028b93b5742a0f66707247c34e3e8}} 
 \index{Model@{Model}!getNbDays@{getNbDays}}
@@ -206,21 +311,7 @@ first\+Day first day of the month
 {\footnotesize\ttfamily int Model\+::get\+Nb\+Days (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 \begin{DoxyReturn}{Returns}
-nb\+Days number of days in the month 
-\end{DoxyReturn}
-\mbox{\Hypertarget{class_model_a0a54406a51473a1ce85728965a064abf}\label{class_model_a0a54406a51473a1ce85728965a064abf}} 
-\index{Model@{Model}!getNextDay@{getNextDay}}
-\index{getNextDay@{getNextDay}!Model@{Model}}
-\doxysubsubsection{\texorpdfstring{getNextDay()}{getNextDay()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}{Day}} Model\+::get\+Next\+Day (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}{Day}}}]{day }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
-
-Give the next day of the given day 
-\begin{DoxyParams}{Parameters}
-{\em day} & \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-Next next day of the given day 
+number of days in the month 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_model_a2907690eb430a304763330fec7ea0208}\label{class_model_a2907690eb430a304763330fec7ea0208}} 
 \index{Model@{Model}!getOvertime@{getOvertime}}
@@ -229,7 +320,16 @@ Next next day of the given day
 {\footnotesize\ttfamily float Model\+::get\+Overtime (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 \begin{DoxyReturn}{Returns}
-overtime overtime allowed for every Agents 
+overtime allowed for every Agents 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_model_a5e88c0c3b225114ad88669b138906dba}\label{class_model_a5e88c0c3b225114ad88669b138906dba}} 
+\index{Model@{Model}!getPosts@{getPosts}}
+\index{getPosts@{getPosts}!Model@{Model}}
+\doxysubsubsection{\texorpdfstring{getPosts()}{getPosts()}}
+{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$ $>$ \& Model\+::get\+Posts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+posts of the model 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_model_a35c3ee24b5cd448c1c81576ae6bab5e2}\label{class_model_a35c3ee24b5cd448c1c81576ae6bab5e2}} 
 \index{Model@{Model}!getServices@{getServices}}
@@ -238,16 +338,16 @@ overtime overtime allowed for every Agents
 {\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{class_service}{Service}} $\ast$ $>$ \& Model\+::get\+Services (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 \begin{DoxyReturn}{Returns}
-services vector of Services of the model 
+vector of Services of the model 
 \end{DoxyReturn}
-\mbox{\Hypertarget{class_model_a48242570139be7238939020e44340ede}\label{class_model_a48242570139be7238939020e44340ede}} 
+\mbox{\Hypertarget{class_model_a0f3cd3db78840c35809b28a74828f856}\label{class_model_a0f3cd3db78840c35809b28a74828f856}} 
 \index{Model@{Model}!getSwapLog@{getSwapLog}}
 \index{getSwapLog@{getSwapLog}!Model@{Model}}
 \doxysubsubsection{\texorpdfstring{getSwapLog()}{getSwapLog()}}
-{\footnotesize\ttfamily vector$<$ \mbox{\hyperlink{class_swap_log}{Swap\+Log}} $>$ Model\+::get\+Swap\+Log (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily const vector$<$ \mbox{\hyperlink{class_swap_log}{Swap\+Log}} $>$ $\ast$ Model\+::get\+Swap\+Log (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
 
 \begin{DoxyReturn}{Returns}
-swaplog vector of swaplog 
+vector of swaplog 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_model_a059caffc12e7f667b6ebcd521a605199}\label{class_model_a059caffc12e7f667b6ebcd521a605199}} 
 \index{Model@{Model}!getValuation@{getValuation}}
@@ -256,8 +356,18 @@ swaplog vector of swaplog
 {\footnotesize\ttfamily \mbox{\hyperlink{class_valuation}{Valuation}} $\ast$ Model\+::get\+Valuation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 \begin{DoxyReturn}{Returns}
-valuation \mbox{\hyperlink{class_valuation}{Valuation}} of the current instance 
+\mbox{\hyperlink{class_valuation}{Valuation}} of the current instance 
 \end{DoxyReturn}
+\mbox{\Hypertarget{class_model_aa047a414883b55095bed7c3e5269695a}\label{class_model_aa047a414883b55095bed7c3e5269695a}} 
+\index{Model@{Model}!idDayToDay@{idDayToDay}}
+\index{idDayToDay@{idDayToDay}!Model@{Model}}
+\doxysubsubsection{\texorpdfstring{idDayToDay()}{idDayToDay()}}
+{\footnotesize\ttfamily int Model\+::id\+Day\+To\+Day (\begin{DoxyParamCaption}\item[{int}]{id\+Day }\end{DoxyParamCaption})}
+
+
+
+return the day (Monday, Thursday...) of the id\+Day (0 to nb\+Days) 
+
 \mbox{\Hypertarget{class_model_abe9d80fc4f9fac0a16c87abb5cb17b7c}\label{class_model_abe9d80fc4f9fac0a16c87abb5cb17b7c}} 
 \index{Model@{Model}!loadXML@{loadXML}}
 \index{loadXML@{loadXML}!Model@{Model}}
@@ -295,6 +405,16 @@ Print the planning to the console.
 
 clear the swap\+Log vector 
 
+\mbox{\Hypertarget{class_model_ad7b99ed7960ede65a069d67c1c803614}\label{class_model_ad7b99ed7960ede65a069d67c1c803614}} 
+\index{Model@{Model}!rollBack@{rollBack}}
+\index{rollBack@{rollBack}!Model@{Model}}
+\doxysubsubsection{\texorpdfstring{rollBack()}{rollBack()}}
+{\footnotesize\ttfamily void Model\+::roll\+Back (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Undo lasts changes (swaps) 
+
 \mbox{\Hypertarget{class_model_a275bccef45d1eb03699ab98a62156082}\label{class_model_a275bccef45d1eb03699ab98a62156082}} 
 \index{Model@{Model}!setDefaultPost@{setDefaultPost}}
 \index{setDefaultPost@{setDefaultPost}!Model@{Model}}
@@ -306,11 +426,11 @@ clear the swap\+Log vector
 {\em default\+Post} & \mbox{\hyperlink{class_post}{Post}} to set \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{class_model_ab1c51d6f5dd6a38bcb31b6f67e438acd}\label{class_model_ab1c51d6f5dd6a38bcb31b6f67e438acd}} 
+\mbox{\Hypertarget{class_model_a788ec6813ae32754419dcca8849bd09f}\label{class_model_a788ec6813ae32754419dcca8849bd09f}} 
 \index{Model@{Model}!setFirstDay@{setFirstDay}}
 \index{setFirstDay@{setFirstDay}!Model@{Model}}
 \doxysubsubsection{\texorpdfstring{setFirstDay()}{setFirstDay()}}
-{\footnotesize\ttfamily void Model\+::set\+First\+Day (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}{Day}}}]{first\+Day }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void Model\+::set\+First\+Day (\begin{DoxyParamCaption}\item[{int}]{first\+Day }\end{DoxyParamCaption})}
 
 
 \begin{DoxyParams}{Parameters}
@@ -347,7 +467,7 @@ clear the swap\+Log vector
 
 
 \begin{DoxyParams}{Parameters}
-{\em v} & valuation to set \\
+{\em valuation} & to set \\
 \hline
 \end{DoxyParams}
 
@@ -357,7 +477,13 @@ clear the swap\+Log vector
 \index{Model@{Model}!agents@{agents}}
 \index{agents@{agents}!Model@{Model}}
 \doxysubsubsection{\texorpdfstring{agents}{agents}}
-{\footnotesize\ttfamily std\+::map$<$\mbox{\hyperlink{class_service}{Service}}$\ast$,std\+::vector$<$Agent$\ast$$>$ $>$ Model\+::agents\hspace{0.3cm}{\ttfamily [protected]}}
+{\footnotesize\ttfamily std\+::map$<$\mbox{\hyperlink{class_service}{Service}}$\ast$,std\+::vector$<$\mbox{\hyperlink{class_agent}{Agent}}$\ast$$>$ $>$ Model\+::agents\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_model_a5eff165cb53ca32ad685db4b5f9df539}\label{class_model_a5eff165cb53ca32ad685db4b5f9df539}} 
+\index{Model@{Model}!attributs@{attributs}}
+\index{attributs@{attributs}!Model@{Model}}
+\doxysubsubsection{\texorpdfstring{attributs}{attributs}}
+{\footnotesize\ttfamily std\+::vector$<$string$>$ Model\+::attributs\hspace{0.3cm}{\ttfamily [protected]}}
 
 \mbox{\Hypertarget{class_model_a8fe42db7b700ea42d02a5a6330e2a282}\label{class_model_a8fe42db7b700ea42d02a5a6330e2a282}} 
 \index{Model@{Model}!defaultPost@{defaultPost}}
@@ -365,11 +491,11 @@ clear the swap\+Log vector
 \doxysubsubsection{\texorpdfstring{defaultPost}{defaultPost}}
 {\footnotesize\ttfamily \mbox{\hyperlink{class_post}{Post}}$\ast$ Model\+::default\+Post\hspace{0.3cm}{\ttfamily [protected]}}
 
-\mbox{\Hypertarget{class_model_ab9ac161cc0ebb7687768723164f0d9a1}\label{class_model_ab9ac161cc0ebb7687768723164f0d9a1}} 
+\mbox{\Hypertarget{class_model_a3995709abae4f01e7cd5223083dbe849}\label{class_model_a3995709abae4f01e7cd5223083dbe849}} 
 \index{Model@{Model}!firstDay@{firstDay}}
 \index{firstDay@{firstDay}!Model@{Model}}
 \doxysubsubsection{\texorpdfstring{firstDay}{firstDay}}
-{\footnotesize\ttfamily \mbox{\hyperlink{_model_8h_ac572d2be8b3c04018816ba1a6e75adad}{Day}} Model\+::first\+Day\hspace{0.3cm}{\ttfamily [protected]}}
+{\footnotesize\ttfamily int Model\+::first\+Day\hspace{0.3cm}{\ttfamily [protected]}}
 
 \mbox{\Hypertarget{class_model_ac8c559e5beaab006ceb57fc324fa0a97}\label{class_model_ac8c559e5beaab006ceb57fc324fa0a97}} 
 \index{Model@{Model}!nbDays@{nbDays}}
@@ -411,5 +537,5 @@ clear the swap\+Log vector
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/\+Valars/\+Documents/\+Git\+Hub/\+P-\/\+A\+N\+D\+R\+O\+I\+D\+E-\/\+Construction-\/\+Automatique-\/de-\/planning/src/model/\mbox{\hyperlink{_model_8h}{Model.\+h}}\item 
-C\+:/\+Users/\+Valars/\+Documents/\+Git\+Hub/\+P-\/\+A\+N\+D\+R\+O\+I\+D\+E-\/\+Construction-\/\+Automatique-\/de-\/planning/src/model/\mbox{\hyperlink{_model_8cpp}{Model.\+cpp}}\end{DoxyCompactItemize}
+src/model/\mbox{\hyperlink{_model_8h}{Model.\+h}}\item 
+src/model/\mbox{\hyperlink{_model_8cpp}{Model.\+cpp}}\end{DoxyCompactItemize}

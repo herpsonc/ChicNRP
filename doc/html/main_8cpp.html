@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PANDROIDE: C:/Users/Valars/Documents/GitHub/P-ANDROIDE-Construction-Automatique-de-planning/src/main.cpp File Reference</title>
+<title>CHIC: src/main.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">PANDROIDE
+   <div id="projectname">CHIC
    </div>
   </td>
  </tr>
@@ -75,100 +75,14 @@ $(function() {
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
 <code>#include &quot;<a class="el" href="heuristic_solver_8h_source.html">heuristic/heuristicSolver.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_agent_8h_source.html">model/Agent.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_constraint_8h_source.html">model/constraint/Constraint.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_constraint_days_seq_8h_source.html">model/constraint/ConstraintDaysSeq.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_model_8h_source.html">model/Model.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_constraint_involved_8h_source.html">model/constraint/ConstraintInvolved.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_constraint_seq_min_max_8h_source.html">model/constraint/ConstraintSeqMinMax.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_hand_writted_models_8h_source.html">HandWrittedModels.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa1d0ab46ab02c71d6d72be16f0b0cff7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aa1d0ab46ab02c71d6d72be16f0b0cff7">addConsecutiveSamePost</a> (Agent *a, <a class="el" href="class_post.html">Post</a> *p, int d_start, int d_end)</td></tr>
-<tr class="separator:aa1d0ab46ab02c71d6d72be16f0b0cff7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3eb8f8c8a0cd94c5f8f2d2559ff1b95"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_model.html">Model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aa3eb8f8c8a0cd94c5f8f2d2559ff1b95">generateGhr</a> ()</td></tr>
-<tr class="separator:aa3eb8f8c8a0cd94c5f8f2d2559ff1b95"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a500eafb30ddc4db566fcc7e5902b5a6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_model.html">Model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a500eafb30ddc4db566fcc7e5902b5a6b">addServiceSDC</a> (<a class="el" href="class_model.html">Model</a> m)</td></tr>
-<tr class="separator:a500eafb30ddc4db566fcc7e5902b5a6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
 <tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="aa1d0ab46ab02c71d6d72be16f0b0cff7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1d0ab46ab02c71d6d72be16f0b0cff7">&#9670;&nbsp;</a></span>addConsecutiveSamePost()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void addConsecutiveSamePost </td>
-          <td>(</td>
-          <td class="paramtype">Agent *&#160;</td>
-          <td class="paramname"><em>a</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_post.html">Post</a> *&#160;</td>
-          <td class="paramname"><em>p</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>d_start</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>d_end</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a500eafb30ddc4db566fcc7e5902b5a6b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a500eafb30ddc4db566fcc7e5902b5a6b">&#9670;&nbsp;</a></span>addServiceSDC()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_model.html">Model</a> addServiceSDC </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_model.html">Model</a>&#160;</td>
-          <td class="paramname"><em>m</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa3eb8f8c8a0cd94c5f8f2d2559ff1b95"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa3eb8f8c8a0cd94c5f8f2d2559ff1b95">&#9670;&nbsp;</a></span>generateGhr()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_model.html">Model</a> generateGhr </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae66f6b31b5ad750f1fe042a706a4e3d4">&#9670;&nbsp;</a></span>main()</h2>
 

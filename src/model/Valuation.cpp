@@ -39,7 +39,7 @@ Valuation& Valuation::operator=(const Valuation& obj)
 
 }
 
-//! \return score score of the Valuation
+//! \return score of the Valuation
 const float& Valuation::getScore()
 {
 	return score;
@@ -51,7 +51,7 @@ void Valuation::setScore(const float score)
 	this->score = score;
 }
 
-//! \return hoursMonth vector of worked hours in the month for each Agent
+//! \return vector of worked hours in the month for each Agent
 const std::vector<std::vector<float>>& Valuation::getHoursMonth()
 {
 	return hoursMonth;
@@ -63,7 +63,7 @@ void Valuation::setHoursMonth(const std::vector<std::vector<float>> h)
 	hoursMonth = h;
 }
 
-//! \return daySeq vector with informations about where the ConstraintDaysSeq is broken
+//! \return vector with informations about where the ConstraintDaysSeq is broken
 const std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>>& Valuation::getDaySeq()
 {
 	return daySeq;
@@ -75,7 +75,7 @@ void Valuation::setDaySeq(const std::vector<std::vector<std::vector<std::vector<
 	this->daySeq = daySeq;
 }
 
-//! \return hoursWeekSlide vector with the intervals of days where the constraint about the week hours is broken
+//! \return vector with the intervals of days where the constraint about the week hours is broken
 const std::vector<std::vector<std::vector<std::pair<int, int>>>>& Valuation::gethoursWeekSlide()
 {
 	return hoursWeekSlide;
@@ -99,7 +99,7 @@ void Valuation::setImpossiblePosts(const std::vector<std::vector<std::vector<int
 	this->impossiblePosts = impossiblePosts;
 }
 
-//! \return daySeq vector with informations about where the ConstraintInvolved is broken
+//! \return vector with informations about where the ConstraintInvolved is broken
 const std::vector<std::vector<std::vector<std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>>>>>& Valuation::getInvolved()
 {
 	return involved;
@@ -111,7 +111,7 @@ void Valuation::setInvolved(const std::vector<std::vector<std::vector<std::vecto
 	this->involved = involved;
 }
 
-//! \return daySeq vector with informations about where the ConstraintSeqMinMax is detected
+//! \return vector with informations about where the ConstraintSeqMinMax is detected
 const std::vector<std::vector<std::vector<std::vector<std::pair<int, int>>>>>& Valuation::getseqMinMax()
 {
 	return seqMinMax;

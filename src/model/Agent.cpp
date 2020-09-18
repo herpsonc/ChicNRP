@@ -44,7 +44,7 @@ Agent::Agent(const Agent &obj){
 Agent::~Agent() {
 }
 
-//! \return id id of the Agent
+//! \return id of the Agent
 const string& Agent::getId() const {
 	return id;
 }
@@ -54,7 +54,7 @@ void Agent::setId(const string &id) {
 	this->id = id;
 }
 
-//! \return nbHoursMonth number of hours in the month accepted for the Agent
+//! \return number of hours in the month accepted for the Agent
 float Agent::getNbHoursMonth() const {
 	return nbHoursMonth;
 }
@@ -64,7 +64,7 @@ void Agent::setNbHoursMonth(float nbHours) {
 	this->nbHoursMonth = nbHours;
 }
 
-//! \return calendar calendar of the Agent where each index is a Post for a day(Also the solution for the Agent)
+//! \return calendar of the Agent where each index is a Post for a day(Also the solution for the Agent)
 const array<Post*, 31>& Agent::getCalendar() const {
 	return calendar;
 }
@@ -87,7 +87,7 @@ void Agent::setCalendarUnlockOnly(const array<Post*, 31>& calendar)
 	}
 }
 
-//! \return impossiblePosts vector of Post not supposed to be affected to the Agent
+//! \return vector of Post not supposed to be affected to the Agent
 const std::vector<Post*>& Agent::getImpossiblePosts() const {
 	return impossiblePosts;
 }
@@ -97,7 +97,7 @@ void Agent::setImpossiblePosts(const std::vector<Post*> &impossiblePosts) {
 	this->impossiblePosts = impossiblePosts;
 }
 
-//! \return status status of the Agent
+//! \return status of the Agent
 Status Agent::getStatus() const {
 	return status;
 }
@@ -107,7 +107,7 @@ void Agent::setStatus(Status status) {
 	this->status = status;
 }
 
-//! \return lastMonthCalendar calendar of the 7 days before the month start
+//! \return calendar of the 7 days before the month start
 const array<Post*, 7>& Agent::getLastMonthCalendar() const {
 	return lastMonthCalendar;
 }
@@ -129,7 +129,7 @@ void Agent::setCalendarDay(Post* post, int day, bool lock) {
 	}
 }
 
-//! \return nbHoursWeek number of hours in a week (7days) accepted for the Agent
+//! \return number of hours in a week (7days) accepted for the Agent
 float Agent::getNbHoursWeek() const {
 	return nbHoursWeek;
 }
@@ -139,7 +139,7 @@ void Agent::setNbHoursWeek(float nbHoursWeek) {
 	this->nbHoursWeek = nbHoursWeek;
 }
 
-//! \return r number of hours worked in the month
+//! \return number of hours worked in the month
 float Agent::getWorkingHoursMonth(int firstDay, bool accounted)
 {
 	float r = 0;

@@ -1,0 +1,109 @@
+\hypertarget{class_heuristic_tool_box}{}\doxysection{Heuristic\+Tool\+Box Class Reference}
+\label{class_heuristic_tool_box}\index{HeuristicToolBox@{HeuristicToolBox}}
+
+
+{\ttfamily \#include $<$Heuristic\+Tool\+Box.\+h$>$}
+
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_heuristic_tool_box_ad53dec7da9683bb4353320c71f63c8f8}{check\+Fast\+Day\+Seq}} (\mbox{\hyperlink{class_model}{Model}} $\ast$m, \mbox{\hyperlink{class_constraint_days_seq}{Constraint\+Days\+Seq}} $\ast$constraint, int service, int i\+Cons)
+\item 
+static void \mbox{\hyperlink{class_heuristic_tool_box_a9dd6dedb59362eb895cafa1d74a77a95}{check\+Fast\+Involved}} (\mbox{\hyperlink{class_model}{Model}} $\ast$m, \mbox{\hyperlink{class_constraint_involved}{Constraint\+Involved}} $\ast$constraint, int service, int i\+Cons)
+\item 
+static void \mbox{\hyperlink{class_heuristic_tool_box_ad4eafe3bb435deb7e4e88c48eee41c44}{check\+Fast\+Seq\+Min\+Max}} (\mbox{\hyperlink{class_model}{Model}} $\ast$m, \mbox{\hyperlink{class_constraint_seq_min_max}{Constraint\+Seq\+Min\+Max}} $\ast$constraint, int service, int i\+Cons)
+\item 
+static void \mbox{\hyperlink{class_heuristic_tool_box_afb7fa488f19b454835509c6b1f53cab4}{check\+Working\+Hours\+Week\+Fast}} (\mbox{\hyperlink{class_model}{Model}} $\ast$m, \mbox{\hyperlink{class_agent}{Agent}} $\ast$agent, int id\+Service, int day, int idA)
+\item 
+static void \mbox{\hyperlink{class_heuristic_tool_box_a7ca6e527b0a03c17f2ca27e53e44b9aa}{check\+Impossible\+Posts\+Fast}} (\mbox{\hyperlink{class_model}{Model}} $\ast$m, \mbox{\hyperlink{class_agent}{Agent}} $\ast$agent, int id\+Service, int day, int idA)
+\item 
+static void \mbox{\hyperlink{class_heuristic_tool_box_a2a9c046df7e92b376f7241beffd350a9}{check\+Posts\+Requirement\+Fast}} (\mbox{\hyperlink{class_model}{Model}} $\ast$m, int id\+Service, int day)
+\item 
+static void \mbox{\hyperlink{class_heuristic_tool_box_a307ced9bc398fa229c3942b0725856bb}{check\+All\+Fast}} (\mbox{\hyperlink{class_model}{Model}} $\ast$m)
+\item 
+static int \mbox{\hyperlink{class_heuristic_tool_box_a509966d7868ca44db29d6ae5a74a9f34}{get\+Next\+Day}} (int day)
+\item 
+static void \mbox{\hyperlink{class_heuristic_tool_box_a227569600efbbc0a0e9c9ab0f94273eb}{check\+All\+Day\+Seq}} (\mbox{\hyperlink{class_model}{Model}} $\ast$m)
+\item 
+static void \mbox{\hyperlink{class_heuristic_tool_box_a92839cefaa116b37ecec7ef4041b511e}{check\+All\+Involved}} (\mbox{\hyperlink{class_model}{Model}} $\ast$m)
+\item 
+static void \mbox{\hyperlink{class_heuristic_tool_box_af4af8858fcd8fb16aed784bb8574e587}{check\+All\+Seq\+Min\+Max}} (\mbox{\hyperlink{class_model}{Model}} $\ast$m)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class contain algorithms to check constraints 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_heuristic_tool_box_a227569600efbbc0a0e9c9ab0f94273eb}\label{class_heuristic_tool_box_a227569600efbbc0a0e9c9ab0f94273eb}} 
+\index{HeuristicToolBox@{HeuristicToolBox}!checkAllDaySeq@{checkAllDaySeq}}
+\index{checkAllDaySeq@{checkAllDaySeq}!HeuristicToolBox@{HeuristicToolBox}}
+\doxysubsubsection{\texorpdfstring{checkAllDaySeq()}{checkAllDaySeq()}}
+{\footnotesize\ttfamily void Heuristic\+Tool\+Box\+::check\+All\+Day\+Seq (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_model}{Model}} $\ast$}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_heuristic_tool_box_a307ced9bc398fa229c3942b0725856bb}\label{class_heuristic_tool_box_a307ced9bc398fa229c3942b0725856bb}} 
+\index{HeuristicToolBox@{HeuristicToolBox}!checkAllFast@{checkAllFast}}
+\index{checkAllFast@{checkAllFast}!HeuristicToolBox@{HeuristicToolBox}}
+\doxysubsubsection{\texorpdfstring{checkAllFast()}{checkAllFast()}}
+{\footnotesize\ttfamily void Heuristic\+Tool\+Box\+::check\+All\+Fast (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_model}{Model}} $\ast$}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_heuristic_tool_box_a92839cefaa116b37ecec7ef4041b511e}\label{class_heuristic_tool_box_a92839cefaa116b37ecec7ef4041b511e}} 
+\index{HeuristicToolBox@{HeuristicToolBox}!checkAllInvolved@{checkAllInvolved}}
+\index{checkAllInvolved@{checkAllInvolved}!HeuristicToolBox@{HeuristicToolBox}}
+\doxysubsubsection{\texorpdfstring{checkAllInvolved()}{checkAllInvolved()}}
+{\footnotesize\ttfamily void Heuristic\+Tool\+Box\+::check\+All\+Involved (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_model}{Model}} $\ast$}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_heuristic_tool_box_af4af8858fcd8fb16aed784bb8574e587}\label{class_heuristic_tool_box_af4af8858fcd8fb16aed784bb8574e587}} 
+\index{HeuristicToolBox@{HeuristicToolBox}!checkAllSeqMinMax@{checkAllSeqMinMax}}
+\index{checkAllSeqMinMax@{checkAllSeqMinMax}!HeuristicToolBox@{HeuristicToolBox}}
+\doxysubsubsection{\texorpdfstring{checkAllSeqMinMax()}{checkAllSeqMinMax()}}
+{\footnotesize\ttfamily void Heuristic\+Tool\+Box\+::check\+All\+Seq\+Min\+Max (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_model}{Model}} $\ast$}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_heuristic_tool_box_ad53dec7da9683bb4353320c71f63c8f8}\label{class_heuristic_tool_box_ad53dec7da9683bb4353320c71f63c8f8}} 
+\index{HeuristicToolBox@{HeuristicToolBox}!checkFastDaySeq@{checkFastDaySeq}}
+\index{checkFastDaySeq@{checkFastDaySeq}!HeuristicToolBox@{HeuristicToolBox}}
+\doxysubsubsection{\texorpdfstring{checkFastDaySeq()}{checkFastDaySeq()}}
+{\footnotesize\ttfamily void Heuristic\+Tool\+Box\+::check\+Fast\+Day\+Seq (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_model}{Model}} $\ast$}]{m,  }\item[{\mbox{\hyperlink{class_constraint_days_seq}{Constraint\+Days\+Seq}} $\ast$}]{constraint,  }\item[{int}]{service,  }\item[{int}]{i\+Cons }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_heuristic_tool_box_a9dd6dedb59362eb895cafa1d74a77a95}\label{class_heuristic_tool_box_a9dd6dedb59362eb895cafa1d74a77a95}} 
+\index{HeuristicToolBox@{HeuristicToolBox}!checkFastInvolved@{checkFastInvolved}}
+\index{checkFastInvolved@{checkFastInvolved}!HeuristicToolBox@{HeuristicToolBox}}
+\doxysubsubsection{\texorpdfstring{checkFastInvolved()}{checkFastInvolved()}}
+{\footnotesize\ttfamily void Heuristic\+Tool\+Box\+::check\+Fast\+Involved (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_model}{Model}} $\ast$}]{m,  }\item[{\mbox{\hyperlink{class_constraint_involved}{Constraint\+Involved}} $\ast$}]{constraint,  }\item[{int}]{service,  }\item[{int}]{i\+Cons }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_heuristic_tool_box_ad4eafe3bb435deb7e4e88c48eee41c44}\label{class_heuristic_tool_box_ad4eafe3bb435deb7e4e88c48eee41c44}} 
+\index{HeuristicToolBox@{HeuristicToolBox}!checkFastSeqMinMax@{checkFastSeqMinMax}}
+\index{checkFastSeqMinMax@{checkFastSeqMinMax}!HeuristicToolBox@{HeuristicToolBox}}
+\doxysubsubsection{\texorpdfstring{checkFastSeqMinMax()}{checkFastSeqMinMax()}}
+{\footnotesize\ttfamily void Heuristic\+Tool\+Box\+::check\+Fast\+Seq\+Min\+Max (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_model}{Model}} $\ast$}]{m,  }\item[{\mbox{\hyperlink{class_constraint_seq_min_max}{Constraint\+Seq\+Min\+Max}} $\ast$}]{constraint,  }\item[{int}]{service,  }\item[{int}]{i\+Cons }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_heuristic_tool_box_a7ca6e527b0a03c17f2ca27e53e44b9aa}\label{class_heuristic_tool_box_a7ca6e527b0a03c17f2ca27e53e44b9aa}} 
+\index{HeuristicToolBox@{HeuristicToolBox}!checkImpossiblePostsFast@{checkImpossiblePostsFast}}
+\index{checkImpossiblePostsFast@{checkImpossiblePostsFast}!HeuristicToolBox@{HeuristicToolBox}}
+\doxysubsubsection{\texorpdfstring{checkImpossiblePostsFast()}{checkImpossiblePostsFast()}}
+{\footnotesize\ttfamily void Heuristic\+Tool\+Box\+::check\+Impossible\+Posts\+Fast (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_model}{Model}} $\ast$}]{m,  }\item[{\mbox{\hyperlink{class_agent}{Agent}} $\ast$}]{agent,  }\item[{int}]{id\+Service,  }\item[{int}]{day,  }\item[{int}]{idA }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_heuristic_tool_box_a2a9c046df7e92b376f7241beffd350a9}\label{class_heuristic_tool_box_a2a9c046df7e92b376f7241beffd350a9}} 
+\index{HeuristicToolBox@{HeuristicToolBox}!checkPostsRequirementFast@{checkPostsRequirementFast}}
+\index{checkPostsRequirementFast@{checkPostsRequirementFast}!HeuristicToolBox@{HeuristicToolBox}}
+\doxysubsubsection{\texorpdfstring{checkPostsRequirementFast()}{checkPostsRequirementFast()}}
+{\footnotesize\ttfamily void Heuristic\+Tool\+Box\+::check\+Posts\+Requirement\+Fast (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_model}{Model}} $\ast$}]{m,  }\item[{int}]{id\+Service,  }\item[{int}]{day }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_heuristic_tool_box_afb7fa488f19b454835509c6b1f53cab4}\label{class_heuristic_tool_box_afb7fa488f19b454835509c6b1f53cab4}} 
+\index{HeuristicToolBox@{HeuristicToolBox}!checkWorkingHoursWeekFast@{checkWorkingHoursWeekFast}}
+\index{checkWorkingHoursWeekFast@{checkWorkingHoursWeekFast}!HeuristicToolBox@{HeuristicToolBox}}
+\doxysubsubsection{\texorpdfstring{checkWorkingHoursWeekFast()}{checkWorkingHoursWeekFast()}}
+{\footnotesize\ttfamily void Heuristic\+Tool\+Box\+::check\+Working\+Hours\+Week\+Fast (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_model}{Model}} $\ast$}]{m,  }\item[{\mbox{\hyperlink{class_agent}{Agent}} $\ast$}]{agent,  }\item[{int}]{id\+Service,  }\item[{int}]{day,  }\item[{int}]{idA }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_heuristic_tool_box_a509966d7868ca44db29d6ae5a74a9f34}\label{class_heuristic_tool_box_a509966d7868ca44db29d6ae5a74a9f34}} 
+\index{HeuristicToolBox@{HeuristicToolBox}!getNextDay@{getNextDay}}
+\index{getNextDay@{getNextDay}!HeuristicToolBox@{HeuristicToolBox}}
+\doxysubsubsection{\texorpdfstring{getNextDay()}{getNextDay()}}
+{\footnotesize\ttfamily int Heuristic\+Tool\+Box\+::get\+Next\+Day (\begin{DoxyParamCaption}\item[{int}]{day }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/heuristic/\mbox{\hyperlink{_heuristic_tool_box_8h}{Heuristic\+Tool\+Box.\+h}}\item 
+src/heuristic/\mbox{\hyperlink{_heuristic_tool_box_8cpp}{Heuristic\+Tool\+Box.\+cpp}}\end{DoxyCompactItemize}

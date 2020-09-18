@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PANDROIDE: Model Class Reference</title>
+<title>CHIC: Model Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">PANDROIDE
+   <div id="projectname">CHIC
    </div>
   </td>
  </tr>
@@ -75,8 +75,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1bcb7e5a6fd4dd750629fbe2ebb0d829"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a1bcb7e5a6fd4dd750629fbe2ebb0d829">Model</a> (<a class="el" href="_model_8h.html#ac572d2be8b3c04018816ba1a6e75adad">Day</a> <a class="el" href="class_model.html#ab9ac161cc0ebb7687768723164f0d9a1">firstDay</a>, int <a class="el" href="class_model.html#ac8c559e5beaab006ceb57fc324fa0a97">nbDays</a>, float <a class="el" href="class_model.html#a549f630f9359a08812705bca01af34d1">overtime</a>)</td></tr>
-<tr class="separator:a1bcb7e5a6fd4dd750629fbe2ebb0d829"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a117d419dd5e799e1272497619c3dedb7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a117d419dd5e799e1272497619c3dedb7">Model</a> (int <a class="el" href="class_model.html#a3995709abae4f01e7cd5223083dbe849">firstDay</a>, int <a class="el" href="class_model.html#ac8c559e5beaab006ceb57fc324fa0a97">nbDays</a>, float <a class="el" href="class_model.html#a549f630f9359a08812705bca01af34d1">overtime</a>)</td></tr>
+<tr class="separator:a117d419dd5e799e1272497619c3dedb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac00568179c3d466977eb67c0993cbbcf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#ac00568179c3d466977eb67c0993cbbcf">Model</a> (const <a class="el" href="class_model.html">Model</a> &amp;obj)</td></tr>
 <tr class="separator:ac00568179c3d466977eb67c0993cbbcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6ebd2062a0b823db841a0b88baac4c0"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#ad6ebd2062a0b823db841a0b88baac4c0">~Model</a> ()</td></tr>
@@ -85,23 +85,28 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a08c2b7ccb88a5521a0b2dbc55c0eb1d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35c3ee24b5cd448c1c81576ae6bab5e2"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_service.html">Service</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a35c3ee24b5cd448c1c81576ae6bab5e2">getServices</a> ()</td></tr>
 <tr class="separator:a35c3ee24b5cd448c1c81576ae6bab5e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90d375694ec8d3bab911ed04e89961aa"><td class="memItemLeft" align="right" valign="top">std::vector&lt; Agent * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a90d375694ec8d3bab911ed04e89961aa">getAgentFrom</a> (<a class="el" href="class_service.html">Service</a> *service)</td></tr>
-<tr class="separator:a90d375694ec8d3bab911ed04e89961aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9379fb93868577ca0f214092daacc504"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a9379fb93868577ca0f214092daacc504">addAgent</a> (Agent *agent, <a class="el" href="class_service.html">Service</a> *service)</td></tr>
+<tr class="memitem:ad2ba4132bb910f4d46b3b6fb215943ee"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="class_agent.html">Agent</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#ad2ba4132bb910f4d46b3b6fb215943ee">getAgentFrom</a> (<a class="el" href="class_service.html">Service</a> *service)</td></tr>
+<tr class="separator:ad2ba4132bb910f4d46b3b6fb215943ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af576ab251890d43a7ec27c91b52b1d1d"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="class_agent.html">Agent</a> * &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#af576ab251890d43a7ec27c91b52b1d1d">getAgentFromPtr</a> (<a class="el" href="class_service.html">Service</a> *service)</td></tr>
+<tr class="separator:af576ab251890d43a7ec27c91b52b1d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9379fb93868577ca0f214092daacc504"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a9379fb93868577ca0f214092daacc504">addAgent</a> (<a class="el" href="class_agent.html">Agent</a> *agent, <a class="el" href="class_service.html">Service</a> *service)</td></tr>
 <tr class="separator:a9379fb93868577ca0f214092daacc504"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8106e9028cb901e335403e35775e8660"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a8106e9028cb901e335403e35775e8660">addService</a> (<a class="el" href="class_service.html">Service</a> *service)</td></tr>
 <tr class="separator:a8106e9028cb901e335403e35775e8660"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8787d6ee942285e8014a582783f1f097"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a8787d6ee942285e8014a582783f1f097">printPlanning</a> ()</td></tr>
 <tr class="memdesc:a8787d6ee942285e8014a582783f1f097"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print the planning to the console.  <a href="class_model.html#a8787d6ee942285e8014a582783f1f097">More...</a><br /></td></tr>
 <tr class="separator:a8787d6ee942285e8014a582783f1f097"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3252bdf535af9a9bb8777d24f729204b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_model_8h.html#ac572d2be8b3c04018816ba1a6e75adad">Day</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a3252bdf535af9a9bb8777d24f729204b">getFirstDay</a> () const</td></tr>
-<tr class="separator:a3252bdf535af9a9bb8777d24f729204b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1c51d6f5dd6a38bcb31b6f67e438acd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#ab1c51d6f5dd6a38bcb31b6f67e438acd">setFirstDay</a> (<a class="el" href="_model_8h.html#ac572d2be8b3c04018816ba1a6e75adad">Day</a> <a class="el" href="class_model.html#ab9ac161cc0ebb7687768723164f0d9a1">firstDay</a>)</td></tr>
-<tr class="separator:ab1c51d6f5dd6a38bcb31b6f67e438acd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc0c50e04f4439afaed0f46a86af97b9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#adc0c50e04f4439afaed0f46a86af97b9">getFirstDay</a> () const</td></tr>
+<tr class="separator:adc0c50e04f4439afaed0f46a86af97b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a788ec6813ae32754419dcca8849bd09f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a788ec6813ae32754419dcca8849bd09f">setFirstDay</a> (int <a class="el" href="class_model.html#a3995709abae4f01e7cd5223083dbe849">firstDay</a>)</td></tr>
+<tr class="separator:a788ec6813ae32754419dcca8849bd09f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73c028b93b5742a0f66707247c34e3e8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a73c028b93b5742a0f66707247c34e3e8">getNbDays</a> () const</td></tr>
 <tr class="separator:a73c028b93b5742a0f66707247c34e3e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad87373ac07c24cdaec195a3ac19c80f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#ad87373ac07c24cdaec195a3ac19c80f8">setNbDays</a> (int <a class="el" href="class_model.html#ac8c559e5beaab006ceb57fc324fa0a97">nbDays</a>)</td></tr>
 <tr class="separator:ad87373ac07c24cdaec195a3ac19c80f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa047a414883b55095bed7c3e5269695a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#aa047a414883b55095bed7c3e5269695a">idDayToDay</a> (int idDay)</td></tr>
+<tr class="memdesc:aa047a414883b55095bed7c3e5269695a"><td class="mdescLeft">&#160;</td><td class="mdescRight">return the day (Monday, Thursday...) of the idDay (0 to nbDays)  <a href="class_model.html#aa047a414883b55095bed7c3e5269695a">More...</a><br /></td></tr>
+<tr class="separator:aa047a414883b55095bed7c3e5269695a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2907690eb430a304763330fec7ea0208"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a2907690eb430a304763330fec7ea0208">getOvertime</a> () const</td></tr>
 <tr class="separator:a2907690eb430a304763330fec7ea0208"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64d79efd05d587cefabb47e7bdd845d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a64d79efd05d587cefabb47e7bdd845d6">setOvertime</a> (float <a class="el" href="class_model.html#a549f630f9359a08812705bca01af34d1">overtime</a>)</td></tr>
@@ -110,42 +115,63 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a58a64a6e8d6ee1774b20bcf482f72a05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a275bccef45d1eb03699ab98a62156082"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a275bccef45d1eb03699ab98a62156082">setDefaultPost</a> (<a class="el" href="class_post.html">Post</a> *<a class="el" href="class_model.html#a8fe42db7b700ea42d02a5a6330e2a282">defaultPost</a>)</td></tr>
 <tr class="separator:a275bccef45d1eb03699ab98a62156082"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e88c0c3b225114ad88669b138906dba"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_post.html">Post</a> * &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a5e88c0c3b225114ad88669b138906dba">getPosts</a> ()</td></tr>
+<tr class="separator:a5e88c0c3b225114ad88669b138906dba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a786cf46066656735878b3777059db604"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a786cf46066656735878b3777059db604">addPost</a> (<a class="el" href="class_post.html">Post</a> *)</td></tr>
+<tr class="memdesc:a786cf46066656735878b3777059db604"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a post to the model, avoid duplication.  <a href="class_model.html#a786cf46066656735878b3777059db604">More...</a><br /></td></tr>
+<tr class="separator:a786cf46066656735878b3777059db604"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a059caffc12e7f667b6ebcd521a605199"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_valuation.html">Valuation</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a059caffc12e7f667b6ebcd521a605199">getValuation</a> ()</td></tr>
 <tr class="separator:a059caffc12e7f667b6ebcd521a605199"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af82c93cb022b1d0eefd7a8d76e3ef3aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#af82c93cb022b1d0eefd7a8d76e3ef3aa">setValuation</a> (<a class="el" href="class_valuation.html">Valuation</a> v)</td></tr>
 <tr class="separator:af82c93cb022b1d0eefd7a8d76e3ef3aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ce5dd705b3107b31f8946fe113cf21b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a6ce5dd705b3107b31f8946fe113cf21b">generateEmptyValuation</a> ()</td></tr>
+<tr class="memdesc:a6ce5dd705b3107b31f8946fe113cf21b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate / initialize an empty valuation for the model.  <a href="class_model.html#a6ce5dd705b3107b31f8946fe113cf21b">More...</a><br /></td></tr>
+<tr class="separator:a6ce5dd705b3107b31f8946fe113cf21b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0c80850f840771bb1fbaba00ba9fd4c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#aa0c80850f840771bb1fbaba00ba9fd4c">addSwapLog</a> (const <a class="el" href="class_swap_log.html">SwapLog</a> <a class="el" href="class_model.html#afd110632794a09675d62914a9d514322">swapLog</a>)</td></tr>
 <tr class="separator:aa0c80850f840771bb1fbaba00ba9fd4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48242570139be7238939020e44340ede"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_swap_log.html">SwapLog</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a48242570139be7238939020e44340ede">getSwapLog</a> ()</td></tr>
-<tr class="separator:a48242570139be7238939020e44340ede"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f3cd3db78840c35809b28a74828f856"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="class_swap_log.html">SwapLog</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a0f3cd3db78840c35809b28a74828f856">getSwapLog</a> () const</td></tr>
+<tr class="separator:a0f3cd3db78840c35809b28a74828f856"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05cb74c45802c16fa1b7163572a520e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a05cb74c45802c16fa1b7163572a520e5">resetSwapLog</a> ()</td></tr>
 <tr class="memdesc:a05cb74c45802c16fa1b7163572a520e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">clear the swapLog vector  <a href="class_model.html#a05cb74c45802c16fa1b7163572a520e5">More...</a><br /></td></tr>
 <tr class="separator:a05cb74c45802c16fa1b7163572a520e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7b99ed7960ede65a069d67c1c803614"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#ad7b99ed7960ede65a069d67c1c803614">rollBack</a> ()</td></tr>
+<tr class="memdesc:ad7b99ed7960ede65a069d67c1c803614"><td class="mdescLeft">&#160;</td><td class="mdescRight">Undo lasts changes (swaps)  <a href="class_model.html#ad7b99ed7960ede65a069d67c1c803614">More...</a><br /></td></tr>
+<tr class="separator:ad7b99ed7960ede65a069d67c1c803614"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a895afd6e4c60c224802d5a1a2c814b99"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_constraint.html">Constraint</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a895afd6e4c60c224802d5a1a2c814b99">createConstraints</a> ()</td></tr>
+<tr class="memdesc:a895afd6e4c60c224802d5a1a2c814b99"><td class="mdescLeft">&#160;</td><td class="mdescRight">return predefined constraints (used for CHIC)  <a href="class_model.html#a895afd6e4c60c224802d5a1a2c814b99">More...</a><br /></td></tr>
 <tr class="separator:a895afd6e4c60c224802d5a1a2c814b99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e3afff542e3d46f9d423971b1a0cb44"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a0e3afff542e3d46f9d423971b1a0cb44">addBasicConstraintsTo</a> (<a class="el" href="class_service.html">Service</a> *s)</td></tr>
+<tr class="memdesc:a0e3afff542e3d46f9d423971b1a0cb44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add constraint returned by <a class="el" href="class_model.html#a895afd6e4c60c224802d5a1a2c814b99" title="return predefined constraints (used for CHIC)">createConstraints()</a> in the given <a class="el" href="class_service.html">Service</a>.  <a href="class_model.html#a0e3afff542e3d46f9d423971b1a0cb44">More...</a><br /></td></tr>
+<tr class="separator:a0e3afff542e3d46f9d423971b1a0cb44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a61c209a4993ad6fb7050baa093b25f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a2a61c209a4993ad6fb7050baa093b25f">generateXML</a> (string fileName)</td></tr>
 <tr class="separator:a2a61c209a4993ad6fb7050baa093b25f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abe9d80fc4f9fac0a16c87abb5cb17b7c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#abe9d80fc4f9fac0a16c87abb5cb17b7c">loadXML</a> (string fileName)</td></tr>
 <tr class="separator:abe9d80fc4f9fac0a16c87abb5cb17b7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad70822a37cad9fd7940cf4f330b7ee2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#ad70822a37cad9fd7940cf4f330b7ee2a">generateXMLPlanning</a> (string fileName)</td></tr>
+<tr class="separator:ad70822a37cad9fd7940cf4f330b7ee2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94204e4444c379d0b13c3d82f6900857"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a94204e4444c379d0b13c3d82f6900857">addAttribut</a> (string att)</td></tr>
+<tr class="separator:a94204e4444c379d0b13c3d82f6900857"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fbb87b25c9c78e0ee505febd4632df6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a8fbb87b25c9c78e0ee505febd4632df6">attributToInt</a> (string att)</td></tr>
+<tr class="separator:a8fbb87b25c9c78e0ee505febd4632df6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ea253e61267ff7bcb4b7a7493e25e04"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a9ea253e61267ff7bcb4b7a7493e25e04">getConstraintInformations</a> ()</td></tr>
+<tr class="separator:a9ea253e61267ff7bcb4b7a7493e25e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a0a54406a51473a1ce85728965a064abf"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="_model_8h.html#ac572d2be8b3c04018816ba1a6e75adad">Day</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a0a54406a51473a1ce85728965a064abf">getNextDay</a> (<a class="el" href="_model_8h.html#ac572d2be8b3c04018816ba1a6e75adad">Day</a> day)</td></tr>
-<tr class="separator:a0a54406a51473a1ce85728965a064abf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46fa457d6a061998ff06853da7ae1c60"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_model.html">Model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a46fa457d6a061998ff06853da7ae1c60">generateModelInstance</a> (<a class="el" href="_model_8h.html#ac572d2be8b3c04018816ba1a6e75adad">Day</a> <a class="el" href="class_model.html#ab9ac161cc0ebb7687768723164f0d9a1">firstDay</a>, int <a class="el" href="class_model.html#ac8c559e5beaab006ceb57fc324fa0a97">nbDays</a>, float <a class="el" href="class_model.html#a549f630f9359a08812705bca01af34d1">overtime</a>, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService=-1, int nbPostsPerService=-1, int proba_1er_conge=-1, int proba_suite_conge=-1)</td></tr>
-<tr class="separator:a46fa457d6a061998ff06853da7ae1c60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97a1257b4549f5c7f08729db69fa1431"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_model.html">Model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a97a1257b4549f5c7f08729db69fa1431">generateModelInstance</a> (int <a class="el" href="class_model.html#a3995709abae4f01e7cd5223083dbe849">firstDay</a>, int <a class="el" href="class_model.html#ac8c559e5beaab006ceb57fc324fa0a97">nbDays</a>, float <a class="el" href="class_model.html#a549f630f9359a08812705bca01af34d1">overtime</a>, int nbServices, int nbPosts, int nbAgents, float nbHoursWeek, float nbHoursMonth, int nbAgentsPerService=-1, int nbPostsPerService=-1, int proba_1er_conge=-1, int proba_suite_conge=-1)</td></tr>
+<tr class="separator:a97a1257b4549f5c7f08729db69fa1431"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:ab9ac161cc0ebb7687768723164f0d9a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_model_8h.html#ac572d2be8b3c04018816ba1a6e75adad">Day</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#ab9ac161cc0ebb7687768723164f0d9a1">firstDay</a></td></tr>
-<tr class="separator:ab9ac161cc0ebb7687768723164f0d9a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3995709abae4f01e7cd5223083dbe849"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a3995709abae4f01e7cd5223083dbe849">firstDay</a></td></tr>
+<tr class="separator:a3995709abae4f01e7cd5223083dbe849"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8c559e5beaab006ceb57fc324fa0a97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#ac8c559e5beaab006ceb57fc324fa0a97">nbDays</a></td></tr>
 <tr class="separator:ac8c559e5beaab006ceb57fc324fa0a97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a549f630f9359a08812705bca01af34d1"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a549f630f9359a08812705bca01af34d1">overtime</a></td></tr>
 <tr class="separator:a549f630f9359a08812705bca01af34d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fe42db7b700ea42d02a5a6330e2a282"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_post.html">Post</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a8fe42db7b700ea42d02a5a6330e2a282">defaultPost</a></td></tr>
 <tr class="separator:a8fe42db7b700ea42d02a5a6330e2a282"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a204a4e5fccb4e65bb05250eaf6dd0a37"><td class="memItemLeft" align="right" valign="top">std::map&lt; <a class="el" href="class_service.html">Service</a> *, std::vector&lt; Agent * &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a204a4e5fccb4e65bb05250eaf6dd0a37">agents</a></td></tr>
+<tr class="memitem:a204a4e5fccb4e65bb05250eaf6dd0a37"><td class="memItemLeft" align="right" valign="top">std::map&lt; <a class="el" href="class_service.html">Service</a> *, std::vector&lt; <a class="el" href="class_agent.html">Agent</a> * &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a204a4e5fccb4e65bb05250eaf6dd0a37">agents</a></td></tr>
 <tr class="separator:a204a4e5fccb4e65bb05250eaf6dd0a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae19ff162a4cdc3b7ac1e058379c01eed"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_service.html">Service</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#ae19ff162a4cdc3b7ac1e058379c01eed">services</a></td></tr>
 <tr class="separator:ae19ff162a4cdc3b7ac1e058379c01eed"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -155,10 +181,14 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a54affb6f26da3fd841d4d014e4d9483e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd110632794a09675d62914a9d514322"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_swap_log.html">SwapLog</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#afd110632794a09675d62914a9d514322">swapLog</a></td></tr>
 <tr class="separator:afd110632794a09675d62914a9d514322"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5eff165cb53ca32ad685db4b5f9df539"><td class="memItemLeft" align="right" valign="top">std::vector&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_model.html#a5eff165cb53ca32ad685db4b5f9df539">attributs</a></td></tr>
+<tr class="separator:a5eff165cb53ca32ad685db4b5f9df539"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a1bcb7e5a6fd4dd750629fbe2ebb0d829"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1bcb7e5a6fd4dd750629fbe2ebb0d829">&#9670;&nbsp;</a></span>Model() <span class="overload">[1/2]</span></h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>This class is the root of a planning model to resolve </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a117d419dd5e799e1272497619c3dedb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a117d419dd5e799e1272497619c3dedb7">&#9670;&nbsp;</a></span>Model() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -166,7 +196,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">Model::Model </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="_model_8h.html#ac572d2be8b3c04018816ba1a6e75adad">Day</a>&#160;</td>
+          <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>firstDay</em>, </td>
         </tr>
         <tr>
@@ -244,7 +274,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void Model::addAgent </td>
           <td>(</td>
-          <td class="paramtype">Agent *&#160;</td>
+          <td class="paramtype"><a class="el" href="class_agent.html">Agent</a> *&#160;</td>
           <td class="paramname"><em>agent</em>, </td>
         </tr>
         <tr>
@@ -262,11 +292,69 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p>Add an agent to the service </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">agent</td><td>Agent to add </td></tr>
+    <tr><td class="paramname">agent</td><td><a class="el" href="class_agent.html">Agent</a> to add </td></tr>
     <tr><td class="paramname">service</td><td><a class="el" href="class_service.html">Service</a> where the agent is added </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a94204e4444c379d0b13c3d82f6900857"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94204e4444c379d0b13c3d82f6900857">&#9670;&nbsp;</a></span>addAttribut()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Model::addAttribut </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>att</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0e3afff542e3d46f9d423971b1a0cb44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e3afff542e3d46f9d423971b1a0cb44">&#9670;&nbsp;</a></span>addBasicConstraintsTo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Model::addBasicConstraintsTo </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_service.html">Service</a> *&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add constraint returned by <a class="el" href="class_model.html#a895afd6e4c60c224802d5a1a2c814b99" title="return predefined constraints (used for CHIC)">createConstraints()</a> in the given <a class="el" href="class_service.html">Service</a>. </p>
+
+</div>
+</div>
+<a id="a786cf46066656735878b3777059db604"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a786cf46066656735878b3777059db604">&#9670;&nbsp;</a></span>addPost()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Model::addPost </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_post.html">Post</a> *&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a post to the model, avoid duplication. </p>
 
 </div>
 </div>
@@ -318,6 +406,24 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a8fbb87b25c9c78e0ee505febd4632df6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fbb87b25c9c78e0ee505febd4632df6">&#9670;&nbsp;</a></span>attributToInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Model::attributToInt </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>att</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a895afd6e4c60c224802d5a1a2c814b99"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a895afd6e4c60c224802d5a1a2c814b99">&#9670;&nbsp;</a></span>createConstraints()</h2>
 
@@ -333,10 +439,31 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>return predefined constraints (used for CHIC) </p>
+
 </div>
 </div>
-<a id="a46fa457d6a061998ff06853da7ae1c60"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46fa457d6a061998ff06853da7ae1c60">&#9670;&nbsp;</a></span>generateModelInstance()</h2>
+<a id="a6ce5dd705b3107b31f8946fe113cf21b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ce5dd705b3107b31f8946fe113cf21b">&#9670;&nbsp;</a></span>generateEmptyValuation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Model::generateEmptyValuation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generate / initialize an empty valuation for the model. </p>
+
+</div>
+</div>
+<a id="a97a1257b4549f5c7f08729db69fa1431"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97a1257b4549f5c7f08729db69fa1431">&#9670;&nbsp;</a></span>generateModelInstance()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -347,7 +474,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="class_model.html">Model</a> Model::generateModelInstance </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="_model_8h.html#ac572d2be8b3c04018816ba1a6e75adad">Day</a>&#160;</td>
+          <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>firstDay</em>, </td>
         </tr>
         <tr>
@@ -446,7 +573,7 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Generate a XML file from the <a class="el" href="class_model.html">Model</a> </p><dl class="params"><dt>Parameters</dt><dd>
+<p>create a XML file from the <a class="el" href="class_model.html">Model</a> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">fileName</td><td>name of the xml file saved </td></tr>
   </table>
@@ -455,14 +582,38 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a90d375694ec8d3bab911ed04e89961aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90d375694ec8d3bab911ed04e89961aa">&#9670;&nbsp;</a></span>getAgentFrom()</h2>
+<a id="ad70822a37cad9fd7940cf4f330b7ee2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad70822a37cad9fd7940cf4f330b7ee2a">&#9670;&nbsp;</a></span>generateXMLPlanning()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt; Agent * &gt; Model::getAgentFrom </td>
+          <td class="memname">void Model::generateXMLPlanning </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>fileName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Generate a XML file with the planning </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fileName</td><td>name of the file to create </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad2ba4132bb910f4d46b3b6fb215943ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2ba4132bb910f4d46b3b6fb215943ee">&#9670;&nbsp;</a></span>getAgentFrom()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; <a class="el" href="class_agent.html">Agent</a> * &gt; Model::getAgentFrom </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_service.html">Service</a> *&#160;</td>
           <td class="paramname"><em>service</em></td><td>)</td>
@@ -480,6 +631,49 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="af576ab251890d43a7ec27c91b52b1d1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af576ab251890d43a7ec27c91b52b1d1d">&#9670;&nbsp;</a></span>getAgentFromPtr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; <a class="el" href="class_agent.html">Agent</a> * &gt; * Model::getAgentFromPtr </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_service.html">Service</a> *&#160;</td>
+          <td class="paramname"><em>service</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>get Agents from a specific service, give a pointer to avoid copy </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">service</td><td>the Agents returned are from this <a class="el" href="class_service.html">Service</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>agents from the specified service </dd></dl>
+
+</div>
+</div>
+<a id="a9ea253e61267ff7bcb4b7a7493e25e04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ea253e61267ff7bcb4b7a7493e25e04">&#9670;&nbsp;</a></span>getConstraintInformations()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string Model::getConstraintInformations </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>informations about what constraints are broken, work only if valuation is filled </dd></dl>
+
+</div>
+</div>
 <a id="a58a64a6e8d6ee1774b20bcf482f72a05"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a58a64a6e8d6ee1774b20bcf482f72a05">&#9670;&nbsp;</a></span>getDefaultPost()</h2>
 
@@ -494,25 +688,25 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>defaultPost post affected by default </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>post affected by default </dd></dl>
 
 </div>
 </div>
-<a id="a3252bdf535af9a9bb8777d24f729204b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3252bdf535af9a9bb8777d24f729204b">&#9670;&nbsp;</a></span>getFirstDay()</h2>
+<a id="adc0c50e04f4439afaed0f46a86af97b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc0c50e04f4439afaed0f46a86af97b9">&#9670;&nbsp;</a></span>getFirstDay()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="_model_8h.html#ac572d2be8b3c04018816ba1a6e75adad">Day</a> Model::getFirstDay </td>
+          <td class="memname">int Model::getFirstDay </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>firstDay first day of the month </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>first day of the month </dd></dl>
 
 </div>
 </div>
@@ -530,40 +724,7 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>nbDays number of days in the month </dd></dl>
-
-</div>
-</div>
-<a id="a0a54406a51473a1ce85728965a064abf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a54406a51473a1ce85728965a064abf">&#9670;&nbsp;</a></span>getNextDay()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="_model_8h.html#ac572d2be8b3c04018816ba1a6e75adad">Day</a> Model::getNextDay </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="_model_8h.html#ac572d2be8b3c04018816ba1a6e75adad">Day</a>&#160;</td>
-          <td class="paramname"><em>day</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Give the next day of the given day </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">day</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Next next day of the given day </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>number of days in the month </dd></dl>
 
 </div>
 </div>
@@ -581,7 +742,25 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>overtime overtime allowed for every Agents </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>overtime allowed for every Agents </dd></dl>
+
+</div>
+</div>
+<a id="a5e88c0c3b225114ad88669b138906dba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e88c0c3b225114ad88669b138906dba">&#9670;&nbsp;</a></span>getPosts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_post.html">Post</a> * &gt; &amp; Model::getPosts </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>posts of the model </dd></dl>
 
 </div>
 </div>
@@ -599,25 +778,25 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>services vector of Services of the model </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>vector of Services of the model </dd></dl>
 
 </div>
 </div>
-<a id="a48242570139be7238939020e44340ede"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48242570139be7238939020e44340ede">&#9670;&nbsp;</a></span>getSwapLog()</h2>
+<a id="a0f3cd3db78840c35809b28a74828f856"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f3cd3db78840c35809b28a74828f856">&#9670;&nbsp;</a></span>getSwapLog()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">vector&lt; <a class="el" href="class_swap_log.html">SwapLog</a> &gt; Model::getSwapLog </td>
+          <td class="memname">const vector&lt; <a class="el" href="class_swap_log.html">SwapLog</a> &gt; * Model::getSwapLog </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>swaplog vector of swaplog </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>vector of swaplog </dd></dl>
 
 </div>
 </div>
@@ -635,7 +814,27 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>valuation <a class="el" href="class_valuation.html">Valuation</a> of the current instance </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_valuation.html">Valuation</a> of the current instance </dd></dl>
+
+</div>
+</div>
+<a id="aa047a414883b55095bed7c3e5269695a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa047a414883b55095bed7c3e5269695a">&#9670;&nbsp;</a></span>idDayToDay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Model::idDayToDay </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>idDay</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>return the day (Monday, Thursday...) of the idDay (0 to nbDays) </p>
 
 </div>
 </div>
@@ -719,6 +918,25 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ad7b99ed7960ede65a069d67c1c803614"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7b99ed7960ede65a069d67c1c803614">&#9670;&nbsp;</a></span>rollBack()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Model::rollBack </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Undo lasts changes (swaps) </p>
+
+</div>
+</div>
 <a id="a275bccef45d1eb03699ab98a62156082"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a275bccef45d1eb03699ab98a62156082">&#9670;&nbsp;</a></span>setDefaultPost()</h2>
 
@@ -743,8 +961,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ab1c51d6f5dd6a38bcb31b6f67e438acd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab1c51d6f5dd6a38bcb31b6f67e438acd">&#9670;&nbsp;</a></span>setFirstDay()</h2>
+<a id="a788ec6813ae32754419dcca8849bd09f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a788ec6813ae32754419dcca8849bd09f">&#9670;&nbsp;</a></span>setFirstDay()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -752,7 +970,7 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname">void Model::setFirstDay </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="_model_8h.html#ac572d2be8b3c04018816ba1a6e75adad">Day</a>&#160;</td>
+          <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>firstDay</em></td><td>)</td>
           <td></td>
         </tr>
@@ -832,7 +1050,7 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">v</td><td>valuation to set </td></tr>
+    <tr><td class="paramname">valuation</td><td>to set </td></tr>
   </table>
   </dd>
 </dl>
@@ -850,7 +1068,29 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::map&lt;<a class="el" href="class_service.html">Service</a>*,std::vector&lt;Agent*&gt; &gt; Model::agents</td>
+          <td class="memname">std::map&lt;<a class="el" href="class_service.html">Service</a>*,std::vector&lt;<a class="el" href="class_agent.html">Agent</a>*&gt; &gt; Model::agents</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5eff165cb53ca32ad685db4b5f9df539"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5eff165cb53ca32ad685db4b5f9df539">&#9670;&nbsp;</a></span>attributs</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;string&gt; Model::attributs</td>
         </tr>
       </table>
   </td>
@@ -884,8 +1124,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ab9ac161cc0ebb7687768723164f0d9a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab9ac161cc0ebb7687768723164f0d9a1">&#9670;&nbsp;</a></span>firstDay</h2>
+<a id="a3995709abae4f01e7cd5223083dbe849"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3995709abae4f01e7cd5223083dbe849">&#9670;&nbsp;</a></span>firstDay</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -894,7 +1134,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="_model_8h.html#ac572d2be8b3c04018816ba1a6e75adad">Day</a> Model::firstDay</td>
+          <td class="memname">int Model::firstDay</td>
         </tr>
       </table>
   </td>
@@ -1039,8 +1279,8 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>C:/Users/Valars/Documents/GitHub/P-ANDROIDE-Construction-Automatique-de-planning/src/model/<a class="el" href="_model_8h_source.html">Model.h</a></li>
-<li>C:/Users/Valars/Documents/GitHub/P-ANDROIDE-Construction-Automatique-de-planning/src/model/<a class="el" href="_model_8cpp.html">Model.cpp</a></li>
+<li>src/model/<a class="el" href="_model_8h_source.html">Model.h</a></li>
+<li>src/model/<a class="el" href="_model_8cpp.html">Model.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

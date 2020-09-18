@@ -7,11 +7,9 @@
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_swap_log_afc1c0f97b76320e34d5f65597d28339c}{Swap\+Log}} ()
+\mbox{\hyperlink{class_swap_log_a17a8de5c4257436c2d6d17287ee21ae0}{Swap\+Log}} (int agent1, int agent2, int day, int service1, int service2, \mbox{\hyperlink{class_post}{Post}} $\ast$post1, \mbox{\hyperlink{class_post}{Post}} $\ast$post2)
 \item 
 virtual \mbox{\hyperlink{class_swap_log_adfb2f7e412d7f6b959962a0dae735a8f}{$\sim$\+Swap\+Log}} ()
-\item 
-\mbox{\hyperlink{class_swap_log_a9bbbf9e696947c3367a9c8386810d833}{Swap\+Log}} (int agent1, int agent2, int day, int service)
 \item 
 int \mbox{\hyperlink{class_swap_log_a590f6d19e3a7567da8b7a5799e748bb7}{get\+Agent1}} ()
 \item 
@@ -19,28 +17,33 @@ int \mbox{\hyperlink{class_swap_log_af44d38b16806bc452092b41abad75599}{get\+Agen
 \item 
 int \mbox{\hyperlink{class_swap_log_ac02ce30a81c1eb3c4c4565de8809ad49}{get\+Day}} ()
 \item 
-int \mbox{\hyperlink{class_swap_log_aad12bfe9044bf49bc2895f1d927f1b60}{get\+Service}} ()
-\end{DoxyCompactItemize}
+int \mbox{\hyperlink{class_swap_log_ac9426e12a571eeb6ec02b8bcbb8e027b}{get\+Service1}} ()
+\item 
+int \mbox{\hyperlink{class_swap_log_a764e27f53eb8024378244cbdd5ea6f6a}{get\+Service2}} ()
+\item 
+\mbox{\hyperlink{class_post}{Post}} $\ast$ \mbox{\hyperlink{class_swap_log_a558e775f9cb04896ae7e08a4f9f83f77}{get\+Post1}} ()
+\item 
+\mbox{\hyperlink{class_post}{Post}} $\ast$ \mbox{\hyperlink{class_swap_log_a24890f979726f7dd8c228afc2d691a4b}{get\+Post2}} ()
+\item 
+void \mbox{\hyperlink{class_swap_log_adfecaabb293440ea29c197853eb721c3}{reverse}} ()
+\begin{DoxyCompactList}\small\item\em exchange post1 and post2 \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+This class is used to register changes in the planning (mostly swap between two agents) in order to optimize the checker 
 
 \doxysubsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{class_swap_log_afc1c0f97b76320e34d5f65597d28339c}\label{class_swap_log_afc1c0f97b76320e34d5f65597d28339c}} 
+\mbox{\Hypertarget{class_swap_log_a17a8de5c4257436c2d6d17287ee21ae0}\label{class_swap_log_a17a8de5c4257436c2d6d17287ee21ae0}} 
 \index{SwapLog@{SwapLog}!SwapLog@{SwapLog}}
 \index{SwapLog@{SwapLog}!SwapLog@{SwapLog}}
-\doxysubsubsection{\texorpdfstring{SwapLog()}{SwapLog()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily Swap\+Log\+::\+Swap\+Log (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+\doxysubsubsection{\texorpdfstring{SwapLog()}{SwapLog()}}
+{\footnotesize\ttfamily Swap\+Log\+::\+Swap\+Log (\begin{DoxyParamCaption}\item[{int}]{agent1,  }\item[{int}]{agent2,  }\item[{int}]{day,  }\item[{int}]{service1,  }\item[{int}]{service2,  }\item[{\mbox{\hyperlink{class_post}{Post}} $\ast$}]{post1,  }\item[{\mbox{\hyperlink{class_post}{Post}} $\ast$}]{post2 }\end{DoxyParamCaption})}
 
 \mbox{\Hypertarget{class_swap_log_adfb2f7e412d7f6b959962a0dae735a8f}\label{class_swap_log_adfb2f7e412d7f6b959962a0dae735a8f}} 
 \index{SwapLog@{SwapLog}!````~SwapLog@{$\sim$SwapLog}}
 \index{````~SwapLog@{$\sim$SwapLog}!SwapLog@{SwapLog}}
 \doxysubsubsection{\texorpdfstring{$\sim$SwapLog()}{~SwapLog()}}
 {\footnotesize\ttfamily Swap\+Log\+::$\sim$\+Swap\+Log (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
-
-\mbox{\Hypertarget{class_swap_log_a9bbbf9e696947c3367a9c8386810d833}\label{class_swap_log_a9bbbf9e696947c3367a9c8386810d833}} 
-\index{SwapLog@{SwapLog}!SwapLog@{SwapLog}}
-\index{SwapLog@{SwapLog}!SwapLog@{SwapLog}}
-\doxysubsubsection{\texorpdfstring{SwapLog()}{SwapLog()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
-{\footnotesize\ttfamily Swap\+Log\+::\+Swap\+Log (\begin{DoxyParamCaption}\item[{int}]{agent1,  }\item[{int}]{agent2,  }\item[{int}]{day,  }\item[{int}]{service }\end{DoxyParamCaption})}
 
 
 
@@ -52,7 +55,7 @@ int \mbox{\hyperlink{class_swap_log_aad12bfe9044bf49bc2895f1d927f1b60}{get\+Serv
 {\footnotesize\ttfamily int Swap\+Log\+::get\+Agent1 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 \begin{DoxyReturn}{Returns}
-agent1 first agent concerned by the swap 
+first agent concerned by the swap 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_swap_log_af44d38b16806bc452092b41abad75599}\label{class_swap_log_af44d38b16806bc452092b41abad75599}} 
 \index{SwapLog@{SwapLog}!getAgent2@{getAgent2}}
@@ -61,7 +64,7 @@ agent1 first agent concerned by the swap
 {\footnotesize\ttfamily int Swap\+Log\+::get\+Agent2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 \begin{DoxyReturn}{Returns}
-agent1 second agent concerned by the swap 
+second agent concerned by the swap 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_swap_log_ac02ce30a81c1eb3c4c4565de8809ad49}\label{class_swap_log_ac02ce30a81c1eb3c4c4565de8809ad49}} 
 \index{SwapLog@{SwapLog}!getDay@{getDay}}
@@ -70,20 +73,51 @@ agent1 second agent concerned by the swap
 {\footnotesize\ttfamily int Swap\+Log\+::get\+Day (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 \begin{DoxyReturn}{Returns}
-day day of the swap 
+day of the swap 
 \end{DoxyReturn}
-\mbox{\Hypertarget{class_swap_log_aad12bfe9044bf49bc2895f1d927f1b60}\label{class_swap_log_aad12bfe9044bf49bc2895f1d927f1b60}} 
-\index{SwapLog@{SwapLog}!getService@{getService}}
-\index{getService@{getService}!SwapLog@{SwapLog}}
-\doxysubsubsection{\texorpdfstring{getService()}{getService()}}
-{\footnotesize\ttfamily int Swap\+Log\+::get\+Service (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{class_swap_log_a558e775f9cb04896ae7e08a4f9f83f77}\label{class_swap_log_a558e775f9cb04896ae7e08a4f9f83f77}} 
+\index{SwapLog@{SwapLog}!getPost1@{getPost1}}
+\index{getPost1@{getPost1}!SwapLog@{SwapLog}}
+\doxysubsubsection{\texorpdfstring{getPost1()}{getPost1()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_post}{Post}} $\ast$ Swap\+Log\+::get\+Post1 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_swap_log_a24890f979726f7dd8c228afc2d691a4b}\label{class_swap_log_a24890f979726f7dd8c228afc2d691a4b}} 
+\index{SwapLog@{SwapLog}!getPost2@{getPost2}}
+\index{getPost2@{getPost2}!SwapLog@{SwapLog}}
+\doxysubsubsection{\texorpdfstring{getPost2()}{getPost2()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_post}{Post}} $\ast$ Swap\+Log\+::get\+Post2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_swap_log_ac9426e12a571eeb6ec02b8bcbb8e027b}\label{class_swap_log_ac9426e12a571eeb6ec02b8bcbb8e027b}} 
+\index{SwapLog@{SwapLog}!getService1@{getService1}}
+\index{getService1@{getService1}!SwapLog@{SwapLog}}
+\doxysubsubsection{\texorpdfstring{getService1()}{getService1()}}
+{\footnotesize\ttfamily int Swap\+Log\+::get\+Service1 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 \begin{DoxyReturn}{Returns}
-service service where the swap happened 
+service where the swap happened 
 \end{DoxyReturn}
+\mbox{\Hypertarget{class_swap_log_a764e27f53eb8024378244cbdd5ea6f6a}\label{class_swap_log_a764e27f53eb8024378244cbdd5ea6f6a}} 
+\index{SwapLog@{SwapLog}!getService2@{getService2}}
+\index{getService2@{getService2}!SwapLog@{SwapLog}}
+\doxysubsubsection{\texorpdfstring{getService2()}{getService2()}}
+{\footnotesize\ttfamily int Swap\+Log\+::get\+Service2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+service where the swap happened 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_swap_log_adfecaabb293440ea29c197853eb721c3}\label{class_swap_log_adfecaabb293440ea29c197853eb721c3}} 
+\index{SwapLog@{SwapLog}!reverse@{reverse}}
+\index{reverse@{reverse}!SwapLog@{SwapLog}}
+\doxysubsubsection{\texorpdfstring{reverse()}{reverse()}}
+{\footnotesize\ttfamily void Swap\+Log\+::reverse (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+exchange post1 and post2 
+
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/\+Valars/\+Documents/\+Git\+Hub/\+P-\/\+A\+N\+D\+R\+O\+I\+D\+E-\/\+Construction-\/\+Automatique-\/de-\/planning/src/model/\mbox{\hyperlink{_swap_log_8h}{Swap\+Log.\+h}}\item 
-C\+:/\+Users/\+Valars/\+Documents/\+Git\+Hub/\+P-\/\+A\+N\+D\+R\+O\+I\+D\+E-\/\+Construction-\/\+Automatique-\/de-\/planning/src/model/\mbox{\hyperlink{_swap_log_8cpp}{Swap\+Log.\+cpp}}\end{DoxyCompactItemize}
+src/model/\mbox{\hyperlink{_swap_log_8h}{Swap\+Log.\+h}}\item 
+src/model/\mbox{\hyperlink{_swap_log_8cpp}{Swap\+Log.\+cpp}}\end{DoxyCompactItemize}

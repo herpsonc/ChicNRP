@@ -5,6 +5,10 @@
 #include "../Agent.h"
 #include <iostream>
 
+/*!	\class ConstraintDaysSeq
+ * 	This class contain informations about the constraint C2 (check report for more)
+ */
+
 class ConstraintDaysSeq: public Constraint {
 
 public:

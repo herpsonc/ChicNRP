@@ -6,6 +6,9 @@
 #include "constraint/Constraint.h"
 #include "PredefinedPlanning.h"
 
+/*! \class Service
+ *	This class represent a service with all his characteristics
+ */
 
 using namespace std;
 

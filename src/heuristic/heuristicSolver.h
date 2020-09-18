@@ -8,6 +8,10 @@
 #include <typeinfo>
 #include "../model/Valuation.h"
 
+/*!	\class heuristicSolver
+ * 	This class contain algorithms used to solve the planning problem
+ */
+
 class heuristicSolver {
 public:
 	heuristicSolver();

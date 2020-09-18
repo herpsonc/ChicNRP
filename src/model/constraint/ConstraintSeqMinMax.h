@@ -7,6 +7,10 @@
 
 enum MinMax {Min, Max};
 
+/*! \class ConstraintSeqMinMax
+ * 	This class contain informations about the constraint C7 (check report for more)
+ */
+
 class ConstraintSeqMinMax: public Constraint {
 public:
 	ConstraintSeqMinMax(int day, MinMax type, int number, std::vector<int> sequence, int priority);

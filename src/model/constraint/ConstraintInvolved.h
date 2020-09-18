@@ -5,6 +5,10 @@
 #include "../Agent.h"
 #include <iostream>
 
+/*! \class ConstraintInvolved
+ * 	This class contain informations about the constraint C6 (check report for more)
+ */
+
 class ConstraintInvolved: public Constraint {
 public:
 	ConstraintInvolved(std::vector<int> first, std::vector<int> last, int firstDay, int priority);

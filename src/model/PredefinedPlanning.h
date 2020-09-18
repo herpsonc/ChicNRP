@@ -4,6 +4,10 @@
 #include <array>
 #include <iostream>
 
+/*! \class PredefinedPlanning
+ *  This class represent a predefined planning for a service, used by PredefinnedGreedy in heuristicSolver
+ */
+
 class PredefinedPlanning
 {
 public:

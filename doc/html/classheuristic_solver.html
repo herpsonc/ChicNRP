@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PANDROIDE: heuristicSolver Class Reference</title>
+<title>CHIC: heuristicSolver Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">PANDROIDE
+   <div id="projectname">CHIC
    </div>
   </td>
  </tr>
@@ -82,27 +82,39 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a503e8c47cef2558eb07f9cdb9affce92"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_model.html">Model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classheuristic_solver.html#a503e8c47cef2558eb07f9cdb9affce92">greedy</a> (const <a class="el" href="class_model.html">Model</a> m)</td></tr>
+<tr class="memdesc:a503e8c47cef2558eb07f9cdb9affce92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Greedy algorithm only using requiredPosts to affect posts to agents.  <a href="classheuristic_solver.html#a503e8c47cef2558eb07f9cdb9affce92">More...</a><br /></td></tr>
 <tr class="separator:a503e8c47cef2558eb07f9cdb9affce92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5886189ffd6e8406e4ad9e862883150"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classheuristic_solver.html#ab5886189ffd6e8406e4ad9e862883150">nullTo</a> (<a class="el" href="class_model.html">Model</a> *m, <a class="el" href="class_post.html">Post</a> *post)</td></tr>
+<tr class="memdesc:ab5886189ffd6e8406e4ad9e862883150"><td class="mdescLeft">&#160;</td><td class="mdescRight">affect post to every null posts in the calendar of each agents  <a href="classheuristic_solver.html#ab5886189ffd6e8406e4ad9e862883150">More...</a><br /></td></tr>
 <tr class="separator:ab5886189ffd6e8406e4ad9e862883150"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a410984eaae34c51401f28d8da625b190"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classheuristic_solver.html#a410984eaae34c51401f28d8da625b190">check</a> (<a class="el" href="class_model.html">Model</a> *m, bool CheckALL, bool log)</td></tr>
-<tr class="separator:a410984eaae34c51401f28d8da625b190"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad382e649a2a7ba83caacadbabc2844d0"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_model.html">Model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classheuristic_solver.html#ad382e649a2a7ba83caacadbabc2844d0">removeExtraPosts</a> (const <a class="el" href="class_model.html">Model</a> *m)</td></tr>
+<tr class="memdesc:ad382e649a2a7ba83caacadbabc2844d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">remove extra posts in the calendar (depend of postRequired). if a post has to be removed, remove the post affected to the agent with the most hours in the month  <a href="classheuristic_solver.html#ad382e649a2a7ba83caacadbabc2844d0">More...</a><br /></td></tr>
+<tr class="separator:ad382e649a2a7ba83caacadbabc2844d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a008aa089c670cff41f861de4b69b66d4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_model.html">Model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classheuristic_solver.html#a008aa089c670cff41f861de4b69b66d4">predefinedGreedy</a> (const <a class="el" href="class_model.html">Model</a> m)</td></tr>
+<tr class="memdesc:a008aa089c670cff41f861de4b69b66d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Affect predefinedPlannings to agents, then complete with removeExtraPost() and <a class="el" href="classheuristic_solver.html#a503e8c47cef2558eb07f9cdb9affce92" title="Greedy algorithm only using requiredPosts to affect posts to agents.">greedy()</a>  <a href="classheuristic_solver.html#a008aa089c670cff41f861de4b69b66d4">More...</a><br /></td></tr>
+<tr class="separator:a008aa089c670cff41f861de4b69b66d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e151beef090f444f25211f29808d89f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classheuristic_solver.html#a2e151beef090f444f25211f29808d89f">checkFast</a> (<a class="el" href="class_model.html">Model</a> *m)</td></tr>
+<tr class="memdesc:a2e151beef090f444f25211f29808d89f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check every constraint and update valuation of the model.  <a href="classheuristic_solver.html#a2e151beef090f444f25211f29808d89f">More...</a><br /></td></tr>
 <tr class="separator:a2e151beef090f444f25211f29808d89f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a937c995834bd567ba0b3cec7cdce9056"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_valuation.html">Valuation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classheuristic_solver.html#a937c995834bd567ba0b3cec7cdce9056">checkValuation</a> (<a class="el" href="class_model.html">Model</a> *m)</td></tr>
-<tr class="separator:a937c995834bd567ba0b3cec7cdce9056"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a6b18afb94a0fcce58acf8f2cf993ea"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_model.html">Model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classheuristic_solver.html#a0a6b18afb94a0fcce58acf8f2cf993ea">getNeighborSwap</a> (<a class="el" href="class_model.html">Model</a> *m, int range)</td></tr>
-<tr class="separator:a0a6b18afb94a0fcce58acf8f2cf993ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd8154f0222f4ff632e68b6ef32597da"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classheuristic_solver.html#afd8154f0222f4ff632e68b6ef32597da">neighborSwap</a> (<a class="el" href="class_model.html">Model</a> *m, int range)</td></tr>
+<tr class="memdesc:afd8154f0222f4ff632e68b6ef32597da"><td class="mdescLeft">&#160;</td><td class="mdescRight">swap posts between agents, range param define the max number of swap  <a href="classheuristic_solver.html#afd8154f0222f4ff632e68b6ef32597da">More...</a><br /></td></tr>
+<tr class="separator:afd8154f0222f4ff632e68b6ef32597da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77cd03a39513bb5d81902df99e4f4473"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classheuristic_solver.html#a77cd03a39513bb5d81902df99e4f4473">neighborSwapBlock</a> (<a class="el" href="class_model.html">Model</a> *m, int range)</td></tr>
+<tr class="memdesc:a77cd03a39513bb5d81902df99e4f4473"><td class="mdescLeft">&#160;</td><td class="mdescRight">swap a block (3 consecutive posts for example) of posts between agents, param range define the max number of posts in the block  <a href="classheuristic_solver.html#a77cd03a39513bb5d81902df99e4f4473">More...</a><br /></td></tr>
+<tr class="separator:a77cd03a39513bb5d81902df99e4f4473"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f823dbe0fabbba078c323f9894f15bf"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classheuristic_solver.html#a8f823dbe0fabbba078c323f9894f15bf">neighborSwapPool</a> (<a class="el" href="class_model.html">Model</a> *m, int range, <a class="el" href="class_service.html">Service</a> *pool)</td></tr>
+<tr class="memdesc:a8f823dbe0fabbba078c323f9894f15bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">swap posts between agents from a random <a class="el" href="class_service.html">Service</a> and the <a class="el" href="class_service.html">Service</a> pool.  <a href="classheuristic_solver.html#a8f823dbe0fabbba078c323f9894f15bf">More...</a><br /></td></tr>
+<tr class="separator:a8f823dbe0fabbba078c323f9894f15bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71a6eb620492624c36b4dc36eec280f7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_model.html">Model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classheuristic_solver.html#a71a6eb620492624c36b4dc36eec280f7">getneighborRandom</a> (<a class="el" href="class_model.html">Model</a> *m, int range)</td></tr>
+<tr class="memdesc:a71a6eb620492624c36b4dc36eec280f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">randomly change a post of range agents. !!! Depreciated because not using swapLogs !!!  <a href="classheuristic_solver.html#a71a6eb620492624c36b4dc36eec280f7">More...</a><br /></td></tr>
 <tr class="separator:a71a6eb620492624c36b4dc36eec280f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89cd733711905cc3afdd567e95b89630"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_model.html">Model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classheuristic_solver.html#a89cd733711905cc3afdd567e95b89630">iterative</a> (const <a class="el" href="class_model.html">Model</a> m, int nbPop, int nbGen, int range)</td></tr>
-<tr class="separator:a89cd733711905cc3afdd567e95b89630"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fa3ddc0ca8b5f7ef03bdecb716d4eec"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_model.html">Model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classheuristic_solver.html#a8fa3ddc0ca8b5f7ef03bdecb716d4eec">iterative2</a> (const <a class="el" href="class_model.html">Model</a> m, int nbIte, int range, int limitTime)</td></tr>
-<tr class="separator:a8fa3ddc0ca8b5f7ef03bdecb716d4eec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a647530c6c1f022344094e514d89e7de1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_model.html">Model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classheuristic_solver.html#a647530c6c1f022344094e514d89e7de1">iterative2Fast</a> (const <a class="el" href="class_model.html">Model</a> m, int nbIte, int range)</td></tr>
-<tr class="separator:a647530c6c1f022344094e514d89e7de1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8527219a5d7f6d6f27cd3bd35d5051e2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_model.html">Model</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classheuristic_solver.html#a8527219a5d7f6d6f27cd3bd35d5051e2">iterativeFast</a> (const <a class="el" href="class_model.html">Model</a> m, int nbIte, int range, int idPool=-1)</td></tr>
+<tr class="memdesc:a8527219a5d7f6d6f27cd3bd35d5051e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">iterative algorithm to find a best planning  <a href="classheuristic_solver.html#a8527219a5d7f6d6f27cd3bd35d5051e2">More...</a><br /></td></tr>
+<tr class="separator:a8527219a5d7f6d6f27cd3bd35d5051e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>This class contain algorithms used to solve the planning problem </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a69359066fb7c5eeb650819d352ef2d37"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a69359066fb7c5eeb650819d352ef2d37">&#9670;&nbsp;</a></span>heuristicSolver()</h2>
 
@@ -146,48 +158,6 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a410984eaae34c51401f28d8da625b190"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a410984eaae34c51401f28d8da625b190">&#9670;&nbsp;</a></span>check()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int heuristicSolver::check </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_model.html">Model</a> *&#160;</td>
-          <td class="paramname"><em>m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>CheckALL</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>log</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a2e151beef090f444f25211f29808d89f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2e151beef090f444f25211f29808d89f">&#9670;&nbsp;</a></span>checkFast()</h2>
 
@@ -212,31 +182,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a937c995834bd567ba0b3cec7cdce9056"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a937c995834bd567ba0b3cec7cdce9056">&#9670;&nbsp;</a></span>checkValuation()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_valuation.html">Valuation</a> heuristicSolver::checkValuation </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_model.html">Model</a> *&#160;</td>
-          <td class="paramname"><em>m</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
+<p>Check every constraint and update valuation of the model. </p>
 
 </div>
 </div>
@@ -274,41 +220,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a0a6b18afb94a0fcce58acf8f2cf993ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a6b18afb94a0fcce58acf8f2cf993ea">&#9670;&nbsp;</a></span>getNeighborSwap()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_model.html">Model</a> heuristicSolver::getNeighborSwap </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_model.html">Model</a> *&#160;</td>
-          <td class="paramname"><em>m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>range</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
+<p>randomly change a post of range agents. !!! Depreciated because not using swapLogs !!! </p>
 
 </div>
 </div>
@@ -336,10 +248,12 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Greedy algorithm only using requiredPosts to affect posts to agents. </p>
+
 </div>
 </div>
-<a id="a89cd733711905cc3afdd567e95b89630"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89cd733711905cc3afdd567e95b89630">&#9670;&nbsp;</a></span>iterative()</h2>
+<a id="a8527219a5d7f6d6f27cd3bd35d5051e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8527219a5d7f6d6f27cd3bd35d5051e2">&#9670;&nbsp;</a></span>iterativeFast()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -348,55 +262,7 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_model.html">Model</a> heuristicSolver::iterative </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_model.html">Model</a>&#160;</td>
-          <td class="paramname"><em>m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>nbPop</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>nbGen</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>range</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8fa3ddc0ca8b5f7ef03bdecb716d4eec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8fa3ddc0ca8b5f7ef03bdecb716d4eec">&#9670;&nbsp;</a></span>iterative2()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_model.html">Model</a> heuristicSolver::iterative2 </td>
+          <td class="memname"><a class="el" href="class_model.html">Model</a> heuristicSolver::iterativeFast </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="class_model.html">Model</a>&#160;</td>
           <td class="paramname"><em>m</em>, </td>
@@ -417,7 +283,7 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>limitTime</em>&#160;</td>
+          <td class="paramname"><em>idPool</em> = <code>-1</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -432,10 +298,12 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>iterative algorithm to find a best planning </p>
+
 </div>
 </div>
-<a id="a647530c6c1f022344094e514d89e7de1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a647530c6c1f022344094e514d89e7de1">&#9670;&nbsp;</a></span>iterative2Fast()</h2>
+<a id="afd8154f0222f4ff632e68b6ef32597da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd8154f0222f4ff632e68b6ef32597da">&#9670;&nbsp;</a></span>neighborSwap()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -444,16 +312,10 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_model.html">Model</a> heuristicSolver::iterative2Fast </td>
+          <td class="memname">void heuristicSolver::neighborSwap </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_model.html">Model</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_model.html">Model</a> *&#160;</td>
           <td class="paramname"><em>m</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>nbIte</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -473,6 +335,90 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>swap posts between agents, range param define the max number of swap </p>
+
+</div>
+</div>
+<a id="a77cd03a39513bb5d81902df99e4f4473"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77cd03a39513bb5d81902df99e4f4473">&#9670;&nbsp;</a></span>neighborSwapBlock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void heuristicSolver::neighborSwapBlock </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_model.html">Model</a> *&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>range</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>swap a block (3 consecutive posts for example) of posts between agents, param range define the max number of posts in the block </p>
+
+</div>
+</div>
+<a id="a8f823dbe0fabbba078c323f9894f15bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f823dbe0fabbba078c323f9894f15bf">&#9670;&nbsp;</a></span>neighborSwapPool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void heuristicSolver::neighborSwapPool </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_model.html">Model</a> *&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>range</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_service.html">Service</a> *&#160;</td>
+          <td class="paramname"><em>pool</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>swap posts between agents from a random <a class="el" href="class_service.html">Service</a> and the <a class="el" href="class_service.html">Service</a> pool. </p>
 
 </div>
 </div>
@@ -510,11 +456,69 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>affect post to every null posts in the calendar of each agents </p>
+
+</div>
+</div>
+<a id="a008aa089c670cff41f861de4b69b66d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a008aa089c670cff41f861de4b69b66d4">&#9670;&nbsp;</a></span>predefinedGreedy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_model.html">Model</a> heuristicSolver::predefinedGreedy </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_model.html">Model</a>&#160;</td>
+          <td class="paramname"><em>m</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Affect predefinedPlannings to agents, then complete with removeExtraPost() and <a class="el" href="classheuristic_solver.html#a503e8c47cef2558eb07f9cdb9affce92" title="Greedy algorithm only using requiredPosts to affect posts to agents.">greedy()</a> </p>
+
+</div>
+</div>
+<a id="ad382e649a2a7ba83caacadbabc2844d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad382e649a2a7ba83caacadbabc2844d0">&#9670;&nbsp;</a></span>removeExtraPosts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_model.html">Model</a> heuristicSolver::removeExtraPosts </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_model.html">Model</a> *&#160;</td>
+          <td class="paramname"><em>m</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>remove extra posts in the calendar (depend of postRequired). if a post has to be removed, remove the post affected to the agent with the most hours in the month </p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>C:/Users/Valars/Documents/GitHub/P-ANDROIDE-Construction-Automatique-de-planning/src/heuristic/<a class="el" href="heuristic_solver_8h_source.html">heuristicSolver.h</a></li>
-<li>C:/Users/Valars/Documents/GitHub/P-ANDROIDE-Construction-Automatique-de-planning/src/heuristic/<a class="el" href="heuristic_solver_8cpp.html">heuristicSolver.cpp</a></li>
+<li>src/heuristic/<a class="el" href="heuristic_solver_8h_source.html">heuristicSolver.h</a></li>
+<li>src/heuristic/<a class="el" href="heuristic_solver_8cpp.html">heuristicSolver.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

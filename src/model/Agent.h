@@ -7,6 +7,11 @@
 
 enum Status {Beginner, Rooki, Confirmed};
 
+/*! \class
+ * 	This class represent an agent with all his characteristics
+ *
+ */
+
 class Agent {
 public:
 	Agent(string id, float nbHourMonth, float nbHoursWeek, Status status);

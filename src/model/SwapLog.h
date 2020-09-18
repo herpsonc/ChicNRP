@@ -1,6 +1,11 @@
 #pragma once
 
 #include "Post.h"
+
+/*! \class SwapLog
+ * 	This class is used to register changes in the planning (mostly swap between two agents) in order to optimize the checker
+ */
+
 class SwapLog
 {
 public:

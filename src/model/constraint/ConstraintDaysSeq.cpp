@@ -11,7 +11,7 @@ ConstraintDaysSeq::ConstraintDaysSeq(vector<int> seq, int priority) {
 ConstraintDaysSeq::~ConstraintDaysSeq() {
 }
 
-//! \return priority priority of the constraint
+//! \return priority of the constraint
 int ConstraintDaysSeq::getPriority() const
 {
 	return priority;

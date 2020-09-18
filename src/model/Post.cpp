@@ -18,7 +18,7 @@ Post::Post(string id, float time, bool accounted)
 Post::~Post() {
 }
 
-//! \return id id of the Post
+//! \return id of the Post
 const string& Post::getId() const {
 	return id;
 }
@@ -28,7 +28,7 @@ void Post::setId(const string &id) {
 	this->id = id;
 }
 
-//! \return time working time of the Post
+//! \return working time of the Post
 float Post::getTime() const {
 	return time;
 }
@@ -48,7 +48,7 @@ void Post::setTimeAccounted(const bool timeAccounted)
 	this->timeAccounted = timeAccounted;
 }
 
-//! \return attributs vector of attributs of the Post
+//! \return vector of attributs of the Post
 const vector<int>& Post::getAttributs() const {
 	return attributs;
 }

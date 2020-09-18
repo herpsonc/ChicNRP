@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PANDROIDE: C:/Users/Valars/Documents/GitHub/P-ANDROIDE-Construction-Automatique-de-planning/src/model/SwapLog.h Source File</title>
+<title>CHIC: src/model/SwapLog.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">PANDROIDE
+   <div id="projectname">CHIC
    </div>
   </td>
  </tr>
@@ -70,33 +70,49 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <a href="_swap_log_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno"><a class="line" href="class_swap_log.html">    2</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_swap_log.html">SwapLog</a></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;{</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;    <a class="code" href="class_swap_log.html#afc1c0f97b76320e34d5f65597d28339c">SwapLog</a>();</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="class_swap_log.html#adfb2f7e412d7f6b959962a0dae735a8f">~SwapLog</a>();</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <a class="code" href="class_swap_log.html#afc1c0f97b76320e34d5f65597d28339c">SwapLog</a>(<span class="keywordtype">int</span> agent1, <span class="keywordtype">int</span> agent2, <span class="keywordtype">int</span> day, <span class="keywordtype">int</span> service);</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_swap_log.html#a590f6d19e3a7567da8b7a5799e748bb7">getAgent1</a>();</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_swap_log.html#af44d38b16806bc452092b41abad75599">getAgent2</a>();</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_swap_log.html#ac02ce30a81c1eb3c4c4565de8809ad49">getDay</a>();</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_swap_log.html#aad12bfe9044bf49bc2895f1d927f1b60">getService</a>();</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keywordtype">int</span> agent1;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keywordtype">int</span> agent2;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordtype">int</span> day;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keywordtype">int</span> service;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;};</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_post_8h.html">Post.h</a>&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="class_swap_log.html">    9</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_swap_log.html">SwapLog</a></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    <a class="code" href="class_swap_log.html#a17a8de5c4257436c2d6d17287ee21ae0">SwapLog</a>(<span class="keywordtype">int</span> agent1, <span class="keywordtype">int</span> agent2, <span class="keywordtype">int</span> day, <span class="keywordtype">int</span> service1, <span class="keywordtype">int</span> service2, <a class="code" href="class_post.html">Post</a>* post1, <a class="code" href="class_post.html">Post</a>* post2);</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">virtual</span> <a class="code" href="class_swap_log.html#adfb2f7e412d7f6b959962a0dae735a8f">~SwapLog</a>();</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_swap_log.html#a590f6d19e3a7567da8b7a5799e748bb7">getAgent1</a>();</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_swap_log.html#af44d38b16806bc452092b41abad75599">getAgent2</a>();</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_swap_log.html#ac02ce30a81c1eb3c4c4565de8809ad49">getDay</a>();</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_swap_log.html#ac9426e12a571eeb6ec02b8bcbb8e027b">getService1</a>();</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_swap_log.html#a764e27f53eb8024378244cbdd5ea6f6a">getService2</a>();</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <a class="code" href="class_post.html">Post</a>* <a class="code" href="class_swap_log.html#a558e775f9cb04896ae7e08a4f9f83f77">getPost1</a>();</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <a class="code" href="class_post.html">Post</a>* <a class="code" href="class_swap_log.html#a24890f979726f7dd8c228afc2d691a4b">getPost2</a>();</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_swap_log.html#adfecaabb293440ea29c197853eb721c3">reverse</a>();</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">int</span> agent1;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordtype">int</span> agent2;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">int</span> day;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">int</span> service1;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keywordtype">int</span> service2;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="class_post.html">Post</a>* post1;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="class_post.html">Post</a>* post2;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;};</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclass_swap_log_html_af44d38b16806bc452092b41abad75599"><div class="ttname"><a href="class_swap_log.html#af44d38b16806bc452092b41abad75599">SwapLog::getAgent2</a></div><div class="ttdeci">int getAgent2()</div><div class="ttdef"><b>Definition:</b> SwapLog.cpp:28</div></div>
-<div class="ttc" id="aclass_swap_log_html_afc1c0f97b76320e34d5f65597d28339c"><div class="ttname"><a href="class_swap_log.html#afc1c0f97b76320e34d5f65597d28339c">SwapLog::SwapLog</a></div><div class="ttdeci">SwapLog()</div><div class="ttdef"><b>Definition:</b> SwapLog.cpp:3</div></div>
-<div class="ttc" id="aclass_swap_log_html"><div class="ttname"><a href="class_swap_log.html">SwapLog</a></div><div class="ttdef"><b>Definition:</b> SwapLog.h:3</div></div>
-<div class="ttc" id="aclass_swap_log_html_adfb2f7e412d7f6b959962a0dae735a8f"><div class="ttname"><a href="class_swap_log.html#adfb2f7e412d7f6b959962a0dae735a8f">SwapLog::~SwapLog</a></div><div class="ttdeci">virtual ~SwapLog()</div><div class="ttdef"><b>Definition:</b> SwapLog.cpp:10</div></div>
-<div class="ttc" id="aclass_swap_log_html_ac02ce30a81c1eb3c4c4565de8809ad49"><div class="ttname"><a href="class_swap_log.html#ac02ce30a81c1eb3c4c4565de8809ad49">SwapLog::getDay</a></div><div class="ttdeci">int getDay()</div><div class="ttdef"><b>Definition:</b> SwapLog.cpp:34</div></div>
-<div class="ttc" id="aclass_swap_log_html_aad12bfe9044bf49bc2895f1d927f1b60"><div class="ttname"><a href="class_swap_log.html#aad12bfe9044bf49bc2895f1d927f1b60">SwapLog::getService</a></div><div class="ttdeci">int getService()</div><div class="ttdef"><b>Definition:</b> SwapLog.cpp:40</div></div>
-<div class="ttc" id="aclass_swap_log_html_a590f6d19e3a7567da8b7a5799e748bb7"><div class="ttname"><a href="class_swap_log.html#a590f6d19e3a7567da8b7a5799e748bb7">SwapLog::getAgent1</a></div><div class="ttdeci">int getAgent1()</div><div class="ttdef"><b>Definition:</b> SwapLog.cpp:22</div></div>
+<div class="ttc" id="aclass_swap_log_html_adfecaabb293440ea29c197853eb721c3"><div class="ttname"><a href="class_swap_log.html#adfecaabb293440ea29c197853eb721c3">SwapLog::reverse</a></div><div class="ttdeci">void reverse()</div><div class="ttdoc">exchange post1 and post2</div><div class="ttdef"><b>Definition:</b> SwapLog.cpp:59</div></div>
+<div class="ttc" id="aclass_swap_log_html_af44d38b16806bc452092b41abad75599"><div class="ttname"><a href="class_swap_log.html#af44d38b16806bc452092b41abad75599">SwapLog::getAgent2</a></div><div class="ttdeci">int getAgent2()</div><div class="ttdef"><b>Definition:</b> SwapLog.cpp:25</div></div>
+<div class="ttc" id="aclass_swap_log_html_ac9426e12a571eeb6ec02b8bcbb8e027b"><div class="ttname"><a href="class_swap_log.html#ac9426e12a571eeb6ec02b8bcbb8e027b">SwapLog::getService1</a></div><div class="ttdeci">int getService1()</div><div class="ttdef"><b>Definition:</b> SwapLog.cpp:37</div></div>
+<div class="ttc" id="aclass_swap_log_html_a17a8de5c4257436c2d6d17287ee21ae0"><div class="ttname"><a href="class_swap_log.html#a17a8de5c4257436c2d6d17287ee21ae0">SwapLog::SwapLog</a></div><div class="ttdeci">SwapLog(int agent1, int agent2, int day, int service1, int service2, Post *post1, Post *post2)</div><div class="ttdef"><b>Definition:</b> SwapLog.cpp:3</div></div>
+<div class="ttc" id="aclass_swap_log_html"><div class="ttname"><a href="class_swap_log.html">SwapLog</a></div><div class="ttdef"><b>Definition:</b> SwapLog.h:10</div></div>
+<div class="ttc" id="aclass_swap_log_html_a764e27f53eb8024378244cbdd5ea6f6a"><div class="ttname"><a href="class_swap_log.html#a764e27f53eb8024378244cbdd5ea6f6a">SwapLog::getService2</a></div><div class="ttdeci">int getService2()</div><div class="ttdef"><b>Definition:</b> SwapLog.cpp:43</div></div>
+<div class="ttc" id="aclass_swap_log_html_adfb2f7e412d7f6b959962a0dae735a8f"><div class="ttname"><a href="class_swap_log.html#adfb2f7e412d7f6b959962a0dae735a8f">SwapLog::~SwapLog</a></div><div class="ttdeci">virtual ~SwapLog()</div><div class="ttdef"><b>Definition:</b> SwapLog.cpp:14</div></div>
+<div class="ttc" id="aclass_swap_log_html_ac02ce30a81c1eb3c4c4565de8809ad49"><div class="ttname"><a href="class_swap_log.html#ac02ce30a81c1eb3c4c4565de8809ad49">SwapLog::getDay</a></div><div class="ttdeci">int getDay()</div><div class="ttdef"><b>Definition:</b> SwapLog.cpp:31</div></div>
+<div class="ttc" id="a_post_8h_html"><div class="ttname"><a href="_post_8h.html">Post.h</a></div></div>
+<div class="ttc" id="aclass_post_html"><div class="ttname"><a href="class_post.html">Post</a></div><div class="ttdef"><b>Definition:</b> Post.h:14</div></div>
+<div class="ttc" id="aclass_swap_log_html_a24890f979726f7dd8c228afc2d691a4b"><div class="ttname"><a href="class_swap_log.html#a24890f979726f7dd8c228afc2d691a4b">SwapLog::getPost2</a></div><div class="ttdeci">Post * getPost2()</div><div class="ttdef"><b>Definition:</b> SwapLog.cpp:53</div></div>
+<div class="ttc" id="aclass_swap_log_html_a558e775f9cb04896ae7e08a4f9f83f77"><div class="ttname"><a href="class_swap_log.html#a558e775f9cb04896ae7e08a4f9f83f77">SwapLog::getPost1</a></div><div class="ttdeci">Post * getPost1()</div><div class="ttdef"><b>Definition:</b> SwapLog.cpp:48</div></div>
+<div class="ttc" id="aclass_swap_log_html_a590f6d19e3a7567da8b7a5799e748bb7"><div class="ttname"><a href="class_swap_log.html#a590f6d19e3a7567da8b7a5799e748bb7">SwapLog::getAgent1</a></div><div class="ttdeci">int getAgent1()</div><div class="ttdef"><b>Definition:</b> SwapLog.cpp:19</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

@@ -72,7 +72,7 @@ Model& Model::operator=(const Model& obj)
 }
 
 
-//! \return services vector of Services of the model
+//! \return vector of Services of the model
 std::vector<Service*>& Model::getServices(){
 	return services;
 }
@@ -155,7 +155,7 @@ void Model::printPlanning() {
 	}
 }
 
-//! \return firstDay first day of the month
+//! \return first day of the month
 int Model::getFirstDay() const {
 	return firstDay;
 }
@@ -165,7 +165,7 @@ void Model::setFirstDay(int firstDay) {
 	this->firstDay = firstDay;
 }
 
-//! \return nbDays number of days in the month
+//! \return number of days in the month
 int Model::getNbDays() const {
 	return nbDays;
 }
@@ -181,7 +181,7 @@ int Model::idDayToDay(int idDay)
 	return (idDay -1 + firstDay) % 7;
 }
 
-//! \return overtime overtime allowed for every Agents 
+//! \return overtime allowed for every Agents
 float Model::getOvertime() const {
 	return overtime;
 }
@@ -206,7 +206,7 @@ const std::vector<Agent*>* Model::getAgentFromPtr(Service* service)
 	return &agents[service];
 }
 
-//! \return defaultPost post affected by default
+//! \return post affected by default
 Post* Model::getDefaultPost() {
 	return defaultPost;
 }
@@ -216,7 +216,7 @@ void Model::setDefaultPost(Post* defaultPost) {
 	this->defaultPost = defaultPost;
 }
 
-//! \return posts posts of the model
+//! \return posts of the model
 std::vector<Post*>& Model::getPosts() {
 	return posts;
 }
@@ -227,12 +227,12 @@ void Model::addPost(Post* p) {
 		posts.push_back(p);
 }
 
-//! \return valuation Valuation of the current instance
+//! \return Valuation of the current instance
 Valuation* Model::getValuation(){
 	return valuation;
 }
 
-//! \param v valuation to set
+//! \param valuation to set
 void Model::setValuation(Valuation v){
 	delete valuation;
 	valuation = new Valuation(v);
@@ -315,7 +315,7 @@ void Model::addSwapLog(const SwapLog swapLog){
 	this->swapLog.push_back(swapLog);
 }
 
-//! \return swaplog vector of swaplog
+//! \return vector of swaplog
 const vector<SwapLog>* Model::getSwapLog() const {
 	return &swapLog;
 }
@@ -340,7 +340,7 @@ void Model::rollBack()
 	}
 }
 
-//! return predefinned constraints (used for CHIC)
+//! return predefined constraints (used for CHIC)
 vector<Constraint*> Model::createConstraints() {
 	std::vector<Constraint*> constraints;
 
@@ -1041,7 +1041,7 @@ int Model::attributToInt(string att)
 	return -1;
 }
 
-//! \return constraintsInformation informations about what constraints are broken, work only if valuation is filled
+//! \return informations about what constraints are broken, work only if valuation is filled
 string Model::getConstraintInformations()
 {
 	string s;

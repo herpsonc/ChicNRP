@@ -15,31 +15,31 @@ SwapLog::~SwapLog() {
 
 }
 
-//! \return agent1 first agent concerned by the swap
+//! \return first agent concerned by the swap
 int SwapLog::getAgent1()
 {
 	return agent1;
 }
 
-//! \return agent1 second agent concerned by the swap
+//! \return second agent concerned by the swap
 int SwapLog::getAgent2()
 {
 	return agent2;
 }
 
-//! \return day day of the swap
+//! \return day of the swap
 int SwapLog::getDay()
 {
 	return day;
 }
 
-//! \return service service where the swap happened
+//! \return service where the swap happened
 int SwapLog::getService1()
 {
 	return service1;
 }
 
-//! \return service service where the swap happened
+//! \return service where the swap happened
 int SwapLog::getService2()
 {
 	return service2;

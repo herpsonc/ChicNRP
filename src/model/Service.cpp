@@ -17,7 +17,7 @@ Service::Service(string id) {
 Service::~Service() {
 }
 
-//! \return id id of the Service
+//! \return id of the Service
 const string& Service::getId() const {
 	return id;
 }
@@ -27,7 +27,7 @@ void Service::setId(const string &id) {
 	this->id = id;
 }
 
-//! \return posts vector of Post that are attributed to the service 
+//! \return vector of Post that are attributed to the service
 const vector<Post*>& Service::getPosts() const {
 	return posts;
 }
@@ -37,7 +37,7 @@ void Service::setPosts(const vector<Post*> &posts) {
 	this->posts = posts;
 }
 
-//! \return referents vector of referent Agent of the Service 
+//! \return vector of referent Agent of the Service
 const vector<Agent*>& Service::getReferents() const {
 	return referents;
 }
@@ -52,7 +52,7 @@ void Service::addPost(Post* post) {
 	posts.push_back(post);
 }
 
-//! \return post a pointer of the post given the id of it, null if not existing 
+//! \return a pointer of the post given the id of it, null if not existing
 Post* Service::getPost(string id)
 {
 	for (unsigned i = 0; i < id.size(); i++) {
@@ -77,7 +77,7 @@ void Service::addReferent(Agent* referent) {
 	referents.push_back(referent);
 }
 
-//! \return constraints vector of Constraint of the Service
+//! \return vector of Constraint of the Service
 const vector<Constraint*>& Service::getConstraints() const {
 	return constraints;
 }
@@ -92,7 +92,7 @@ void Service::addConstraint(Constraint *constraint) {
 	constraints.push_back(constraint);
 }
 
-//! \return postRequired vector of the required posts for each days of the week
+//! \return vector of the required posts for each days of the week
 const array<map<Post*, int>, 7>& Service::getPostRequired() const {
 	return postRequired;
 }
@@ -119,7 +119,7 @@ void Service::addPostRequired(Post *post, int nb, int day) {
 	postRequired[day][post] = nb;
 }
 
-//! \return agents vector of Agent of the Service
+//! \return vector of Agent of the Service
 const vector<Agent*>& Service::getAgents() const {
 	return agents;
 }
@@ -157,7 +157,7 @@ PredefinedPlanning* Service::getPredefinedPlanning()
 //! load a predefined planning from a csv file
 //! \param fileName path of the csv file to load
 //! \param nbDays nb of days in the month
-//! /param firstDay first day of the month
+//! \param firstDay first day of the month
 void Service::loadPredefinedPlanning(string fileName,int nbDays, int firstDay)
 {
 	fstream fin;
@@ -166,7 +166,7 @@ void Service::loadPredefinedPlanning(string fileName,int nbDays, int firstDay)
 
 	string line, word;
 
-	//Première ligne
+	//Premiere ligne
 	getline(fin, line);
 	int j = 0;
 	//pour chaque agent

@@ -1,0 +1,402 @@
+\hypertarget{class_agent}{}\doxysection{Agent Class Reference}
+\label{class_agent}\index{Agent@{Agent}}
+
+
+{\ttfamily \#include $<$Agent.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_agent_a2f0463361bd534c51f056095533a5cca}{Agent}} (string \mbox{\hyperlink{class_agent_a2e7c08822b76cf8a7d270dd078d15c89}{id}}, float nb\+Hour\+Month, float \mbox{\hyperlink{class_agent_afb81edecfc40b5a1fcb16b77c533a676}{nb\+Hours\+Week}}, \mbox{\hyperlink{_agent_8h_a67a0db04d321a74b7e7fcfd3f1a3f70b}{Status}} \mbox{\hyperlink{class_agent_a4b934b696771a6043045b30543d0dc77}{status}})
+\item 
+\mbox{\hyperlink{class_agent_a7277a02de58755abd5ccefa866c21b2e}{Agent}} (const \mbox{\hyperlink{class_agent}{Agent}} \&obj)
+\item 
+virtual \mbox{\hyperlink{class_agent_ab8dd8d152605cf1339fed595376e83cb}{$\sim$\+Agent}} ()
+\item 
+const string \& \mbox{\hyperlink{class_agent_ab68093e7bf07637eb326ee9d4cca58fc}{get\+Id}} () const
+\item 
+void \mbox{\hyperlink{class_agent_a72e470a7e15fb5bd9d9cb217b6bc0c5d}{set\+Id}} (const string \&\mbox{\hyperlink{class_agent_a2e7c08822b76cf8a7d270dd078d15c89}{id}})
+\item 
+float \mbox{\hyperlink{class_agent_acd5a991a20669021e9f307209a0f89a9}{get\+Nb\+Hours\+Month}} () const
+\item 
+void \mbox{\hyperlink{class_agent_a0ce667d9a2c358d067b7ccb85026bc4a}{set\+Nb\+Hours\+Month}} (float nb\+Hours)
+\item 
+const array$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$, 31 $>$ \& \mbox{\hyperlink{class_agent_ac7f708914b5fbf4b0ef103d79692d11e}{get\+Calendar}} () const
+\item 
+const array$<$ bool, 31 $>$ \& \mbox{\hyperlink{class_agent_ab35b9cdaead992bb210093cb0a27353d}{get\+Calendar\+Lock}} () const
+\item 
+void \mbox{\hyperlink{class_agent_a9d491d39a99f54024bf14237e4ddc69d}{set\+Calendar}} (const array$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$, 31 $>$ \&\mbox{\hyperlink{class_agent_aa734a1157c741137498c0d49c0dc0165}{calendar}})
+\item 
+void \mbox{\hyperlink{class_agent_a04f065a865b22b655149eb12b7b64810}{set\+Calendar\+Unlock\+Only}} (const array$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$, 31 $>$ \&\mbox{\hyperlink{class_agent_aa734a1157c741137498c0d49c0dc0165}{calendar}})
+\item 
+void \mbox{\hyperlink{class_agent_ab448b77b0b5210de4f55093067d9ac10}{set\+Calendar\+Day}} (\mbox{\hyperlink{class_post}{Post}} $\ast$post, int day, bool lock=false)
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$ $>$ \& \mbox{\hyperlink{class_agent_a8799d1cb2297ff5d143df02e81066cb8}{get\+Impossible\+Posts}} () const
+\item 
+void \mbox{\hyperlink{class_agent_a1ec3d755bd6f0005a8968f357280d067}{set\+Impossible\+Posts}} (const std\+::vector$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$ $>$ \&\mbox{\hyperlink{class_agent_a742a7e5ce106c52280f9548d8be0d3e0}{impossible\+Posts}})
+\item 
+\mbox{\hyperlink{_agent_8h_a67a0db04d321a74b7e7fcfd3f1a3f70b}{Status}} \mbox{\hyperlink{class_agent_a44b58afcf5c9672400bebc5c5df5334c}{get\+Status}} () const
+\item 
+void \mbox{\hyperlink{class_agent_a6f02743f1ed5331cf97da27f3e3d83df}{set\+Status}} (\mbox{\hyperlink{_agent_8h_a67a0db04d321a74b7e7fcfd3f1a3f70b}{Status}} \mbox{\hyperlink{class_agent_a4b934b696771a6043045b30543d0dc77}{status}})
+\item 
+const array$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$, 7 $>$ \& \mbox{\hyperlink{class_agent_a7fb1fe0f4982859bf5253d0f20c51b1e}{get\+Last\+Month\+Calendar}} () const
+\item 
+void \mbox{\hyperlink{class_agent_af57f63c64351f729d34b0422e82752ee}{set\+Last\+Month\+Calendar}} (const array$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$, 7 $>$ \&\mbox{\hyperlink{class_agent_ae8ebc8acfaef0c1dfa1351394611415b}{last\+Month\+Calendar}})
+\item 
+float \mbox{\hyperlink{class_agent_ae8496aa0e7f5603c0633faee348ace07}{get\+Nb\+Hours\+Week}} () const
+\item 
+void \mbox{\hyperlink{class_agent_aae7768f70e9897f6027e160fd8705a76}{set\+Nb\+Hours\+Week}} (float \mbox{\hyperlink{class_agent_afb81edecfc40b5a1fcb16b77c533a676}{nb\+Hours\+Week}})
+\item 
+float \mbox{\hyperlink{class_agent_a9d9489a3d3e6bf546b3ccdd312a606bb}{get\+Working\+Hours\+Month}} (int first\+Day, bool accounted=false)
+\item 
+void \mbox{\hyperlink{class_agent_a8f659af3e55abee28fdf721e8bb46ac0}{set\+Nb\+Hours\+Month\+Priority}} (int priority)
+\item 
+int \mbox{\hyperlink{class_agent_a874b2b810995589a372ffc2be45e47a2}{get\+Nb\+Hours\+Month\+Priority}} () const
+\item 
+void \mbox{\hyperlink{class_agent_ab267e825880571414567131b79ecae90}{set\+Nb\+Hours\+Week\+Priority}} (int priority)
+\item 
+int \mbox{\hyperlink{class_agent_a2dcca21bc6405d68652c992fcb8fafc4}{get\+Nb\+Hours\+Week\+Priority}} () const
+\item 
+void \mbox{\hyperlink{class_agent_a272c608efe6db502f84b11c0849f3430}{set\+Impossible\+Posts\+Priority}} (int priority)
+\item 
+int \mbox{\hyperlink{class_agent_a2b1f4d3d5e96546da8efbbb0f76467f9}{get\+Impossible\+Posts\+Priority}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_agent_a2e7c08822b76cf8a7d270dd078d15c89}{id}}
+\item 
+\mbox{\hyperlink{_agent_8h_a67a0db04d321a74b7e7fcfd3f1a3f70b}{Status}} \mbox{\hyperlink{class_agent_a4b934b696771a6043045b30543d0dc77}{status}}
+\item 
+float \mbox{\hyperlink{class_agent_ac93b978f71bf76f856a12b527db761db}{nb\+Hours\+Month}}
+\item 
+float \mbox{\hyperlink{class_agent_afb81edecfc40b5a1fcb16b77c533a676}{nb\+Hours\+Week}}
+\item 
+array$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$, 31 $>$ \mbox{\hyperlink{class_agent_aa734a1157c741137498c0d49c0dc0165}{calendar}}
+\item 
+array$<$ bool, 31 $>$ \mbox{\hyperlink{class_agent_a271e7aafd67aeb66d4b037d62fbf3d24}{calendar\+Lock}}
+\item 
+array$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$, 7 $>$ \mbox{\hyperlink{class_agent_ae8ebc8acfaef0c1dfa1351394611415b}{last\+Month\+Calendar}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$ $>$ \mbox{\hyperlink{class_agent_a742a7e5ce106c52280f9548d8be0d3e0}{impossible\+Posts}}
+\item 
+int \mbox{\hyperlink{class_agent_a17e1044dd6e97d280221f4b09224d535}{nb\+Hours\+Month\+Priority}}
+\item 
+int \mbox{\hyperlink{class_agent_a8cdd868f2e0f906de4cd078c4bd7f978}{nb\+Hours\+Week\+Priority}}
+\item 
+int \mbox{\hyperlink{class_agent_ac8834d39fd6232581a3813f1ed74f1c2}{impossible\+Posts\+Priority}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_agent_a2f0463361bd534c51f056095533a5cca}\label{class_agent_a2f0463361bd534c51f056095533a5cca}} 
+\index{Agent@{Agent}!Agent@{Agent}}
+\index{Agent@{Agent}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{Agent()}{Agent()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Agent\+::\+Agent (\begin{DoxyParamCaption}\item[{string}]{id,  }\item[{float}]{nb\+Hour\+Month,  }\item[{float}]{nb\+Hours\+Week,  }\item[{\mbox{\hyperlink{_agent_8h_a67a0db04d321a74b7e7fcfd3f1a3f70b}{Status}}}]{status }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_agent_a7277a02de58755abd5ccefa866c21b2e}\label{class_agent_a7277a02de58755abd5ccefa866c21b2e}} 
+\index{Agent@{Agent}!Agent@{Agent}}
+\index{Agent@{Agent}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{Agent()}{Agent()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Agent\+::\+Agent (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_agent}{Agent}} \&}]{obj }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_agent_ab8dd8d152605cf1339fed595376e83cb}\label{class_agent_ab8dd8d152605cf1339fed595376e83cb}} 
+\index{Agent@{Agent}!````~Agent@{$\sim$Agent}}
+\index{````~Agent@{$\sim$Agent}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{$\sim$Agent()}{~Agent()}}
+{\footnotesize\ttfamily Agent\+::$\sim$\+Agent (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_agent_ac7f708914b5fbf4b0ef103d79692d11e}\label{class_agent_ac7f708914b5fbf4b0ef103d79692d11e}} 
+\index{Agent@{Agent}!getCalendar@{getCalendar}}
+\index{getCalendar@{getCalendar}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{getCalendar()}{getCalendar()}}
+{\footnotesize\ttfamily const array$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$, 31 $>$ \& Agent\+::get\+Calendar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+calendar of the \mbox{\hyperlink{class_agent}{Agent}} where each index is a \mbox{\hyperlink{class_post}{Post}} for a day(\+Also the solution for the Agent) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_agent_ab35b9cdaead992bb210093cb0a27353d}\label{class_agent_ab35b9cdaead992bb210093cb0a27353d}} 
+\index{Agent@{Agent}!getCalendarLock@{getCalendarLock}}
+\index{getCalendarLock@{getCalendarLock}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{getCalendarLock()}{getCalendarLock()}}
+{\footnotesize\ttfamily const array$<$ bool, 31 $>$ \& Agent\+::get\+Calendar\+Lock (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+calendar\+Lock a calendar where each day is a bool, used to lock some \mbox{\hyperlink{class_post}{Post}} in algorithms 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_agent_ab68093e7bf07637eb326ee9d4cca58fc}\label{class_agent_ab68093e7bf07637eb326ee9d4cca58fc}} 
+\index{Agent@{Agent}!getId@{getId}}
+\index{getId@{getId}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{getId()}{getId()}}
+{\footnotesize\ttfamily const string \& Agent\+::get\+Id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+id of the \mbox{\hyperlink{class_agent}{Agent}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_agent_a8799d1cb2297ff5d143df02e81066cb8}\label{class_agent_a8799d1cb2297ff5d143df02e81066cb8}} 
+\index{Agent@{Agent}!getImpossiblePosts@{getImpossiblePosts}}
+\index{getImpossiblePosts@{getImpossiblePosts}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{getImpossiblePosts()}{getImpossiblePosts()}}
+{\footnotesize\ttfamily const std\+::vector$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$ $>$ \& Agent\+::get\+Impossible\+Posts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+vector of \mbox{\hyperlink{class_post}{Post}} not supposed to be affected to the \mbox{\hyperlink{class_agent}{Agent}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_agent_a2b1f4d3d5e96546da8efbbb0f76467f9}\label{class_agent_a2b1f4d3d5e96546da8efbbb0f76467f9}} 
+\index{Agent@{Agent}!getImpossiblePostsPriority@{getImpossiblePostsPriority}}
+\index{getImpossiblePostsPriority@{getImpossiblePostsPriority}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{getImpossiblePostsPriority()}{getImpossiblePostsPriority()}}
+{\footnotesize\ttfamily int Agent\+::get\+Impossible\+Posts\+Priority (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{class_agent_a7fb1fe0f4982859bf5253d0f20c51b1e}\label{class_agent_a7fb1fe0f4982859bf5253d0f20c51b1e}} 
+\index{Agent@{Agent}!getLastMonthCalendar@{getLastMonthCalendar}}
+\index{getLastMonthCalendar@{getLastMonthCalendar}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{getLastMonthCalendar()}{getLastMonthCalendar()}}
+{\footnotesize\ttfamily const array$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$, 7 $>$ \& Agent\+::get\+Last\+Month\+Calendar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+calendar of the 7 days before the month start 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_agent_acd5a991a20669021e9f307209a0f89a9}\label{class_agent_acd5a991a20669021e9f307209a0f89a9}} 
+\index{Agent@{Agent}!getNbHoursMonth@{getNbHoursMonth}}
+\index{getNbHoursMonth@{getNbHoursMonth}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{getNbHoursMonth()}{getNbHoursMonth()}}
+{\footnotesize\ttfamily float Agent\+::get\+Nb\+Hours\+Month (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+number of hours in the month accepted for the \mbox{\hyperlink{class_agent}{Agent}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_agent_a874b2b810995589a372ffc2be45e47a2}\label{class_agent_a874b2b810995589a372ffc2be45e47a2}} 
+\index{Agent@{Agent}!getNbHoursMonthPriority@{getNbHoursMonthPriority}}
+\index{getNbHoursMonthPriority@{getNbHoursMonthPriority}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{getNbHoursMonthPriority()}{getNbHoursMonthPriority()}}
+{\footnotesize\ttfamily int Agent\+::get\+Nb\+Hours\+Month\+Priority (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{class_agent_ae8496aa0e7f5603c0633faee348ace07}\label{class_agent_ae8496aa0e7f5603c0633faee348ace07}} 
+\index{Agent@{Agent}!getNbHoursWeek@{getNbHoursWeek}}
+\index{getNbHoursWeek@{getNbHoursWeek}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{getNbHoursWeek()}{getNbHoursWeek()}}
+{\footnotesize\ttfamily float Agent\+::get\+Nb\+Hours\+Week (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+number of hours in a week (7days) accepted for the \mbox{\hyperlink{class_agent}{Agent}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_agent_a2dcca21bc6405d68652c992fcb8fafc4}\label{class_agent_a2dcca21bc6405d68652c992fcb8fafc4}} 
+\index{Agent@{Agent}!getNbHoursWeekPriority@{getNbHoursWeekPriority}}
+\index{getNbHoursWeekPriority@{getNbHoursWeekPriority}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{getNbHoursWeekPriority()}{getNbHoursWeekPriority()}}
+{\footnotesize\ttfamily int Agent\+::get\+Nb\+Hours\+Week\+Priority (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{class_agent_a44b58afcf5c9672400bebc5c5df5334c}\label{class_agent_a44b58afcf5c9672400bebc5c5df5334c}} 
+\index{Agent@{Agent}!getStatus@{getStatus}}
+\index{getStatus@{getStatus}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{getStatus()}{getStatus()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{_agent_8h_a67a0db04d321a74b7e7fcfd3f1a3f70b}{Status}} Agent\+::get\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\begin{DoxyReturn}{Returns}
+status of the \mbox{\hyperlink{class_agent}{Agent}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_agent_a9d9489a3d3e6bf546b3ccdd312a606bb}\label{class_agent_a9d9489a3d3e6bf546b3ccdd312a606bb}} 
+\index{Agent@{Agent}!getWorkingHoursMonth@{getWorkingHoursMonth}}
+\index{getWorkingHoursMonth@{getWorkingHoursMonth}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{getWorkingHoursMonth()}{getWorkingHoursMonth()}}
+{\footnotesize\ttfamily float Agent\+::get\+Working\+Hours\+Month (\begin{DoxyParamCaption}\item[{int}]{first\+Day,  }\item[{bool}]{accounted = {\ttfamily false} }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+number of hours worked in the month 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_agent_a9d491d39a99f54024bf14237e4ddc69d}\label{class_agent_a9d491d39a99f54024bf14237e4ddc69d}} 
+\index{Agent@{Agent}!setCalendar@{setCalendar}}
+\index{setCalendar@{setCalendar}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{setCalendar()}{setCalendar()}}
+{\footnotesize\ttfamily void Agent\+::set\+Calendar (\begin{DoxyParamCaption}\item[{const array$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$, 31 $>$ \&}]{calendar }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em calendar} & calendar to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_agent_ab448b77b0b5210de4f55093067d9ac10}\label{class_agent_ab448b77b0b5210de4f55093067d9ac10}} 
+\index{Agent@{Agent}!setCalendarDay@{setCalendarDay}}
+\index{setCalendarDay@{setCalendarDay}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{setCalendarDay()}{setCalendarDay()}}
+{\footnotesize\ttfamily void Agent\+::set\+Calendar\+Day (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_post}{Post}} $\ast$}]{post,  }\item[{int}]{day,  }\item[{bool}]{lock = {\ttfamily false} }\end{DoxyParamCaption})}
+
+Set a day of the calendar 
+\begin{DoxyParams}{Parameters}
+{\em post} & \mbox{\hyperlink{class_post}{Post}} to set \\
+\hline
+{\em day} & day at which the post is setted \\
+\hline
+{\em lock} & true to lock the day \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_agent_a04f065a865b22b655149eb12b7b64810}\label{class_agent_a04f065a865b22b655149eb12b7b64810}} 
+\index{Agent@{Agent}!setCalendarUnlockOnly@{setCalendarUnlockOnly}}
+\index{setCalendarUnlockOnly@{setCalendarUnlockOnly}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{setCalendarUnlockOnly()}{setCalendarUnlockOnly()}}
+{\footnotesize\ttfamily void Agent\+::set\+Calendar\+Unlock\+Only (\begin{DoxyParamCaption}\item[{const array$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$, 31 $>$ \&}]{calendar }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_agent_a72e470a7e15fb5bd9d9cb217b6bc0c5d}\label{class_agent_a72e470a7e15fb5bd9d9cb217b6bc0c5d}} 
+\index{Agent@{Agent}!setId@{setId}}
+\index{setId@{setId}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{setId()}{setId()}}
+{\footnotesize\ttfamily void Agent\+::set\+Id (\begin{DoxyParamCaption}\item[{const string \&}]{id }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & id to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_agent_a1ec3d755bd6f0005a8968f357280d067}\label{class_agent_a1ec3d755bd6f0005a8968f357280d067}} 
+\index{Agent@{Agent}!setImpossiblePosts@{setImpossiblePosts}}
+\index{setImpossiblePosts@{setImpossiblePosts}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{setImpossiblePosts()}{setImpossiblePosts()}}
+{\footnotesize\ttfamily void Agent\+::set\+Impossible\+Posts (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$ $>$ \&}]{impossible\+Posts }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em impossible\+Posts} & impossibles \mbox{\hyperlink{class_post}{Post}} to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_agent_a272c608efe6db502f84b11c0849f3430}\label{class_agent_a272c608efe6db502f84b11c0849f3430}} 
+\index{Agent@{Agent}!setImpossiblePostsPriority@{setImpossiblePostsPriority}}
+\index{setImpossiblePostsPriority@{setImpossiblePostsPriority}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{setImpossiblePostsPriority()}{setImpossiblePostsPriority()}}
+{\footnotesize\ttfamily void Agent\+::set\+Impossible\+Posts\+Priority (\begin{DoxyParamCaption}\item[{int}]{priority }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_agent_af57f63c64351f729d34b0422e82752ee}\label{class_agent_af57f63c64351f729d34b0422e82752ee}} 
+\index{Agent@{Agent}!setLastMonthCalendar@{setLastMonthCalendar}}
+\index{setLastMonthCalendar@{setLastMonthCalendar}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{setLastMonthCalendar()}{setLastMonthCalendar()}}
+{\footnotesize\ttfamily void Agent\+::set\+Last\+Month\+Calendar (\begin{DoxyParamCaption}\item[{const array$<$ \mbox{\hyperlink{class_post}{Post}} $\ast$, 7 $>$ \&}]{last\+Month\+Calendar }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em last\+Month\+Calendar} & last month calendar to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_agent_a0ce667d9a2c358d067b7ccb85026bc4a}\label{class_agent_a0ce667d9a2c358d067b7ccb85026bc4a}} 
+\index{Agent@{Agent}!setNbHoursMonth@{setNbHoursMonth}}
+\index{setNbHoursMonth@{setNbHoursMonth}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{setNbHoursMonth()}{setNbHoursMonth()}}
+{\footnotesize\ttfamily void Agent\+::set\+Nb\+Hours\+Month (\begin{DoxyParamCaption}\item[{float}]{nb\+Hours }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em nb\+Hours} & number of hours to set for the month \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_agent_a8f659af3e55abee28fdf721e8bb46ac0}\label{class_agent_a8f659af3e55abee28fdf721e8bb46ac0}} 
+\index{Agent@{Agent}!setNbHoursMonthPriority@{setNbHoursMonthPriority}}
+\index{setNbHoursMonthPriority@{setNbHoursMonthPriority}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{setNbHoursMonthPriority()}{setNbHoursMonthPriority()}}
+{\footnotesize\ttfamily void Agent\+::set\+Nb\+Hours\+Month\+Priority (\begin{DoxyParamCaption}\item[{int}]{priority }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_agent_aae7768f70e9897f6027e160fd8705a76}\label{class_agent_aae7768f70e9897f6027e160fd8705a76}} 
+\index{Agent@{Agent}!setNbHoursWeek@{setNbHoursWeek}}
+\index{setNbHoursWeek@{setNbHoursWeek}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{setNbHoursWeek()}{setNbHoursWeek()}}
+{\footnotesize\ttfamily void Agent\+::set\+Nb\+Hours\+Week (\begin{DoxyParamCaption}\item[{float}]{nb\+Hours\+Week }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em number} & of hours to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_agent_ab267e825880571414567131b79ecae90}\label{class_agent_ab267e825880571414567131b79ecae90}} 
+\index{Agent@{Agent}!setNbHoursWeekPriority@{setNbHoursWeekPriority}}
+\index{setNbHoursWeekPriority@{setNbHoursWeekPriority}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{setNbHoursWeekPriority()}{setNbHoursWeekPriority()}}
+{\footnotesize\ttfamily void Agent\+::set\+Nb\+Hours\+Week\+Priority (\begin{DoxyParamCaption}\item[{int}]{priority }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_agent_a6f02743f1ed5331cf97da27f3e3d83df}\label{class_agent_a6f02743f1ed5331cf97da27f3e3d83df}} 
+\index{Agent@{Agent}!setStatus@{setStatus}}
+\index{setStatus@{setStatus}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{setStatus()}{setStatus()}}
+{\footnotesize\ttfamily void Agent\+::set\+Status (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_agent_8h_a67a0db04d321a74b7e7fcfd3f1a3f70b}{Status}}}]{status }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em status} & status to set \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_agent_aa734a1157c741137498c0d49c0dc0165}\label{class_agent_aa734a1157c741137498c0d49c0dc0165}} 
+\index{Agent@{Agent}!calendar@{calendar}}
+\index{calendar@{calendar}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{calendar}{calendar}}
+{\footnotesize\ttfamily array$<$\mbox{\hyperlink{class_post}{Post}}$\ast$, 31$>$ Agent\+::calendar\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_agent_a271e7aafd67aeb66d4b037d62fbf3d24}\label{class_agent_a271e7aafd67aeb66d4b037d62fbf3d24}} 
+\index{Agent@{Agent}!calendarLock@{calendarLock}}
+\index{calendarLock@{calendarLock}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{calendarLock}{calendarLock}}
+{\footnotesize\ttfamily array$<$bool, 31$>$ Agent\+::calendar\+Lock\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_agent_a2e7c08822b76cf8a7d270dd078d15c89}\label{class_agent_a2e7c08822b76cf8a7d270dd078d15c89}} 
+\index{Agent@{Agent}!id@{id}}
+\index{id@{id}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily string Agent\+::id\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_agent_a742a7e5ce106c52280f9548d8be0d3e0}\label{class_agent_a742a7e5ce106c52280f9548d8be0d3e0}} 
+\index{Agent@{Agent}!impossiblePosts@{impossiblePosts}}
+\index{impossiblePosts@{impossiblePosts}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{impossiblePosts}{impossiblePosts}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{class_post}{Post}}$\ast$$>$ Agent\+::impossible\+Posts\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_agent_ac8834d39fd6232581a3813f1ed74f1c2}\label{class_agent_ac8834d39fd6232581a3813f1ed74f1c2}} 
+\index{Agent@{Agent}!impossiblePostsPriority@{impossiblePostsPriority}}
+\index{impossiblePostsPriority@{impossiblePostsPriority}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{impossiblePostsPriority}{impossiblePostsPriority}}
+{\footnotesize\ttfamily int Agent\+::impossible\+Posts\+Priority\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_agent_ae8ebc8acfaef0c1dfa1351394611415b}\label{class_agent_ae8ebc8acfaef0c1dfa1351394611415b}} 
+\index{Agent@{Agent}!lastMonthCalendar@{lastMonthCalendar}}
+\index{lastMonthCalendar@{lastMonthCalendar}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{lastMonthCalendar}{lastMonthCalendar}}
+{\footnotesize\ttfamily array$<$\mbox{\hyperlink{class_post}{Post}}$\ast$, 7$>$ Agent\+::last\+Month\+Calendar\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_agent_ac93b978f71bf76f856a12b527db761db}\label{class_agent_ac93b978f71bf76f856a12b527db761db}} 
+\index{Agent@{Agent}!nbHoursMonth@{nbHoursMonth}}
+\index{nbHoursMonth@{nbHoursMonth}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{nbHoursMonth}{nbHoursMonth}}
+{\footnotesize\ttfamily float Agent\+::nb\+Hours\+Month\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_agent_a17e1044dd6e97d280221f4b09224d535}\label{class_agent_a17e1044dd6e97d280221f4b09224d535}} 
+\index{Agent@{Agent}!nbHoursMonthPriority@{nbHoursMonthPriority}}
+\index{nbHoursMonthPriority@{nbHoursMonthPriority}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{nbHoursMonthPriority}{nbHoursMonthPriority}}
+{\footnotesize\ttfamily int Agent\+::nb\+Hours\+Month\+Priority\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_agent_afb81edecfc40b5a1fcb16b77c533a676}\label{class_agent_afb81edecfc40b5a1fcb16b77c533a676}} 
+\index{Agent@{Agent}!nbHoursWeek@{nbHoursWeek}}
+\index{nbHoursWeek@{nbHoursWeek}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{nbHoursWeek}{nbHoursWeek}}
+{\footnotesize\ttfamily float Agent\+::nb\+Hours\+Week\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_agent_a8cdd868f2e0f906de4cd078c4bd7f978}\label{class_agent_a8cdd868f2e0f906de4cd078c4bd7f978}} 
+\index{Agent@{Agent}!nbHoursWeekPriority@{nbHoursWeekPriority}}
+\index{nbHoursWeekPriority@{nbHoursWeekPriority}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{nbHoursWeekPriority}{nbHoursWeekPriority}}
+{\footnotesize\ttfamily int Agent\+::nb\+Hours\+Week\+Priority\hspace{0.3cm}{\ttfamily [protected]}}
+
+\mbox{\Hypertarget{class_agent_a4b934b696771a6043045b30543d0dc77}\label{class_agent_a4b934b696771a6043045b30543d0dc77}} 
+\index{Agent@{Agent}!status@{status}}
+\index{status@{status}!Agent@{Agent}}
+\doxysubsubsection{\texorpdfstring{status}{status}}
+{\footnotesize\ttfamily \mbox{\hyperlink{_agent_8h_a67a0db04d321a74b7e7fcfd3f1a3f70b}{Status}} Agent\+::status\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/model/\mbox{\hyperlink{_agent_8h}{Agent.\+h}}\item 
+src/model/\mbox{\hyperlink{_agent_8cpp}{Agent.\+cpp}}\end{DoxyCompactItemize}

@@ -15,17 +15,13 @@ virtual \mbox{\hyperlink{class_valuation_a70d2c60bfd46bd9a306c10f1e5cb4d4d}{$\si
 \item 
 \mbox{\hyperlink{class_valuation}{Valuation}} \& \mbox{\hyperlink{class_valuation_a58d09920f894899ef4308cfb0c14f046}{operator=}} (const \mbox{\hyperlink{class_valuation}{Valuation}} \&obj)
 \item 
-const int \& \mbox{\hyperlink{class_valuation_a6ce84a090e4c8b9fe9326cc475570d9f}{get\+Score}} ()
+const float \& \mbox{\hyperlink{class_valuation_aad043ccac0fc0d1471f2b80d2be114bb}{get\+Score}} ()
 \item 
-void \mbox{\hyperlink{class_valuation_a8b638eb8ff480b2bb79e614f4da247a0}{set\+Score}} (const int score)
+void \mbox{\hyperlink{class_valuation_abe9b3276c6190e8a8e505ef0048bd049}{set\+Score}} (const float score)
 \item 
-const std\+::vector$<$ std\+::vector$<$ int $>$ $>$ \& \mbox{\hyperlink{class_valuation_a2f64cac694b3ba872030199fc068637e}{get\+Hours\+Month}} ()
+const std\+::vector$<$ std\+::vector$<$ float $>$ $>$ \& \mbox{\hyperlink{class_valuation_ac2a2c80f579c092dd7b90d29958cc241}{get\+Hours\+Month}} ()
 \item 
-void \mbox{\hyperlink{class_valuation_aba46f010e7bb2ba6f89c1ba745cf61a1}{set\+Hours\+Month}} (const std\+::vector$<$ std\+::vector$<$ int $>$$>$ h)
-\item 
-const std\+::vector$<$ std\+::vector$<$ std\+::array$<$ int, 6 $>$ $>$ $>$ \& \mbox{\hyperlink{class_valuation_adb116553cdd83d0d69d77a0b02ef9f11}{get\+Hours\+Weeks}} ()
-\item 
-void \mbox{\hyperlink{class_valuation_ab93b904f6282cfc51e79016e780ba5f3}{set\+Hours\+Weeks}} (const std\+::vector$<$ std\+::vector$<$ std\+::array$<$ int, 6 $>$$>$$>$ hours\+Weeks)
+void \mbox{\hyperlink{class_valuation_af41e80aa34d187e4bd16cc60607b72a8}{set\+Hours\+Month}} (const std\+::vector$<$ std\+::vector$<$ float $>$$>$ h)
 \item 
 const std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ $>$ $>$ $>$ \& \mbox{\hyperlink{class_valuation_a2a440ec29819f3d0b287c91568162b5f}{get\+Day\+Seq}} ()
 \item 
@@ -47,9 +43,30 @@ const std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+:
 \item 
 void \mbox{\hyperlink{class_valuation_aa838d018f89d2e7f74ba4b99a0ddc950}{set\+Seq\+Min\+Max}} (const std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ int, int $>$$>$$>$$>$$>$ seq\+Min\+Max)
 \item 
+const std\+::vector$<$ std\+::array$<$ int, 31 $>$ $>$ \mbox{\hyperlink{class_valuation_a344553a2031db4c2ba98657e1c747d9e}{get\+Posts\+Requirement}} ()
+\item 
+void \mbox{\hyperlink{class_valuation_a98f83ad6310cfb7853a0fec176cb6577}{set\+Posts\+Requirement}} (std\+::vector$<$ std\+::array$<$ int, 31 $>$$>$ posts\+Requirement)
+\item 
+void \mbox{\hyperlink{class_valuation_a800ba1ba4efcb62427533c792d99d617}{merge\+Day\+Seq}} (const std\+::vector$<$ std\+::pair$<$ int, int $>$$>$ cons, const int day, const int service, const int agent, const \mbox{\hyperlink{class_constraint_days_seq}{Constraint\+Days\+Seq}} $\ast$constraint, const int i\+Cons)
+\item 
+void \mbox{\hyperlink{class_valuation_a08a19790c5a2dcda34dfb977e641b7a7}{merge\+Involved}} (const std\+::vector$<$ std\+::pair$<$ std\+::pair$<$ int, int $>$, std\+::pair$<$ int, int $>$$>$$>$ cons, const int day, const int service, const int agent, const \mbox{\hyperlink{class_constraint_involved}{Constraint\+Involved}} $\ast$constraint, const int i\+Cons)
+\item 
+void \mbox{\hyperlink{class_valuation_a9dba53a1b6cbacac9f2c8b3aab094769}{merge\+Seq\+Min\+Max}} (const std\+::vector$<$ std\+::pair$<$ int, int $>$$>$ cons, const int day, const int service, const int agent, const \mbox{\hyperlink{class_constraint_seq_min_max}{Constraint\+Seq\+Min\+Max}} $\ast$constraint, const int i\+Cons)
+\item 
+void \mbox{\hyperlink{class_valuation_a5432967ec49ec3b0610b621262ee8b66}{merge\+Hours\+Week\+Slide}} (const std\+::vector$<$ std\+::pair$<$ int, int $>$$>$ cons, const int day, const int service, const int agent, const int priority)
+\item 
+void \mbox{\hyperlink{class_valuation_a3e318627d8416d99a885353525370c93}{merge\+Impossible\+Posts}} (const bool fail, const int day, const int service, const int agent, const int priority)
+\item 
+void \mbox{\hyperlink{class_valuation_a1ff4254cdc9ad6b2308fd5bd452940ec}{merge\+Hours\+Month}} (const float dif, const int service, const int agent, const float nb\+Hours\+Month, const int priority)
+\item 
+void \mbox{\hyperlink{class_valuation_af04ba03222bf176b0b04b82da7bb0bf2}{merge\+Post\+Requirement}} (const int service, const int day, const int nb\+Fail, const int priority)
+\item 
 void \mbox{\hyperlink{class_valuation_af46a6bc15f6b4d88f4dd2ffc23eff2fe}{print}} ()
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Print all the informations about each constraints in the \mbox{\hyperlink{class_valuation}{Valuation}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+This class is used to register data about violated constraints at every check in order to optimize the checker 
 
 \doxysubsection{Constructor \& Destructor Documentation}
 \mbox{\Hypertarget{class_valuation_a38d1ec250a3bfe8e4cf543ac1de742b2}\label{class_valuation_a38d1ec250a3bfe8e4cf543ac1de742b2}} 
@@ -79,53 +96,110 @@ void \mbox{\hyperlink{class_valuation_af46a6bc15f6b4d88f4dd2ffc23eff2fe}{print}}
 \doxysubsubsection{\texorpdfstring{getDaySeq()}{getDaySeq()}}
 {\footnotesize\ttfamily const std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ $>$ $>$ $>$ \& Valuation\+::get\+Day\+Seq (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{class_valuation_a2f64cac694b3ba872030199fc068637e}\label{class_valuation_a2f64cac694b3ba872030199fc068637e}} 
+\begin{DoxyReturn}{Returns}
+vector with informations about where the \mbox{\hyperlink{class_constraint_days_seq}{Constraint\+Days\+Seq}} is broken 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_valuation_ac2a2c80f579c092dd7b90d29958cc241}\label{class_valuation_ac2a2c80f579c092dd7b90d29958cc241}} 
 \index{Valuation@{Valuation}!getHoursMonth@{getHoursMonth}}
 \index{getHoursMonth@{getHoursMonth}!Valuation@{Valuation}}
 \doxysubsubsection{\texorpdfstring{getHoursMonth()}{getHoursMonth()}}
-{\footnotesize\ttfamily const std\+::vector$<$ std\+::vector$<$ int $>$ $>$ \& Valuation\+::get\+Hours\+Month (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily const std\+::vector$<$ std\+::vector$<$ float $>$ $>$ \& Valuation\+::get\+Hours\+Month (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 \begin{DoxyReturn}{Returns}
-hours\+Month vector of worked hours in the month for each Agent 
+vector of worked hours in the month for each \mbox{\hyperlink{class_agent}{Agent}} 
 \end{DoxyReturn}
-\mbox{\Hypertarget{class_valuation_adb116553cdd83d0d69d77a0b02ef9f11}\label{class_valuation_adb116553cdd83d0d69d77a0b02ef9f11}} 
-\index{Valuation@{Valuation}!getHoursWeeks@{getHoursWeeks}}
-\index{getHoursWeeks@{getHoursWeeks}!Valuation@{Valuation}}
-\doxysubsubsection{\texorpdfstring{getHoursWeeks()}{getHoursWeeks()}}
-{\footnotesize\ttfamily const std\+::vector$<$std\+::vector$<$std\+::array$<$int, 6$>$ $>$ $>$\& Valuation\+::get\+Hours\+Weeks (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
-
 \mbox{\Hypertarget{class_valuation_a79c044701da238fbd8fbad6e411fea96}\label{class_valuation_a79c044701da238fbd8fbad6e411fea96}} 
 \index{Valuation@{Valuation}!gethoursWeekSlide@{gethoursWeekSlide}}
 \index{gethoursWeekSlide@{gethoursWeekSlide}!Valuation@{Valuation}}
 \doxysubsubsection{\texorpdfstring{gethoursWeekSlide()}{gethoursWeekSlide()}}
 {\footnotesize\ttfamily const std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ $>$ $>$ \& Valuation\+::gethours\+Week\+Slide (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
+\begin{DoxyReturn}{Returns}
+vector with the intervals of days where the constraint about the week hours is broken 
+\end{DoxyReturn}
 \mbox{\Hypertarget{class_valuation_af31c751505b422dd7930266fcf458975}\label{class_valuation_af31c751505b422dd7930266fcf458975}} 
 \index{Valuation@{Valuation}!getImpossiblePosts@{getImpossiblePosts}}
 \index{getImpossiblePosts@{getImpossiblePosts}!Valuation@{Valuation}}
 \doxysubsubsection{\texorpdfstring{getImpossiblePosts()}{getImpossiblePosts()}}
 {\footnotesize\ttfamily const std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ int $>$ $>$ $>$ \& Valuation\+::get\+Impossible\+Posts (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
+\begin{DoxyReturn}{Returns}
+vector of which day the constraint about impossible posts is broken 
+\end{DoxyReturn}
 \mbox{\Hypertarget{class_valuation_a0efa518a52b5e9ed5b379a5283b2613c}\label{class_valuation_a0efa518a52b5e9ed5b379a5283b2613c}} 
 \index{Valuation@{Valuation}!getInvolved@{getInvolved}}
 \index{getInvolved@{getInvolved}!Valuation@{Valuation}}
 \doxysubsubsection{\texorpdfstring{getInvolved()}{getInvolved()}}
 {\footnotesize\ttfamily const std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ std\+::pair$<$ int, int $>$, std\+::pair$<$ int, int $>$ $>$ $>$ $>$ $>$ $>$ \& Valuation\+::get\+Involved (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{class_valuation_a6ce84a090e4c8b9fe9326cc475570d9f}\label{class_valuation_a6ce84a090e4c8b9fe9326cc475570d9f}} 
+\begin{DoxyReturn}{Returns}
+vector with informations about where the \mbox{\hyperlink{class_constraint_involved}{Constraint\+Involved}} is broken 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_valuation_a344553a2031db4c2ba98657e1c747d9e}\label{class_valuation_a344553a2031db4c2ba98657e1c747d9e}} 
+\index{Valuation@{Valuation}!getPostsRequirement@{getPostsRequirement}}
+\index{getPostsRequirement@{getPostsRequirement}!Valuation@{Valuation}}
+\doxysubsubsection{\texorpdfstring{getPostsRequirement()}{getPostsRequirement()}}
+{\footnotesize\ttfamily const std\+::vector$<$ std\+::array$<$ int, 31 $>$ $>$ Valuation\+::get\+Posts\+Requirement (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_valuation_aad043ccac0fc0d1471f2b80d2be114bb}\label{class_valuation_aad043ccac0fc0d1471f2b80d2be114bb}} 
 \index{Valuation@{Valuation}!getScore@{getScore}}
 \index{getScore@{getScore}!Valuation@{Valuation}}
 \doxysubsubsection{\texorpdfstring{getScore()}{getScore()}}
-{\footnotesize\ttfamily const int \& Valuation\+::get\+Score (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily const float \& Valuation\+::get\+Score (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 \begin{DoxyReturn}{Returns}
-score score of the \mbox{\hyperlink{class_valuation}{Valuation}} 
+score of the \mbox{\hyperlink{class_valuation}{Valuation}} 
 \end{DoxyReturn}
 \mbox{\Hypertarget{class_valuation_ad97145a9c466fa7ab40bb8cb59b569ab}\label{class_valuation_ad97145a9c466fa7ab40bb8cb59b569ab}} 
 \index{Valuation@{Valuation}!getseqMinMax@{getseqMinMax}}
 \index{getseqMinMax@{getseqMinMax}!Valuation@{Valuation}}
 \doxysubsubsection{\texorpdfstring{getseqMinMax()}{getseqMinMax()}}
 {\footnotesize\ttfamily const std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ $>$ $>$ $>$ \& Valuation\+::getseq\+Min\+Max (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+vector with informations about where the \mbox{\hyperlink{class_constraint_seq_min_max}{Constraint\+Seq\+Min\+Max}} is detected 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_valuation_a800ba1ba4efcb62427533c792d99d617}\label{class_valuation_a800ba1ba4efcb62427533c792d99d617}} 
+\index{Valuation@{Valuation}!mergeDaySeq@{mergeDaySeq}}
+\index{mergeDaySeq@{mergeDaySeq}!Valuation@{Valuation}}
+\doxysubsubsection{\texorpdfstring{mergeDaySeq()}{mergeDaySeq()}}
+{\footnotesize\ttfamily void Valuation\+::merge\+Day\+Seq (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::pair$<$ int, int $>$$>$}]{cons,  }\item[{const int}]{day,  }\item[{const int}]{service,  }\item[{const int}]{agent,  }\item[{const \mbox{\hyperlink{class_constraint_days_seq}{Constraint\+Days\+Seq}} $\ast$}]{constraint,  }\item[{const int}]{i\+Cons }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_valuation_a1ff4254cdc9ad6b2308fd5bd452940ec}\label{class_valuation_a1ff4254cdc9ad6b2308fd5bd452940ec}} 
+\index{Valuation@{Valuation}!mergeHoursMonth@{mergeHoursMonth}}
+\index{mergeHoursMonth@{mergeHoursMonth}!Valuation@{Valuation}}
+\doxysubsubsection{\texorpdfstring{mergeHoursMonth()}{mergeHoursMonth()}}
+{\footnotesize\ttfamily void Valuation\+::merge\+Hours\+Month (\begin{DoxyParamCaption}\item[{const float}]{dif,  }\item[{const int}]{service,  }\item[{const int}]{agent,  }\item[{const float}]{nb\+Hours\+Month,  }\item[{const int}]{priority }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_valuation_a5432967ec49ec3b0610b621262ee8b66}\label{class_valuation_a5432967ec49ec3b0610b621262ee8b66}} 
+\index{Valuation@{Valuation}!mergeHoursWeekSlide@{mergeHoursWeekSlide}}
+\index{mergeHoursWeekSlide@{mergeHoursWeekSlide}!Valuation@{Valuation}}
+\doxysubsubsection{\texorpdfstring{mergeHoursWeekSlide()}{mergeHoursWeekSlide()}}
+{\footnotesize\ttfamily void Valuation\+::merge\+Hours\+Week\+Slide (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::pair$<$ int, int $>$$>$}]{cons,  }\item[{const int}]{day,  }\item[{const int}]{service,  }\item[{const int}]{agent,  }\item[{const int}]{priority }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_valuation_a3e318627d8416d99a885353525370c93}\label{class_valuation_a3e318627d8416d99a885353525370c93}} 
+\index{Valuation@{Valuation}!mergeImpossiblePosts@{mergeImpossiblePosts}}
+\index{mergeImpossiblePosts@{mergeImpossiblePosts}!Valuation@{Valuation}}
+\doxysubsubsection{\texorpdfstring{mergeImpossiblePosts()}{mergeImpossiblePosts()}}
+{\footnotesize\ttfamily void Valuation\+::merge\+Impossible\+Posts (\begin{DoxyParamCaption}\item[{const bool}]{fail,  }\item[{const int}]{day,  }\item[{const int}]{service,  }\item[{const int}]{agent,  }\item[{const int}]{priority }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_valuation_a08a19790c5a2dcda34dfb977e641b7a7}\label{class_valuation_a08a19790c5a2dcda34dfb977e641b7a7}} 
+\index{Valuation@{Valuation}!mergeInvolved@{mergeInvolved}}
+\index{mergeInvolved@{mergeInvolved}!Valuation@{Valuation}}
+\doxysubsubsection{\texorpdfstring{mergeInvolved()}{mergeInvolved()}}
+{\footnotesize\ttfamily void Valuation\+::merge\+Involved (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::pair$<$ std\+::pair$<$ int, int $>$, std\+::pair$<$ int, int $>$$>$$>$}]{cons,  }\item[{const int}]{day,  }\item[{const int}]{service,  }\item[{const int}]{agent,  }\item[{const \mbox{\hyperlink{class_constraint_involved}{Constraint\+Involved}} $\ast$}]{constraint,  }\item[{const int}]{i\+Cons }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_valuation_af04ba03222bf176b0b04b82da7bb0bf2}\label{class_valuation_af04ba03222bf176b0b04b82da7bb0bf2}} 
+\index{Valuation@{Valuation}!mergePostRequirement@{mergePostRequirement}}
+\index{mergePostRequirement@{mergePostRequirement}!Valuation@{Valuation}}
+\doxysubsubsection{\texorpdfstring{mergePostRequirement()}{mergePostRequirement()}}
+{\footnotesize\ttfamily void Valuation\+::merge\+Post\+Requirement (\begin{DoxyParamCaption}\item[{const int}]{service,  }\item[{const int}]{day,  }\item[{const int}]{nb\+Fail,  }\item[{const int}]{priority }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_valuation_a9dba53a1b6cbacac9f2c8b3aab094769}\label{class_valuation_a9dba53a1b6cbacac9f2c8b3aab094769}} 
+\index{Valuation@{Valuation}!mergeSeqMinMax@{mergeSeqMinMax}}
+\index{mergeSeqMinMax@{mergeSeqMinMax}!Valuation@{Valuation}}
+\doxysubsubsection{\texorpdfstring{mergeSeqMinMax()}{mergeSeqMinMax()}}
+{\footnotesize\ttfamily void Valuation\+::merge\+Seq\+Min\+Max (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::pair$<$ int, int $>$$>$}]{cons,  }\item[{const int}]{day,  }\item[{const int}]{service,  }\item[{const int}]{agent,  }\item[{const \mbox{\hyperlink{class_constraint_seq_min_max}{Constraint\+Seq\+Min\+Max}} $\ast$}]{constraint,  }\item[{const int}]{i\+Cons }\end{DoxyParamCaption})}
 
 \mbox{\Hypertarget{class_valuation_a58d09920f894899ef4308cfb0c14f046}\label{class_valuation_a58d09920f894899ef4308cfb0c14f046}} 
 \index{Valuation@{Valuation}!operator=@{operator=}}
@@ -139,52 +213,76 @@ score score of the \mbox{\hyperlink{class_valuation}{Valuation}}
 \doxysubsubsection{\texorpdfstring{print()}{print()}}
 {\footnotesize\ttfamily void Valuation\+::print (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
+
+
+Print all the informations about each constraints in the \mbox{\hyperlink{class_valuation}{Valuation}}. 
+
 \mbox{\Hypertarget{class_valuation_a9eaa7302c8179e4667de633fded71a39}\label{class_valuation_a9eaa7302c8179e4667de633fded71a39}} 
 \index{Valuation@{Valuation}!setDaySeq@{setDaySeq}}
 \index{setDaySeq@{setDaySeq}!Valuation@{Valuation}}
 \doxysubsubsection{\texorpdfstring{setDaySeq()}{setDaySeq()}}
 {\footnotesize\ttfamily void Valuation\+::set\+Day\+Seq (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ int, int $>$$>$$>$$>$$>$}]{day\+Seq }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{class_valuation_aba46f010e7bb2ba6f89c1ba745cf61a1}\label{class_valuation_aba46f010e7bb2ba6f89c1ba745cf61a1}} 
+
+\begin{DoxyParams}{Parameters}
+{\em day\+Seq} & day\+Seq to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_valuation_af41e80aa34d187e4bd16cc60607b72a8}\label{class_valuation_af41e80aa34d187e4bd16cc60607b72a8}} 
 \index{Valuation@{Valuation}!setHoursMonth@{setHoursMonth}}
 \index{setHoursMonth@{setHoursMonth}!Valuation@{Valuation}}
 \doxysubsubsection{\texorpdfstring{setHoursMonth()}{setHoursMonth()}}
-{\footnotesize\ttfamily void Valuation\+::set\+Hours\+Month (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ int $>$$>$}]{h }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void Valuation\+::set\+Hours\+Month (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ float $>$$>$}]{h }\end{DoxyParamCaption})}
 
 
 \begin{DoxyParams}{Parameters}
 {\em h} & hours\+Month to set \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{class_valuation_ab93b904f6282cfc51e79016e780ba5f3}\label{class_valuation_ab93b904f6282cfc51e79016e780ba5f3}} 
-\index{Valuation@{Valuation}!setHoursWeeks@{setHoursWeeks}}
-\index{setHoursWeeks@{setHoursWeeks}!Valuation@{Valuation}}
-\doxysubsubsection{\texorpdfstring{setHoursWeeks()}{setHoursWeeks()}}
-{\footnotesize\ttfamily void Valuation\+::set\+Hours\+Weeks (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ std\+::array$<$ int, 6 $>$$>$$>$}]{hours\+Weeks }\end{DoxyParamCaption})}
-
 \mbox{\Hypertarget{class_valuation_a9b407bbf28d6c2e4ae649e2fa2155dc3}\label{class_valuation_a9b407bbf28d6c2e4ae649e2fa2155dc3}} 
 \index{Valuation@{Valuation}!sethoursWeekSlide@{sethoursWeekSlide}}
 \index{sethoursWeekSlide@{sethoursWeekSlide}!Valuation@{Valuation}}
 \doxysubsubsection{\texorpdfstring{sethoursWeekSlide()}{sethoursWeekSlide()}}
-{\footnotesize\ttfamily void Valuation\+::sethours\+Week\+Slide (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ int, int $>$$>$$>$$>$}]{day\+Seq }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void Valuation\+::sethours\+Week\+Slide (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ int, int $>$$>$$>$$>$}]{hours\+Week\+Slide }\end{DoxyParamCaption})}
 
+
+\begin{DoxyParams}{Parameters}
+{\em hours\+Week\+Slide} & hours\+Week\+Slide to set \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{class_valuation_ad6c2aeef5f4985d93f2cc90c4b9cce0c}\label{class_valuation_ad6c2aeef5f4985d93f2cc90c4b9cce0c}} 
 \index{Valuation@{Valuation}!setImpossiblePosts@{setImpossiblePosts}}
 \index{setImpossiblePosts@{setImpossiblePosts}!Valuation@{Valuation}}
 \doxysubsubsection{\texorpdfstring{setImpossiblePosts()}{setImpossiblePosts()}}
 {\footnotesize\ttfamily void Valuation\+::set\+Impossible\+Posts (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ int $>$$>$$>$}]{impossible\+Posts }\end{DoxyParamCaption})}
 
+
+\begin{DoxyParams}{Parameters}
+{\em impossible\+Posts} & impossible\+Posts to set \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{class_valuation_a786114d0d7fd2c919d8cf08862f85bf1}\label{class_valuation_a786114d0d7fd2c919d8cf08862f85bf1}} 
 \index{Valuation@{Valuation}!setInvolved@{setInvolved}}
 \index{setInvolved@{setInvolved}!Valuation@{Valuation}}
 \doxysubsubsection{\texorpdfstring{setInvolved()}{setInvolved()}}
 {\footnotesize\ttfamily void Valuation\+::set\+Involved (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ std\+::pair$<$ int, int $>$, std\+::pair$<$ int, int $>$$>$$>$$>$$>$$>$}]{involved }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{class_valuation_a8b638eb8ff480b2bb79e614f4da247a0}\label{class_valuation_a8b638eb8ff480b2bb79e614f4da247a0}} 
+
+\begin{DoxyParams}{Parameters}
+{\em involved} & involved to set \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_valuation_a98f83ad6310cfb7853a0fec176cb6577}\label{class_valuation_a98f83ad6310cfb7853a0fec176cb6577}} 
+\index{Valuation@{Valuation}!setPostsRequirement@{setPostsRequirement}}
+\index{setPostsRequirement@{setPostsRequirement}!Valuation@{Valuation}}
+\doxysubsubsection{\texorpdfstring{setPostsRequirement()}{setPostsRequirement()}}
+{\footnotesize\ttfamily void Valuation\+::set\+Posts\+Requirement (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::array$<$ int, 31 $>$$>$}]{posts\+Requirement }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_valuation_abe9b3276c6190e8a8e505ef0048bd049}\label{class_valuation_abe9b3276c6190e8a8e505ef0048bd049}} 
 \index{Valuation@{Valuation}!setScore@{setScore}}
 \index{setScore@{setScore}!Valuation@{Valuation}}
 \doxysubsubsection{\texorpdfstring{setScore()}{setScore()}}
-{\footnotesize\ttfamily void Valuation\+::set\+Score (\begin{DoxyParamCaption}\item[{const int}]{score }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void Valuation\+::set\+Score (\begin{DoxyParamCaption}\item[{const float}]{score }\end{DoxyParamCaption})}
 
 
 \begin{DoxyParams}{Parameters}
@@ -198,8 +296,13 @@ score score of the \mbox{\hyperlink{class_valuation}{Valuation}}
 {\footnotesize\ttfamily void Valuation\+::set\+Seq\+Min\+Max (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::vector$<$ std\+::pair$<$ int, int $>$$>$$>$$>$$>$}]{seq\+Min\+Max }\end{DoxyParamCaption})}
 
 
+\begin{DoxyParams}{Parameters}
+{\em seq\+Min\+Max} & seq\+Min\+Max to set \\
+\hline
+\end{DoxyParams}
+
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-C\+:/\+Users/\+Valars/\+Documents/\+Git\+Hub/\+P-\/\+A\+N\+D\+R\+O\+I\+D\+E-\/\+Construction-\/\+Automatique-\/de-\/planning/src/model/\mbox{\hyperlink{_valuation_8h}{Valuation.\+h}}\item 
-C\+:/\+Users/\+Valars/\+Documents/\+Git\+Hub/\+P-\/\+A\+N\+D\+R\+O\+I\+D\+E-\/\+Construction-\/\+Automatique-\/de-\/planning/src/model/\mbox{\hyperlink{_valuation_8cpp}{Valuation.\+cpp}}\end{DoxyCompactItemize}
+src/model/\mbox{\hyperlink{_valuation_8h}{Valuation.\+h}}\item 
+src/model/\mbox{\hyperlink{_valuation_8cpp}{Valuation.\+cpp}}\end{DoxyCompactItemize}
