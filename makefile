@@ -11,6 +11,9 @@ SwapLog.o : src/model/SwapLog.cpp src/model/SwapLog.h
 
 Post.o : src/model/Post.cpp src/model/Post.h
 	g++ -c src/model/Post.cpp -o exec/Post.o -W -Wall -Werror
+	
+PredefinedPlanning.o : src/model/Valuation.cpp src/model/PredefinedPlanning.h
+	g++ -c src/model/PredefinedPlanning.cpp -o exec/PredefinedPlanning.o -W -Wall -Werror	
 
 Agent.o : src/model/Agent.cpp src/model/Agent.h
 	g++ -c src/model/Agent.cpp -o exec/Agent.o -W -Wall -Werror
@@ -36,14 +39,14 @@ HeuristicToolBox.o : src/heuristic/HeuristicToolBox.cpp src/heuristic/HeuristicT
 heuristicSolver.o : src/heuristic/heuristicSolver.cpp src/heuristic/heuristicSolver.h
 	g++ -c src/heuristic/heuristicSolver.cpp -o exec/heuristicSolver.o -W -Wall -Werror
 
-VariableData.o : src/LP/VariableData.cpp src/LP/VariableData.h
-	g++ -c src/LP/VariableData.cpp -o exec/VariableData.o -W -Wall -Werror
-
 LPSolver.o : src/LP/LPSolver.cpp src/LP/LPSolver.h
 	g++ -c src/LP/LPSolver.cpp -o exec/LPSolver.o -W -Wall -Werror
+	
+HandWrittedModels.o : src/HandWrittedModels.cpp src/HandWrittedModels.h
+	g++ -c src/HandWrittedModels.cpp -o exec/HandWrittedModels.o -W -Wall -Werror	
 
-main : heuristicSolver.o Constraint.o Valuation.o SwapLog.o Post.o Agent.o Service.o ConstraintInvolved.o ConstraintDaysSeq.o ConstraintSeqMinMax.o Model.o HeuristicToolBox.o VariableData.o
-	g++ exec/heuristicSolver.o exec/LPSolver.o exec/Constraint.o exec/Valuation.o exec/SwapLog.o exec/Post.o exec/Agent.o exec/Service.o exec/ConstraintInvolved.o exec/ConstraintDaysSeq.o exec/ConstraintSeqMinMax.o exec/Model.o exec/HeuristicToolBox.o exec/VariableData.o src/main.cpp -o main -lm -W -Wall -Werror
+main : HandWrittedModels.o PredefinedPlanning.o heuristicSolver.o Constraint.o Valuation.o SwapLog.o Post.o Agent.o Service.o ConstraintInvolved.o ConstraintDaysSeq.o ConstraintSeqMinMax.o Model.o HeuristicToolBox.o
+	g++ exec/HandWrittedModels.o exec/PredefinedPlanning.o exec/heuristicSolver.o exec/Constraint.o exec/Valuation.o exec/SwapLog.o exec/Post.o exec/Agent.o exec/Service.o exec/ConstraintInvolved.o exec/ConstraintDaysSeq.o exec/ConstraintSeqMinMax.o exec/Model.o exec/HeuristicToolBox.o src/main.cpp -o main -lm -W -Wall -Werror
 
 clean :
 	rm -f exec/*.o main
