@@ -198,7 +198,7 @@ void HeuristicToolBox::checkFastSeqMinMax(Model* m, ConstraintSeqMinMax* constra
 						}
 
 						if (start || indice != 0) {
-							for (int k = 0; k < p->getAttributs().size(); k++) {
+							for (unsigned int k = 0; k < p->getAttributs().size(); k++) {
 								if (p->getAttributs()[k] == (*constraint->getSequenceAtt())[indice]) {
 									indice++;
 									found = true;

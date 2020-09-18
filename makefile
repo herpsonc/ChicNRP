@@ -1,5 +1,3 @@
-SCIPDIR = ~/bin/scip
-
 all : main
 
 Constraint.o : src/model/constraint/Constraint.cpp src/model/constraint/Constraint.h
@@ -44,8 +42,8 @@ VariableData.o : src/LP/VariableData.cpp src/LP/VariableData.h
 LPSolver.o : src/LP/LPSolver.cpp src/LP/LPSolver.h
 	g++ -c src/LP/LPSolver.cpp -o exec/LPSolver.o -W -Wall -Werror
 
-main : heuristicSolver.o LPSolver.o Constraint.o Valuation.o SwapLog.o Post.o Agent.o Service.o ConstraintInvolved.o ConstraintDaysSeq.o ConstraintSeqMinMax.o Model.o HeuristicToolBox.o VariableData.o
-	g++ -I/$(SCIPDIR) -L/$(SCIPDIR) exec/heuristicSolver.o exec/LPSolver.o exec/Constraint.o exec/Valuation.o exec/SwapLog.o exec/Post.o exec/Agent.o exec/Service.o exec/ConstraintInvolved.o exec/ConstraintDaysSeq.o exec/ConstraintSeqMinMax.o exec/Model.o exec/HeuristicToolBox.o exec/VariableData.o src/main.cpp -o main -lm -lscip -W -Wall -Werror
+main : heuristicSolver.o Constraint.o Valuation.o SwapLog.o Post.o Agent.o Service.o ConstraintInvolved.o ConstraintDaysSeq.o ConstraintSeqMinMax.o Model.o HeuristicToolBox.o VariableData.o
+	g++ exec/heuristicSolver.o exec/LPSolver.o exec/Constraint.o exec/Valuation.o exec/SwapLog.o exec/Post.o exec/Agent.o exec/Service.o exec/ConstraintInvolved.o exec/ConstraintDaysSeq.o exec/ConstraintSeqMinMax.o exec/Model.o exec/HeuristicToolBox.o exec/VariableData.o src/main.cpp -o main -lm -W -Wall -Werror
 
 clean :
 	rm -f exec/*.o main
