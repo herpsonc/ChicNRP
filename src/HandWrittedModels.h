@@ -1,6 +1,6 @@
 #pragma once
 
-#include "model\Model.h"
+#include "model/Model.h"
 
 class HandWrittedModels
 {
