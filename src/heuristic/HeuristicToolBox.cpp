@@ -20,7 +20,7 @@ void HeuristicToolBox::checkFastDaySeq(Model* m, ConstraintDaysSeq* constraint, 
 					if (i >= 0 && i < m->getNbDays()) {
 						Post* p = a->getCalendar()[i];
 						if (p != NULL) {
-							for (int k = 0; k < p->getAttributs().size(); k++) {
+							for (unsigned int k = 0; k < p->getAttributs().size(); k++) {
 								if (!found && p->getAttributs()[k] == (*constraint->getSequenceAtt())[indice]) {
 									found = true;
 									indice++;
@@ -93,7 +93,7 @@ void HeuristicToolBox::checkFastInvolved(Model* m, ConstraintInvolved* constrain
 						Post* p = a->getCalendar()[i];
 						if (indice != 0 || constraint->getFirstDay() == -1 || constraint->getFirstDay() == day || seqDetected) {
 							if (p != NULL) {
-								for (int k = 0; k < p->getAttributs().size(); k++) {
+								for (unsigned int k = 0; k < p->getAttributs().size(); k++) {
 									//Le cas où la séquence est déjà détectée
 									if (!found && seqDetected) {
 										if (p->getAttributs()[k] == (*constraint->getLastSeqAtt())[indice]) {
